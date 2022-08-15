@@ -1,3 +1,4 @@
+
 -- Settings setup 
 -- Thx to ThePrimeagen
 local function bind(op, outer_opts)
@@ -16,17 +17,12 @@ local nnoremap = bind("n")
 local vnoremap = bind("v")
 local xnoremap = bind("x")
 local inoremap = bind("i")
+local M = {
+	nmap = nmap,
+	nnoremap = nnoremap,
+	vnoremap = vnoremap,
+	xnoremap = xnoremap,
+	inoremap = inoremap
+	}
 
--- Actual remaps
-nnoremap("<leader>ff", '<cmd>Telescope find_files<CR>')
--- Neogit
-local neogit = require('neogit')
-neogit.setup {}
-
-nnoremap("<leader>gs", function()
-    neogit.open({})
-end);
-
--- nnoremap("<leader>ga", "<cmd>!git fetch -all<CR>");
--- nnoremap("<leader>t", "<cmd>exe v:count1 . \"ToggleTerm\"<CR>")
-nnoremap("<leader>b", "<cmd>NvimTreeToggle<CR>")
+return M

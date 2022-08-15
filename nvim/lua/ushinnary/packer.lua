@@ -3,16 +3,15 @@ return require("packer").startup(function()
     use("nvim-lua/plenary.nvim")
     use {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.0',
+        tag = '0.1.0'
     }
-    use {
-        'TimUntersberger/neogit',
-    }
+    use {'TimUntersberger/neogit'}
     use("sbdchd/neoformat")
     -- Themes
-    --use("shaunsingh/nord.nvim")
-    use("folke/tokyonight.nvim")
-    --use("gruvbox-community/gruvbox")
+    -- use("shaunsingh/nord.nvim")
+    --use("folke/tokyonight.nvim")
+    use("Mofiqul/vscode.nvim")
+    -- use("gruvbox-community/gruvbox")
     -- Coding plug-ins
     use("neovim/nvim-lspconfig")
     use("hrsh7th/cmp-nvim-lsp")
@@ -33,10 +32,7 @@ return require("packer").startup(function()
         'kyazdani42/nvim-tree.lua',
         requires = {'kyazdani42/nvim-web-devicons'}
     }
-    use({
-        "sindrets/diffview.nvim",
-        cmd = {"DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles"}
-    })
+    -- Terminal
     use {
         "akinsho/toggleterm.nvim",
         tag = 'v2.*',

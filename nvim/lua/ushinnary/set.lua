@@ -11,7 +11,7 @@ vim.opt.termguicolors = true
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
-vim.cmd [[colorscheme tokyonight]]
+vim.cmd [[colorscheme vscode]]
 vim.g.nord_contrast = true
 vim.g.nord_borders = true
 vim.g.nord_italic = false

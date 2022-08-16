@@ -1,4 +1,4 @@
-local remapper = require("remapper")
+local remapper = require("ushinnary.remapper")
 local nnoremap = remapper.nnoremap
 -- Actual remaps
 nnoremap("<leader>ff", '<cmd>Telescope find_files<CR>')

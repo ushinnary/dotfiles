@@ -9,8 +9,8 @@ return require("packer").startup(function()
     use("sbdchd/neoformat")
     -- Themes
     -- use("shaunsingh/nord.nvim")
-    --use("folke/tokyonight.nvim")
-    use("Mofiqul/vscode.nvim")
+    use("folke/tokyonight.nvim")
+    --use("Mofiqul/vscode.nvim")
     -- use("gruvbox-community/gruvbox")
     -- Coding plug-ins
     use("neovim/nvim-lspconfig")
@@ -41,3 +41,4 @@ return require("packer").startup(function()
         end
     }
 end)
+

@@ -11,7 +11,7 @@ export PATH="$PATH:$HOME/.luarocks/bin/"
 ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
+# Setting this variable when ZSH_THEME="spaceship"
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
@@ -106,6 +106,3 @@ source $ZSH/oh-my-zsh.sh
 alias nvimconfig="nvim ~/.config/nvim/lua/ushinnary"
 export NVM_DIR=~/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-
-eval "$(starship init zsh)"

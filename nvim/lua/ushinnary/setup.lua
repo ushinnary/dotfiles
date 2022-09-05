@@ -1,12 +1,4 @@
-require('telescope').setup {
-    defaults = {
-        mappings = {
-            i = {
-                ["<C-h>"] = "which_key"
-            }
-        }
-    }
-}
+require('telescope').setup {}
 require('lualine').setup()
 require("nvim-tree").setup({
     sort_by = "case_sensetive",

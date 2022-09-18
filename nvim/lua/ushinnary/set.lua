@@ -23,4 +23,3 @@ vim.g.neoformat_try_formatprg = 1
 --vim.g.neoformat_enabled_lua = { "luaformatter" }
 vim.g.neoformat_enabled_typescript = { "prettier", "eslint_d" }
 vim.g.neoformat_enabled_vue = { "prettier" }
-

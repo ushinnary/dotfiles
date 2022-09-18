@@ -13,6 +13,7 @@ return require("packer").startup(function()
     --use("Mofiqul/vscode.nvim")
     -- use("gruvbox-community/gruvbox")
     -- Coding plug-ins
+    use("nvim-lua/completion-nvim")
     use("onsails/lspkind.nvim")
     use("neovim/nvim-lspconfig")
     use("hrsh7th/cmp-nvim-lsp")
@@ -20,6 +21,7 @@ return require("packer").startup(function()
     use("hrsh7th/cmp-path")
     use("hrsh7th/cmp-cmdline")
     use("hrsh7th/nvim-cmp")
+    use("nvim-treesitter/nvim-treesitter")
     -- Bottom status line
     use {
         'nvim-lualine/lualine.nvim',
@@ -34,13 +36,7 @@ return require("packer").startup(function()
         requires = {'kyazdani42/nvim-web-devicons'}
     }
     -- Terminal
-    use {
-        "akinsho/toggleterm.nvim",
-        tag = 'v2.*',
-        config = function()
-            require("toggleterm").setup()
-        end
-    }
+    use("akinsho/toggleterm.nvim")
 end)
 
 

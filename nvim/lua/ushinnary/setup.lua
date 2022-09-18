@@ -3,7 +3,9 @@ local cmp = require "cmp"
 local lspkind = require('lspkind')
 --local lga_actions = require("telescope-live-grep-args.actions")
 
-telescope.setup {}
+telescope.setup {
+	file_ignore_patterns = { "node_modules" }
+}
 require('lualine').setup()
 require("nvim-tree").setup({
     sort_by = "case_sensetive",
@@ -34,6 +36,7 @@ cmp.setup {
        	 ["<C-d>"] = cmp.mapping.scroll_docs(-4),
          ["<C-f>"] = cmp.mapping.scroll_docs(4),
          ["<C-e>"] = cmp.mapping.close(),
+	 ["<C-Space>"] = cmp.mapping.complete(),
          ["<c-y>"] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Insert,
             select = true,
@@ -50,12 +53,37 @@ cmp.setup {
          },
       },
 }
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "lua", "rust" },
 
--- The following example advertise capabilities to `clangd`.
-require'lspconfig'.clangd.setup {
-  capabilities = capabilities,
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  auto_install = true,
+
+  -- List of parsers to ignore installing (for "all")
+  ignore_install = { "javascript" },
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { "c" },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
 }
-require'lspconfig'.tsserver.setup{}
+require("toggleterm").setup()

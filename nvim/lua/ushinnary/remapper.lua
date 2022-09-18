@@ -17,12 +17,14 @@ local nnoremap = bind("n")
 local vnoremap = bind("v")
 local xnoremap = bind("x")
 local inoremap = bind("i")
+local tnoremap = bind("t")
 local M = {
 	nmap = nmap,
 	nnoremap = nnoremap,
 	vnoremap = vnoremap,
 	xnoremap = xnoremap,
-	inoremap = inoremap
+	inoremap = inoremap,
+	tnoremap = tnoremap,
 	}
 
 return M

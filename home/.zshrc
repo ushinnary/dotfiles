@@ -4,6 +4,11 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$PATH:$HOME/.luarocks/bin/"
+export PATH="$PATH:$HOME/nvim-linux64/bin/"
+export PATH="$PATH:$HOME/neovide/bin/"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/taplo/"
+export PATH="$PATH:$HOME/lua-lsp/bin/"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -104,5 +109,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias nvimconfig="nvim ~/.config/nvim/lua/ushinnary"
+alias nvi="neovide"
 export NVM_DIR=~/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"

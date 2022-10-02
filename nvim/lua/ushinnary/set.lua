@@ -11,7 +11,17 @@ vim.opt.termguicolors = true
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
-vim.cmd [[colorscheme tokyonight]]
+-- Theming
+local handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme")
+local result = handle:read("*a")
+-- Gnome 42+
+if string.find(result, "default") then
+	vim.cmd([[colorscheme tokyonight-day]])
+else
+	vim.cmd([[colorscheme tokyonight]])
+end
+handle:close()
+
 vim.g.nord_contrast = true
 vim.g.nord_borders = true
 vim.g.nord_italic = false

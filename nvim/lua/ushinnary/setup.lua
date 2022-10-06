@@ -1,10 +1,23 @@
 local telescope = require("telescope")
+local lga_actions = require("telescope-live-grep-args.actions")
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 --local lga_actions = require("telescope-live-grep-args.actions")
 
 telescope.setup({
-	file_ignore_patterns = { "node_modules" },
+	defaults = {
+		file_ignore_patterns = { "node_modules/.*" },
+	},
+	extensions = {
+		live_grep_args = {
+			auto_quoting = true,
+			mappings = {
+				i = {
+					["<C-k"] = lga_actions.quote_prompt(),
+				},
+			},
+		},
+	},
 })
 require("lualine").setup()
 require("nvim-tree").setup({
@@ -39,10 +52,14 @@ cmp.setup({
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
 		["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Insert,
-			select = true,
-		}),
+		["<Tab>"] = cmp.mapping(function()
+			if cmp.visible() then
+				cmp.confirm({
+					behavior = cmp.ConfirmBehavior.Insert,
+					select = true,
+				})
+			end
+		end, { "i", "s" }),
 	},
 	formatting = {
 		format = lspkind.cmp_format({

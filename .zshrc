@@ -1,0 +1,1 @@
+/var/home/ushinnary/.zshrc

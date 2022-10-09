@@ -1,6 +1,7 @@
 vim.g.mapleader = " "
 vim.opt.relativenumber = true
 vim.opt.number = true
+vim.opt.ignorecase = true
 
 vim.opt.smartindent = true
 
@@ -16,9 +17,9 @@ local handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme"
 local result = handle:read("*a")
 -- Gnome 42+
 if string.find(result, "default") then
-	vim.cmd([[colorscheme tokyonight-day]])
+	vim.cmd([[colorscheme ayu-light]])
 else
-	vim.cmd([[colorscheme tokyonight]])
+	vim.cmd([[colorscheme ayu-dark]])
 end
 handle:close()
 

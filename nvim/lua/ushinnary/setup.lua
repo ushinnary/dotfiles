@@ -52,12 +52,14 @@ cmp.setup({
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
 		["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<Tab>"] = cmp.mapping(function()
+		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.confirm({
 					behavior = cmp.ConfirmBehavior.Insert,
 					select = true,
 				})
+			else
+				fallback()
 			end
 		end, { "i", "s" }),
 	},

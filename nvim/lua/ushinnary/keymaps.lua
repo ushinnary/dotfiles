@@ -1,9 +1,14 @@
 local remapper = require("ushinnary.remapper")
 local nnoremap = remapper.nnoremap
+local vnoremap = remapper.vnoremap
+local nmap = remapper.nmap
 local tnoremap = remapper.tnoremap
 -- Actual remaps
 nnoremap("<C-p>", "<cmd>Telescope find_files<CR>")
 nnoremap("<leader>fg", "<cmd>Telescope live_grep<CR>")
+nnoremap("<C-s>", "<cmd>write<CR>")
+nnoremap("<C-S>", "<cmd>wa<CR>")
+nnoremap("<leader>s", "<cmd>source %<CR>")
 -- Neogit
 local neogit = require("neogit")
 neogit.setup({})
@@ -26,3 +31,23 @@ nnoremap("gD", "<cmd>lua vim.lsp.buf.implementation()<CR>")
 nnoremap("gr", "<cmd>lua vim.lsp.buf.references()<CR>")
 nnoremap("ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 nnoremap("K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+
+-- VonHeikemen
+-- Moving lines and preserving indentation
+nnoremap("<C-j>", ":move .+1<CR>==")
+nnoremap("<C-k>", ":move .-2<CR>==")
+vnoremap("<C-j>", ":move '>+1<CR>gv=gv")
+vnoremap("<C-k>", ":move '<-2<CR>gv=gv")
+-- Open new tabpage
+nnoremap("<Leader>tn", ":tabnew<CR>")
+
+-- Navigate between tabpages
+nnoremap("[t", ":tabprevious<CR>")
+nnoremap("]t", ":tabnext<CR>")
+--
+-- Navigate between buffers
+nnoremap("[b", ":bprevious<CR>")
+nnoremap("]b", ":bnext<CR>")
+--
+-- Search symbols in buffer
+nnoremap("<Leader>fs", ":Telescope treesitter<CR>")

@@ -5,6 +5,19 @@ WIP
 
 ## Packages to install:
 
+### Rust
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+- RipGrep
+```
+cargo install ripgrep
+```
+
+### NVM
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+```
 ### ZSH
 
 ```
@@ -59,3 +72,6 @@ cargo install stylua
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 ```
+
+### Font
+```https://www.programmingfonts.org/#hermit```

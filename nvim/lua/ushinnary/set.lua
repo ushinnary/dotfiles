@@ -25,7 +25,7 @@ vim.opt.list = true
 --	vim.cmd([[colorscheme ayu-dark]])
 --end
 --handle:close()
-vim.cmd([[colorscheme ayu-dark]])
+vim.cmd([[colorscheme tokyonight-moon]])
 
 vim.g.neoformat_try_node_exe = 1
 vim.g.neoformat_try_formatprg = 1

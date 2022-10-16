@@ -42,8 +42,8 @@ vnoremap("<C-k>", ":move '<-2<CR>gv=gv")
 nnoremap("<Leader>tn", ":tabnew<CR>")
 
 -- Navigate between tabpages
-nnoremap("[t", ":tabprevious<CR>")
-nnoremap("]t", ":tabnext<CR>")
+nnoremap("[[", ":tabprevious<CR>")
+nnoremap("]]", ":tabnext<CR>")
 --
 -- Navigate between buffers
 nnoremap("[b", ":bprevious<CR>")

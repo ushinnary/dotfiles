@@ -96,3 +96,30 @@ require("mason").setup({
 		},
 	},
 })
+
+require("mason-lspconfig").setup({
+	ensure_installed = {
+		-- LSPs
+		"rust_analyzer",
+		"bash-language-server",
+		"vue-language-server",
+		"css-lsp",
+		"json-lsp",
+		"lua-language-server",
+		"sqlls",
+		"taplo",
+		-- Linters
+		"typescript-language-server",
+		"cfn-lint",
+		"erb-lint",
+		"eslint_d",
+		"selene",
+		"shellcheck",
+		-- Formatters
+		"sqlfluff",
+		"beautysh",
+		"prettierd",
+		"sql-formatter",
+		"stylua",
+	},
+})

@@ -1,7 +1,7 @@
-vim.cmd([[packadd packer.nvim]])
 return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 	use("williamboman/mason.nvim")
+	use("williamboman/mason-lspconfig.nvim")
 	use("nvim-lua/plenary.nvim")
 	use({
 		"nvim-telescope/telescope.nvim",
@@ -15,10 +15,8 @@ return require("packer").startup(function(use)
 	use({ "TimUntersberger/neogit" })
 	use("sbdchd/neoformat")
 	-- Themes
-	--use("folke/tokyonight.nvim")
-	use("Shatur/neovim-ayu")
-	--use("Mofiqul/vscode.nvim")
-	-- use("gruvbox-community/gruvbox")
+	use("folke/tokyonight.nvim")
+	--use("Shatur/neovim-ayu")
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")
 	use("neovim/nvim-lspconfig")

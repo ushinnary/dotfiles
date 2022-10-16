@@ -1,28 +1,41 @@
 -- Languages support
 local nvim_lsp = require("lspconfig")
 
-nvim_lsp.rust_analyzer.setup({
-	settings = {
-		["rust-analyzer"] = {
-			imports = {
-				granularity = {
-					group = "module",
+local servers = {
+	tsserver = {},
+	cssls = {},
+	volar = {
+		filetypes = { "vue" },
+	},
+	bashls = {},
+	taplo = {},
+	jsonls = {},
+	sumneko_lua = {},
+	rust_analyzer = {
+		settings = {
+			["rust-analyzer"] = {
+				imports = {
+					granularity = {
+						group = "module",
+					},
+					prefix = "self",
 				},
-				prefix = "self",
-			},
-			cargo = {
-				buildScripts = {
+				cargo = {
+					buildScripts = {
+						enable = true,
+					},
+				},
+				procMacro = {
 					enable = true,
 				},
-			},
-			procMacro = {
-				enable = true,
-			},
-			checkOnSave = {
-				command = "clippy",
+				checkOnSave = {
+					command = "clippy",
+				},
 			},
 		},
 	},
-})
+}
 
-nvim_lsp.tsserver.setup({})
+for name, config in pairs(servers) do
+	nvim_lsp[name].setup(config)
+end

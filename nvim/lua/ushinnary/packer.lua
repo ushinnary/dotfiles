@@ -36,8 +36,8 @@ return require("packer").startup(function(use)
 	})
 	-- Tree
 	use({
-		"kyazdani42/nvim-tree.lua",
-		requires = { "kyazdani42/nvim-web-devicons" },
+		"nvim-tree/nvim-tree.lua",
+		requires = { "nvim-tree/nvim-web-devicons" },
 	})
 	-- Terminal
 	use("akinsho/toggleterm.nvim")
@@ -46,4 +46,11 @@ return require("packer").startup(function(use)
 	use("tpope/vim-surround")
 	use("RRethy/vim-illuminate")
 	use("lewis6991/impatient.nvim")
+	-- Lua
+	use({
+		"folke/which-key.nvim",
+	})
+	use({
+		"lewis6991/gitsigns.nvim",
+	})
 end)

@@ -1,7 +1,9 @@
 local telescope = require("telescope")
 local lga_actions = require("telescope-live-grep-args.actions")
 local cmp = require("cmp")
+local remapper = require("ushinnary.remapper")
 local lspkind = require("lspkind")
+local nnoremap = remapper.nnoremap
 --local lga_actions = require("telescope-live-grep-args.actions")
 
 telescope.setup({
@@ -97,29 +99,11 @@ require("mason").setup({
 	},
 })
 
-require("mason-lspconfig").setup({
-	ensure_installed = {
-		-- LSPs
-		"rust_analyzer",
-		"bash-language-server",
-		"vue-language-server",
-		"css-lsp",
-		"json-lsp",
-		"lua-language-server",
-		"sqlls",
-		"taplo",
-		-- Linters
-		"typescript-language-server",
-		"cfn-lint",
-		"erb-lint",
-		"eslint_d",
-		"selene",
-		"shellcheck",
-		-- Formatters
-		"sqlfluff",
-		"beautysh",
-		"prettierd",
-		"sql-formatter",
-		"stylua",
-	},
+require("mason-lspconfig").setup()
+require("gitsigns").setup({
+	on_attach = function()
+		-- Actions
+		nnoremap("<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
+		nnoremap("<leader>ht", "<cmd>Gitsigns toggle_current_line_blame<CR>")
+	end,
 })

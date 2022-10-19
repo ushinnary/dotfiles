@@ -1,7 +1,6 @@
 local remapper = require("ushinnary.remapper")
 local nnoremap = remapper.nnoremap
 local vnoremap = remapper.vnoremap
-local nmap = remapper.nmap
 local tnoremap = remapper.tnoremap
 -- Actual remaps
 nnoremap("<C-p>", "<cmd>Telescope find_files<CR>")

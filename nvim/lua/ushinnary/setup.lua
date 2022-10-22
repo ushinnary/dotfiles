@@ -77,14 +77,11 @@ cmp.setup({
 	},
 })
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "rust", "typescript", "javascript", "markdown", "json", "css", "scss", "sql", "regex" },
+	ensure_installed = "all",
 	sync_install = false,
-	auto_install = false,
 	highlight = {
 		enable = true,
-	},
-	indent = {
-		enable = false,
+		additional_vim_regex_highlighting = false,
 	},
 })
 require("toggleterm").setup()
@@ -105,5 +102,7 @@ require("gitsigns").setup({
 		-- Actions
 		nnoremap("<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
 		nnoremap("<leader>ht", "<cmd>Gitsigns toggle_current_line_blame<CR>")
+		nnoremap("<leader>hu", "<cmd>Gitsigns undo_stage_hunk<CR>")
+		nnoremap("<leader>hs", "<cmd>Gitsigns stage_hunk<CR>")
 	end,
 })

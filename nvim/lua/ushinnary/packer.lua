@@ -12,10 +12,10 @@ return require("packer").startup(function(use)
 			require("telescope").load_extension("live_grep_args")
 		end,
 	})
-	use({ "TimUntersberger/neogit" })
 	use("sbdchd/neoformat")
 	-- Themes
 	use("folke/tokyonight.nvim")
+	use({ "shaunsingh/oxocarbon.nvim", branch = "fennel" })
 	--use("Shatur/neovim-ayu")
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")
@@ -50,7 +50,10 @@ return require("packer").startup(function(use)
 	use({
 		"folke/which-key.nvim",
 	})
+	-- Git
+	use({ "TimUntersberger/neogit" })
 	use({
 		"lewis6991/gitsigns.nvim",
 	})
+	use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
 end)

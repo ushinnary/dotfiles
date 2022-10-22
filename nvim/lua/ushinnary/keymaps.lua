@@ -33,20 +33,23 @@ nnoremap("K", "<cmd>lua vim.lsp.buf.hover()<CR>")
 
 -- VonHeikemen
 -- Moving lines and preserving indentation
-nnoremap("<C-j>", ":move .+1<CR>==")
-nnoremap("<C-k>", ":move .-2<CR>==")
-vnoremap("<C-j>", ":move '>+1<CR>gv=gv")
-vnoremap("<C-k>", ":move '<-2<CR>gv=gv")
+nnoremap("<A-j>", ":move .+1<CR>==")
+nnoremap("<A-k>", ":move .-2<CR>==")
+vnoremap("<A-j>", ":move '>+1<CR>gv=gv")
+vnoremap("<A-k>", ":move '<-2<CR>gv=gv")
 -- Open new tabpage
 nnoremap("<Leader>tn", ":tabnew<CR>")
 
 -- Navigate between tabpages
 nnoremap("[[", ":tabprevious<CR>")
 nnoremap("]]", ":tabnext<CR>")
+nnoremap("<C-c>t", ":tabclose<CR>")
 --
 -- Navigate between buffers
 nnoremap("[b", ":bprevious<CR>")
 nnoremap("]b", ":bnext<CR>")
 --
 -- Search symbols in buffer
-nnoremap("<Leader>fs", ":Telescope treesitter<CR>")
+nnoremap("<leader>fs", ":Telescope treesitter<CR>")
+-- Git file history
+nnoremap("<leader>fh", ":DiffviewFileHistory<CR>")

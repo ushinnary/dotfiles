@@ -75,3 +75,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 
 ### Font
 ```https://www.programmingfonts.org/#hermit```
+
+```
+https://www.nerdfonts.com/font-downloads
+```

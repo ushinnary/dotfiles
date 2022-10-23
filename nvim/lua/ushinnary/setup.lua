@@ -106,3 +106,4 @@ require("gitsigns").setup({
 		nnoremap("<leader>hs", "<cmd>Gitsigns stage_hunk<CR>")
 	end,
 })
+require("which-key").setup()

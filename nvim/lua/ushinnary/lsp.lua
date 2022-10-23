@@ -4,9 +4,6 @@ local nvim_lsp = require("lspconfig")
 local servers = {
 	tsserver = {},
 	cssls = {},
-	volar = {
-		filetypes = { "vue" },
-	},
 	bashls = {},
 	taplo = {},
 	jsonls = {},

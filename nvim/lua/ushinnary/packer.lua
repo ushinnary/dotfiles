@@ -15,7 +15,6 @@ return require("packer").startup(function(use)
 	use("sbdchd/neoformat")
 	-- Themes
 	use("folke/tokyonight.nvim")
-	use({ "shaunsingh/oxocarbon.nvim", branch = "fennel" })
 	--use("Shatur/neovim-ayu")
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")
@@ -55,5 +54,4 @@ return require("packer").startup(function(use)
 	use({
 		"lewis6991/gitsigns.nvim",
 	})
-	use({ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" })
 end)

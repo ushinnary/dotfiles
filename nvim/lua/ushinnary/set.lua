@@ -26,7 +26,7 @@ vim.opt.list = true
 --end
 --handle:close()
 
-vim.cmd.colorscheme("oxocarbon")
+vim.cmd.colorscheme("tokyonight-night")
 
 vim.g.neoformat_try_node_exe = 1
 vim.g.neoformat_try_formatprg = 1

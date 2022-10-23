@@ -8,6 +8,7 @@ nnoremap("<leader>fg", "<cmd>Telescope live_grep<CR>")
 nnoremap("<C-s>", "<cmd>write<CR>")
 nnoremap("<C-S>", "<cmd>wa<CR>")
 nnoremap("<leader>s", "<cmd>source %<CR>")
+nnoremap("<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>")
 -- Neogit
 local neogit = require("neogit")
 neogit.setup({})

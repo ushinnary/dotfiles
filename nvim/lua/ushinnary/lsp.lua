@@ -11,6 +11,9 @@ local servers = {
 	taplo = {},
 	jsonls = {},
 	sumneko_lua = {},
+	volar = {
+		filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+	},
 	rust_analyzer = {
 		settings = {
 			["rust-analyzer"] = {

@@ -98,7 +98,20 @@ require("mason").setup({
 })
 
 require("mason-lspconfig").setup({
-	ensure_installed = { "sumneko_lua", "rust_analyzer", "omnisharp", "dockerls", "sqlls", "taplo", "tailwindcss", "tsserver", "bashls", "jsonls", "cssls" },
+	ensure_installed = {
+		"sumneko_lua",
+		"rust_analyzer",
+		"omnisharp",
+		"dockerls",
+		"sqlls",
+		"taplo",
+		"tailwindcss",
+		"volar",
+		"tsserver",
+		"bashls",
+		"jsonls",
+		"cssls",
+	},
 	automatic_installation = true,
 })
 require("gitsigns").setup({

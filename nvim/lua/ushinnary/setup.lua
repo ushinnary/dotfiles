@@ -77,8 +77,9 @@ cmp.setup({
 	},
 })
 require("nvim-treesitter.configs").setup({
-	ensure_installed = "all",
+	ensure_installed = { "rust" },
 	sync_install = false,
+	auto_install = false,
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,
@@ -96,7 +97,10 @@ require("mason").setup({
 	},
 })
 
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({
+	ensure_installed = { "sumneko_lua", "rust_analyzer", "omnisharp", "dockerls", "sqlls", "taplo", "tailwindcss", "tsserver", "bashls", "jsonls", "cssls" },
+	automatic_installation = true,
+})
 require("gitsigns").setup({
 	on_attach = function()
 		-- Actions

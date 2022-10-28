@@ -124,3 +124,32 @@ require("gitsigns").setup({
 	end,
 })
 require("which-key").setup()
+require("catppuccin").setup({
+	flavour = "macchiato",
+	integrations = {
+		cmp = true,
+		gitsigns = true,
+		nvimtree = true,
+		telescope = true,
+		treesitter = true,
+		mason = true,
+		neogit = true,
+		which_key = true,
+	},
+	native_lsp = {
+		enabled = true,
+		virtual_text = {
+			errors = { "italic" },
+			hints = { "italic" },
+			warnings = { "italic" },
+			information = { "italic" },
+		},
+		underlines = {
+			errors = { "underline" },
+			hints = { "underline" },
+			warnings = { "underline" },
+			information = { "underline" },
+		},
+	},
+})
+require("lsp_lines").setup()

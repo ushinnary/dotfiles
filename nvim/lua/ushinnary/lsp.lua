@@ -2,15 +2,16 @@
 local nvim_lsp = require("lspconfig")
 
 local servers = {
-	tsserver = {},
+	bashls = {},
 	cssls = {},
 	dockerls = {},
+	tsserver = {},
 	tailwindcss = {},
-	omnisharp = {},
-	bashls = {},
 	taplo = {},
+	omnisharp = {},
 	jsonls = {},
 	sumneko_lua = {},
+	sqlls= {},
 	volar = {
 		filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
 	},

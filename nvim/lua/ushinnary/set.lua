@@ -26,10 +26,15 @@ vim.opt.list = true
 --end
 --handle:close()
 
-vim.cmd.colorscheme("tokyonight-night")
+vim.cmd.colorscheme("catppuccin")
 
 vim.g.neoformat_try_node_exe = 1
 vim.g.neoformat_try_formatprg = 1
 
 --vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+-- Disable virtual_text since it's redundant due to lsp_lines.
+vim.diagnostic.config({
+	virtual_text = false,
+})

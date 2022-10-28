@@ -14,8 +14,15 @@ return require("packer").startup(function(use)
 	})
 	use("sbdchd/neoformat")
 	-- Themes
-	use("folke/tokyonight.nvim")
+	--use("folke/tokyonight.nvim")
 	--use("Shatur/neovim-ayu")
+	use({
+		"catppuccin/nvim",
+		as = "catppuccin",
+	})
+	use({
+		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+	})
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")
 	use("neovim/nvim-lspconfig")

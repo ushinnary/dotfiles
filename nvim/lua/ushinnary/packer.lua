@@ -13,7 +13,7 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("sbdchd/neoformat")
-	-- Themes
+	-- Look and feel
 	--use("folke/tokyonight.nvim")
 	--use("Shatur/neovim-ayu")
 	use({
@@ -22,6 +22,10 @@ return require("packer").startup(function(use)
 	})
 	use({
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+	})
+	use({
+		"romgrk/barbar.nvim",
+		requires = { "kyazdani42/nvim-web-devicons" },
 	})
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")
@@ -32,6 +36,12 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-cmdline")
 	use("hrsh7th/nvim-cmp")
 	use("nvim-treesitter/nvim-treesitter")
+	use("nvim-treesitter/nvim-treesitter-context")
+	-- Lua
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+	})
 	-- Bottom status line
 	use({
 		"nvim-lualine/lualine.nvim",

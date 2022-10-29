@@ -21,6 +21,7 @@ nnoremap("<leader>gf", "<cmd>!git fetch --all<CR>")
 -- nnoremap("<leader>t", "<cmd>exe v:count1 . \"ToggleTerm\"<CR>")
 nnoremap("<leader>b", "<cmd>NvimTreeToggle<CR>")
 nnoremap("<leader>t", "<cmd>ToggleTerm<CR>")
+nnoremap("<leader>tt", "<cmd>TroubleToggle<CR>")
 tnoremap("<esc>", "<cmd>ToggleTerm<CR>")
 -- Rust related
 --nnoremap("<leader>T", "<cmd>lua require'lsp_extensions'.inlay_hints()<CR>")
@@ -42,8 +43,8 @@ vnoremap("<A-k>", ":move '<-2<CR>gv=gv")
 nnoremap("<Leader>tn", ":tabnew<CR>")
 
 -- Navigate between tabpages
-nnoremap("[[", ":tabprevious<CR>")
-nnoremap("]]", ":tabnext<CR>")
+nnoremap("<A-<>", ":BufferPrevious<CR>")
+nnoremap("<A->>", ":BufferNext<CR>")
 nnoremap("<C-c>t", ":tabclose<CR>")
 --
 -- Navigate between buffers

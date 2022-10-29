@@ -6,18 +6,23 @@ WIP
 ## Packages to install:
 
 ### Rust
+
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
+
 - RipGrep
+
 ```
 cargo install ripgrep
 ```
 
 ### NVM
+
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 ```
+
 ### ZSH
 
 ```
@@ -74,7 +79,11 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 ```
 
 ### Font
-```https://www.programmingfonts.org/#hermit```
+
+`https://www.programmingfonts.org/#hermit`
+
+- System:
+  `QuickSand`
 
 ```
 https://www.nerdfonts.com/font-downloads

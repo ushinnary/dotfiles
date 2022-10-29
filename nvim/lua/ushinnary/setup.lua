@@ -76,6 +76,7 @@ cmp.setup({
 		}),
 	},
 })
+require("treesitter-context").setup()
 require("nvim-treesitter.configs").setup({
 	ensure_installed = { "rust" },
 	sync_install = false,
@@ -153,3 +154,5 @@ require("catppuccin").setup({
 	},
 })
 require("lsp_lines").setup()
+require("bufferline").setup()
+require("trouble").setup()

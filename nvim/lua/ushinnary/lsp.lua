@@ -11,7 +11,7 @@ local servers = {
 	omnisharp = {},
 	jsonls = {},
 	sumneko_lua = {},
-	sqlls= {},
+	sqlls = {},
 	volar = {
 		filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
 	},

@@ -15,6 +15,10 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 vim.opt.listchars = { eol = "↲", tab = "▸ ", trail = "·" }
 vim.opt.list = true
+
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 -- Theming
 --local handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme")
 --local result = handle:read("*a")
@@ -33,8 +37,3 @@ vim.g.neoformat_try_formatprg = 1
 
 --vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-
--- Disable virtual_text since it's redundant due to lsp_lines.
-vim.diagnostic.config({
-	virtual_text = false,
-})

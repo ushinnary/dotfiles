@@ -41,9 +41,6 @@ return require("packer").startup(function(use)
 		as = "catppuccin",
 	})
 	use({
-		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-	})
-	use({
 		"romgrk/barbar.nvim",
 		requires = { "kyazdani42/nvim-web-devicons" },
 	})
@@ -58,6 +55,8 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-nvim-lsp-signature-help")
 	use("nvim-treesitter/nvim-treesitter")
 	use("nvim-treesitter/nvim-treesitter-context")
+	-- Debug
+	use("mfussenegger/nvim-dap")
 	-- Lua
 	use({
 		"folke/trouble.nvim",
@@ -70,6 +69,11 @@ return require("packer").startup(function(use)
 			"kyazdani42/nvim-web-devicons",
 			opt = true,
 		},
+	})
+	-- NodeJS
+	use({
+		"vuki656/package-info.nvim",
+		requires = "MunifTanjim/nui.nvim",
 	})
 	-- Tree
 	use({

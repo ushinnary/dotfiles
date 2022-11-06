@@ -3,10 +3,11 @@ local nvim_lsp = require("lspconfig")
 
 local servers = {
 	bashls = {},
+	svelte = {},
 	cssls = {},
 	dockerls = {},
 	tsserver = {},
-	tailwindcss = {},
+	--tailwindcss = {},
 	taplo = {},
 	omnisharp = {},
 	jsonls = {},

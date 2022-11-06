@@ -1,5 +1,6 @@
 local remapper = require("ushinnary.remapper")
 local nnoremap = remapper.nnoremap
+local nmap = remapper.nmap
 local vnoremap = remapper.vnoremap
 local tnoremap = remapper.tnoremap
 -- Actual remaps
@@ -57,3 +58,14 @@ nnoremap("]b", ":bnext<CR>")
 nnoremap("<leader>fs", ":Telescope treesitter<CR>")
 -- Git file history
 nnoremap("<leader>fh", ":DiffviewFileHistory<CR>")
+
+-- Debug
+nmap("<F9>", ":lua require'dap'.repl.open()<CR>")
+nmap("<F10>", ":lua require'dap'.continue()<CR>")
+nmap("<F11>", ":lua require'dap'.step_into()<CR>")
+nmap("<F12>", ":lua require'dap'.step_over()<CR>")
+nmap("Db", ":lua require'dap'.toggle_breakpoint()<CR>")
+
+-- Package.json
+nnoremap("<leader>nu", ":lua require('package-info').update()<CR>")
+nnoremap("<leader>nd", ":lua require('package-info').delete()<CR>")

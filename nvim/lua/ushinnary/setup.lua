@@ -113,6 +113,7 @@ require("mason-lspconfig").setup({
 		"bashls",
 		"jsonls",
 		"cssls",
+		"svelte",
 	},
 	automatic_installation = true,
 })
@@ -154,6 +155,6 @@ require("catppuccin").setup({
 		},
 	},
 })
-require("lsp_lines").setup()
 require("bufferline").setup()
 require("trouble").setup()
+require("package-info").setup()

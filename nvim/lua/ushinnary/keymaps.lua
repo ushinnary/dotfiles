@@ -6,6 +6,7 @@ local tnoremap = remapper.tnoremap
 -- Actual remaps
 nnoremap("<C-p>", "<cmd>Telescope find_files<CR>")
 nnoremap("<leader>fg", "<cmd>Telescope live_grep<CR>")
+nnoremap("<leader>nf", ":NvimTreeFindFile<CR>")
 nnoremap("<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
 nnoremap("<C-s>", "<cmd>write<CR>")
 nnoremap("<C-S>", "<cmd>wa<CR>")
@@ -46,9 +47,9 @@ vnoremap("<A-k>", ":move '<-2<CR>gv=gv")
 nnoremap("<Leader>tn", ":tabnew<CR>")
 
 -- Navigate between tabpages
-nnoremap("<A-<>", ":BufferPrevious<CR>")
-nnoremap("<A->>", ":BufferNext<CR>")
-nnoremap("<C-c>t", ":tabclose<CR>")
+nnoremap("<A-<>", ":BufferLineCyclePrev<CR>")
+nnoremap("<A->>", ":BufferLineCycleNext<CR>")
+nnoremap("<C-c>t", ":BufferLinePickClose<CR>")
 --
 -- Navigate between buffers
 nnoremap("[b", ":bprevious<CR>")
@@ -69,3 +70,5 @@ nmap("Db", ":lua require'dap'.toggle_breakpoint()<CR>")
 -- Package.json
 nnoremap("<leader>nu", ":lua require('package-info').update()<CR>")
 nnoremap("<leader>nd", ":lua require('package-info').delete()<CR>")
+
+-- Commenting

@@ -40,10 +40,7 @@ return require("packer").startup(function(use)
 		"catppuccin/nvim",
 		as = "catppuccin",
 	})
-	use({
-		"romgrk/barbar.nvim",
-		requires = { "kyazdani42/nvim-web-devicons" },
-	})
+	use("akinsho/bufferline.nvim")
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")
 	use("neovim/nvim-lspconfig")
@@ -96,4 +93,6 @@ return require("packer").startup(function(use)
 	use({
 		"lewis6991/gitsigns.nvim",
 	})
+	-- Games
+	use("ThePrimeagen/vim-be-good")
 end)

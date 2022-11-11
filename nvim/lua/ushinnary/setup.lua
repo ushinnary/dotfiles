@@ -21,7 +21,16 @@ telescope.setup({
 		},
 	},
 })
-require("lualine").setup()
+require("lualine").setup({
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { "branch", "diff", "diagnostics" },
+		lualine_c = { "filename", "filesize" },
+		lualine_x = { "encoding", "fileformat", "filetype" },
+		lualine_y = { "searchcount" },
+		lualine_z = { "location" },
+	},
+})
 require("nvim-tree").setup({
 	sort_by = "case_sensetive",
 	view = {
@@ -155,6 +164,14 @@ require("catppuccin").setup({
 		},
 	},
 })
-require("bufferline").setup()
+require("bufferline").setup({
+	options = {
+		diagnostics = "nvim_lsp",
+		diagnostics_indicator = function(count, level, diagnostics_dict, context)
+			local icon = level:match("error") and " " or " "
+			return " " .. icon .. count
+		end,
+	},
+})
 require("trouble").setup()
 require("package-info").setup()

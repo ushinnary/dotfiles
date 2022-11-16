@@ -40,6 +40,7 @@ return require("packer").startup(function(use)
 		"catppuccin/nvim",
 		as = "catppuccin",
 	})
+	use("petertriho/nvim-scrollbar")
 	use("akinsho/bufferline.nvim")
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")

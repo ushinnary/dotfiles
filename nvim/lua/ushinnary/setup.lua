@@ -175,3 +175,4 @@ require("bufferline").setup({
 })
 require("trouble").setup()
 require("package-info").setup()
+require("scrollbar").setup()

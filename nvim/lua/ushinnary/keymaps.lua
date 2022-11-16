@@ -23,7 +23,7 @@ end)
 nnoremap("<leader>gf", "<cmd>!git fetch --all<CR>")
 -- nnoremap("<leader>t", "<cmd>exe v:count1 . \"ToggleTerm\"<CR>")
 nnoremap("<leader>b", "<cmd>NvimTreeToggle<CR>")
-nnoremap("<leader>t", "<cmd>ToggleTerm<CR>")
+nnoremap("<leader>te", "<cmd>ToggleTerm<CR>")
 nnoremap("<leader>tt", "<cmd>TroubleToggle<CR>")
 tnoremap("<esc>", "<cmd>ToggleTerm<CR>")
 -- Rust related

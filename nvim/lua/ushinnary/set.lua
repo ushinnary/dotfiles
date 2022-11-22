@@ -30,10 +30,11 @@ vim.opt.shiftwidth = 4
 --end
 --handle:close()
 
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("oxocarbon")
 
 vim.g.neoformat_try_node_exe = 1
 vim.g.neoformat_try_formatprg = 1
 
 --vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.termguicolors = true

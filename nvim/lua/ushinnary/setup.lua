@@ -96,8 +96,6 @@ require("nvim-treesitter.configs").setup({
 		additional_vim_regex_highlighting = false,
 	},
 })
-require("toggleterm").setup()
-require("nvim-autopairs").setup({})
 require("mason").setup({
 	ui = {
 		icons = {
@@ -135,35 +133,6 @@ require("gitsigns").setup({
 		nnoremap("<leader>hs", "<cmd>Gitsigns stage_hunk<CR>")
 	end,
 })
-require("which-key").setup()
-require("catppuccin").setup({
-	flavour = "macchiato",
-	integrations = {
-		cmp = true,
-		gitsigns = true,
-		nvimtree = true,
-		telescope = true,
-		treesitter = true,
-		mason = true,
-		neogit = true,
-		which_key = true,
-	},
-	native_lsp = {
-		enabled = true,
-		virtual_text = {
-			errors = { "italic" },
-			hints = { "italic" },
-			warnings = { "italic" },
-			information = { "italic" },
-		},
-		underlines = {
-			errors = { "underline" },
-			hints = { "underline" },
-			warnings = { "underline" },
-			information = { "underline" },
-		},
-	},
-})
 require("bufferline").setup({
 	options = {
 		diagnostics = "nvim_lsp",
@@ -173,6 +142,3 @@ require("bufferline").setup({
 		end,
 	},
 })
-require("trouble").setup()
-require("package-info").setup()
-require("scrollbar").setup()

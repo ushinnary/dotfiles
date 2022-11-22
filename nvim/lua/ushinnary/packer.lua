@@ -36,12 +36,34 @@ return require("packer").startup(function(use)
 	-- Look and feel
 	--use("folke/tokyonight.nvim")
 	--use("Shatur/neovim-ayu")
+	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
+	use("rcarriga/nvim-notify")
 	use({
-		"catppuccin/nvim",
-		as = "catppuccin",
+		"petertriho/nvim-scrollbar",
+		config = function()
+			require("scrollbar").setup()
+		end,
 	})
-	use("petertriho/nvim-scrollbar")
 	use("akinsho/bufferline.nvim")
+	use({
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("todo-comments").setup({})
+		end,
+	})
+	use({
+		"NvChad/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup()
+		end,
+	})
+	use({
+		"karb94/neoscroll.nvim",
+		config = function()
+			require("neoscroll").setup()
+		end,
+	})
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")
 	use("neovim/nvim-lspconfig")
@@ -59,6 +81,9 @@ return require("packer").startup(function(use)
 	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup()
+		end,
 	})
 	-- Bottom status line
 	use({
@@ -72,6 +97,9 @@ return require("packer").startup(function(use)
 	use({
 		"vuki656/package-info.nvim",
 		requires = "MunifTanjim/nui.nvim",
+		config = function()
+			require("package-info").setup()
+		end,
 	})
 	-- Tree
 	use({
@@ -79,21 +107,41 @@ return require("packer").startup(function(use)
 		requires = { "nvim-tree/nvim-web-devicons" },
 	})
 	-- Terminal
-	use("akinsho/toggleterm.nvim")
+	use({
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("toggleterm").setup()
+		end,
+	})
 	-- Tools
-	use("windwp/nvim-autopairs")
+	use({
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	})
 	use("tpope/vim-surround")
 	use("RRethy/vim-illuminate")
 	use("lewis6991/impatient.nvim")
 	-- Lua
 	use({
 		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup()
+		end,
 	})
 	-- Git
 	use({ "TimUntersberger/neogit" })
 	use({
 		"lewis6991/gitsigns.nvim",
 	})
-	-- Games
-	use("ThePrimeagen/vim-be-good")
+	-- Rust
+	use({
+		"saecki/crates.nvim",
+		event = { "BufRead Cargo.toml" },
+		requires = { { "nvim-lua/plenary.nvim" } },
+		config = function()
+			require("crates").setup()
+		end,
+	})
 end)

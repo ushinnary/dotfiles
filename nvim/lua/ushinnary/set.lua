@@ -30,7 +30,7 @@ vim.opt.shiftwidth = 4
 --end
 --handle:close()
 
-vim.cmd.colorscheme("ayu-dark")
+vim.cmd.colorscheme("github_dark_default")
 
 vim.g.neoformat_try_node_exe = 1
 vim.g.neoformat_try_formatprg = 1

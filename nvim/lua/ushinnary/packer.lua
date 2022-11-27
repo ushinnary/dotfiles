@@ -32,8 +32,7 @@ return require("packer").startup(function(use)
 	use("sbdchd/neoformat")
 	-- Look and feel
 	--use("folke/tokyonight.nvim")
-	--use("Shatur/neovim-ayu")
-	use({ "Shatur/neovim-ayu" })
+	use({ "projekt0n/github-nvim-theme" })
 	use("rcarriga/nvim-notify")
 	use({
 		"petertriho/nvim-scrollbar",

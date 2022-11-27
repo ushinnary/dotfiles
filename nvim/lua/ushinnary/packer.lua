@@ -28,41 +28,26 @@ return require("packer").startup(function(use)
 		requires = {
 			{ "nvim-telescope/telescope-live-grep-args.nvim" },
 		},
-		config = function()
-			require("telescope").load_extension("live_grep_args")
-		end,
 	})
 	use("sbdchd/neoformat")
 	-- Look and feel
 	--use("folke/tokyonight.nvim")
 	--use("Shatur/neovim-ayu")
-	use({ "shaunsingh/oxocarbon.nvim", run = "./install.sh" })
+	use({ "Shatur/neovim-ayu" })
 	use("rcarriga/nvim-notify")
 	use({
 		"petertriho/nvim-scrollbar",
-		config = function()
-			require("scrollbar").setup()
-		end,
 	})
 	use("akinsho/bufferline.nvim")
 	use({
 		"folke/todo-comments.nvim",
 		requires = "nvim-lua/plenary.nvim",
-		config = function()
-			require("todo-comments").setup({})
-		end,
 	})
 	use({
 		"NvChad/nvim-colorizer.lua",
-		config = function()
-			require("colorizer").setup()
-		end,
 	})
 	use({
 		"karb94/neoscroll.nvim",
-		config = function()
-			require("neoscroll").setup()
-		end,
 	})
 	-- Coding plug-ins
 	use("onsails/lspkind.nvim")
@@ -72,6 +57,7 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 	use("hrsh7th/nvim-cmp")
+	use("L3MON4D3/LuaSnip")
 	use("hrsh7th/cmp-nvim-lsp-signature-help")
 	use("nvim-treesitter/nvim-treesitter")
 	use("nvim-treesitter/nvim-treesitter-context")
@@ -81,9 +67,6 @@ return require("packer").startup(function(use)
 	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("trouble").setup()
-		end,
 	})
 	-- Bottom status line
 	use({
@@ -97,9 +80,6 @@ return require("packer").startup(function(use)
 	use({
 		"vuki656/package-info.nvim",
 		requires = "MunifTanjim/nui.nvim",
-		config = function()
-			require("package-info").setup()
-		end,
 	})
 	-- Tree
 	use({
@@ -109,16 +89,10 @@ return require("packer").startup(function(use)
 	-- Terminal
 	use({
 		"akinsho/toggleterm.nvim",
-		config = function()
-			require("toggleterm").setup()
-		end,
 	})
 	-- Tools
 	use({
 		"windwp/nvim-autopairs",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
 	})
 	use("tpope/vim-surround")
 	use("RRethy/vim-illuminate")
@@ -126,9 +100,6 @@ return require("packer").startup(function(use)
 	-- Lua
 	use({
 		"folke/which-key.nvim",
-		config = function()
-			require("which-key").setup()
-		end,
 	})
 	-- Git
 	use({ "TimUntersberger/neogit" })
@@ -140,8 +111,5 @@ return require("packer").startup(function(use)
 		"saecki/crates.nvim",
 		event = { "BufRead Cargo.toml" },
 		requires = { { "nvim-lua/plenary.nvim" } },
-		config = function()
-			require("crates").setup()
-		end,
 	})
 end)

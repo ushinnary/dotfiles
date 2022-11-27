@@ -5,7 +5,7 @@ local vnoremap = remapper.vnoremap
 local tnoremap = remapper.tnoremap
 -- Actual remaps
 nnoremap("<C-p>", "<cmd>Telescope find_files<CR>")
-nnoremap("<C-n>", "<cmd>Neoformat<CR>")
+nmap("<C-f>", "<cmd>Neoformat<CR>")
 nnoremap("<leader>fg", "<cmd>Telescope live_grep<CR>")
 nnoremap("<leader>nf", ":NvimTreeFindFile<CR>")
 nnoremap("<leader>rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
@@ -29,7 +29,6 @@ nnoremap("<leader>tt", "<cmd>TroubleToggle<CR>")
 tnoremap("<esc>", "<cmd>ToggleTerm<CR>")
 -- Rust related
 --nnoremap("<leader>T", "<cmd>lua require'lsp_extensions'.inlay_hints()<CR>")
-
 
 -- VonHeikemen
 -- Moving lines and preserving indentation

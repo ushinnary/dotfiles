@@ -4,8 +4,9 @@ local cmp = require("cmp")
 local remapper = require("ushinnary.remapper")
 local lspkind = require("lspkind")
 local nnoremap = remapper.nnoremap
+local luasnip = require("luasnip")
 --local lga_actions = require("telescope-live-grep-args.actions")
-
+require("luasnip.loaders.from_vscode").lazy_load()
 telescope.setup({
 	defaults = {
 		file_ignore_patterns = { "node_modules/.*" },
@@ -52,10 +53,11 @@ require("nvim-tree").setup({
 })
 cmp.setup({
 	sources = {
-		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp", keyword_length = 3 },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "path" },
-		{ name = "buffer", keyword_length = 3 },
+		{ name = "luasnip", keyword_length = 2 },
+		{ name = "buffer", keyword_length = 5 },
 	},
 	mapping = {
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -84,6 +86,11 @@ cmp.setup({
 				path = "[path]",
 			},
 		}),
+	},
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
 	},
 })
 require("treesitter-context").setup()
@@ -142,3 +149,14 @@ require("bufferline").setup({
 		end,
 	},
 })
+require("trouble").setup()
+require("package-info").setup()
+require("toggleterm").setup()
+require("nvim-autopairs").setup({})
+require("which-key").setup()
+require("crates").setup()
+require("telescope").load_extension("live_grep_args")
+require("scrollbar").setup()
+require("todo-comments").setup({})
+require("colorizer").setup()
+require("neoscroll").setup()

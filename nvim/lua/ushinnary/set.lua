@@ -30,7 +30,7 @@ vim.opt.shiftwidth = 4
 --end
 --handle:close()
 
-vim.cmd.colorscheme("github_dark_default")
+vim.cmd.colorscheme("oxocarbon")
 
 vim.g.neoformat_try_node_exe = 1
 vim.g.neoformat_try_formatprg = 1
@@ -39,3 +39,19 @@ vim.g.neoformat_try_formatprg = 1
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.termguicolors = true
 vim.notify = require("notify")
+-- Virtual text
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	virtual_text = false,
+})
+
+local signs = {
+	Error = " ",
+	Warning = " ",
+	Hint = " ",
+	Information = " ",
+}
+
+for type, icon in pairs(signs) do
+	local hl = "LspDiagnosticsSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end

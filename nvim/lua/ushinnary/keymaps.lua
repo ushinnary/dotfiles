@@ -13,6 +13,7 @@ nnoremap("<C-s>", "<cmd>write<CR>")
 nnoremap("<C-S>", "<cmd>wa<CR>")
 nnoremap("<leader>s", "<cmd>source %<CR>")
 nnoremap("<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>")
+nnoremap("<leader>l", "<cmd>lua require('lsp_lines').toggle()<CR>")
 -- Neogit
 local neogit = require("neogit")
 neogit.setup({})

@@ -30,7 +30,9 @@ vim.opt.shiftwidth = 4
 --end
 --handle:close()
 
-vim.cmd.colorscheme("oxocarbon")
+vim.cmd.colorscheme("tokyonight-night")
+--vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+--vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 vim.g.neoformat_try_node_exe = 1
 vim.g.neoformat_try_formatprg = 1

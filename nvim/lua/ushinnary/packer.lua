@@ -31,9 +31,7 @@ return require("packer").startup(function(use)
 	})
 	use("sbdchd/neoformat")
 	-- Look and feel
-	--use("folke/tokyonight.nvim")
-	--use({ "projekt0n/github-nvim-theme" })
-	use({ "nyoom-engineering/oxocarbon.nvim" })
+	use("folke/tokyonight.nvim")
 	use({
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 		config = function()

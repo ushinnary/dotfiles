@@ -31,7 +31,7 @@ local servers = {
 	sqlls = { on_attach = on_attach() },
 	volar = {
 		on_attach = on_attach(),
-		filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+		filetypes = { "vue" },
 	},
 	rust_analyzer = {
 		on_attach = on_attach(),

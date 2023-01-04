@@ -10,6 +10,7 @@ export PATH="$PATH:$HOME/lua-lsp/bin/"
 
 # Aliases
 alias nvimconfig="nvim ~/.config/nvim"
+alias ubuntu="distrobox enter ubuntu_lts"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

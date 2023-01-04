@@ -128,6 +128,7 @@ require("mason-lspconfig").setup({
 		"jsonls",
 		"cssls",
 		"svelte",
+		"angularls",
 	},
 	automatic_installation = true,
 })

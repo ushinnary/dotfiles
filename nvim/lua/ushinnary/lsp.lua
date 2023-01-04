@@ -33,6 +33,9 @@ local servers = {
 		on_attach = on_attach(),
 		filetypes = { "vue" },
 	},
+	angularls = {
+		on_attach = on_attach(),
+	},
 	rust_analyzer = {
 		on_attach = on_attach(),
 		settings = {

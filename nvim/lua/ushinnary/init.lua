@@ -1,4 +1,4 @@
-require("ushinnary.packer")
+require("ushinnary.lazy")
 require("ushinnary.set")
 require("ushinnary.setup")
 require("ushinnary.lsp")

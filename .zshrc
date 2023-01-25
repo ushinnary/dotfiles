@@ -120,5 +120,4 @@ export NVM_DIR=~/.nvm
 
 if command -v starship &>/dev/null; then
 	eval "$(starship init bash)"
-	exit
 fi

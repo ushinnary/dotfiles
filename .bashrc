@@ -34,3 +34,8 @@ if command -v starship &>/dev/null; then
 	eval "$(starship init bash)"
 	exit
 fi
+
+if command -v zsh &>/dev/null; then
+	exec zsh
+	exit
+fi

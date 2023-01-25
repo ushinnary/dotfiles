@@ -118,4 +118,7 @@ export NVM_DIR=~/.nvm
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-eval "$(starship init zsh)"
+if command -v starship &>/dev/null; then
+	eval "$(starship init bash)"
+	exit
+fi

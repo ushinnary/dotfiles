@@ -119,5 +119,18 @@ export NVM_DIR=~/.nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 if command -v starship &>/dev/null; then
-	eval "$(starship init bash)"
+	eval "$(starship init zsh)"
 fi
+
+# Language
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US:en"
+export LC_NUMERIC="en_US.UTF-8"
+export LC_TIME="en_US.UTF-8"
+export LC_MONETARY="en_US.UTF-8"
+export LC_PAPER="en_US.UTF-8"
+export LC_IDENTIFICATION="en_US.UTF-8"
+export LC_NAME="en_US.UTF-8"
+export LC_ADDRESS="en_US.UTF-8"
+export LC_TELEPHONE="en_US.UTF-8"
+export LC_MEASUREMENT="en_US.UTF-8"

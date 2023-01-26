@@ -9,8 +9,16 @@ fi
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
 	PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
+export PATH="$PATH:$HOME/nvim-linux64/bin/"
+export PATH="$PATH:$HOME/RustUtils/"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/lua-lsp/bin/"
 export PATH
 
+# Aliases
+alias nvimconfig="nvim ~/.config/nvim"
+alias ubuntu="distrobox enter ubuntu_lts"
+alias docker="podman"
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
@@ -30,12 +38,55 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-if command -v starship &>/dev/null; then
-	eval "$(starship init bash)"
-	exit
-fi
+#if command -v starship -v &>/dev/null; then
+#	eval "$(starship init bash)"
+#	exit
+#fi
 
-if command -v zsh &>/dev/null; then
-	exec zsh
-	exit
-fi
+#if command -v zsh &>/dev/null; then
+#	exec zsh
+#	exit
+#fi
+#
+## source it from ~/.bashrc or ~/.bash_profile ##
+echo "source /etc/profile.d/bash_completion.sh" >>~/.bashrc
+
+## Another example Check and load it from ~/.bashrc or ~/.bash_profile ##
+grep -wq '^source /etc/profile.d/bash_completion.sh' ~/.bashrc || echo 'source /etc/profile.d/bash_completion.sh' >>~/.bashrc
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh
+source /etc/profile.d/bash_completion.sh

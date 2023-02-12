@@ -32,7 +32,6 @@ if [ -d ~/.bashrc.d ]; then
 fi
 
 unset rc
-. "$HOME/.cargo/env"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
@@ -48,45 +47,3 @@ export NVM_DIR="$HOME/.nvm"
 #	exit
 #fi
 #
-## source it from ~/.bashrc or ~/.bash_profile ##
-echo "source /etc/profile.d/bash_completion.sh" >>~/.bashrc
-
-## Another example Check and load it from ~/.bashrc or ~/.bash_profile ##
-grep -wq '^source /etc/profile.d/bash_completion.sh' ~/.bashrc || echo 'source /etc/profile.d/bash_completion.sh' >>~/.bashrc
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh
-source /etc/profile.d/bash_completion.sh

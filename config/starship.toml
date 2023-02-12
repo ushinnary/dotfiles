@@ -1,130 +1,67 @@
-[aws]
-symbol = "  "
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$git_metrics\
+$fill\
+$nodejs\
+$cmd_duration $jobs $time\
+$line_break\
+$character"""
 
-[buf]
-symbol = " "
+[nodejs]
+format = "[$symbol($version )]($style)"
 
-[c]
-symbol = " "
-
-[conda]
-symbol = " "
-
-[dart]
-symbol = " "
+[fill]
+symbol = " "
 
 [directory]
+style = "blue"
 read_only = " "
+truncation_length = 4
+truncate_to_repo = false
 
-[docker_context]
-symbol = " "
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+#vicmd_symbol = "[❮](green)"
 
 [git_branch]
 symbol = " "
+format = "[$symbol$branch]($style) "
+style = "bright-black"
 
-[golang]
-symbol = " "
+[jobs]
+symbol = ""
+style = "bold red"
+number_threshold = 1
+format = "[$symbol]($style)"
 
-[guix_shell]
-symbol = " "
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "cyan"
 
-[haskell]
-symbol = " "
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
 
-[haxe]
-symbol = "⌘ "
+[git_metrics]
+disabled = false
 
-[hg_branch]
-symbol = " "
-
-[java]
-symbol = " "
-
-[julia]
-symbol = " "
-
-[lua]
-symbol = " "
+[cmd_duration]
+format = "[$duration]($style)"
+style = "yellow"
 
 [memory_usage]
 symbol = " "
 
-[meson]
-symbol = "喝 "
-
-[nim]
-symbol = " "
-
-[nix_shell]
-symbol = " "
-
-[nodejs]
-symbol = " "
-
-[os.symbols]
-Alpine = " "
-Amazon = " "
-Android = " "
-Arch = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = "﯑ "
-Gentoo = " "
-HardenedBSD = "ﲊ "
-Illumos = " "
-Linux = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-OpenBSD = " "
-openSUSE = " "
-OracleLinux = " "
-Pop = " "
-Raspbian = " "
-Redhat = " "
-RedHatEnterprise = " "
-Redox = " "
-Solus = "ﴱ "
-SUSE = " "
-Ubuntu = " "
-Unknown = " "
-Windows = " "
-
-[package]
-symbol = " "
-
-[python]
-symbol = " "
-
-[rlang]
-symbol = "ﳒ "
-
-[ruby]
-symbol = " "
-
 [rust]
 symbol = " "
 
-[scala]
-symbol = " "
-
-[spack]
-symbol = "🅢 "
-
-[container]
-disabled = true
+[time]
+disabled = false
+style = "bold white"
+format = "[$time]($style)"

@@ -6,17 +6,10 @@ WIP
 ## Packages to install:
 
 ### Rust
-
+run 
 ```
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+./setup-rust.sh
 ```
-
-- RipGrep
-
-```
-cargo install ripgrep
-```
-
 ### NVM
 
 ```
@@ -80,10 +73,14 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 
 ### Font
 
+- Coding:
 `https://www.programmingfonts.org/#hermit`
+`https://github.com/subframe7536/Maple-font`
 
 - System:
   `QuickSand`
+  `https://fonts.google.com/specimen/Comfortaa?category=Display`
+  `https://fonts.google.com/specimen/Poiret+One?category=Display`
 
 ```
 https://www.nerdfonts.com/font-downloads

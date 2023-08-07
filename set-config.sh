@@ -1,3 +1,3 @@
 #!/bin/bash
-ln -s ./nvim ~/.config
+ln -sd ./nvim ~/.config
 ln -s ./.zshrc ~/

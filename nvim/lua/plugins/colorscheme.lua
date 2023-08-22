@@ -1,24 +1,19 @@
 return {
 	{
-		-- "folke/tokyonight.nvim",
-		-- opts = {
-		--   transparent = false,
-		--   styles = {
-		--     sidebars = "transparent",
-		--     floats = "transparent",
-		--   },
-		-- },
-		"projekt0n/github-nvim-theme",
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
 		config = function()
-			require("github-theme").setup({})
+			require("tokyonight").setup({})
 			-- check if linux system has dark mode enabled
 			if
 				vim.fn.system("gsettings get org.gnome.desktop.interface gtk-theme"):match("dark")
 				or vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):match("dark")
 			then
-				vim.cmd("colorscheme github_dark")
+				vim.cmd("colorscheme tokyonight-night")
 			else
-				vim.cmd("colorscheme github_light")
+				vim.cmd("colorscheme tokyonight-day")
 			end
 		end,
 	},

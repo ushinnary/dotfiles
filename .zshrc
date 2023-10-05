@@ -135,10 +135,10 @@ export LC_ADDRESS="en_US.UTF-8"
 export LC_TELEPHONE="en_US.UTF-8"
 export LC_MEASUREMENT="en_US.UTF-8"
 
-# Theme for alacritty
-if [[ "$(gsettings get org.gnome.desktop.interface gtk-theme)" == *"dark"* ]] || [[ "$(gsettings get org.gnome.desktop.interface color-scheme)" == *"dark"* ]]; then
- # execute command when dark mode: alacritty-themes TokioNight Night
- alacritty-themes Tokyonight_Night
-else
- alacritty-themes Tokyonight_Day
-fi
+## Theme for alacritty
+#if [[ "$(gsettings get org.gnome.desktop.interface gtk-theme)" == *"dark"* ]] || [[ "$(gsettings get org.gnome.desktop.interface color-scheme)" == *"dark"* ]]; then
+# # execute command when dark mode: alacritty-themes TokioNight Night
+# alacritty-themes Tokyonight_Night
+#else
+# alacritty-themes Tokyonight_Day
+#fi

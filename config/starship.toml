@@ -1,16 +1,10 @@
-format = """
-$username\
-$hostname\
-$directory\
-$git_branch\
-$git_state\
-$git_status\
-$git_metrics\
-$fill\
-$nodejs\
-$cmd_duration $jobs $time\
-$line_break\
-$character"""
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = '''
+[┌───────────────────>](bold green) $rust$nodejs$lua$package
+[│](bold green)$directory$git_branch$git_status$username
+[└─>](bold green) '''
+add_newline = true
 
 [nodejs]
 format = "[$symbol($version )]($style)"
@@ -40,10 +34,6 @@ style = "bold red"
 number_threshold = 1
 format = "[$symbol]($style)"
 
-[git_status]
-format = '([\[$all_status$ahead_behind\]]($style) )'
-style = "cyan"
-
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "bright-black"
@@ -56,7 +46,11 @@ format = "[$duration]($style)"
 style = "yellow"
 
 [memory_usage]
-symbol = " "
+disabled = false
+threshold = -1
+symbol = ' '
+style = 'bold dimmed green'
+format = "Ram: $symbol[$ram]($style) "
 
 [rust]
 symbol = " "

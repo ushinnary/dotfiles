@@ -1,5 +1,5 @@
 return {
-	"nyoom-engineering/oxocarbon.nvim",
+	"folke/tokyonight.nvim",
 	-- Add in any other configuration;
 	--   event = foo,
 	--   config = bar
@@ -10,10 +10,9 @@ return {
 			vim.fn.system("gsettings get org.gnome.desktop.interface gtk-theme"):match("dark")
 			or vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):match("dark")
 		then
-			vim.opt.background = "dark" -- set this to dark or light
+			vim.cmd("colorscheme tokyonight-moon")
 		else
-			vim.opt.background = "light" -- set this to dark or light
+			vim.cmd("colorscheme tokyonight-day")
 		end
-		vim.cmd("colorscheme oxocarbon")
 	end,
 }

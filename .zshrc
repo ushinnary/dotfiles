@@ -10,7 +10,6 @@ export PATH="$PATH:$HOME/lua-lsp/bin/"
 
 # Aliases
 alias nvimconfig="nvim ~/.config/nvim"
-alias ubuntu="distrobox enter ubuntu_lts"
 alias docker="distrobox-host-exec podman"
 
 # Set name of the theme to load --- if set to "random", it will

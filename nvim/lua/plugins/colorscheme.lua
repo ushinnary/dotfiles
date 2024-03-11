@@ -1,5 +1,5 @@
 return {
-	"folke/tokyonight.nvim",
+	"projekt0n/github-nvim-theme",
 	-- Add in any other configuration;
 	--   event = foo,
 	--   config = bar
@@ -10,9 +10,9 @@ return {
 			vim.fn.system("gsettings get org.gnome.desktop.interface gtk-theme"):match("dark")
 			or vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):match("dark")
 		then
-			vim.cmd("colorscheme tokyonight-moon")
+			vim.cmd("colorscheme github_dark_default")
 		else
-			vim.cmd("colorscheme tokyonight-day")
+			vim.cmd("colorscheme github_light")
 		end
 	end,
 }

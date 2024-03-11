@@ -8,10 +8,6 @@ export PATH="$PATH:$HOME/RustUtils/"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/lua-lsp/bin/"
 
-# Aliases
-alias nvimconfig="nvim ~/.config/nvim"
-alias docker="distrobox-host-exec podman"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -140,3 +136,11 @@ export LC_MEASUREMENT="en_US.UTF-8"
 #else
 # alacritty-themes Tokyonight_Day
 #fi
+
+# Aliases
+alias nvimconfig="nvim ~/.config/nvim"
+alias -g docker="distrobox-host-exec podman"
+alias ls="exa --long"
+alias -g cat="bat"
+alias -g "??"="gh copilot explain"
+

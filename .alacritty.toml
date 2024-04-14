@@ -1,48 +1,88 @@
-[[colors.indexed_colors]]
-color = "0xff9e64"
-index = 16
-
-[[colors.indexed_colors]]
-color = "0xdb4b4b"
-index = 17
+# Dark Github theme
+[colors.primary]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+dim_foreground = "#7f849c"
+bright_foreground = "#cdd6f4"
 
 [colors.cursor]
-text = "0x0d1117"
-cursor = "0xc9d1d9"
+text = "#1e1e2e"
+cursor = "#f5e0dc"
 
-[colors.bright]
-black = "0x6e7681"
-blue = "0x79c0ff"
-cyan = "0x39c5cf"
-green = "0x79c0ff"
-magenta = "0xbc8cff"
-red = "0xfdac54"
-white = "0xb1bac4"
-yellow = "0xe3b341"
+[colors.vi_mode_cursor]
+text = "#1e1e2e"
+cursor = "#b4befe"
+
+[colors.search.matches]
+foreground = "#1e1e2e"
+background = "#a6adc8"
+
+[colors.search.focused_match]
+foreground = "#1e1e2e"
+background = "#a6e3a1"
+
+[colors.footer_bar]
+foreground = "#1e1e2e"
+background = "#a6adc8"
+
+[colors.hints.start]
+foreground = "#1e1e2e"
+background = "#f9e2af"
+
+[colors.hints.end]
+foreground = "#1e1e2e"
+background = "#a6adc8"
+
+[colors.selection]
+text = "#1e1e2e"
+background = "#f5e0dc"
 
 [colors.normal]
-black = "0x484f58"
-blue = "0x58a6ff"
-cyan = "0x39c5cf"
-green = "0x58a6ff"
-magenta = "0xbc8cff"
-red = "0xec8e2c"
-white = "0xb1bac4"
-yellow = "0xd29922"
+black = "#45475a"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#bac2de"
 
-[colors.primary]
-background = "0x0d1117"
-foreground = "0xc9d1d9"
+[colors.bright]
+black = "#585b70"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#a6adc8"
+
+[colors.dim]
+black = "#45475a"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#bac2de"
+
+[[colors.indexed_colors]]
+index = 16
+color = "#fab387"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#f5e0dc"
 
 [env]
 TERM = "xterm-256color"
 
 [font]
-size = 14.0
+size = 12.0
 
 [font.normal]
 family = "Cousine Nerd Font Mono"
-
 
 [window]
 opacity = 1

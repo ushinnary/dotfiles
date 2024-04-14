@@ -142,5 +142,22 @@ alias nvimconfig="nvim ~/.config/nvim"
 alias -g docker="distrobox-host-exec podman"
 alias ls="exa --long"
 alias -g cat="bat"
-alias -g "??"="gh copilot explain"
+alias -g ghce="gh copilot explain"
+alias -g ghcs="gh copilot suggest"
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/var/home/ushinnary/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/var/home/ushinnary/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/var/home/ushinnary/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/var/home/ushinnary/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 

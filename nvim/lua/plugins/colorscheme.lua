@@ -1,5 +1,5 @@
 return {
-	"projekt0n/github-nvim-theme",
+	"catppuccin/nvim",
 	-- Add in any other configuration;
 	--   event = foo,
 	--   config = bar
@@ -10,9 +10,9 @@ return {
 			vim.fn.system("gsettings get org.gnome.desktop.interface gtk-theme"):match("dark")
 			or vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):match("dark")
 		then
-			vim.cmd("colorscheme github_dark_default")
+			vim.cmd("colorscheme catppuccin-mocha")
 		else
-			vim.cmd("colorscheme github_light")
+			vim.cmd("colorscheme catppuccin-latte")
 		end
 	end,
 }

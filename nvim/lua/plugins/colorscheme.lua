@@ -12,7 +12,7 @@ return {
 		then
 			vim.cmd("colorscheme catppuccin-mocha")
 		else
-			vim.cmd("colorscheme catppuccin-latte")
+			vim.cmd("colorscheme tokyonight-day")
 		end
 	end,
 }

@@ -1,5 +1,8 @@
 #!/bin/bash
-flatpak --user override --filesystem=/home/$USER/.icons/:ro && \
-flatpak --user override --filesystem=/usr/share/icons/:ro && \
-sudo dnf install openssl-devel cmake && \
-sudo dnf group install "C Development Tools and Libraries" "Development Tools"
+sudo dnf install openssl-devel cmake &&
+	sudo dnf group install "C Development Tools and Libraries" "Development Tools" &&
+	sudo dnf install zsh &&
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &&
+	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions &&
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+

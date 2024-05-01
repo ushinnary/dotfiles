@@ -82,7 +82,7 @@ TERM = "xterm-256color"
 size = 12.0
 
 [font.normal]
-family = "Cousine Nerd Font Mono"
+family = "JetBrainsMono Nerd Font Mono"
 
 [window]
 opacity = 1

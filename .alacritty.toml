@@ -82,7 +82,11 @@ TERM = "xterm-256color"
 size = 12.0
 
 [font.normal]
-family = "JetBrainsMono Nerd Font Mono"
+family = "Hurmit Nerd Font"
+
+[shell]
+program = "/home/ushinnary/.cargo/bin/nu"
+#args = ['-e', 'tmux']
 
 [window]
 opacity = 1

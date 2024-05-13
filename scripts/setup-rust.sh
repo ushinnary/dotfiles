@@ -11,4 +11,5 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &&
 	cargo install sqlx-cli --no-default-features --features postgres &&
 	cargo install wasm-pack &&
 	cargo install bottom &&
-	cargo install --locked difftastic
+	cargo install --locked difftastic &&
+	cargo install nu

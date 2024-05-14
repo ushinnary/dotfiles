@@ -97,6 +97,7 @@ $env.NU_PLUGIN_DIRS = [
 # $env.PATH = ($env.PATH | uniq)
 #
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.cargo/bin/')
+$env.FREETYPE_PROPERTIES = 'cff:no-stem-darkening=0'
 
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')

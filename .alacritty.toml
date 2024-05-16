@@ -86,7 +86,7 @@ family = "UbuntuSansMono Nerd Font"
 
 [shell]
 program = "/home/ushinnary/.cargo/bin/nu"
-#args = ['-e', 'tmux']
+args = ['-e', 'zellij']
 
 [window]
 opacity = 1

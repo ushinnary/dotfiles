@@ -1,6 +1,7 @@
-// If you'd like to override the default keybindings completely, be sure to ch
-keybinds {
+keybinds clear-defaults=true {
     unbind "Ctrl s"
+    unbind "Ctrl p"
+    unbind "Ctrl n"
     normal {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }

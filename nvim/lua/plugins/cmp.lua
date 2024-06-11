@@ -17,19 +17,8 @@ return {
 					end
 				end, { "i", "s" }),
 			})
-
-			opts.sorting.comparators = {
-				cmp.config.compare.offset,
-				cmp.config.compare.exact,
-				-- compare.scopes,
-				cmp.config.compare.score,
-				cmp.config.compare.recently_used,
-				cmp.config.compare.locality,
-				cmp.config.compare.kind,
-				-- compare.sort_text,
-				cmp.config.compare.length,
-				cmp.config.compare.order,
-			}
+			-- override nvim-cmp and add cmp-emoji
+			table.insert(opts.sources, { name = "emoji" })
 		end,
 	},
 }

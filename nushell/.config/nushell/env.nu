@@ -99,6 +99,7 @@ $env.NU_PLUGIN_DIRS = [
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.cargo/bin/')
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/nvim-linux64/bin/')
 $env.PATH = ($env.PATH | prepend "/home/ushinnary/.fnm")
+$env.PATH = ($env.PATH | prepend "/home/ushinnary/.surrealdb")
 $env.FREETYPE_PROPERTIES = 'cff:no-stem-darkening=0'
 
 # To load from a custom file you can use:

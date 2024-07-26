@@ -1,14 +1,14 @@
 return {
-	"folke/tokyonight.nvim",
+	"rebelot/kanagawa.nvim",
 	config = function()
 		-- check if linux system has dark mode enabled
 		if
 			vim.fn.system("gsettings get org.gnome.desktop.interface gtk-theme"):match("dark")
 			or vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):match("dark")
 		then
-			vim.cmd("colorscheme tokyonight-night")
+			vim.cmd("colorscheme kanagawa")
 		else
-			vim.cmd("colorscheme tokyonight-day")
+			vim.cmd("colorscheme kanagawa-lotus")
 		end
 	end,
 }

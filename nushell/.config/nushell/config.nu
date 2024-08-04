@@ -908,3 +908,6 @@ if not (which fnm | is-empty) {
   }
   $env.PATH = ($path | prepend [ $node_path ])
 }
+
+# Zoxide
+source ~/.zoxide.nu

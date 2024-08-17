@@ -6,7 +6,7 @@ return {
 			vim.fn.system("gsettings get org.gnome.desktop.interface gtk-theme"):match("dark")
 			or vim.fn.system("gsettings get org.gnome.desktop.interface color-scheme"):match("dark")
 		then
-			vim.cmd("colorscheme kanagawa")
+			vim.cmd("colorscheme kanagawa-dragon")
 		else
 			vim.cmd("colorscheme kanagawa-lotus")
 		end

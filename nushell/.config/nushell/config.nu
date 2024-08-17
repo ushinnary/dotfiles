@@ -893,6 +893,7 @@ $env.config = {
 }
 
 alias nvimconfig = nvim ~/.config/nvim
+alias docker = distrobox-host-exec podman
 
 use ~/.cache/starship/init.nu
 

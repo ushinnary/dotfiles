@@ -1,78 +1,39 @@
+# github Alacritty Colors
+
+# Default colors
 [colors.primary]
-background = '#181616' # base
-foreground = '#c5c9c5' # text
-# Bright and dim foreground colors
-dim_foreground = '#CDD6F4' # text
-bright_foreground = '#CDD6F4' # text
-
-# Cursor colors
-[colors.cursor]
-text = '#1E1E2E' # base
-cursor = '#F5E0DC' # rosewater
-
-[colors.vi_mode_cursor]
-text = '#1E1E2E' # base
-cursor = '#B4BEFE' # lavender
-
-# Search colors
-[colors.search.matches]
-foreground = '#1E1E2E' # base
-background = '#A6ADC8' # subtext0
-
-[colors.search.focused_match]
-foreground = '#1E1E2E' # base
-background = '#A6E3A1' # green
-
-[colors.footer_bar]
-foreground = '#1E1E2E' # base
-background = '#A6ADC8' # subtext0
-
-# Keyboard regex hints
-[colors.hints.start]
-foreground = '#1E1E2E' # base
-background = '#F9E2AF' # yellow
-
-[colors.hints.end]
-foreground = '#1E1E2E' # base
-background = '#A6ADC8' # subtext0
-
-# Selection colors
-[colors.selection]
-text = '#C8C093' # base
-background = '#2D4F67' # rosewater
+background = '#0d1117'
+foreground = '#b3b1ad'
 
 # Normal colors
 [colors.normal]
-black = '#0d0c0c' # surface1
-red = '#c4746e' # red
-green = '#8a9a7b' # green
-yellow = '#c4b28a' # yellow
-blue = '#8ba4b0' # blue
-magenta = '#a292a3' # pink
-cyan = '#8ea4a2' # teal
-white = '#C8C093' # subtext1
+black   = '#484f58'
+red     = '#ff7b72'
+green   = '#3fb950'
+yellow  = '#d29922'
+blue    = '#58a6ff'
+magenta = '#bc8cff'
+cyan    = '#39c5cf'
+white   = '#b1bac4'
 
 # Bright colors
 [colors.bright]
-black = '#a6a69c' # surface2
-red = '#E46876' # red
-green = '#87a987' # green
-yellow = '#E6C384' # yellow
-blue = '#7FB4CA' # blue
-magenta = '#938AA9' # pink
-cyan = '#7AA89F' # teal
-white = '#c5c9c5' # subtext0
+black   = '#6e7681'
+red     = '#ffa198'
+green   = '#56d364'
+yellow  = '#e3b341'
+blue    = '#79c0ff'
+magenta = '#d2a8ff'
+cyan    = '#56d4dd'
+white   = '#f0f6fc'
 
-# Dim colors
-[colors.dim]
-black = '#45475A' # surface1
-red = '#F38BA8' # red
-green = '#A6E3A1' # green
-yellow = '#F9E2AF' # yellow
-blue = '#89B4FA' # blue
-magenta = '#F5C2E7' # pink
-cyan = '#94E2D5' # teal
-white = '#BAC2DE' # subtext1
+[[colors.indexed_colors]]
+index = 16
+color = '#d18616'
+
+[[colors.indexed_colors]]
+index = 17
+color = '#ffa198'
 
 [env]
 TERM = "xterm-256color"
@@ -81,7 +42,7 @@ TERM = "xterm-256color"
 size = 12.0
 
 [font.normal]
-family = "RobotoMono Nerd Font"
+family = "Roboto Mono Nerd Font"
 
 #[shell]
 #program = "/home/ushinnary/.cargo/bin/nu"

@@ -41,7 +41,6 @@ require("lazy").setup({
 		{ import = "lazyvim.plugins.extras.dap.core" },
 
 		{ import = "lazyvim.plugins.extras.editor.navic" },
-		{ import = "lazyvim.plugins.extras.editor.fzf" },
 		{ import = "lazyvim.plugins.extras.editor.mini-diff" },
 		{ import = "lazyvim.plugins.extras.editor.overseer" },
 
@@ -58,7 +57,7 @@ require("lazy").setup({
 		version = false, -- always use the latest git commit
 		-- version = "*", -- try installing the latest stable version for plugins that support semver
 	},
-	install = { colorscheme = { "rebelot/kanagawa.nvim" } },
+	install = { colorscheme = { "projekt0n/github-nvim-theme" } },
 	checker = { enabled = true, notify = false }, -- automatically check for plugin updates
 	performance = {
 		rtp = {

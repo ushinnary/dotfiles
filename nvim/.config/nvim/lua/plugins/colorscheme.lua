@@ -1,6 +1,6 @@
 return {
 	{
-		"projekt0n/github-nvim-theme",
+		"rebelot/kanagawa.nvim",
 		config = function()
 			-- check if linux or WSL2 system has dark mode enabled
 			if
@@ -15,9 +15,9 @@ return {
 						:match(0)
 				)
 			then
-				vim.cmd("colorscheme github_dark_default")
+				vim.cmd("colorscheme kanagawa-dragon")
 			else
-				vim.cmd("colorscheme github_light")
+				vim.cmd("colorscheme kanagawa-lotus")
 			end
 		end,
 	},

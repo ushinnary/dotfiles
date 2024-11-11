@@ -17,6 +17,9 @@ return {
 					end
 				end, { "i", "s" }),
 			})
+			-- Rust
+			opts.sources = opts.sources or {}
+			table.insert(opts.sources, { name = "crates" })
 			-- override nvim-cmp and add cmp-emoji
 			table.insert(opts.sources, { name = "emoji" })
 		end,

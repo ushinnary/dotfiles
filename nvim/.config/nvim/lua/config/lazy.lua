@@ -57,7 +57,7 @@ require("lazy").setup({
 		version = false, -- always use the latest git commit
 		-- version = "*", -- try installing the latest stable version for plugins that support semver
 	},
-	install = { colorscheme = { "projekt0n/github-nvim-theme" } },
+	install = { colorscheme = { "rebelot/kanagawa.nvim" } },
 	checker = { enabled = true, notify = false }, -- automatically check for plugin updates
 	performance = {
 		rtp = {

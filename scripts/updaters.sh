@@ -1,39 +1,29 @@
 #!/bin/bash
 
-# Check if apt is installed
-if command -v apt >/dev/null; then
-  echo "apt is installed. Running update..."
-  sudo apt update
-  sudo apt upgrade -y
-else
-  echo "apt is not installed on this system."
-fi
+# Function to check and update package manager
+update_func() {
+  local app=$1
+  local update_cmd=$2
 
-# Check if dnf is installed
-if command -v dnf >/dev/null; then
-  echo "dnf is installed. Running update..."
-  sudo dnf upgrade -y
-else
-  echo "dnf is not installed on this system."
-fi
+  if command -v "$app" >/dev/null; then
+    echo "$update_cmd is installed. Running update..."
+    eval "$update_cmd"
+  else
+    echo "$app is not installed on this system."
+  fi
+}
 
-# Check if rust is installed
-if command -v rustup >/dev/null; then
-  rustup update
-else
-  echo "rust is not installed on this system."
-fi
+# Update apt if installed
+update_func "apt" "sudo apt update && sudo apt upgrade -y"
 
-# Check if cargo is installed
-if command -v cargo >/dev/null; then
-  cargo-install-update install-update --all
-else
-  echo "cargo is not installed on this system."
-fi
+# Update dnf if installed
+update_func "dnf" "sudo dnf upgrade -y"
 
-# Check if ollama is installed
-if command -v ollama >/dev/null; then
-  curl -fsSL https://ollama.com/install.sh | sh
-else
-  echo "Ollama is not installed"
-fi
+# Update rust if installed
+update_func "rustup" "rustup update"
+
+# Update all cargo installed packages
+update_func "cargo" "cargo-install-update install-update --all"
+
+# Update ollama if installed
+update_func "ollama" "curl -fsSL https://ollama.com/install.sh | sh"

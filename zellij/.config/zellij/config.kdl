@@ -348,9 +348,24 @@ themes {
       black "#0d0c0c" 
       white "#C8C093"
     }
+
+  // Not sure what im doing here but i like it
+  fade-theme {
+    bg "#21222C"
+    fg "#5f5f5f"
+    red "#f9ba86"
+    green "#f9ba86"
+    blue "#00A7F8"
+    yellow "#f9ba86"
+    magenta "#F2F6FA"
+    orange "#f9ba86"
+    cyan "#f9ba86"
+    black "#0d0c0c"
+    white "#f9ba86"
+  }
 }
 
-theme "kanagawa-dragon"
+theme "fade-theme"
 
 // Choose the theme that is specified in the themes section.
 // Default: default

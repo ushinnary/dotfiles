@@ -88,28 +88,25 @@ symbol = ' '
 style = "fg:#A991F3"
 home_symbol = "⌂"
 truncation_length = 2
-truncation_symbol = "□ "
-read_only = " ◈"
+truncation_symbol = "󰝰 "
+read_only = " 󰌾"
 use_os_path_sep = true
 format = '[$path]($style)[$read_only]($read_only_style)'
+read_only_style = "#F07178"
 repo_root_style = 'fg:#A991F3'
 repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
 
 
 [character]
-format = "$symbol  "
-success_symbol = "[◎](fg:#f9ba86)"
-error_symbol = "[○](italic purple)"
-vimcmd_symbol = "[■](italic dimmed green)"
-# not supported in zsh
-vimcmd_replace_one_symbol = "◌"
-vimcmd_replace_symbol = "□"
-vimcmd_visual_symbol = "▼"
+format = "$symbol $shell"
+success_symbol = "[](fg:#AAD94C)"
+error_symbol = "[](fg:#F07178)"
+vimcmd_symbol = "[](fg:#E6B450)"
 
 [git_branch]
-format = " [$branch(:$remote_branch)]($style)"
-style = "fg:#f9ba86"
-symbol = "[△](bold italic bright-blue)"
+format = " [$symbol$branch(:$remote_branch)]($style)"
+style = "fg:#FF8F40"
+symbol = " "
 truncation_symbol = "⋯"
 truncation_length = 11
 only_attached = true
@@ -133,8 +130,8 @@ format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "bright-black"
 
 [git_metrics]
-added_style = 'fg:#58dd90'
-deleted_style = 'fg:#f5306B'
+added_style = 'fg:#AAD94C'
+deleted_style = 'fg:#F07178'
 format = ' [+$added]($added_style) / [-$deleted]($deleted_style) '
 disabled = false
 
@@ -144,6 +141,7 @@ format = "[◄ $duration ](italic white)"
 [python]
 format = "[$virtualenv]($style) "
 style = "bright-black"
+symbol = " "
 
 [jobs]
 format = "[$symbol$number]($style) "
@@ -184,6 +182,7 @@ style = "italic dimmed yellow"
 
 [nodejs]
 format = " [node](italic) [◫ ($version)](bold bright-green)"
+symbol = " "
 version_format = "${raw}"
 detect_files = ["package-lock.json", "yarn.lock"]
 detect_folders = ["node_modules"]
@@ -191,7 +190,7 @@ detect_extensions = []
 
 [rust]
 format = " [$symbol$version]($style)"
-symbol = "🦀 "
+symbol = "󱘗 "
 version_format = "${raw}"
 style = "bold red"
 
@@ -199,4 +198,160 @@ style = "bold red"
 format = " [$symbol$version]($style)"
 version_format = "${raw}"
 symbol = "📦 "
-style = "fg:#f9ba86 bold"
+style = "fg:#E6B450 bold"
+
+[aws]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
+
+[git_commit]
+tag_symbol = '  '
+
+[golang]
+symbol = " "
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[hostname]
+ssh_symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+
+[nim]
+symbol = "󰆥 "
+
+[nix_shell]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[pijul_channel]
+symbol = " "
+
+[rlang]
+symbol = "󰟔 "
+
+[ruby]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[swift]
+symbol = " "
+
+[zig]
+symbol = " "
+
+[gradle]
+symbol = " "
+
+[shell]
+bash_indicator = ""

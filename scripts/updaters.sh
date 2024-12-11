@@ -19,11 +19,14 @@ update_func "apt" "sudo apt update && sudo apt upgrade -y"
 # Update dnf if installed
 update_func "dnf" "sudo dnf upgrade -y"
 
+# Update rpm-ostree if installed
+update_func "rpm-ostree" "rpm-ostree upgrade"
+
 # Update rust if installed
 update_func "rustup" "rustup update"
 
 # Update all cargo installed packages
-update_func "cargo" "cargo-install-update install-update --all"
+update_func "cargo-install-update" "cargo-install-update install-update --all"
 
 # Update ollama if installed
 update_func "ollama" "curl -fsSL https://ollama.com/install.sh | sh"

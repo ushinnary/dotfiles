@@ -342,10 +342,10 @@ themes {
       green "#8a9a7b"
       blue "#8ba4b0"
       yellow "#c4b28a"
-      magenta "#a292a3" 
-      orange "#FFA066" 
-      cyan "#8ea4a2" 
-      black "#0d0c0c" 
+      magenta "#a292a3"
+      orange "#FFA066"
+      cyan "#8ea4a2"
+      black "#0d0c0c"
       white "#C8C093"
     }
 
@@ -363,9 +363,37 @@ themes {
     black "#0d0c0c"
     white "#f9ba86"
   }
+
+  ayu_light {
+		fg "#5C6166"
+		bg "#FAFAFA"
+		black "#E7EAED"
+		red "#F07171"
+		green "#86B300"
+		yellow "#FFAA33"
+		blue "#399EE6"
+		magenta "#A37ACC"
+		cyan "#478ACC"
+		white "#FCFCFC"
+		orange "#FA8D3E"
+	}
+
+	ayu_dark {
+		fg "#BFBDB6"
+		bg "#0F1419"
+		black "#131721"
+		red "#F07178"
+		green "#AAD94C"
+		yellow "#E6B450"
+		blue "#59C2FF"
+		magenta "#D2A6FF"
+		cyan "#73B8FF"
+		white "#CCCAC2"
+		orange "#FF8F40"
+	}
 }
 
-theme "fade-theme"
+theme "ayu_dark"
 
 // Choose the theme that is specified in the themes section.
 // Default: default

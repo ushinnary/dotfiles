@@ -98,6 +98,7 @@ $env.NU_PLUGIN_DIRS = [
 #
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.cargo/bin/')
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.local/bin/')
+$env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.dotnet/tools/')
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/nvim-linux64/bin/')
 $env.PATH = ($env.PATH | prepend "/home/ushinnary/.fnm")
 $env.PATH = ($env.PATH | prepend "/home/ushinnary/.surrealdb")

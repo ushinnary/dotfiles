@@ -38,8 +38,6 @@ require("lazy").setup({
 		-- import/override with your plugins
 		-- { import = "lazyvim.plugins.extras.ui.edgy" },
 
-		{ import = "lazyvim.plugins.extras.dap.core" },
-
 		{ import = "lazyvim.plugins.extras.editor.navic" },
 		{ import = "lazyvim.plugins.extras.editor.mini-diff" },
 		{ import = "lazyvim.plugins.extras.editor.overseer" },
@@ -54,10 +52,10 @@ require("lazy").setup({
 		lazy = false,
 		-- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
 		-- have outdated releases, which may break your Neovim install.
-		version = false, -- always use the latest git commit
-		-- version = "*", -- try installing the latest stable version for plugins that support semver
+		-- version = false, -- always use the latest git commit
+		version = "*", -- try installing the latest stable version for plugins that support semver
 	},
-	install = { colorscheme = { "rebelot/kanagawa.nvim" } },
+	install = { colorscheme = { "ayu-dark" } },
 	checker = { enabled = true, notify = false }, -- automatically check for plugin updates
 	performance = {
 		rtp = {

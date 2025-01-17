@@ -1,6 +1,6 @@
 return {
 	{
-		"Shatur/neovim-ayu",
+		"rebelot/kanagawa.nvim",
 		config = function()
 			-- check if linux or WSL2 system has dark mode enabled
 			if
@@ -15,9 +15,9 @@ return {
 						:match(0)
 				)
 			then
-				vim.cmd("colorscheme ayu-dark")
+				vim.cmd("colorscheme kanagawa-wave")
 			else
-				vim.cmd("colorscheme ayu-light")
+				vim.cmd("colorscheme kanagawa-lotus")
 			end
 		end,
 	},

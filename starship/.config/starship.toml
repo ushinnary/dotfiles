@@ -1,7 +1,6 @@
 # version: 1.0.0
-
 add_newline = true
-continuation_prompt = "[▸▹ ](dimmed white)"
+continuation_prompt = "[▸▹ ](dimmed #C8C093)"
 
 format = """
 $os\
@@ -85,7 +84,7 @@ $character"""
 symbol = ' '
 
 [directory]
-style = "fg:#A991F3"
+style = "fg:#8ba4b0"
 home_symbol = "⌂"
 truncation_length = 2
 truncation_symbol = "󰝰 "
@@ -93,19 +92,19 @@ read_only = " 󰌾"
 use_os_path_sep = true
 format = '[$path]($style)[$read_only]($read_only_style)'
 read_only_style = "#F07178"
-repo_root_style = 'fg:#A991F3'
+repo_root_style = 'fg:#8ba4b0'
 repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
 
 
 [character]
 format = "$symbol $shell"
-success_symbol = "[](fg:#AAD94C)"
-error_symbol = "[](fg:#F07178)"
-vimcmd_symbol = "[](fg:#E6B450)"
+success_symbol = "[](fg:#8a9a7b)"
+error_symbol = "[](fg:#c4746e)"
+vimcmd_symbol = "[](fg:#8ba4b0)"
 
 [git_branch]
 format = " [$symbol$branch(:$remote_branch)]($style)"
-style = "fg:#FF8F40"
+style = "fg:#c4b28a"
 symbol = " "
 truncation_symbol = "⋯"
 truncation_length = 11
@@ -115,28 +114,28 @@ only_attached = true
 style = "bold italic bright-blue"
 format = "([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"
 conflicted = "[◪◦](italic bright-magenta)"
-ahead = "[▴│[${count}](bold white)│](italic green)"
-behind = "[▿│[${count}](bold white)│](italic red)"
-diverged = "[◇ ▴┤[${ahead_count}](regular white)│▿┤[${behind_count}](regular white)│](italic bright-magenta)"
+ahead = "[▴│[${count}](bold #C8C093)│](italic #8a9a7b)"
+behind = "[▿│[${count}](bold #C8C093)│](italic #c4746e)"
+diverged = "[◇ ▴┤[${ahead_count}](regular #C8C093)│▿┤[${behind_count}](regular white)│](italic bright-magenta)"
 untracked = "[◌◦](italic bright-yellow)"
-stashed = "[◃◈](italic white)"
-modified = "[●◦](italic yellow)"
-staged = "[▪┤[$count](bold white)│](italic bright-cyan)"
+stashed = "[◃◈](italic #C8C093)"
+modified = "[●◦](italic #c4b28a)"
+staged = "[▪┤[$count](bold #C8C093)│](italic bright-cyan)"
 renamed = "[◎◦](italic bright-blue)"
-deleted = "[✕](italic red)"
+deleted = "[✕](italic #c4746e)"
 
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "bright-black"
 
 [git_metrics]
-added_style = 'fg:#AAD94C'
-deleted_style = 'fg:#F07178'
+added_style = 'fg:#8a9a7b'
+deleted_style = 'fg:#c4746e'
 format = ' [+$added]($added_style) / [-$deleted]($deleted_style) '
 disabled = false
 
 [cmd_duration]
-format = "[◄ $duration ](italic white)"
+format = "[◄ $duration ](italic #C8C093)"
 
 [python]
 format = "[$virtualenv]($style) "
@@ -145,12 +144,12 @@ symbol = " "
 
 [jobs]
 format = "[$symbol$number]($style) "
-style = "white"
-symbol = "[▶](blue italic)"
+style = "#C8C093"
+symbol = "[▶](#8ba4b0 italic)"
 
 [localip]
 ssh_only = true
-format = " ◯[$localipv4](bold magenta)"
+format = " ◯[$localipv4](bold #a292a3)"
 disabled = false
 
 [time]
@@ -158,19 +157,19 @@ disabled = false
 format = "[ $time]($style)"
 time_format = "%R"
 utc_time_offset = "local"
-style = "italic dimmed white"
+style = "italic dimmed #C8C093"
 
 [battery]
 format = "[ $percentage $symbol]($style)"
 full_symbol = "█"
-charging_symbol = "[↑](italic bold green)"
+charging_symbol = "[↑](italic bold #8a9a7b)"
 discharging_symbol = "↓"
 unknown_symbol = "░"
 empty_symbol = "▃"
 
 [[battery.display]]
 threshold = 20
-style = "italic bold red"
+style = "italic bold #c4746e"
 
 [[battery.display]]
 threshold = 60
@@ -178,10 +177,10 @@ style = "italic dimmed bright-purple"
 
 [[battery.display]]
 threshold = 70
-style = "italic dimmed yellow"
+style = "italic dimmed #c4b28a"
 
 [nodejs]
-format = " [node](italic) [◫ ($version)](bold bright-green)"
+format = " [node](italic) [◫ ($version)](bold #8a9a7b)"
 symbol = " "
 version_format = "${raw}"
 detect_files = ["package-lock.json", "yarn.lock"]
@@ -192,13 +191,13 @@ detect_extensions = []
 format = " [$symbol$version]($style)"
 symbol = "󱘗 "
 version_format = "${raw}"
-style = "bold red"
+style = "bold #c4746e"
 
 [package]
 format = " [$symbol$version]($style)"
 version_format = "${raw}"
 symbol = "📦 "
-style = "fg:#E6B450 bold"
+style = "fg:#c4b28a bold"
 
 [aws]
 symbol = "  "

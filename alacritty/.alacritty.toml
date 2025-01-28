@@ -1,31 +1,33 @@
-# Colors (Ayu Dark)
-
-# Default colors
 [colors.primary]
-background = '#0F1419'
-foreground = '#B3B1AD'
+background = "#08080b"
+foreground = "#787c99"
 
-# Normal colors
+[colors.cursor]
+cursor = "#787c99"
+
+[colors.selection]
+text = "CellForeground"
+background = "#515c7e"
+
 [colors.normal]
-black = '#01060E'
-red = '#EA6C73'
-green = '#91B362'
-yellow = '#F9AF4F'
-blue = '#53BDFA'
-magenta = '#FAE994'
-cyan = '#90E1C6'
-white = '#C7C7C7'
+black = "#363b54"
+red = "#f7768e"
+green = "#41a6b5"
+yellow = "#e0af68"
+blue = "#7aa2f7"
+magenta = "#bb9af7"
+cyan = "#7dcfff"
+white = "#787c99"
 
-# Bright colors
 [colors.bright]
-black = '#686868'
-red = '#F07178'
-green = '#C2D94C'
-yellow = '#FFB454'
-blue = '#59C2FF'
-magenta = '#FFEE99'
-cyan = '#95E6CB'
-white = '#FFFFFF'
+black = "#363b54"
+red = "#f7768e"
+green = "#41a6b5"
+yellow = "#e0af68"
+blue = "#7aa2f7"
+magenta = "#bb9af7"
+cyan = "#7dcfff"
+white = "#787c99"
 
 [[colors.indexed_colors]]
 index = 16
@@ -49,7 +51,7 @@ family = "Roboto Mono Nerd Font"
 #args = ['-e', 'zellij']
 
 [window]
-opacity = 1
+opacity = 0
 #opacity = 0.3
 #blur = true
 #decorations = "Transparent"

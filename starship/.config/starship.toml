@@ -84,7 +84,7 @@ $character"""
 symbol = ' '
 
 [directory]
-style = "fg:#8ba4b0"
+style = "fg:#7aa2f7"
 home_symbol = "⌂"
 truncation_length = 2
 truncation_symbol = "󰝰 "
@@ -92,7 +92,7 @@ read_only = " 󰌾"
 use_os_path_sep = true
 format = '[$path]($style)[$read_only]($read_only_style)'
 read_only_style = "#F07178"
-repo_root_style = 'fg:#8ba4b0'
+repo_root_style = 'fg:#7aa2f7'
 repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
 
 
@@ -100,7 +100,7 @@ repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($re
 format = "$symbol $shell"
 success_symbol = "[](fg:#8a9a7b)"
 error_symbol = "[](fg:#c4746e)"
-vimcmd_symbol = "[](fg:#8ba4b0)"
+vimcmd_symbol = "[](fg:#7aa2f7)"
 
 [git_branch]
 format = " [$symbol$branch(:$remote_branch)]($style)"
@@ -145,7 +145,7 @@ symbol = " "
 [jobs]
 format = "[$symbol$number]($style) "
 style = "#C8C093"
-symbol = "[▶](#8ba4b0 italic)"
+symbol = "[▶](#7aa2f7 italic)"
 
 [localip]
 ssh_only = true

@@ -1,6 +1,6 @@
 # version: 1.0.0
 add_newline = true
-continuation_prompt = "[▸▹ ](dimmed #C8C093)"
+continuation_prompt = "[▸▹ ](dimmed #e0af68)"
 
 format = """
 $os\
@@ -91,20 +91,20 @@ truncation_symbol = "󰝰 "
 read_only = " 󰌾"
 use_os_path_sep = true
 format = '[$path]($style)[$read_only]($read_only_style)'
-read_only_style = "#F07178"
+read_only_style = "#f7768e"
 repo_root_style = 'fg:#7aa2f7'
 repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
 
 
 [character]
 format = "$symbol $shell"
-success_symbol = "[](fg:#8a9a7b)"
-error_symbol = "[](fg:#c4746e)"
+success_symbol = "[](fg:#9ece6a)"
+error_symbol = "[](fg:#f7768e)"
 vimcmd_symbol = "[](fg:#7aa2f7)"
 
 [git_branch]
 format = " [$symbol$branch(:$remote_branch)]($style)"
-style = "fg:#c4b28a"
+style = "fg:#e0af68"
 symbol = " "
 truncation_symbol = "⋯"
 truncation_length = 11
@@ -114,13 +114,13 @@ only_attached = true
 style = "bold italic bright-blue"
 format = "([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"
 conflicted = "[◪◦](italic bright-magenta)"
-ahead = "[▴│[${count}](bold #C8C093)│](italic #8a9a7b)"
-behind = "[▿│[${count}](bold #C8C093)│](italic #c4746e)"
-diverged = "[◇ ▴┤[${ahead_count}](regular #C8C093)│▿┤[${behind_count}](regular white)│](italic bright-magenta)"
+ahead = "[▴│[${count}](bold #e0af68)│](italic #9ece6a)"
+behind = "[▿│[${count}](bold #e0af68)│](italic #c4746e)"
+diverged = "[◇ ▴┤[${ahead_count}](regular #e0af68)│▿┤[${behind_count}](regular white)│](italic bright-magenta)"
 untracked = "[◌◦](italic bright-yellow)"
-stashed = "[◃◈](italic #C8C093)"
-modified = "[●◦](italic #c4b28a)"
-staged = "[▪┤[$count](bold #C8C093)│](italic bright-cyan)"
+stashed = "[◃◈](italic #e0af68)"
+modified = "[●◦](italic #7da6ff)"
+staged = "[▪┤[$count](bold #e0af68)│](italic bright-cyan)"
 renamed = "[◎◦](italic bright-blue)"
 deleted = "[✕](italic #c4746e)"
 
@@ -129,13 +129,13 @@ format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "bright-black"
 
 [git_metrics]
-added_style = 'fg:#8a9a7b'
-deleted_style = 'fg:#c4746e'
+added_style = 'fg:#9ece6a'
+deleted_style = 'fg:#f7768e'
 format = ' [+$added]($added_style) / [-$deleted]($deleted_style) '
 disabled = false
 
 [cmd_duration]
-format = "[◄ $duration ](italic #C8C093)"
+format = "[◄ $duration ](italic #e0af68)"
 
 [python]
 format = "[$virtualenv]($style) "
@@ -144,7 +144,7 @@ symbol = " "
 
 [jobs]
 format = "[$symbol$number]($style) "
-style = "#C8C093"
+style = "#e0af68"
 symbol = "[▶](#7aa2f7 italic)"
 
 [localip]
@@ -157,19 +157,19 @@ disabled = false
 format = "[ $time]($style)"
 time_format = "%R"
 utc_time_offset = "local"
-style = "italic dimmed #C8C093"
+style = "italic dimmed #e0af68"
 
 [battery]
 format = "[ $percentage $symbol]($style)"
 full_symbol = "█"
-charging_symbol = "[↑](italic bold #8a9a7b)"
+charging_symbol = "[↑](italic bold #9ece6a)"
 discharging_symbol = "↓"
 unknown_symbol = "░"
 empty_symbol = "▃"
 
 [[battery.display]]
 threshold = 20
-style = "italic bold #c4746e"
+style = "italic bold #f7768e"
 
 [[battery.display]]
 threshold = 60
@@ -180,7 +180,7 @@ threshold = 70
 style = "italic dimmed #c4b28a"
 
 [nodejs]
-format = " [node](italic) [◫ ($version)](bold #8a9a7b)"
+format = " [node](italic) [◫ ($version)](bold #9ece6a)"
 symbol = " "
 version_format = "${raw}"
 detect_files = ["package-lock.json", "yarn.lock"]

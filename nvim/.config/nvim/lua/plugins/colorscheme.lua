@@ -2,11 +2,11 @@ return {
 	{
 		"tokyonight.nvim",
 		opts = {
-			transparent = true,
-			styles = {
-				sidebars = "transparent",
-				floats = "transparent",
-			},
+			-- transparent = true,
+			-- styles = {
+			-- 	sidebars = "transparent",
+			-- 	floats = "transparent",
+			-- },
 			style = "moon", -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
 			light_style = "day", -- The theme is used when the background is set to light
 		},

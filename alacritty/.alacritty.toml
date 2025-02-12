@@ -41,17 +41,17 @@ color = '#ffa198'
 TERM = "xterm-256color"
 
 [font]
-size = 12.0
+size = 14.0
 
 [font.normal]
-family = "Roboto Mono Nerd Font"
+family = "Iosevka Nerd Font"
 
 #[shell]
 #program = "/home/ushinnary/.cargo/bin/nu"
 #args = ['-e', 'zellij']
 
 [window]
-opacity = 0
+opacity = 1
 #opacity = 0.3
 #blur = true
 #decorations = "Transparent"

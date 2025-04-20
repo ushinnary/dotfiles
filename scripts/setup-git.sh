@@ -4,10 +4,10 @@ FILE_PATH="$HOME/.gitconfig"
 SEARCH_TEXT="difftastic"
 
 if [ -f "$FILE_PATH" ]; then
-	if grep -q "$SEARCH_TEXT" "$FILE_PATH"; then
-		echo "Difftastic already in use"
-	else
-		cat <<EOL >>"$HOME/.gitconfig"
+  if grep -q "$SEARCH_TEXT" "$FILE_PATH"; then
+    echo "Difftastic already in use"
+  else
+    cat <<EOL >>"$HOME/.gitconfig"
 
 [diff]
   tool = difftastic
@@ -27,5 +27,7 @@ if [ -f "$FILE_PATH" ]; then
   dlog = "-c diff.external=difft log -p --ext-diff"
 
 EOL
-	fi
+  fi
 fi
+
+git config --global credential.credentialStore secretservice

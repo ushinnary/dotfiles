@@ -1,0 +1,9 @@
+[Unit]
+Description=Sets max GPU Power limit
+
+[Service]
+Type=simple
+ExecStart=/home/ushinnary/dotfiles/runnables/nvidia-power-management.sh
+
+[Install]
+WantedBy=default.target

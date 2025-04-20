@@ -3,7 +3,7 @@
 My config for Rust/JS/TS development
 WIP
 
-## Packages to install:
+## Packages to install
 
 ### Fedora packages
 
@@ -13,14 +13,14 @@ WIP
 
 `./setup-rust.sh`
 
-### NVM
-
-```
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
-```
-
 ### Font
 
 ```
 https://www.nerdfonts.com/font-downloads
+```
+
+### Cursors
+
+`https://github.com/ful1e5/Bibata_Cursor/releases`
+
 ```

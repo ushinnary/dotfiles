@@ -13,14 +13,10 @@ WIP
 
 `./setup-rust.sh`
 
-### Font
+### Fonts
 
-```
-https://www.nerdfonts.com/font-downloads
-```
+`https://github.com/ryanoasis/nerd-fonts/releases/`
 
 ### Cursors
 
 `https://github.com/ful1e5/Bibata_Cursor/releases`
-
-```

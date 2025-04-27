@@ -7,8 +7,14 @@ return {
 			-- 	sidebars = "transparent",
 			-- 	floats = "transparent",
 			-- },
-			style = "moon", -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+			style = "night", -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
 			light_style = "day", -- The theme is used when the background is set to light
+			on_colors = function(colors)
+				colors.bg = "#000000"
+				colors.bg_sidebar = "#000000"
+				colors.bg_popup = "#000000"
+				colors.bg_float = "#000000"
+			end,
 		},
 		-- config = function()
 		-- 	-- check if linux or WSL2 system has dark mode enabled

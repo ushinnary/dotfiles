@@ -891,6 +891,7 @@ $env.config = {
 }
 
 alias nvimconfig = nvim ~/.config/nvim
+alias fg = job unfreeze
 
 use ~/.cache/starship/init.nu
 

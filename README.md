@@ -13,6 +13,9 @@ WIP
 
 `./setup-rust.sh`
 
+Binstall
+`https://github.com/cargo-bins/cargo-binstall?tab=readme-ov-file`
+
 ### Fonts
 
 `https://github.com/ryanoasis/nerd-fonts/releases/`

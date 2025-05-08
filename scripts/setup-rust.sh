@@ -1,18 +1,16 @@
 #!/bin/bash
 (curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh) &&
   cargo install cargo-update &&
-  cargo install ripgrep &&
-  cargo install fd-find &&
-  cargo install starship &&
-  cargo install exa &&
-  cargo install bat &&
-  cargo install tokei --features all &&
-  cargo install stylua &&
-  cargo install sqlx-cli --no-default-features --features postgres &&
-  cargo install wasm-pack &&
-  cargo install bottom &&
-  cargo install --locked difftastic &&
-  cargo install nu &&
-  cargo install --locked zellij &&
-  cargo install fnm &&
-  cargo install zoxide --locked
+  cargo install cargo-binstall &&
+  cargo binstall ripgrep &&
+  cargo binstall starship &&
+  cargo binstall stylua &&
+  cargo binstall dioxus-cli &&
+  #cargo binstall sqlx-cli --no-default-features --features postgres &&
+  #cargo binstall wasm-pack &&
+  cargo binstall bottom &&
+  cargo binstall difftastic &&
+  cargo binstall nu &&
+  cargo binstall zellij &&
+  cargo binstall fnm &&
+  cargo binstall zoxide --locked

@@ -13,4 +13,5 @@
   cargo binstall nu &&
   cargo binstall zellij &&
   cargo binstall fnm &&
-  cargo binstall zoxide --locked
+  cargo binstall zoxide --locked &&
+  cargo binstall surrealdb-migrations

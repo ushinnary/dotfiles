@@ -921,3 +921,28 @@ def --env y [...args] {
 	}
 	rm -fp $tmp
 }
+
+def "cargo search" [ query: string, --limit=10] { 
+    ^cargo search $query --limit $limit
+    | lines 
+    | each { 
+        |line| if ($line | str contains "#") { 
+            $line | parse --regex '(?P<name>.+) = "(?P<version>.+)" +# (?P<description>.+)' 
+        } else { 
+            $line | parse --regex '(?P<name>.+) = "(?P<version>.+)"' 
+        } 
+    } 
+    | flatten
+}
+
+use cargo-completions.nu *
+use dotnet-completions.nu *
+use git-completions.nu *
+use npm-completions.nu *
+use rg-completions.nu *
+use rustup-completions.nu *
+use ssh-completions.nu *
+use tar-completions.nu *
+use zellij-completions.nu *
+use zoxide-completions.nu *
+use catppuccin-mocha.nu *

@@ -1,356 +1,193 @@
-# version: 1.0.0
-add_newline = true
-continuation_prompt = "[▸▹ ](dimmed #e0af68)"
+"$schema" = 'https://starship.rs/config-schema.json'
+palette = "catppuccin_mocha"
 
 format = """
+[](red)\
 $os\
-$container\
 $username\
-$hostname\
+[](bg:peach fg:red)\
 $directory\
+[](bg:yellow fg:peach)\
 $git_branch\
-$git_state\
-$git_metrics\
 $git_status\
-$docker_context\
-$package\
+[](fg:yellow bg:green)\
 $c\
-$cmake\
-$cobol\
-$daml\
-$dart\
-$deno\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$fennel\
-$golang\
-$guix_shell\
-$haskell\
-$haxe\
-$helm\
-$java\
-$julia\
-$kotlin\
-$gradle\
-$lua\
-$nim\
-$nodejs\
-$ocaml\
-$opa\
-$perl\
-$php\
-$pulumi\
-$purescript\
-$python\
-$quarto\
-$raku\
-$rlang\
-$red\
-$ruby\
 $rust\
-$scala\
-$solidity\
-$swift\
-$terraform\
-$typst\
-$vlang\
-$vagrant\
-$zig\
-$buf\
-$nix_shell\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](fg:green bg:sapphire)\
 $conda\
-$meson\
-$spack\
-$memory_usage\
-$aws\
-$gcloud\
-$openstack\
-$azure\
-$direnv\
-$env_var\
-$crystal\
-$custom\
-$sudo\
-$cmd_duration\
+[](fg:sapphire bg:lavender)\
 $time\
-$status\
-$shell\
+[ ](fg:lavender)\
+$cmd_duration\
 $line_break\
 $character"""
 
-[fill]
-symbol = ' '
+[os]
+disabled = false
+style = "bg:red fg:crust"
+
+[os.symbols]
+Windows = ""
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
+[username]
+show_always = true
+style_user = "bg:red fg:crust"
+style_root = "bg:red fg:crust"
+format = '[ $user]($style)'
 
 [directory]
-style = "fg:#7aa2f7"
-home_symbol = "⌂"
-truncation_length = 2
-truncation_symbol = "󰝰 "
-read_only = " 󰌾"
-use_os_path_sep = true
-format = '[$path]($style)[$read_only]($read_only_style)'
-read_only_style = "#f7768e"
-repo_root_style = 'fg:#7aa2f7'
-repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+style = "bg:peach fg:crust"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
 
-
-[character]
-format = "$symbol $shell"
-success_symbol = "[](fg:#9ece6a)"
-error_symbol = "[](fg:#f7768e)"
-vimcmd_symbol = "[](fg:#7aa2f7)"
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
 
 [git_branch]
-format = " [$symbol$branch(:$remote_branch)]($style)"
-style = "fg:#e0af68"
-symbol = " "
-truncation_symbol = "⋯"
-truncation_length = 11
-only_attached = true
+symbol = ""
+style = "bg:yellow"
+format = '[[ $symbol $branch ](fg:crust bg:yellow)]($style)'
 
 [git_status]
-style = "bold italic bright-blue"
-format = "([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"
-conflicted = "[◪◦](italic bright-magenta)"
-ahead = "[▴│[${count}](bold #e0af68)│](italic #9ece6a)"
-behind = "[▿│[${count}](bold #e0af68)│](italic #c4746e)"
-diverged = "[◇ ▴┤[${ahead_count}](regular #e0af68)│▿┤[${behind_count}](regular white)│](italic bright-magenta)"
-untracked = "[◌◦](italic bright-yellow)"
-stashed = "[◃◈](italic #e0af68)"
-modified = "[●◦](italic #7da6ff)"
-staged = "[▪┤[$count](bold #e0af68)│](italic bright-cyan)"
-renamed = "[◎◦](italic bright-blue)"
-deleted = "[✕](italic #c4746e)"
-
-[git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
-style = "bright-black"
-
-[git_metrics]
-added_style = 'fg:#9ece6a'
-deleted_style = 'fg:#f7768e'
-format = ' [+$added]($added_style) / [-$deleted]($deleted_style) '
-disabled = false
-
-[cmd_duration]
-format = "[◄ $duration ](italic #e0af68)"
-
-[python]
-format = "[$virtualenv]($style) "
-style = "bright-black"
-symbol = " "
-
-[jobs]
-format = "[$symbol$number]($style) "
-style = "#e0af68"
-symbol = "[▶](#7aa2f7 italic)"
-
-[localip]
-ssh_only = true
-format = " ◯[$localipv4](bold #a292a3)"
-disabled = false
-
-[time]
-disabled = false
-format = "[ $time]($style)"
-time_format = "%R"
-utc_time_offset = "local"
-style = "italic dimmed #e0af68"
-
-[battery]
-format = "[ $percentage $symbol]($style)"
-full_symbol = "█"
-charging_symbol = "[↑](italic bold #9ece6a)"
-discharging_symbol = "↓"
-unknown_symbol = "░"
-empty_symbol = "▃"
-
-[[battery.display]]
-threshold = 20
-style = "italic bold #f7768e"
-
-[[battery.display]]
-threshold = 60
-style = "italic dimmed bright-purple"
-
-[[battery.display]]
-threshold = 70
-style = "italic dimmed #c4b28a"
+style = "bg:yellow"
+format = '[[($all_status$ahead_behind )](fg:crust bg:yellow)]($style)'
 
 [nodejs]
-format = " [node](italic) [◫ ($version)](bold #9ece6a)"
-symbol = " "
-version_format = "${raw}"
-detect_files = ["package-lock.json", "yarn.lock"]
-detect_folders = ["node_modules"]
-detect_extensions = []
-
-[rust]
-format = " [$symbol$version]($style)"
-symbol = "󱘗 "
-version_format = "${raw}"
-style = "bold #c4746e"
-
-[package]
-format = " [$symbol$version]($style)"
-version_format = "${raw}"
-symbol = "📦 "
-style = "fg:#c4b28a bold"
-
-[aws]
-symbol = "  "
-
-[buf]
-symbol = " "
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
 [c]
 symbol = " "
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
-[conda]
-symbol = " "
-
-[crystal]
-symbol = " "
-
-[dart]
-symbol = " "
-
-[docker_context]
-symbol = " "
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
-
-[fennel]
-symbol = " "
-
-[fossil_branch]
-symbol = " "
-
-[git_commit]
-tag_symbol = '  '
+[rust]
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
 [golang]
-symbol = " "
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
-[guix_shell]
-symbol = " "
-
-[haskell]
-symbol = " "
-
-[haxe]
-symbol = " "
-
-[hg_branch]
-symbol = " "
-
-[hostname]
-ssh_symbol = " "
+[php]
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
 [java]
 symbol = " "
-
-[julia]
-symbol = " "
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
 [kotlin]
-symbol = " "
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
-[lua]
-symbol = " "
+[haskell]
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
-[memory_usage]
-symbol = "󰍛 "
+[python]
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:crust bg:green)]($style)'
 
-[meson]
-symbol = "󰔷 "
+[docker_context]
+symbol = ""
+style = "bg:sapphire"
+format = '[[ $symbol( $context) ](fg:crust bg:sapphire)]($style)'
 
-[nim]
-symbol = "󰆥 "
+[conda]
+symbol = "  "
+style = "fg:crust bg:sapphire"
+format = '[$symbol$environment ]($style)'
+ignore_base = false
 
-[nix_shell]
-symbol = " "
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:lavender"
+format = '[[  $time ](fg:crust bg:lavender)]($style)'
 
-[ocaml]
-symbol = " "
+[line_break]
+disabled = true
 
-[os.symbols]
-Alpaquita = " "
-Alpine = " "
-AlmaLinux = " "
-Amazon = " "
-Android = " "
-Arch = " "
-Artix = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = "󰛓 "
-Gentoo = " "
-HardenedBSD = "󰞌 "
-Illumos = "󰈸 "
-Kali = " "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-OpenBSD = "󰈺 "
-openSUSE = " "
-OracleLinux = "󰌷 "
-Pop = " "
-Raspbian = " "
-Redhat = " "
-RedHatEnterprise = " "
-RockyLinux = " "
-Redox = "󰀘 "
-Solus = "󰠳 "
-SUSE = " "
-Ubuntu = " "
-Unknown = " "
-Void = " "
-Windows = "󰍲 "
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:green)'
+error_symbol = '[❯](bold fg:red)'
+vimcmd_symbol = '[❮](bold fg:green)'
+vimcmd_replace_one_symbol = '[❮](bold fg:lavender)'
+vimcmd_replace_symbol = '[❮](bold fg:lavender)'
+vimcmd_visual_symbol = '[❮](bold fg:yellow)'
 
-[perl]
-symbol = " "
+[cmd_duration]
+show_milliseconds = true
+format = " in $duration "
+style = "bg:lavender"
+disabled = false
+show_notifications = true
+min_time_to_notify = 45000
 
-[php]
-symbol = " "
-
-[pijul_channel]
-symbol = " "
-
-[rlang]
-symbol = "󰟔 "
-
-[ruby]
-symbol = " "
-
-[scala]
-symbol = " "
-
-[swift]
-symbol = " "
-
-[zig]
-symbol = " "
-
-[gradle]
-symbol = " "
-
-[shell]
-bash_indicator = ""
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

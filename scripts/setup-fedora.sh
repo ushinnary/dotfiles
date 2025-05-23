@@ -12,4 +12,5 @@ sudo dnf install openssl-devel cmake libxcb libX11-devel fontconfig-devel perl -
   dnf check-update &&
   sudo dnf install code -y &&
   sudo dnf install neovim -y &&
-  sudo dnf install https://github.com/wezterm/wezterm/releases/download/nightly/wezterm-nightly-fedora40.rpm -y
+  sudo dnf install https://github.com/wezterm/wezterm/releases/download/nightly/wezterm-nightly-fedora40.rpm -y &&
+  sudo dnf install btop

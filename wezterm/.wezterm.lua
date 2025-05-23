@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 
 -- For example, changing the initial geometry for new windows:
 config.initial_cols = 120
-config.initial_rows = 2
+config.initial_rows = 30
 
 local function scheme_for_appearance(appearance)
 	if appearance:find("Dark") then

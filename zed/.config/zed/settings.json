@@ -41,11 +41,14 @@
   },
   "vim_mode": true,
   "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "buffer_font_size": 14,
+  "buffer_font_family": "UbuntuMono Nerd Font Propo",
+  "buffer_font_weight": 500,
+  "buffer_line_height": "standard",
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Catppuccin Mocha"
+    "dark": "Catppuccin Mocha (Blur)"
   },
   "base_keymap": "VSCode",
   "relative_line_numbers": true,
@@ -62,6 +65,7 @@
     "toml": true,
     "surrealql": true,
     "html": true,
-    "catppuccin": true
+    "catppuccin": true,
+    "nu": true
   }
 }

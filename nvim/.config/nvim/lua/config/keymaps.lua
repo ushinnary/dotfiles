@@ -6,3 +6,6 @@ local map = vim.keymap.set
 
 map("n", "<C-d>", "<C-d>zz", { remap = true })
 map("n", "<C-u>", "<C-u>zz", { remap = true })
+
+-- Terminal go to vi normal mode
+map("t", "<C-Space>", [[<C-\><C-n>]], { desc = "Terminal Normal Mode" })

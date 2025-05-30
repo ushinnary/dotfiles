@@ -25,11 +25,11 @@ if command -v git >/dev/null 2>&1; then
 fi
 
 # Apply config
-stow ./alacritty/
-stow ./lazygit/
-stow ./nushell/
-stow ./nvim/
-stow ./starship/
-stow ./wezterm/
-stow ./zed/
-stow ./zellij/
+stow alacritty/
+stow lazygit/
+stow nushell/
+stow nvim/
+stow starship/
+stow wezterm/
+stow zed/
+stow zellij/

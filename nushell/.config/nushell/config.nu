@@ -892,6 +892,7 @@ $env.config = {
 
 alias nvimconfig = nvim ~/.config/nvim
 alias fg = job unfreeze
+alias ?? = gh copilot suggest
 
 use ~/.cache/starship/init.nu
 

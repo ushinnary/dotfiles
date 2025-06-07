@@ -33,3 +33,19 @@ update_func "ollama" "curl -fsSL https://ollama.com/install.sh | sh"
 
 # Update flatpak if installed
 update_func "flatpak" "flatpak update -y"
+
+# Update all global NPM packages
+update_func "npm" "npm update -g"
+
+# Update Homebrew if installed
+update_func "brew" "brew update && brew upgrade"
+
+# Update firmware if fwupdmgr is installed
+update_func "fwupdmgr" "sudo fwupdmgr get-updates && sudo fwupdmgr update"
+
+# Update podman containers if podman is installed
+update_func "podman" "podman auto-update"
+
+# Update Distrobox if installed
+update_func "distrobox" "distrobox upgrade --all"
+

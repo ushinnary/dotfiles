@@ -102,6 +102,7 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.dotne
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/nvim-linux64/bin/')
 $env.PATH = ($env.PATH | prepend "/home/ushinnary/.fnm")
 $env.PATH = ($env.PATH | prepend "/home/ushinnary/.surrealdb")
+$env.PATH = ($env.PATH | prepend "/home/ushinnary/dotfiles/bins/")
 $env.PATH = ($env.PATH | prepend "/home/linuxbrew/.linuxbrew/bin/")
 $env.FREETYPE_PROPERTIES = 'cff:no-stem-darkening=0'
 $env.DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 1

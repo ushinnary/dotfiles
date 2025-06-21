@@ -23,10 +23,14 @@ local function set_scheme_for_appearance(appearance)
 end
 
 -- or, changing the font size and color scheme.
-config.font_size = 12
+config.font_size = 14
 set_scheme_for_appearance(wezterm.gui.get_appearance())
 
-wezterm.font("UbuntuMono Nerd Font Mono", {})
+config.font = wezterm.font_with_fallback({
+	"Sono",
+	"Quicksand",
+	"Adwaita Mono",
+})
 
 -- Finally, return the configuration to wezterm:
 return config

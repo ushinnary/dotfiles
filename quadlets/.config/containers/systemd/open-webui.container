@@ -8,7 +8,7 @@ Environment=OLLAMA_BASE_URL=http://ollama.local:11434 ANONYMIZED_TELEMETRY=False
 Image=ghcr.io/open-webui/open-webui:main
 Network=slirp4netns:allow_host_loopback=true
 PodmanArgs=--add-host ollama.local:10.0.2.2
-PublishPort=0.0.0.0:3000:8080
+PublishPort=0.0.0.0:4000:8080
 Volume=open-webui:/app/backend/data
 
 [Service]

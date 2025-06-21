@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo dnf install openssl-devel cmake libxcb libX11-devel fontconfig-devel perl -y &&
+sudo dnf update -y &&
+  sudo dnf install openssl-devel cmake libxcb libX11-devel fontconfig-devel perl -y &&
   sudo dnf copr enable atim/lazygit -y &&
   sudo dnf install lazygit -y &&
   sudo dnf install fzf -y &&

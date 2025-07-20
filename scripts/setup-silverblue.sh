@@ -57,7 +57,8 @@ add_nvidia() {
       nvidia-container-toolkit-base-${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
       libnvidia-container-tools-${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
       libnvidia-container1-${NVIDIA_CONTAINER_TOOLKIT_VERSION}
-    sudo rpm-ostree kargs --append=rd.driver.blacklist=nouveau --append=modprobe.blacklist=nouveau --append=nvidia-drm.modeset=1 --reboot
+    sudo rpm-ostree kargs --append=rd.driver.blacklist=nouveau,nova_core --append=modprobe.blacklist=nouveau,nova_core
+    systemctl reboot
   else
     echo "NVIDIA drivers already layered."
   fi
@@ -90,4 +91,3 @@ flatpak-icons)
   usage
   ;;
 esac
-

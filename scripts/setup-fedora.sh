@@ -17,4 +17,5 @@ sudo dnf update -y &&
   sudo dnf install btop -y &&
   sudo dnf install fuse-libs -y &&
   sudo dnf install libappindicator-gtk3 -y &&
-  sudo dnf install stow -y
+  sudo dnf install stow -y &&
+  sudo dnf install wget -y

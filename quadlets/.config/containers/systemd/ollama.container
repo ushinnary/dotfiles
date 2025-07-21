@@ -1,5 +1,7 @@
 [Unit]
 Description=The ollama container
+Requires=nvidia-cdi-regen.service
+After=nvidia-cdi-regen.service
 
 [Container]
 AutoUpdate=registry

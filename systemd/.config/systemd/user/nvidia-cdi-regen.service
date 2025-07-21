@@ -1,0 +1,11 @@
+[Unit]
+Description=Regenerate NVIDIA CDI file
+DefaultDependencies=no
+Before=quadlet.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/ushinnary/dotfiles/scripts/nvidia-cdi-regen.sh
+
+[Install]
+WantedBy=multi-user.target

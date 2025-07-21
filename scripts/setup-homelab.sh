@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo rpm-ostree install cockpit-system \
+sudo rpm-ostree install cockpit \
+  cockpit-system \
   cockpit-ostree \
   cockpit-podman \
   cockpit-storaged \

@@ -36,6 +36,9 @@ stow starship/
 stow wezterm/
 stow zed/
 stow zellij/
+stow kitty/
+stow hypr/
+stow waybar/
 
 # Install fonts
 install_font Quicksand https://fonts.google.com/download?family=Quicksand

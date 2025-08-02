@@ -22,6 +22,9 @@ update_func "dnf" "sudo dnf upgrade -y"
 # Update rpm-ostree if installed
 update_func "rpm-ostree" "rpm-ostree upgrade"
 
+# Update arch if installed
+update_func "pacman" "sudo pacman -Syu"
+
 # Update rust if installed
 update_func "rustup" "rustup update"
 
@@ -48,4 +51,3 @@ update_func "podman" "podman auto-update"
 
 # Update Distrobox if installed
 update_func "distrobox" "distrobox upgrade --all"
-

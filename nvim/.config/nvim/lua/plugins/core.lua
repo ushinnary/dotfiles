@@ -1,24 +1,15 @@
 return {
 
-	{ -- plugin spec for catppuccin
-		"catppuccin/nvim",
-		-- this belongs to no plugin spec and is ignored
+	{
+		"folke/tokyonight.nvim",
 		lazy = false,
-		name = "catppuccin",
-		opts = {
-			flavour = "auto", -- latte, frappe, macchiato, mocha
-			background = { -- :h background
-				light = "latte",
-				dark = "mocha",
-			},
-			transparent_background = true,
-		},
+		opts = {},
 	},
 
 	{
 		"LazyVim/LazyVim",
 		opts = {
-			colorscheme = "catppuccin",
+			colorscheme = "tokyonight-night",
 		},
 	},
 }

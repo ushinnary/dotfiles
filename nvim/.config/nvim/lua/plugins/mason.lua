@@ -6,7 +6,7 @@ return {
 				"lua_ls",
 				"ast_grep",
 				"rust_analyzer",
-				"omnisharp",
+				"csharp_ls",
 				"dockerls",
 				"sqlls",
 				-- "sqlfluff",

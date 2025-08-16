@@ -41,6 +41,6 @@ stow hypr/
 stow waybar/
 
 # Install fonts
-install_font Quicksand https://fonts.google.com/download?family=Quicksand
-install_font Sono https://fonts.google.com/download?family=Sono
+# install_font Quicksand https://fonts.google.com/download?family=Quicksand
+# install_font Sono https://fonts.google.com/download?family=Sono
 install_font SymbolsNerdFont https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz

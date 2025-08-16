@@ -106,6 +106,8 @@ $env.PATH = ($env.PATH | prepend "/home/ushinnary/dotfiles/bins/")
 $env.PATH = ($env.PATH | prepend "/home/linuxbrew/.linuxbrew/bin/")
 $env.FREETYPE_PROPERTIES = 'cff:no-stem-darkening=0'
 $env.DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 1
+$env.VISUAL = "nvim"
+$env.EDITOR = "nvim"
 
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')

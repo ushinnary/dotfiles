@@ -12,7 +12,7 @@ flatpaks=(
   net.nokyan.Resources
   org.gustavoperedo.FontDownloader
   org.gimp.GIMP
-  com.saivert.pwvucontrol
+  org.telegram.desktop
 )
 
 for app in "${flatpaks[@]}"; do
@@ -21,4 +21,3 @@ for app in "${flatpaks[@]}"; do
 done
 
 echo "All Flatpak applications have been installed."
-

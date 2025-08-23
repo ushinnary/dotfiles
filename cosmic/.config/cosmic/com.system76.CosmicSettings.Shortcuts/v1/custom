@@ -1,0 +1,156 @@
+{
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "4",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F7",
+    ): MoveToWorkspace(7),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "8",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F6",
+    ): MoveToWorkspace(6),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "3",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "5",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F8",
+    ): MoveToWorkspace(8),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "2",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "0",
+    ): Disable,
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+        ],
+        key: "w",
+        description: Some("wezterm"),
+    ): Spawn("wezterm"),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F2",
+    ): MoveToWorkspace(2),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F1",
+    ): MoveToWorkspace(1),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F3",
+    ): MoveToWorkspace(3),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F5",
+    ): MoveToWorkspace(5),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "7",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F4",
+    ): MoveToWorkspace(4),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F9",
+    ): MoveToWorkspace(9),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "1",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "9",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "v",
+    ): ToggleSticky,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "F11",
+    ): MoveToLastWorkspace,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "6",
+    ): Disable,
+}

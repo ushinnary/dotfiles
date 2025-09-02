@@ -890,10 +890,6 @@ $env.config = {
     ]
 }
 
-alias nvimconfig = nvim ~/.config/nvim
-alias fg = job unfreeze
-alias ?? = gh copilot suggest
-
 use ~/.cache/starship/init.nu
 
 # FNM Node manager
@@ -947,3 +943,4 @@ use tar-completions.nu *
 use zellij-completions.nu *
 use zoxide-completions.nu *
 use catppuccin-mocha.nu *
+use alias.nu 

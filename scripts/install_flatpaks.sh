@@ -20,4 +20,10 @@ for app in "${flatpaks[@]}"; do
   flatpak install -y flathub "$app"
 done
 
+# Apply params
+flatpak -u override --filesystem=/usr/share/icons/:ro
+flatpak -u override --filesystem=/home/$USER/.icons/:ro
+flatpak -u override --filesystem=xdg-config/gtk-3.0:ro
+flatpak -u override --env=XCURSOR_PATH=~/.icons
+
 echo "All Flatpak applications have been installed."

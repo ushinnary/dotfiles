@@ -1,6 +1,5 @@
 #!/bin/bash
-sudo pacman -S --needed git base-devel
-sudo pacman -S --needed otf-font-awesome
+sudo pacman -S --needed git base-devel otf-font-awesome ttf-nerd-fonts-symbols
 
 # Omarchy
 

@@ -5,7 +5,7 @@ sudo pacman -S --needed git avahi \
   terminus-font ttf-dejavu ttf-liberation otf-font-awesome ttf-nerd-fonts-symbols \
   wpa_supplicant ufw podman podman-compose \
   networkmanager pipewire pipewire-pulse bluez bluez-utils bluez-libs distrobox \
-  wget curl unzip
+  wget curl unzip wl-clipboard tailscale
 
 #   # Allow nothing in, everything out
 sudo ufw default deny incoming
@@ -28,6 +28,8 @@ sudo ufw reload
 sudo systemctl enable NetworkManager
 sudo systemctl enable bluetooth
 sudo systemctl enable avahi-daemon
+sudo systemctl enable --now tailscaled
+systemctl --user enable podman.socket
 
 # Detect if running on a laptop (battery present)
 if ls /sys/class/power_supply/BAT* 1>/dev/null 2>&1; then

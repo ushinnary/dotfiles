@@ -5,7 +5,7 @@ sudo pacman -S --needed git avahi \
   terminus-font ttf-dejavu ttf-liberation otf-font-awesome ttf-nerd-fonts-symbols \
   wpa_supplicant ufw podman podman-compose \
   networkmanager pipewire pipewire-pulse bluez bluez-utils bluez-libs distrobox \
-  wget curl unzip wl-clipboard tailscale
+  wget curl unzip wl-clipboard tailscale ttf-nerd-fonts-symbols-mono
 
 #   # Allow nothing in, everything out
 sudo ufw default deny incoming

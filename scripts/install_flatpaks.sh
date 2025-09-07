@@ -13,6 +13,7 @@ flatpaks=(
   org.gustavoperedo.FontDownloader
   org.gimp.GIMP
   org.telegram.desktop
+  com.heroicgameslauncher.hgl
 )
 
 for app in "${flatpaks[@]}"; do

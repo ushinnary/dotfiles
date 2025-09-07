@@ -6,12 +6,13 @@ height=476
 width=600
 
 [org/gnome/Console]
+custom-font='Adwaita Mono 10'
 last-window-maximised=true
 last-window-size=(732, 528)
 theme='auto'
 
 [org/gnome/control-center]
-last-panel='display'
+last-panel='multitasking'
 window-state=(980, 640, true)
 
 [org/gnome/desktop/app-folders]
@@ -53,6 +54,7 @@ sources=[('xkb', 'us')]
 xkb-options=['caps:ctrl_modifier']
 
 [org/gnome/desktop/interface]
+color-scheme='prefer-dark'
 cursor-theme='Bibata-Modern-Ice'
 font-antialiasing='grayscale'
 font-hinting='slight'
@@ -61,10 +63,25 @@ icon-theme='Adwaita'
 toolkit-accessibility=false
 
 [org/gnome/desktop/notifications]
-application-children=['org-gnome-epiphany']
+application-children=['org-gnome-epiphany', 'com-microsoft-edge', 'com-discordapp-discord', 'org-gnome-console', 'org-gnome-software', 'gnome-power-panel']
+
+[org/gnome/desktop/notifications/application/com-discordapp-discord]
+application-id='com.discordapp.Discord.desktop'
+
+[org/gnome/desktop/notifications/application/com-microsoft-edge]
+application-id='com.microsoft.Edge.desktop'
+
+[org/gnome/desktop/notifications/application/gnome-power-panel]
+application-id='gnome-power-panel.desktop'
+
+[org/gnome/desktop/notifications/application/org-gnome-console]
+application-id='org.gnome.Console.desktop'
 
 [org/gnome/desktop/notifications/application/org-gnome-epiphany]
 application-id='org.gnome.Epiphany.desktop'
+
+[org/gnome/desktop/notifications/application/org-gnome-software]
+application-id='org.gnome.Software.desktop'
 
 [org/gnome/desktop/peripherals/mouse]
 natural-scroll=true
@@ -103,6 +120,7 @@ migrated=true
 
 [org/gnome/mutter]
 experimental-features=['variable-refresh-rate', 'scale-monitor-framebuffer', 'xwayland-native-scaling']
+workspaces-only-on-primary=false
 
 [org/gnome/nautilus/preferences]
 default-folder-viewer='icon-view'
@@ -112,18 +130,61 @@ search-filter-time-type='last_modified'
 [org/gnome/nautilus/window-state]
 initial-size=(890, 550)
 
+[org/gnome/settings-daemon/global-shortcuts]
+applications=['com.microsoft.Edge']
+
+[org/gnome/settings-daemon/global-shortcuts/com.microsoft.Edge]
+shortcuts=[('2EBB6A21F08E0BD07C49C87774A6AF02-launch-element-picker', {'description': <'Entrer en mode Sélecteur'>}), ('2EBB6A21F08E0BD07C49C87774A6AF02-launch-element-zapper', {'description': <"Entrer en mode Zappeur d'élément">}), ('2EBB6A21F08E0BD07C49C87774A6AF02-launch-logger', {'description': <'Ouvrir le journal des requêtes'>}), ('2EBB6A21F08E0BD07C49C87774A6AF02-open-dashboard', {'description': <'Ouvrir le Tableau de bord'>}), ('2EBB6A21F08E0BD07C49C87774A6AF02-relax-blocking-mode', {'description': <'Détendre le mode de blocage'>}), ('2EBB6A21F08E0BD07C49C87774A6AF02-toggle-cosmetic-filtering', {'description': <'Commuter le filtrage esthétique'>}), ('2EBB6A21F08E0BD07C49C87774A6AF02-toggle-javascript', {'description': <'Commuter JavaScript'>})]
+
 [org/gnome/settings-daemon/plugins/color]
 night-light-enabled=true
 night-light-schedule-automatic=false
 night-light-temperature=uint32 2700
 
 [org/gnome/settings-daemon/plugins/media-keys]
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
 screensaver=@as []
 www=['<Super>b']
 
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
+binding='<Super>t'
+command='kgx'
+name='Console'
+
 [org/gnome/shell]
-favorite-apps=['org.gnome.Epiphany.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop']
+enabled-extensions=['blur-my-shell@aunetx', 'nightthemeswitcher@romainvigier.fr']
+favorite-apps=['org.gnome.Epiphany.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop', 'com.microsoft.Edge.desktop', 'com.discordapp.Discord.desktop']
 welcome-dialog-last-shown-version='48.4'
+
+[org/gnome/shell/app-switcher]
+current-workspace-only=true
+
+[org/gnome/shell/extensions/blur-my-shell]
+settings-version=2
+
+[org/gnome/shell/extensions/blur-my-shell/appfolder]
+brightness=0.59999999999999998
+sigma=30
+
+[org/gnome/shell/extensions/blur-my-shell/dash-to-dock]
+blur=true
+brightness=0.59999999999999998
+sigma=30
+static-blur=true
+style-dash-to-dock=0
+
+[org/gnome/shell/extensions/blur-my-shell/panel]
+brightness=0.59999999999999998
+sigma=30
+
+[org/gnome/shell/extensions/blur-my-shell/window-list]
+brightness=0.59999999999999998
+sigma=30
+
+[org/gnome/shell/extensions/nightthemeswitcher/time]
+manual-schedule=true
+nightthemeswitcher-ondemand-keybinding=['']
+sunrise=7.0
 
 [org/gnome/shell/keybindings]
 switch-to-application-1=@as []
@@ -135,8 +196,9 @@ switch-to-application-4=@as []
 locations=@av []
 
 [org/gnome/software]
-check-timestamp=int64 1756911566
+check-timestamp=int64 1757139114
 first-run=false
+flatpak-purge-timestamp=int64 1757148242
 
 [org/gtk/gtk4/settings/file-chooser]
 show-hidden=true

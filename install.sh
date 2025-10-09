@@ -29,6 +29,7 @@ fi
 
 # Apply config
 stow alacritty/
+stow ghostty/
 stow lazygit/
 stow nushell/
 stow nvim/

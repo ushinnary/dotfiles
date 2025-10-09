@@ -1,0 +1,14 @@
+[Unit]
+Description=Vaultwarden Container
+
+[Container]
+Image=docker.io/vaultwarden/server:latest
+ContainerName=vaultwarden
+HostName=vaultwarden
+AutoUpdate=registry
+EnvironmentFile=%h/vaultwarden/.env
+Volume=%h/vaultwarden/data:/data:Z
+Network=host
+
+[Install]
+WantedBy=default.target

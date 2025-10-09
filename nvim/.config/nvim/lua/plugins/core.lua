@@ -1,24 +1,23 @@
 return {
 
 	{ -- plugin spec for catppuccin
-		"catppuccin/nvim",
+		"rebelot/kanagawa.nvim",
 		-- this belongs to no plugin spec and is ignored
 		lazy = false,
-		name = "catppuccin",
+		name = "kanagawa",
 		opts = {
-			flavour = "auto", -- latte, frappe, macchiato, mocha
-			background = { -- :h background
-				light = "latte",
-				dark = "mocha",
+			theme = "wave", -- Load "wave" theme
+			background = { -- map the value of 'background' option to a theme
+				dark = "wave", -- try "dragon" !
+				light = "lotus",
 			},
-			-- transparent_background = true,
 		},
 	},
 
 	{
 		"LazyVim/LazyVim",
 		opts = {
-			colorscheme = "catppuccin",
+			colorscheme = "kanagawa",
 		},
 	},
 }

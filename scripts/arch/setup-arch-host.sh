@@ -5,8 +5,16 @@ sudo pacman -S --needed git avahi \
   terminus-font ttf-dejavu ttf-liberation otf-font-awesome ttf-nerd-fonts-symbols \
   wpa_supplicant ufw podman podman-compose \
   networkmanager pipewire pipewire-pulse bluez bluez-utils bluez-libs distrobox \
-  wget curl unzip wl-clipboard tailscale ttf-nerd-fonts-symbols-mono
+  wget curl unzip wl-clipboard tailscale ttf-nerd-fonts-symbols-mono \
+  rustup zoxide yazi starship nushell stow neovim lazygit fd ripgrep fzf difftastic \
+  snapper
 
+sudo snapper -c root create-config /
+sudo snapper -c root create --description "initial snapshot"
+
+sudo pacman -S --needed snap-pac
+
+sudo chsh -s /usr/bin/nu
 #   # Allow nothing in, everything out
 sudo ufw default deny incoming
 sudo ufw default allow outgoing

@@ -1,3 +1,4 @@
 tmux/plugins
 lazy-lock.json
 history.txt
+systemd/.config/systemd/user/default.target.wants

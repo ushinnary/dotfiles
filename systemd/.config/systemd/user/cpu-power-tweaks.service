@@ -3,7 +3,7 @@ Description=Sets max CPU Power limit
 
 [Service]
 Type=simple
-ExecStart=/home/ushinnary/dotfiles/runnables/cpu-i5-power-management.sh
+ExecStart=/home/ushinnary/dotfiles/runnables/cpu-ryzen-desktop-pm.sh
 
 [Install]
 WantedBy=default.target

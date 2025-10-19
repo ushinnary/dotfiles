@@ -29,15 +29,18 @@ sudo ufw allow 22/tcp
 #   # Turn on the firewall
 sudo ufw enable
 #
-#   # Turn on Docker protections
+#   # Use latest configuration for firewall
 sudo ufw reload
 
 # Enable essential services
 sudo systemctl enable NetworkManager
 sudo systemctl enable bluetooth
 sudo systemctl enable avahi-daemon
+sudo systemctl enable --now sshd
 sudo systemctl enable --now tailscaled
-systemctl --user enable podman.socket
+
+# User services
+systemctl --user enable --now podman.socket
 
 # Detect if running on a laptop (battery present)
 if ls /sys/class/power_supply/BAT* 1>/dev/null 2>&1; then

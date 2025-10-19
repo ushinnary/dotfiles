@@ -942,5 +942,5 @@ use ssh-completions.nu *
 use tar-completions.nu *
 use zellij-completions.nu *
 use zoxide-completions.nu *
-use catppuccin-mocha.nu *
+use ayu.nu *
 use alias.nu 

@@ -14,6 +14,9 @@ sudo snapper -c root create --description "initial snapshot"
 
 sudo pacman -S --needed snap-pac
 
+# Steam input for gamepads
+sudo wget -O /etc/udev/rules.d/60-steam-input.rules https://raw.githubusercontent.com/ValveSoftware/steam-devices/master/60-steam-input.rules
+
 sudo chsh -s /usr/bin/nu
 #   # Allow nothing in, everything out
 sudo ufw default deny incoming

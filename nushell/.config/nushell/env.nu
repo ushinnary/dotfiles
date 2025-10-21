@@ -109,6 +109,9 @@ $env.DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 1
 $env.VISUAL = "nvim"
 $env.EDITOR = "nvim"
 
+try { ^systemctl --user enable --now podman.socket | ignore }
+$env.DOCKER_HOST = $"unix://($env.XDG_RUNTIME_DIR)/podman/podman.sock"
+
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')
 

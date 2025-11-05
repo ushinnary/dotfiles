@@ -33,7 +33,7 @@
     enable = true;
     package = pkgs.gnomeExtensions.gsconnect;
   };
-   environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     gnomeExtensions.blur-my-shell
     gnomeExtensions.just-perfection
     gnomeExtensions.appindicator
@@ -52,5 +52,11 @@
     gnome-tweaks
   ];
 
+  security.pam.services = {
+    login.enableGnomeKeyring = true;
+    gdm.enableGnomeKeyring = true;
+  };
+
+  services.gnome.gnome-keyring.enable = true;
 
 }

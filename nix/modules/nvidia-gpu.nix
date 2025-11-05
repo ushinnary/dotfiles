@@ -1,5 +1,9 @@
-{ config, ... }:
+{ config,pkgs, ... }:
 {
+
+  imports = [
+    ./nvidia-power-limit.nix
+  ];
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
@@ -16,4 +20,10 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+
+  environment.systemPackages = [
+   (pkgs.ollama.override {
+      acceleration = "cuda";
+    })
+  ];
 }

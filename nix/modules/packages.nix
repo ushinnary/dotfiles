@@ -9,25 +9,6 @@
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
     cifs-utils
-    nil
-    alejandra
-    ghostty
-
-    yazi
-    nushell
-    nufmt
-    starship
-    ripgrep
-    fd
-    fzf
-    lazygit
-    zoxide
-    zellij
-    difftastic
-
-    stow
-    neovim
-    git-credential-manager
     wayland-utils
     wl-clipboard
   ];

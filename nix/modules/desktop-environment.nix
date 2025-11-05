@@ -56,6 +56,8 @@
     login.enableGnomeKeyring = true;
     gdm.enableGnomeKeyring = true;
   };
+  services.gvfs.enable = true;
+  services.flatpak.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
 

@@ -6,6 +6,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "i2c"
     ];
     packages = with pkgs; [
       kdePackages.kate

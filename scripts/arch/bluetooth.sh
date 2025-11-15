@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Install bluetooth controls
 sudo pacman -S blueberry

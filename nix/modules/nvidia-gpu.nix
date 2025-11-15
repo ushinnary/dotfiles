@@ -1,4 +1,4 @@
-{ config,pkgs, ... }:
+{ config, pkgs, ... }:
 {
 
   imports = [
@@ -21,9 +21,9 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  environment.systemPackages = [
-   (pkgs.ollama.override {
-      acceleration = "cuda";
-    })
-  ];
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
+
 }

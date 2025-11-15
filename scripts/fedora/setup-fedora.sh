@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 sudo dnf update -y &&
   sudo dnf install openssl-devel cmake libxcb libX11-devel fontconfig-devel perl -y &&
   sudo dnf copr enable atim/lazygit -y &&

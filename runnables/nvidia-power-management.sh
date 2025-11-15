@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 sudo nvidia-smi -pm ENABLED
 sudo nvidia-smi -pl 120
 sudo nvidia-smi --lock-gpu-clocks=0,1695 --mode=1

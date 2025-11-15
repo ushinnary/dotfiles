@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 sudo pacman -S --needed git avahi \
   gstreamer gst-plugins-good gst-plugins-bad \
   openssh vi \

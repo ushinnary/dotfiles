@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 sudo pacman -S ttf-font-awesome \
   ttf-cascadia-mono-nerd \

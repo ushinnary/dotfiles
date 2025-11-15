@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs,lib, ... }:
 {
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
@@ -14,15 +14,20 @@
     epiphany
     gnome-music
   ];
+  programs.dconf.enable = true;
   programs.dconf.profiles.user.databases = [
     {
-      settings = {
+      settings = with lib.gvariant; {
         "org/gnome/mutter" = {
           experimental-features = [
             "scale-monitor-framebuffer" # Enables fractional scaling (125% 150% 175%)
             "variable-refresh-rate" # Enables Variable Refresh Rate (VRR) on compatible displays
             "xwayland-native-scaling" # Scales Xwayland applications to look crisp on HiDPI screens
           ];
+        };
+"org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          gtk-theme = "adw-gtk3-dark";
         };
       };
     }
@@ -50,6 +55,7 @@
     adwaita-fonts
     bibata-cursors
     gnome-tweaks
+    adw-gtk3
   ];
 
   security.pam.services = {

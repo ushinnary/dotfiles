@@ -34,6 +34,7 @@
     zoxide
     zellij
     difftastic
+    dust
 
     stow
     neovim

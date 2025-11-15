@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 sudo pacman -S --needed git base-devel \
   neovim fzf python go \
   ttf-nerd-fonts-symbols-mono lazygit wget curl unzip \

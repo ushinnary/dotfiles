@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 FILE_PATH="$HOME/.gitconfig"
 SEARCH_TEXT="difftastic"

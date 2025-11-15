@@ -15,7 +15,10 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
+    nerd-fonts.ubuntu-mono
   ];
+  fonts.fontDir.enable = true;
+
 
   programs.git = {
     enable = true;

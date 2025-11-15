@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 # List your Flatpak application IDs here, one per line
 flatpaks=(
   com.discordapp.Discord
-  com.github.wwmm.easyeffects
+  me.timschneeberger.jdsp4linux
   com.microsoft.Edge
   com.valvesoftware.Steam
   io.bassi.Amberol
@@ -14,6 +14,8 @@ flatpaks=(
   org.gimp.GIMP
   org.telegram.desktop
   com.heroicgameslauncher.hgl
+  com.github.tchx84.Flatseal
+  io.github.kolunmi.Bazaar
 )
 
 for app in "${flatpaks[@]}"; do

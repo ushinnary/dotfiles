@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 install_font() {
   local fontname="$1"

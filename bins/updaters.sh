@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Function to check and update package manager
 update_func() {
@@ -35,7 +35,7 @@ update_func "rustup" "rustup update"
 update_func "cargo-install-update" "cargo-install-update install-update --all"
 
 # Update ollama if installed
-update_func "ollama" "curl -fsSL https://ollama.com/install.sh | sh"
+# update_func "ollama" "curl -fsSL https://ollama.com/install.sh | sh"
 
 # Update flatpak if installed
 update_func "flatpak" "flatpak update -y"

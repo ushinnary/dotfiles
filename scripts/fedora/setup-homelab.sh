@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 sudo rpm-ostree install cockpit \
   cockpit-system \
   cockpit-ostree \

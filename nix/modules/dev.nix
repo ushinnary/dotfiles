@@ -1,5 +1,8 @@
 { pkgs, ... }:
-{
+ {
+ imports = [
+ ./nixvim/default.nix
+ ];
   environment.systemPackages = with pkgs; [
     nil
     alejandra
@@ -37,7 +40,7 @@
     dust
 
     stow
-    neovim
+    # neovim
     git-credential-manager
 
     vscode

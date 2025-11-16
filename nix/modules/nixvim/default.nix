@@ -1,0 +1,65 @@
+{ pkgs, ... }:
+let
+  nixvim = import (
+    builtins.fetchGit {
+      url = "https://github.com/nix-community/nixvim";
+    }
+  );
+in
+{
+  imports = [
+    # For NixOS
+    nixvim.nixosModules.nixvim
+  ];
+  programs.nixvim = {
+    enable = true;
+    defaultEditor = true;
+
+    colorschemes.ayu.enable = true;
+
+    imports = [
+      ./keymaps.nix
+      ./set.nix
+      ./plugins.nix
+      ./conform.nix
+      ./treesitter.nix
+      ./snacks.nix
+      ./plugins/default.nix
+    ];
+
+    globals = {
+      mapleader = " ";
+    };
+
+    extraPackages = with pkgs; [
+      # base
+      nerd-fonts.jetbrains-mono # Font
+      fzf
+      ripgrep
+      fd
+      # Formatters
+      stylua # Lua formatter
+      csharpier # C# formatter
+      nixfmt-rfc-style # Nix formatter
+      # Linters
+      # golangci-lint # Go linter
+      shellcheck # Shell script linter
+      # Debuggers
+      # gcc
+
+    ];
+
+    diagnostic.settings = {
+      virtual_text = true;
+      signs = true;
+      underline = true;
+      update_in_insert = false;
+      severity_sort = false;
+    };
+
+    plugins = {
+      #bufferline.enable = true;
+      web-devicons.enable = true;
+    };
+  };
+}

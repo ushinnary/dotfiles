@@ -13,6 +13,4 @@
     amberol
   ];
 
-programs.steam.enable = true;
-
 }

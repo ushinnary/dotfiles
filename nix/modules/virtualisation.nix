@@ -10,12 +10,7 @@
     };
   };
 
-  users.users.ushinnary = {
-    # replace `<USERNAME>` with the actual username
-    extraGroups = [
-      "podman"
-    ];
-  };
+  users.users.ushinnary.extraGroups = ["podman"];
 
   environment.systemPackages = with pkgs; [
     podman-compose

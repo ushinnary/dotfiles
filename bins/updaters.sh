@@ -2,15 +2,15 @@
 
 # Function to check and update package manager
 update_func() {
-  local app=$1
-  local update_cmd=$2
+	app="$1"
+	update_cmd="$2"
 
-  if command -v "$app" >/dev/null; then
-    echo "$update_cmd is installed. Running update..."
-    eval "$update_cmd"
-  else
-    echo "$app is not installed on this system."
-  fi
+	if command -v "$app" >/dev/null; then
+		echo "$update_cmd is installed. Running update..."
+		eval "$update_cmd"
+	else
+		echo "$app is not installed on this system."
+	fi
 }
 
 # Update apt if installed

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Get the filename and format from the command line argument
 filename=$1

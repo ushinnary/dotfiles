@@ -1,27 +1,10 @@
 { pkgs, ... }:
- {
- imports = [
- ./nixvim/default.nix
- ];
+{
+  imports = [
+    ./nixvim/default.nix
+  ];
   environment.systemPackages = with pkgs; [
-    nil
-    alejandra
-    rust-analyzer
-    vscode-css-languageserver
-    #docker-language-server
-    vtsls
-    sqls
-    yaml-language-server
-    vue-language-server
-    tailwindcss-language-server
-    svelte-language-server
-    angular-language-server
-    lua-language-server
-    csharpier
-    csharp-ls
     ast-grep
-    biome
-    lemminx
 
     ghostty
     vim

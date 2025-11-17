@@ -15,10 +15,9 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
-    nerd-fonts.ubuntu-mono
+    nerd-fonts.adwaita-mono
   ];
   fonts.fontDir.enable = true;
-
 
   programs.git = {
     enable = true;

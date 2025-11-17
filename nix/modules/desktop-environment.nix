@@ -1,4 +1,4 @@
-{ pkgs,lib, ... }:
+{ pkgs, lib, ... }:
 {
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
@@ -17,7 +17,7 @@
   programs.dconf.enable = true;
   programs.dconf.profiles.user.databases = [
     {
-      settings = with lib.gvariant; {
+      settings = {
         "org/gnome/mutter" = {
           experimental-features = [
             "scale-monitor-framebuffer" # Enables fractional scaling (125% 150% 175%)
@@ -25,7 +25,7 @@
             "xwayland-native-scaling" # Scales Xwayland applications to look crisp on HiDPI screens
           ];
         };
-"org/gnome/desktop/interface" = {
+        "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
           gtk-theme = "adw-gtk3-dark";
         };
@@ -55,7 +55,6 @@
     adwaita-fonts
     bibata-cursors
     gnome-tweaks
-    adw-gtk3
   ];
 
   security.pam.services = {

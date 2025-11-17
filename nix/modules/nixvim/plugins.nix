@@ -33,4 +33,24 @@
   plugins.todo-comments = {
     enable = true;
   };
+
+  plugins.neoscroll = {
+    enable = true;
+    autoLoad = true;
+  };
+
+  plugins.colorizer = {
+    enable = true;
+    autoLoad = true;
+  };
+
+  plugins.dashboard = {
+    enable = true;
+    autoLoad = true;
+  };
+
+  plugins.nix = {
+    enable = true;
+    autoLoad = true;
+  };
 }

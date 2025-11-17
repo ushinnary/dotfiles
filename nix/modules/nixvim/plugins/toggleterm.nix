@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   plugins.toggleterm = {
     enable = true;

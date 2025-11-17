@@ -3,7 +3,7 @@
   lsp.servers.roslyn_ls = {
     enable = true;
 
-    settings = {
+    config = {
       cmd = [
         "${lib.getExe' pkgs.roslyn-ls "Microsoft.CodeAnalysis.LanguageServer"}"
         "--logLevel"

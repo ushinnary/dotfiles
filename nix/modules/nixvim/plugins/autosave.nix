@@ -2,7 +2,6 @@
   plugins.auto-save = {
     enable = true;
     autoLoad = true;
-    #testsave
   };
   keymaps = [
     {
@@ -13,7 +12,7 @@
         "x"
         "s"
       ];
-      action = "<cmd>w!<cr><esc>";
+      action = "<cmd>wa!<cr><esc>";
     }
   ];
 }

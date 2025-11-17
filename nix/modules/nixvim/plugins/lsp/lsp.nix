@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -16,12 +14,6 @@
       enable = true;
       inlayHints = true;
       servers = {
-        # omnisharp = {
-        #   enable = true;
-        # };
-        # superhtml = {
-        #   enable = true;
-        # };
         sqls = {
           enable = true;
         };
@@ -52,18 +44,36 @@
         jsonls = {
           enable = true;
         };
-        # helm_ls = {
-        #   enable = true;
-        #   extraOptions = {
-        #     settings = {
-        #       "helm_ls" = {
-        #         yamlls = {
-        #           path = "${pkgs.yaml-language-server}/bin/yaml-language-server";
-        #         };
-        #       };
-        #     };
-        #   };
-        # };
+        biome = {
+          enable = true;
+        };
+
+        cssls = {
+          enable = true;
+        };
+
+        emmet_language_server = {
+          enable = true;
+        };
+
+        html = {
+          enable = true;
+        };
+
+        lemminx = {
+          enable = true;
+        };
+        vtsls = {
+          enable = true;
+        };
+        vue_ls = {
+          enable = true;
+        };
+        rust_analyzer = {
+          enable = true;
+          installCargo = true;
+          installRustc = true;
+        };
         yamlls = {
           enable = true;
           extraOptions = {

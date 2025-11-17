@@ -1,4 +1,3 @@
-{ config, pkgs, ... }:
 {
   imports = [
     ./lang/nix.nix
@@ -12,10 +11,13 @@
     ./autosave.nix
     ./yazi.nix
     ./toggleterm.nix
+    ./smear-cursor.nix
     ./bufferline.nix
+    ./notify.nix
     ./ts-comments.nix
     ./lsp/blink.nix
     ./lsp/roslyn.nix
     ./lsp/lsp.nix
+    ./lsp/ast_grep.nix
   ];
 }

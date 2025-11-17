@@ -14,6 +14,7 @@ in
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
+    clipboard.providers.wl-copy.enable = true;
 
     colorschemes.ayu.enable = true;
 
@@ -32,8 +33,6 @@ in
     };
 
     extraPackages = with pkgs; [
-      # base
-      nerd-fonts.jetbrains-mono # Font
       fzf
       ripgrep
       fd

@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   plugins.lualine = {
     enable = true;
@@ -15,7 +14,7 @@
             "alpha"
           ];
         };
-        theme = "catppuccin";
+        theme = "ayu";
       };
       sections = {
         lualine_a = [

@@ -1,6 +1,6 @@
 {
   plugins = {
-    # rustaceanvim.enable = true;
+    rustaceanvim.enable = true;
     crates.enable = true;
   };
 }

@@ -50,6 +50,10 @@
 
         cssls = {
           enable = true;
+          cmd = [
+            "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server"
+            "--stdio"
+          ];
         };
 
         emmet_language_server = {
@@ -58,6 +62,10 @@
 
         html = {
           enable = true;
+          cmd = [
+            "${pkgs.vscode-langservers-extracted}/bin/vscode-html-language-server"
+            "--stdio"
+          ];
         };
 
         lemminx = {
@@ -69,11 +77,14 @@
         vue_ls = {
           enable = true;
         };
-        rust_analyzer = {
+        nixd = {
           enable = true;
-          installCargo = true;
-          installRustc = true;
         };
+        # rust_analyzer = {
+        #   enable = true;
+        #   installCargo = true;
+        #   installRustc = true;
+        # };
         yamlls = {
           enable = true;
           extraOptions = {

@@ -1,33 +1,38 @@
-{ pkgs, ... }:
 {
-  imports = [
-    ./nixvim/default.nix
-  ];
-  environment.systemPackages = with pkgs; [
-    ast-grep
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.my.software;
+in
+{
+  imports = [ ./nixvim/default.nix ];
 
-    ghostty
-    vim
+  environment.systemPackages = lib.mkIf cfg.enableDevPackages [
+    pkgs.ast-grep
 
-    yazi
-    nushell
-    nufmt
-    starship
-    ripgrep
-    fd
-    fzf
-    lazygit
-    zoxide
-    zellij
-    difftastic
-    dust
+    pkgs.ghostty
+    pkgs.vim
 
-    stow
-    # neovim
-    git-credential-manager
+    pkgs.yazi
+    pkgs.nushell
+    pkgs.nufmt
+    pkgs.starship
+    pkgs.ripgrep
+    pkgs.fd
+    pkgs.fzf
+    pkgs.lazygit
+    pkgs.zoxide
+    pkgs.zellij
+    pkgs.difftastic
+    pkgs.dust
 
-    vscode
-    zed-editor
+    pkgs.stow
+    pkgs.git-credential-manager
+
+    pkgs.vscode
   ];
 
   programs.nix-ld = {

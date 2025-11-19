@@ -1,64 +1,74 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+with lib;
 let
   nixvim = import (
     builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
     }
   );
+  cfg = config.my.software;
 in
 {
   imports = [
     # For NixOS
     nixvim.nixosModules.nixvim
   ];
-  programs.nixvim = {
-    enable = true;
-    defaultEditor = true;
-    clipboard.providers.wl-copy.enable = true;
 
-    colorschemes.ayu.enable = true;
+  config = mkIf cfg.enableDevPackages {
+    programs.nixvim = {
+      enable = true;
+      defaultEditor = true;
+      clipboard.providers.wl-copy.enable = true;
 
-    imports = [
-      ./keymaps.nix
-      ./set.nix
-      ./plugins.nix
-      ./conform.nix
-      ./treesitter.nix
-      ./snacks.nix
-      ./plugins/default.nix
-    ];
+      colorschemes.ayu.enable = true;
 
-    globals = {
-      mapleader = " ";
-    };
+      imports = [
+        ./keymaps.nix
+        ./set.nix
+        ./plugins.nix
+        ./conform.nix
+        ./treesitter.nix
+        ./snacks.nix
+        ./plugins/default.nix
+      ];
 
-    extraPackages = with pkgs; [
-      fzf
-      ripgrep
-      fd
-      # Formatters
-      stylua # Lua formatter
-      csharpier # C# formatter
-      nixfmt-rfc-style # Nix formatter
-      # Linters
-      # golangci-lint # Go linter
-      shellcheck # Shell script linter
-      # Debuggers
-      # gcc
+      globals = {
+        mapleader = " ";
+      };
 
-    ];
+      extraPackages = with pkgs; [
+        fzf
+        ripgrep
+        fd
+        # Formatters
+        stylua # Lua formatter
+        csharpier # C# formatter
+        nixfmt-rfc-style # Nix formatter
+        # Linters
+        # golangci-lint # Go linter
+        shellcheck # Shell script linter
+        # Debuggers
+        # gcc
 
-    diagnostic.settings = {
-      virtual_text = true;
-      signs = true;
-      underline = true;
-      update_in_insert = false;
-      severity_sort = false;
-    };
+      ];
 
-    plugins = {
-      #bufferline.enable = true;
-      web-devicons.enable = true;
+      diagnostic.settings = {
+        virtual_text = true;
+        signs = true;
+        underline = true;
+        update_in_insert = false;
+        severity_sort = false;
+      };
+
+      plugins = {
+        #bufferline.enable = true;
+        web-devicons.enable = true;
+      };
     };
   };
 }

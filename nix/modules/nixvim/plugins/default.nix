@@ -19,5 +19,6 @@
     ./lsp/roslyn.nix
     ./lsp/lsp.nix
     ./lsp/ast_grep.nix
+    ./gitsigns.nix
   ];
 }

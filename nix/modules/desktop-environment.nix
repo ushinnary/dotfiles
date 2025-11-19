@@ -25,10 +25,6 @@
             "xwayland-native-scaling" # Scales Xwayland applications to look crisp on HiDPI screens
           ];
         };
-        "org/gnome/desktop/interface" = {
-          color-scheme = "prefer-dark";
-          gtk-theme = "adw-gtk3-dark";
-        };
       };
     }
   ];
@@ -55,6 +51,7 @@
     adwaita-fonts
     bibata-cursors
     gnome-tweaks
+    pavucontrol
   ];
 
   security.pam.services = {

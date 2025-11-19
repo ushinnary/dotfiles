@@ -13,4 +13,6 @@
     amberol
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
 }

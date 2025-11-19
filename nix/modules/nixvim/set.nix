@@ -15,7 +15,13 @@
     scrolloff = 8;
     signcolumn = "yes";
     updatetime = 50;
+    timeoutlen = 250;
     foldlevelstart = 99;
+    # Set encoding type
+    encoding = "utf-8";
+    fileencoding = "utf-8";
+    # Maximum number of items to show in the popup menu (0 means "use available screen space")
+    pumheight = 0;
   };
 
   extraConfigLua = ''

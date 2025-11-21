@@ -6,11 +6,11 @@
 }:
 with lib;
 let
-  cfg = config.my.nvidia;
+  cfg = config.ushinnary.nvidia;
 in
 {
   options = {
-    my.nvidia.powerLimit = lib.mkOption {
+    ushinnary.nvidia.powerLimit = lib.mkOption {
       type = lib.types.ints.positive;
       description = "Set power limit to nvidia GPU";
       default = 120;

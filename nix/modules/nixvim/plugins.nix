@@ -111,11 +111,6 @@
     autoLoad = true;
   };
 
-  plugins.dashboard = {
-    enable = true;
-    autoLoad = true;
-  };
-
   plugins.nix = {
     enable = true;
     autoLoad = true;

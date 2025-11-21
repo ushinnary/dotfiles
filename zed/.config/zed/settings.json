@@ -7,11 +7,12 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "icon_theme": "Zed (Default)",
   "agent": {
     "default_model": {
       "provider": "ollama",
       "model": "qwen3:14b"
-    },
+    }
   },
   "telemetry": {
     "metrics": false,
@@ -46,8 +47,8 @@
   "buffer_line_height": "standard",
   "theme": {
     "mode": "system",
-    "light": "Catppuccin Latte",
-    "dark": "Catppuccin Mocha (Blur)"
+    "light": "Ayu Light",
+    "dark": "Ayu Dark"
   },
   "base_keymap": "VSCode",
   "relative_line_numbers": true,

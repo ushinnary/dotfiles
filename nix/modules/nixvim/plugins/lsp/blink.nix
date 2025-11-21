@@ -2,6 +2,7 @@
 {
   extraPlugins = with pkgs.vimPlugins; [
     blink-ripgrep-nvim
+    blink-cmp-avante
   ];
 
   plugins = {
@@ -15,6 +16,17 @@
       setupLspCapabilities = true;
 
       settings = {
+        fuzzy = {
+          implementation = "rust";
+          sorts = [
+            "exact"
+            "score"
+            "sort_text"
+          ];
+          prebuilt_binaries = {
+            download = false;
+          };
+        };
         keymap = {
           "<C-space>" = [
             "show"
@@ -105,6 +117,37 @@
               name = "Spell";
               module = "blink-cmp-spell";
               score_offset = 1;
+            };
+            path = {
+              score_offset = 55;
+              opts = {
+                # Toggle support for path completions from project root. Default normal behavior
+                get_cwd.__raw = ''
+                  function(context)
+                    if vim.g.blink_path_from_cwd == nil then vim.g.blink_path_from_cwd = false end
+
+                    if vim.g.blink_path_from_cwd then
+                      return vim.fn.getcwd()
+                    else
+                      local bufpath = vim.api.nvim_buf_get_name(context.bufnr)
+                      if bufpath == "" then
+                        return vim.fn.getcwd()
+                      end
+                      return vim.fn.fnamemodify(bufpath, ":p:h")
+                    end
+                  end
+                '';
+              };
+            };
+            avante = {
+              module = "blink-cmp-avante";
+              name = "Avante";
+              score_offset = 68;
+              enabled.__raw = ''
+                function()
+                  return vim.bo.filetype == 'AvanteInput'
+                end
+              '';
             };
             git = {
               name = "Git";

@@ -5,7 +5,7 @@
 }:
 with lib;
 let
-  cfg = config.my.cpu;
+  cfg = config.ushinnary.cpu;
 in
 {
   config = mkIf cfg.isAmd {

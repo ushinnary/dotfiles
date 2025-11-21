@@ -11,7 +11,7 @@ let
       url = "https://github.com/nix-community/nixvim";
     }
   );
-  cfg = config.my.software;
+  cfg = config.ushinnary.software;
 in
 {
   imports = [

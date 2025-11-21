@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.my.software;
+  cfg = config.ushinnary.software;
 in
 {
   imports = [ ./nixvim/default.nix ];
@@ -28,6 +28,7 @@ in
     pkgs.zellij
     pkgs.difftastic
     pkgs.dust
+    pkgs.dotnet-runtime_10
 
     pkgs.stow
     pkgs.git-credential-manager

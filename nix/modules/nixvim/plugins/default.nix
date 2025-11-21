@@ -6,7 +6,6 @@
     ./lang/rust.nix
     ./lang/shell.nix
     ./lang/toml.nix
-    ./lazygit.nix
     ./lualine.nix
     ./autosave.nix
     ./yazi.nix
@@ -20,5 +19,6 @@
     ./lsp/lsp.nix
     ./lsp/ast_grep.nix
     ./gitsigns.nix
+    ./avante.nix
   ];
 }

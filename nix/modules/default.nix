@@ -5,19 +5,19 @@
 with lib;
 {
   options = {
-    my.nvidia.enable = mkOption {
+    ushinnary.nvidia.enable = mkOption {
       type = types.bool;
       default = true;
       description = "Enable NVIDIA GPU Drivers for desktop PC";
     };
 
-    my.software.enableDevPackages = mkOption {
+    ushinnary.software.enableDevPackages = mkOption {
       type = types.bool;
       default = true;
       description = "Enable all dev packages with Nixvim included";
     };
 
-    my.cpu.isAmd = mkOption {
+    ushinnary.cpu.isAmd = mkOption {
       type = types.bool;
       default = true;
       description = "Apply AMD tweaks for CPU";

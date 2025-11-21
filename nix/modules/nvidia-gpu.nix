@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.my.nvidia;
+  cfg = config.ushinnary.nvidia;
 in
 {
 

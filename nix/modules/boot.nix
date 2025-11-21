@@ -1,4 +1,4 @@
-{ pkgs, nix, ... }:
+{ pkgs, ... }:
 {
   boot = {
 
@@ -36,9 +36,9 @@
   hardware.i2c.enable = true;
 
   nix.gc = {
-  automatic = true;
-  dates = "weekly";
-  options = "--delete-older-than 30d";
-};
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
 }

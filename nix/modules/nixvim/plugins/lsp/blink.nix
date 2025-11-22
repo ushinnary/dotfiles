@@ -2,7 +2,6 @@
 {
   extraPlugins = with pkgs.vimPlugins; [
     blink-ripgrep-nvim
-    blink-cmp-avante
   ];
 
   plugins = {
@@ -138,16 +137,6 @@
                   end
                 '';
               };
-            };
-            avante = {
-              module = "blink-cmp-avante";
-              name = "Avante";
-              score_offset = 68;
-              enabled.__raw = ''
-                function()
-                  return vim.bo.filetype == 'AvanteInput'
-                end
-              '';
             };
             git = {
               name = "Git";

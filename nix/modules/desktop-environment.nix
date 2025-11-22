@@ -38,14 +38,20 @@
     gnomeExtensions.blur-my-shell
     gnomeExtensions.just-perfection
     gnomeExtensions.appindicator
+    gnomeExtensions.night-theme-switcher
+    gnomeExtensions.dash-to-dock
+    gnomeExtensions.vitals
     nautilus
+    sushi
     gnome-calculator
     gnome-calendar
     gnome-characters
     gnome-clocks
     gnome-contacts
     gnome-weather
+    simple-scan
     loupe
+    dconf-editor
     simple-scan
     adwaita-icon-theme
     adwaita-fonts
@@ -53,6 +59,7 @@
     gnome-tweaks
     pavucontrol
   ];
+  services.power-profiles-daemon.enable = true;
 
   security.pam.services = {
     login.enableGnomeKeyring = true;

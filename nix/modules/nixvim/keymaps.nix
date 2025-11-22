@@ -70,5 +70,16 @@
       mode = [ "i" ];
       action = "<esc><cmd>m .-2<cr>==gi";
     }
+    # Search
+    {
+      mode = [ "v" ];
+      key = "<C-f>";
+      action = ''
+        y
+        :let @/ = '\V' . escape(@", '/\')<CR>
+        :set hlsearch<CR>
+      '';
+      options.silent = true;
+    }
   ];
 }

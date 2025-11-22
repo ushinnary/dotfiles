@@ -19,6 +19,5 @@
     ./lsp/lsp.nix
     ./lsp/ast_grep.nix
     ./gitsigns.nix
-    ./avante.nix
   ];
 }

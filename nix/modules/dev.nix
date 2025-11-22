@@ -28,6 +28,7 @@ in
     pkgs.zellij
     pkgs.difftastic
     pkgs.dust
+    pkgs.gh
     pkgs.dotnet-runtime_10
 
     pkgs.stow

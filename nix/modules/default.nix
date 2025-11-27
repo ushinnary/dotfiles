@@ -29,6 +29,7 @@ with lib;
     ./nvidia-gpu.nix
     ./applications.nix
     ./boot.nix
+    ./audio.nix
     ./desktop-environment.nix
     ./dev.nix
     ./firewall.nix

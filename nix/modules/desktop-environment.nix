@@ -51,13 +51,17 @@
     gnome-weather
     simple-scan
     loupe
+    showtime
     dconf-editor
     simple-scan
     adwaita-icon-theme
     adwaita-fonts
     bibata-cursors
     gnome-tweaks
+    refine
     pavucontrol
+    gnome-disk-utility
+    easyeffects
   ];
   services.power-profiles-daemon.enable = true;
 
@@ -69,5 +73,23 @@
   services.flatpak.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
+
+  fonts = {
+    packages = with pkgs; [
+      inter
+      jetbrains-mono
+    ];
+
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "Inter" ];
+        sansSerif = [ "Inter" ];
+        monospace = [ "JetBrains Mono" ];
+      };
+
+      hinting.style = "none";
+      subpixel.rgba = "rgb";
+    };
+  };
 
 }

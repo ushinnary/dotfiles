@@ -15,7 +15,6 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
-    nerd-fonts.adwaita-mono
   ];
   fonts.fontDir.enable = true;
 

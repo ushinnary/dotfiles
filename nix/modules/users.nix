@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   users.users.ushinnary = {
     isNormalUser = true;
@@ -6,7 +6,6 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "i2c"
     ];
   };
 }

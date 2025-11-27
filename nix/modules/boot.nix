@@ -1,18 +1,6 @@
 { pkgs, ... }:
 {
   boot = {
-
-    plymouth = {
-      enable = true;
-      theme = "lone";
-      themePackages = with pkgs; [
-        # By default we would install all themes
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ "lone" ];
-        })
-      ];
-    };
-
     # Enable "Silent boot"
     consoleLogLevel = 3;
     initrd.verbose = false;
@@ -30,15 +18,15 @@
   };
 
   environment.systemPackages = with pkgs; [
-    ddcutil
   ];
-
-  hardware.i2c.enable = true;
 
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 30d";
+    options = "--delete-older-than 3d";
   };
+  nix.settings.auto-optimise-store = true;
+
+  location.provider = "geoclue2";
 
 }

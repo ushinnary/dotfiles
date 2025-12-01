@@ -9,13 +9,7 @@ let
   cfg = config.ushinnary.nvidia;
 in
 {
-  options = {
-    ushinnary.nvidia.powerLimit = lib.mkOption {
-      type = lib.types.ints.positive;
-      description = "Set power limit to nvidia GPU";
-      default = 120;
-    };
-  };
+  # Option declarations for NVIDA are centralised in modules/options.nix
 
   config = mkIf cfg.enable {
     systemd.services."set-nvidia-power-limit" = {

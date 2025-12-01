@@ -1,31 +1,11 @@
 {
-  lib,
   ...
 }:
-with lib;
 {
-  options = {
-    ushinnary.nvidia.enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable NVIDIA GPU Drivers for desktop PC";
-    };
-
-    ushinnary.software.enableDevPackages = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable all dev packages with Nixvim included";
-    };
-
-    ushinnary.cpu.isAmd = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Apply AMD tweaks for CPU";
-    };
-
-  };
+  # Option declarations moved to modules/options.nix
 
   imports = [
+    ./options.nix
     ./nvidia-gpu.nix
     ./applications.nix
     ./boot.nix

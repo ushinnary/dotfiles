@@ -35,6 +35,7 @@ in
     pkgs.git-credential-manager
 
     pkgs.vscode
+    pkgs.antigravity
   ];
 
   programs.nix-ld = {

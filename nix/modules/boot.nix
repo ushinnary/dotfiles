@@ -27,6 +27,4 @@
   };
   nix.settings.auto-optimise-store = true;
 
-  location.provider = "geoclue2";
-
 }

@@ -15,6 +15,7 @@
     ./firewall.nix
     ./gaming.nix
     ./locale.nix
+    ./location.nix
     ./packages.nix
     ./users.nix
     ./virtualisation.nix

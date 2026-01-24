@@ -23,7 +23,7 @@
     package = pkgs.gitFull;
     config = {
       credential = {
-        helper = "libsecret";
+        helper = "manager";
       };
     };
   };

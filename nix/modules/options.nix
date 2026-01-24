@@ -17,12 +17,18 @@ with lib;
           description = "Enable NVIDIA GPU Drivers for desktop PC";
         };
 
+        open = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Use open source NVIDIA drivers";
+        };
+
         # powerLimit is an integer when used but defaults to `false` here to
         # follow the user's instruction. The service using this value should
         # be gated by `enable` (so the false default won't be used at runtime).
         powerLimit = mkOption {
-          type = lib.types.ints.positive;
-          default = 120;
+          type = with types; either bool int;
+          default = false;
           description = "Set power limit to nvidia GPU (positive int) or false to disable";
         };
       };
@@ -46,6 +52,14 @@ with lib;
           type = types.bool;
           default = false;
           description = "Enable all dev packages with Nixvim included";
+        };
+      };
+
+      gaming = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable gaming-related packages and configurations";
         };
       };
 

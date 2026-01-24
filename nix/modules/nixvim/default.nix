@@ -2,21 +2,17 @@
   pkgs,
   config,
   lib,
+  inputs,
   ...
 }:
 with lib;
 let
-  nixvim = import (
-    builtins.fetchGit {
-      url = "https://github.com/nix-community/nixvim";
-    }
-  );
   cfg = config.ushinnary.software;
 in
 {
   imports = [
     # For NixOS
-    nixvim.nixosModules.nixvim
+    inputs.nixvim.nixosModules.nixvim
   ];
 
   config = mkIf cfg.enableDevPackages {

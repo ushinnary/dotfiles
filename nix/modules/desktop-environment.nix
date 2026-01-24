@@ -1,8 +1,9 @@
 { pkgs, ... }:
 {
 
-  import = [
+  imports = [
     ./DE/gnome.nix
+    ./DE/cosmic.nix
   ];
   environment.systemPackages = with pkgs; [
     bibata-cursors

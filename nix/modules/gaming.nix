@@ -1,8 +1,15 @@
 {
+  config,
   pkgs,
+  lib,
   ...
 }:
+with lib;
+let
+  cfg = config.ushinnary.gaming;
+in
 {
+  config = mkIf cfg.enable {
   environment.systemPackages = with pkgs; [
     mangohud
   ];
@@ -33,4 +40,5 @@
   };
 
   users.users.ushinnary.extraGroups = [ "gamemode" ];
+  };
 }

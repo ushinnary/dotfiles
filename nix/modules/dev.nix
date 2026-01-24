@@ -29,17 +29,22 @@ in
     pkgs.difftastic
     pkgs.dust
     pkgs.gh
-    pkgs.dotnet-runtime_10
+    pkgs.dotnet-sdk
 
     pkgs.stow
     pkgs.git-credential-manager
 
     pkgs.vscode
-    pkgs.antigravity
+    # pkgs.antigravity
   ];
 
   programs.nix-ld = {
     enable = true;
     # libraries = [ pkgs.zlib pkgs.openssl ];
+  };
+    
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 }

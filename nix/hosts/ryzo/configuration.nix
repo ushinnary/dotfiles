@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -8,19 +13,24 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "ryzo"; 
+  networking.hostName = "ryzo";
   networking.networkmanager.enable = true;
 
-  time.timeZone = "Europe/Paris"; # Change this to your timezone
+  #time.timeZone = "Europe/Paris"; # Change this to your timezone
   # Locale is set via modules/locale.nix
 
   # Enable the custom options
   ushinnary = {
-    nvidia.enable = true; 
+    amd.enable = true;
     desktopEnvironment.gnome = true;
     software.enableDevPackages = true;
     gaming.enable = true;
@@ -34,5 +44,5 @@
     users.ushinnary = import ../../modules/home.nix;
   };
 
-  system.stateVersion = "25.11"; 
+  system.stateVersion = "25.11";
 }

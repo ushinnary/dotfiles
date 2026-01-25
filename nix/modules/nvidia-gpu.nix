@@ -32,11 +32,6 @@ in
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
-    services.ollama = {
-      enable = true;
-      acceleration = "cuda";
-    };
-
     environment.systemPackages = with pkgs; [
       davinci-resolve-studio
     ];

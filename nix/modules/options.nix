@@ -33,6 +33,14 @@ with lib;
         };
       };
 
+      amd = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable AMD GPU Drivers for desktop PC";
+        };
+      };
+
       desktopEnvironment = {
         gnome = mkOption {
           type = types.bool;

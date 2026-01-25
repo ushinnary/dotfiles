@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # List your Flatpak application IDs here, one per line
 flatpaks=(

@@ -7,6 +7,7 @@
   imports = [
     ./options.nix
     ./nvidia-gpu.nix
+    ./amd-gpu.nix
     ./applications.nix
     ./boot.nix
     ./audio.nix

@@ -24,6 +24,7 @@
     config = {
       credential = {
         helper = "manager";
+        credentialStore = "secretservice";
       };
     };
   };

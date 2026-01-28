@@ -1,6 +1,6 @@
 # Zotac Zone NixOS Installation Guide
 
-This guide will help you install NixOS on your Zotac Zone gaming handheld with a Steam Deck-like experience.
+This guide will help you install NixOS on your Zotac Zone gaming handheld with a minimal, performance-oriented setup similar to CachyOS.
 
 ## 📋 Hardware Specifications
 
@@ -8,6 +8,8 @@ This guide will help you install NixOS on your Zotac Zone gaming handheld with a
 - **GPU**: AMD Radeon 780M (RDNA3 integrated)
 - **Display**: 7" OLED, 1920x1080, 120Hz
 - **RAM**: 16GB LPDDR5X
+- **Storage**: NVMe SSD + MicroSD card slot
+- **Kernel**: Linux Zen (performance-oriented)
 
 ## 🔧 Pre-Installation Requirements
 
@@ -18,20 +20,11 @@ This guide will help you install NixOS on your Zotac Zone gaming handheld with a
 
 ## 📥 Step 1: Create NixOS Installation Media
 
-### Download NixOS ISO
-
 ```bash
-# Download the latest NixOS Minimal ISO (recommended for handhelds)
+# Download NixOS Minimal ISO
 wget https://channels.nixos.org/nixos-unstable/latest-nixos-minimal-x86_64-linux.iso
-```
 
-### Create Bootable USB
-
-```bash
-# Find your USB device (be careful to identify the correct one!)
-lsblk
-
-# Write the ISO to USB (replace /dev/sdX with your USB device)
+# Create bootable USB
 sudo dd if=latest-nixos-minimal-x86_64-linux.iso of=/dev/sdX bs=4M status=progress conv=fsync
 ```
 
@@ -39,27 +32,21 @@ sudo dd if=latest-nixos-minimal-x86_64-linux.iso of=/dev/sdX bs=4M status=progre
 
 1. Insert USB into Zotac Zone
 2. Power on while holding **Volume Down** to enter BIOS
-3. Disable Secure Boot (if enabled)
+3. Disable Secure Boot
 4. Set USB as first boot device
 5. Save and exit BIOS
 
 ## 💾 Step 3: Partition Your Drive
 
-Once booted into the NixOS installer:
-
 ```bash
 # Connect to WiFi
 sudo nmtui
 
-# Identify your drive (usually nvme0n1)
-lsblk
-
 # Partition the drive
 sudo parted /dev/nvme0n1 -- mklabel gpt
-sudo parted /dev/nvme0n1 -- mkpart primary 512MB -8GB   # Root partition
+sudo parted /dev/nvme0n1 -- mkpart primary 512MB -8GB   # Root
 sudo parted /dev/nvme0n1 -- mkpart primary linux-swap -8GB 100%  # Swap
 sudo parted /dev/nvme0n1 -- mkpart ESP fat32 1MB 512MB  # EFI
-sudo parted /dev/nvme0n1 -- set 3 esp on
 
 # Format partitions
 sudo mkfs.ext4 -L nixos /dev/nvme0n1p1
@@ -76,236 +63,126 @@ sudo swapon /dev/disk/by-label/swap
 ## 📝 Step 4: Generate Hardware Configuration
 
 ```bash
-# Generate the hardware configuration
+# Generate hardware config
 sudo nixos-generate-config --root /mnt
 
-# View the generated config to copy UUIDs
-cat /mnt/etc/nixos/hardware-configuration.nix
-```
-
-## 📦 Step 5: Clone Your Dotfiles
-
-```bash
-# Install git
-nix-env -iA nixos.git
-
-# Clone dotfiles repository
-sudo git clone https://github.com/ushinnary/dotfiles.git /mnt/home/ushinnary/dotfiles
-
-# Copy the generated hardware-configuration.nix
+# Copy the generated config
 sudo cp /mnt/etc/nixos/hardware-configuration.nix /mnt/home/ushinnary/dotfiles/nix/hosts/zotac-zone/
 ```
 
-**Important**: Edit the `hardware-configuration.nix` in your dotfiles to use the correct UUIDs from the generated file.
-
-## 🛠️ Step 6: Install NixOS
+## 📦 Step 5: Install NixOS
 
 ```bash
-# Navigate to the dotfiles directory
-cd /mnt/home/ushinnary/dotfiles/nix
+# Clone dotfiles
+sudo git clone https://github.com/YOUR_USERNAME/dotfiles.git /mnt/home/ushinnary/dotfiles
 
-# Install NixOS with the zotac-zone configuration
+# Install NixOS
+cd /mnt/home/ushinnary/dotfiles/nix
 sudo nixos-install --flake .#zotac-zone --no-root-passwd
 
-# Set the user password when prompted
-# The system will reboot automatically
+# Set user password when prompted
 ```
 
-## 🎮 Post-Installation Configuration
+## 🎮 Post-Installation Setup
 
 ### First Boot
 
-1. Log in with your user account
-2. Connect to WiFi using `nmtui` or your desktop environment
-
-### Update the System
-
-```bash
-cd ~/dotfiles/nix
-sudo nixos-rebuild switch --flake .#zotac-zone
-```
+1. Log in as ushinnary
+2. Connect to WiFi using `nmtui`
 
 ### Install Decky Loader
 
-Decky Loader provides plugins for Steam's Game Mode (like PowerTools, vibrantDeck, etc.):
-
 ```bash
-# Run the official Decky Loader installer
+# Install Decky Loader
 curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh
-
-# Or for the prerelease version with latest features:
-curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_prerelease.sh | sh
 ```
 
-After installation, access Decky by pressing the **Quick Access** button (...) in Steam Game Mode.
+### Install SimpleTDP Plugin
 
-#### Recommended Decky Plugins
-
-- **PowerTools** - CPU/GPU power management
-- **vibrantDeck** - Screen saturation control (great for OLED)
-- **ProtonDB Badges** - See game compatibility ratings
-- **SteamGridDB** - Custom game artwork
-- **AutoFlatpaks** - Manage Flatpak apps in Game Mode
-- **Battery Tracker** - Detailed battery stats
+1. Open Steam → Power button → Decky Loader
+2. Go to **Store** tab
+3. Search for **SimpleTDP**
+4. Install and configure TDP limits
 
 ### Configure Steam Game Mode
 
-For the best handheld experience, set Steam to launch in Game Mode:
+In Steam settings:
+- Set refresh rate to **120Hz**
+- Enable **Variable Refresh Rate**
+- Enable **HDR** for OLED display
 
-```bash
-# Edit your session to auto-start Steam Big Picture
-# This is optional - you can also start it manually
+### MicroSD Card Setup
 
-# To manually start Gamescope session:
-gamescope --steam -f -r 120 -- steam -gamepadui
-```
+The system automatically detects and mounts microSD cards. Insert a microSD card and it will be available at `/run/media/ushinnary/` or through the file manager.
 
-### Set Optimal Display Settings
+## ⚙️ Performance Configuration
 
-In Steam Game Mode Settings:
-1. Go to **Display** → Set refresh rate to **120Hz**
-2. Enable **Variable Refresh Rate**
-3. For OLED: Enable **HDR** if supported by games
-4. Set **Resolution** to **1920x1080** (native)
+### SimpleTDP Settings (via Decky Loader)
 
-### Configure MangoHud
+Recommended TDP profiles:
+- **Performance Mode**: 25-28W
+- **Balanced Mode**: 15-20W  
+- **Power Saving**: 8-12W
 
-The configuration includes MangoHud for performance monitoring. Toggle it with **Shift+F2**.
+### GameMode Integration
 
-Default display includes:
-- FPS and frametime
-- CPU/GPU temperatures
-- Battery level and remaining time
-- RAM/VRAM usage
+GameMode automatically activates when launching games through Steam, providing CPU/GPU performance optimizations.
 
-### Power Management Tips
+### MangoHud
 
-The configuration includes TLP for power management:
+Press **Shift+F2** in games to toggle performance overlay showing FPS, temperatures, and usage.
 
-- **On Battery**: Conservative power saving, CPU boost disabled
-- **On AC**: Full performance mode
-
-To check power status:
-```bash
-sudo tlp-stat -s
-```
-
-## 🔄 Updating Your System
+## 🔄 Updating
 
 ```bash
 cd ~/dotfiles/nix
-
-# Update flake inputs (nixpkgs, home-manager, etc.)
 nix flake update
-
-# Apply updates
 sudo nixos-rebuild switch --flake .#zotac-zone
 ```
 
 ## 🐛 Troubleshooting
 
-### Display Issues
-
-If you experience screen flickering or issues:
+### Decky Loader Issues
 
 ```bash
-# Check if amdgpu is loaded correctly
-lsmod | grep amdgpu
+# Restart Decky Loader
+systemctl --user restart plugin_loader
 
-# Check for GPU errors
-dmesg | grep amdgpu
-```
-
-### Controller Not Detected
-
-```bash
-# Check if the controller is recognized
-cat /proc/bus/input/devices
-
-# Verify udev rules are applied
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-```
-
-### Audio Problems
-
-```bash
-# Restart PipeWire
-systemctl --user restart pipewire pipewire-pulse wireplumber
-
-# Check audio devices
-wpctl status
-```
-
-### WiFi Issues
-
-```bash
-# Restart NetworkManager
-sudo systemctl restart NetworkManager
-
-# Check WiFi status
-nmcli device wifi list
-```
-
-### Decky Loader Not Working
-
-```bash
-# Reinstall Decky Loader
+# Reinstall if needed
 curl -L https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh | sh
-
-# Check the service status
-systemctl --user status plugin_loader
 ```
 
-## 📊 Performance Optimization
+### MicroSD Not Detected
 
-### For Maximum Performance
+```bash
+# Check card detection
+lsblk
 
-- Use **Game Mode** in TLP (when plugged in)
-- Enable **MangoHud** to monitor FPS
-- Use **GameScope** for optimal frame pacing
-- Set frame limit to **120** or **60** FPS in games
+# Remount manually
+sudo mount /dev/mmcblk0p1 /mnt/microsd
+```
 
-### For Maximum Battery Life
+### Performance Issues
 
-- Set refresh rate to **60Hz** in Steam settings
-- Enable **TDP limit** via PowerTools (Decky plugin)
-- Lower screen brightness
-- Use **WiFi Power Saving** mode
-
-## 🎯 Recommended Settings Per Game
-
-| Game Type | Refresh Rate | TDP | Notes |
-|-----------|-------------|-----|-------|
-| Indie/2D | 60-120Hz | 8-12W | Full battery life |
-| AAA (older) | 60Hz | 15-20W | Stable performance |
-| AAA (new) | 40-60Hz | 25-28W | Lower settings |
-| Emulation | 60Hz | 8-15W | Depends on system |
+- Ensure SimpleTDP is properly configured
+- Check that GameMode is activating (run `gamemoded -t`)
+- Verify Vulkan drivers: `vulkaninfo | head -20`
 
 ## 📁 File Locations
 
 - **NixOS Config**: `~/dotfiles/nix/hosts/zotac-zone/`
 - **Decky Plugins**: `~/homebrew/plugins/`
 - **Steam Games**: `~/.steam/steam/steamapps/`
-- **Proton Prefixes**: `~/.steam/steam/steamapps/compatdata/`
+- **MicroSD**: `/run/media/ushinnary/` (auto-mounted)
 
-## 🔗 Useful Resources
+## 🎯 Key Differences from CachyOS
 
-- [NixOS Manual](https://nixos.org/manual/nixos/stable/)
-- [NixOS Hardware](https://github.com/NixOS/nixos-hardware)
-- [Decky Loader](https://decky.xyz/)
-- [ProtonDB](https://www.protondb.com/)
-- [r/ZotacGaming](https://www.reddit.com/r/ZotacGaming/)
-- [r/SteamDeck](https://www.reddit.com/r/SteamDeck/) (Many tips apply)
-
-## 🆘 Getting Help
-
-If you encounter issues:
-
-1. Check the [NixOS Discourse](https://discourse.nixos.org/)
-2. Search the [NixOS GitHub Issues](https://github.com/NixOS/nixpkgs/issues)
-3. Ask on the [NixOS Matrix/Discord](https://nixos.org/community/)
+- **Zen Kernel**: Performance-oriented like CachyOS but from NixOS repos
+- **Minimal Services**: Only essential services, no TLP/power-profiles-daemon
+- **SimpleTDP**: Decky plugin handles all power management
+- **Immutable**: NixOS atomic updates and rollbacks
+- **Declarative**: All configuration managed through Nix files
 
 ---
 
-**Enjoy your Steam Deck-like experience on Zotac Zone!** 🎮
+**Enjoy your minimal, high-performance Zotac Zone setup!** 🎮

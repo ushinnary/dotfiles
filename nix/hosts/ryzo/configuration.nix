@@ -26,7 +26,7 @@
   networking.hostName = "ryzo";
   networking.networkmanager.enable = true;
 
-  #time.timeZone = "Europe/Paris"; # Change this to your timezone
+  time.timeZone = "Europe/Paris"; # Change this to your timezone
   # Locale is set via modules/locale.nix
 
   # Enable the custom options
@@ -35,6 +35,10 @@
     desktopEnvironment.gnome = true;
     software.enableDevPackages = true;
     gaming.enable = true;
+    screen = {
+      refreshRate = 90; # Normal desktop use
+      gamingRefreshRate = 144; # Gaming performance
+    };
   };
 
   # Home Manager Setup

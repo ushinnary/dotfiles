@@ -71,6 +71,46 @@ with lib;
         };
       };
 
+      handheld = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable handheld gaming device optimizations (Steam Deck-like experience)";
+        };
+
+        oledScreen = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable OLED-specific optimizations (HDR, deeper blacks)";
+        };
+
+        refreshRate = mkOption {
+          type = types.int;
+          default = 60;
+          description = "Native refresh rate of the handheld screen (e.g., 120 for Zotac Zone)";
+        };
+      };
+
+      screen = {
+        isOled = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable OLED-specific optimizations (HDR, deeper blacks)";
+        };
+
+        refreshRate = mkOption {
+          type = types.int;
+          default = 60;
+          description = "Default refresh rate for normal desktop use";
+        };
+
+        gamingRefreshRate = mkOption {
+          type = types.int;
+          default = 144;
+          description = "Refresh rate to use when gaming (higher for better performance)";
+        };
+      };
+
       cpu = {
         isAmd = mkOption {
           type = types.bool;

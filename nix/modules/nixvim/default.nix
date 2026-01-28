@@ -21,7 +21,7 @@ in
       defaultEditor = true;
       clipboard.providers.wl-copy.enable = true;
 
-      colorschemes.ayu.enable = true;
+      colorschemes.vscode.enable = true;
 
       imports = [
         ./keymaps.nix

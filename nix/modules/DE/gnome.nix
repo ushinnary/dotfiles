@@ -38,6 +38,29 @@ in
               "xwayland-native-scaling" # Scales Xwayland applications to look crisp on HiDPI screens
             ];
           };
+          "org/gnome/desktop/peripherals/mouse" = {
+            natural-scroll = true; # Enable inverted/natural scroll for mouse
+            acceleration-profile = "flat"; # Use flat acceleration profile for mouse
+          };
+          "org/gnome/desktop/wm/keybindings" = {
+            close = [
+              "<Alt>F4"
+              "<Super>q"
+            ];
+          };
+          "org/gnome/desktop/interface" = {
+            cursor-theme = "Bibata-Modern-Ice";
+          };
+          "org/gnome/shell" = {
+            enabled-extensions = [
+              "appindicatorsupport@rgcjonas.gmail.com"
+              "dash-to-dock@micxgx.gmail.com"
+              "gsconnect@andyholmes.github.io"
+              "just-perfection-desktop@just-perfection"
+              "Vitals@CoreCoding.com"
+              "nightthemeswitcher@romainvigier.fr"
+            ];
+          };
         };
       }
     ];

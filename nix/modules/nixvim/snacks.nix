@@ -13,6 +13,10 @@
       lazygit = {
         enabled = true;
       };
+      explorer = {
+        enabled = true;
+        replace_netrw = true;
+      };
       gh = {
         enabled = true;
         # Buffer keymaps for GitHub buffers
@@ -166,6 +170,24 @@
       key = "<leader>sg";
       mode = [ "n" ];
       action = "<cmd>lua Snacks.picker.grep()<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+      };
+    }
+    {
+      key = "<leader>sk";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.picker.keymaps()<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+      };
+    }
+    {
+      key = "<leader>sw";
+      mode = [ "n" "v" ];
+      action = "<cmd>lua Snacks.picker.grep_word()<CR>";
       options = {
         silent = true;
         noremap = true;
@@ -391,6 +413,64 @@
       action = ''<cmd>lua Snacks.picker.lsp_type_definitions()<cr>'';
       options = {
         desc = "Goto T[y]pe Definition";
+      };
+    }
+    # Code Actions
+    {
+      mode = ["n" "v"];
+      key = "<leader>ca";
+      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+      options = {
+        desc = "Code Action";
+      };
+    }
+    # Diagnostic Navigation
+    {
+      mode = "n";
+      key = "]d";
+      action = "<cmd>lua vim.diagnostic.goto_next()<CR>";
+      options = {
+        desc = "Next Diagnostic";
+      };
+    }
+    {
+      mode = "n";
+      key = "[d";
+      action = "<cmd>lua vim.diagnostic.goto_prev()<CR>";
+      options = {
+        desc = "Prev Diagnostic";
+      };
+    }
+    {
+      mode = "n";
+      key = "]e";
+      action = "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>";
+      options = {
+        desc = "Next Error";
+      };
+    }
+    {
+      mode = "n";
+      key = "[e";
+      action = "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR})<CR>";
+      options = {
+        desc = "Prev Error";
+      };
+    }
+    {
+      mode = "n";
+      key = "]w";
+      action = "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.WARN})<CR>";
+      options = {
+        desc = "Next Warning";
+      };
+    }
+    {
+      mode = "n";
+      key = "[w";
+      action = "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.WARN})<CR>";
+      options = {
+        desc = "Prev Warning";
       };
     }
     # Lazygit

@@ -98,6 +98,30 @@ with lib;
           description = "Apply AMD tweaks for CPU";
         };
       };
+
+      virtualisation = {
+        enable = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Enable virtualization with podman";
+        };
+      };
+
+      powerManagement = {
+        tuned = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Enable tuned for dynamic power management";
+          };
+
+          profile = mkOption {
+            type = types.str;
+            default = "balanced";
+            description = "Tuned profile to use";
+          };
+        };
+      };
     };
   };
 }

@@ -1,7 +1,25 @@
-{ ... }:
+{ pkgs, ... }:
 {
   plugins.treesitter = {
     enable = true;
+    grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+      bash
+      css
+      html
+      javascript
+      json
+      lua
+      markdown
+      nix
+      nu
+      rust
+      regex
+      sql
+      toml
+      typescript
+      yaml
+      xml
+    ];
     settings.indent = {
       enable = true;
     };

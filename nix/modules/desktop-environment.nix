@@ -1,14 +1,22 @@
-{ pkgs, ... }:
 {
-
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+{
   imports = [
     ./DE/gnome.nix
     ./DE/cosmic.nix
   ];
+
+  # Power profiles daemon conflicts with tuned
+  services.power-profiles-daemon.enable = !config.ushinnary.powerManagement.tuned.enable;
+
   environment.systemPackages = with pkgs; [
     bibata-cursors
   ];
-  services.power-profiles-daemon.enable = true;
 
   services.gvfs.enable = true;
   services.flatpak.enable = true;
@@ -37,5 +45,4 @@
       subpixel.rgba = "rgb";
     };
   };
-
 }

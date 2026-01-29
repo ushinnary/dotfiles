@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -52,6 +51,16 @@
   # XDG Desktop Portals (required for Flatpak)
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+  # Enable the custom options
+  ushinnary = {
+    amd.enable = true;
+    gaming.enable = true;
+    powerManagement.tuned = {
+      enable = true;
+      profile = "ryzen-desktop";
+    };
+  };
 
   # Home Manager Setup
   home-manager = {

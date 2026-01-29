@@ -44,7 +44,8 @@ in
         # Formatters
         stylua # Lua formatter
         csharpier # C# formatter
-        nixfmt-rfc-style # Nix formatter
+        nixfmt # Nix formatter
+        nufmt # Nushell formatter
         # Linters
         # golangci-lint # Go linter
         shellcheck # Shell script linter

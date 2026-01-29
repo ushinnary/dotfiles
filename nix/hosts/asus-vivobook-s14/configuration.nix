@@ -23,7 +23,10 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
-  networking.hostName = "ryzo";
+  # Enable zram for better memory management on low-RAM systems
+  zramSwap.enable = true;
+
+  networking.hostName = "asus-vivobook-s14";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Paris"; # Change this to your timezone
@@ -34,14 +37,15 @@
     amd.enable = true;
     desktopEnvironment.gnome = true;
     software.enableDevPackages = true;
-    gaming.enable = true;
+    gaming.enable = false;
+    virtualisation.enable = false;
     screen = {
-      refreshRate = 90; # Normal desktop use
-      gamingRefreshRate = 144; # Gaming performance
+      refreshRate = 60; # 60Hz OLED screen
+      isOled = true;
     };
     powerManagement.tuned = {
       enable = true;
-      profile = "ryzen-desktop";
+      profile = "ryzen-mobile";
     };
   };
 
@@ -55,3 +59,4 @@
 
   system.stateVersion = "25.11";
 }
+

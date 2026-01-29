@@ -5,6 +5,7 @@
     ./lang/md.nix
     ./lang/rust.nix
     ./lang/shell.nix
+    ./lang/nushell.nix
     ./lang/toml.nix
     ./lualine.nix
     ./autosave.nix

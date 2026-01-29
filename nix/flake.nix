@@ -22,10 +22,7 @@
 
   outputs =
     {
-      self,
       nixpkgs,
-      home-manager,
-      nixvim,
       jovian,
       ...
     }@inputs:
@@ -47,6 +44,15 @@
           modules = [
             ./hosts/zotac-zone/configuration.nix
             jovian.nixosModules.default
+          ];
+        };
+
+        # Hostname: asus-vivobook-s14 (Laptop)
+        asus-vivobook-s14 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/asus-vivobook-s14/configuration.nix
           ];
         };
       };

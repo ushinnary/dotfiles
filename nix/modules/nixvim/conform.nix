@@ -121,12 +121,13 @@
             "shfmt"
           ];
           json = [ "jq" ];
+          nu = [ "nufmt" ];
           "_" = [ "trim_whitespace" ];
         };
 
         formatters = {
-          nixfmt-rfc-style = {
-            command = "${lib.getExe pkgs.nixfmt-rfc-style}";
+          nixfmt = {
+            command = "${lib.getExe pkgs.nixfmt}";
           };
           alejandra = {
             command = "${lib.getExe pkgs.alejandra}";
@@ -148,6 +149,9 @@
           };
           shellharden = {
             command = "${lib.getExe pkgs.shellharden}";
+          };
+          nufmt = {
+            command = "${lib.getExe pkgs.nufmt}";
           };
         };
       };

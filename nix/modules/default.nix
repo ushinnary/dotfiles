@@ -20,6 +20,7 @@
     ./packages.nix
     ./users.nix
     ./virtualisation.nix
+    ./power-management.nix
     ./services.nix
   ];
 }

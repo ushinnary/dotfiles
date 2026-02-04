@@ -37,5 +37,6 @@
     options = "--delete-older-than 3d";
   };
   nix.settings.auto-optimise-store = true;
+  services.fstrim.enable = true;
 
 }

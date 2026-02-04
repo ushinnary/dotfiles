@@ -21,6 +21,7 @@ in
     };
 
     hardware.amdgpu.opencl.enable = true;
+    hardware.amdgpu.initrd.enable = true;
 
     environment.systemPackages = with pkgs; [
       davinci-resolve-studio

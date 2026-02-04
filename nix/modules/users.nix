@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   users.users.ushinnary = {
     isNormalUser = true;
@@ -8,6 +8,7 @@
       "networkmanager"
       "wheel"
     ];
+    shell = pkgs.nushell;
   };
 
   users.groups.ushinnary = {};

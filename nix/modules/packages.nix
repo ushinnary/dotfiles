@@ -11,6 +11,7 @@
     cifs-utils
     wayland-utils
     wl-clipboard
+    nushell
   ];
 
   fonts.packages = with pkgs; [

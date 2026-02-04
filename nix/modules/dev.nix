@@ -17,7 +17,6 @@ in
     pkgs.vim
 
     pkgs.yazi
-    pkgs.nushell
     pkgs.nufmt
     pkgs.starship
     pkgs.ripgrep

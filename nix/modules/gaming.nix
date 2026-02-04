@@ -13,6 +13,7 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       mangohud
+      # (pkgs.writeScriptBin "gpu-cache-clean" (builtins.readFile ../../../bins/gpu-cache-clean.sh))
     ];
 
     programs = {
@@ -68,17 +69,13 @@ in
       # AMD GPU optimizations
       RADV_PERFTEST = "all";
       AMD_VULKAN_ICD = "RADV";
-      # General GPU optimizations
-      __GL_SHADER_DISK_CACHE = "1";
-      __GL_SHADER_DISK_CACHE_PATH = "/tmp";
-      __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
-      # Vulkan optimizations
-      VKD3D_CONFIG = "dxr";
-      # Steam optimizations
-      STEAM_FRAME_FORCE_CLOSE = "0";
-      # Mesa optimizations
+      # AMD GPU specific fixes for RX6500XT input lag
+      AMDGPU_RESET_HANG_TIMEOUT = "10000";
+      AMDGPU_WATCHDOG_TIMEOUT = "0";
+      # Mesa optimizations with larger cache for RX6500XT
       MESA_SHADER_CACHE_DISABLE = "false";
-      MESA_SHADER_CACHE_MAX_SIZE = "512MB";
+      MESA_SHADER_CACHE_MAX_SIZE = "2GB";
+      MESA_SHADER_CACHE_PATH = "/tmp/mesa_shader_cache";
     };
 
     environment.sessionVariables = {

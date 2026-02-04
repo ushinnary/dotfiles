@@ -17,27 +17,6 @@
         enabled = true;
         replace_netrw = true;
       };
-      gh = {
-        enabled = true;
-        # Buffer keymaps for GitHub buffers
-        keys = {
-          select = {
-            __raw = ''{ "<cr>", "gh_actions", desc = "Select Action" }'';
-          };
-          edit = {
-            __raw = ''{ "i", "gh_edit", desc = "Edit" }'';
-          };
-          comment = {
-            __raw = ''{ "a", "gh_comment", desc = "Add Comment" }'';
-          };
-          close = {
-            __raw = ''{ "c", "gh_close", desc = "Close" }'';
-          };
-          reopen = {
-            __raw = ''{ "o", "gh_reopen", desc = "Reopen" }'';
-          };
-        };
-      };
       dashboard = {
         sections = [
           {
@@ -73,13 +52,6 @@
           }
           {
             pane = 2;
-            section = "terminal";
-            cmd = "colorscript -e square";
-            height = 5;
-            padding = 2;
-          }
-          {
-            pane = 2;
             icon = " ";
             desc = "Browse Repo";
             padding = 1;
@@ -94,37 +66,6 @@
               function()
                 local in_git = Snacks.git.get_root() ~= nil
                 local cmds = {
-                  {
-                    title = "Notifications",
-                    cmd = "gh notify -s -a -n5",
-                    action = function()
-                      vim.ui.open("https://github.com/notifications")
-                    end,
-                    key = "N",
-                    icon = " ",
-                    height = 5,
-                    enabled = true,
-                  },
-                  {
-                    title = "Open Issues",
-                    cmd = "gh issue list -L 3",
-                    key = "i",
-                    action = function()
-                      vim.fn.jobstart("gh issue list --web", { detach = true })
-                    end,
-                    icon = " ",
-                    height = 7,
-                  },
-                  {
-                    icon = " ",
-                    title = "Open PRs",
-                    cmd = "gh pr list -L 3",
-                    key = "p",
-                    action = function()
-                      vim.fn.jobstart("gh pr list --web", { detach = true })
-                    end,
-                    height = 7,
-                  },
                   {
                     icon = " ",
                     title = "Git Status",
@@ -186,7 +127,10 @@
     }
     {
       key = "<leader>sw";
-      mode = [ "n" "v" ];
+      mode = [
+        "n"
+        "v"
+      ];
       action = "<cmd>lua Snacks.picker.grep_word()<CR>";
       options = {
         silent = true;
@@ -271,7 +215,7 @@
     {
       mode = "n";
       key = "<leader>gff";
-      action = ''<cmd>lua Snacks.picker.git_files()<cr>'';
+      action = "<cmd>lua Snacks.picker.git_files()<cr>";
       options = {
         desc = "Git Files";
       };
@@ -279,7 +223,7 @@
     {
       mode = "n";
       key = "<leader>gfb";
-      action = ''<cmd>lua Snacks.picker.git_branches()<cr>'';
+      action = "<cmd>lua Snacks.picker.git_branches()<cr>";
       options = {
         desc = "Git Branches";
       };
@@ -287,7 +231,7 @@
     {
       mode = "n";
       key = "<leader>gfs";
-      action = ''<cmd>lua Snacks.picker.git_stash()<cr>'';
+      action = "<cmd>lua Snacks.picker.git_stash()<cr>";
       options = {
         desc = "Git Stashes";
       };
@@ -295,7 +239,7 @@
     {
       mode = "n";
       key = "<leader>gfL";
-      action = ''<cmd>lua Snacks.picker.git_log_line()<cr>'';
+      action = "<cmd>lua Snacks.picker.git_log_line()<cr>";
       options = {
         desc = "Git Log Line";
       };
@@ -303,7 +247,7 @@
     {
       mode = "n";
       key = "<leader>gfd";
-      action = ''<cmd>lua Snacks.picker.git_diff()<cr>'';
+      action = "<cmd>lua Snacks.picker.git_diff()<cr>";
       options = {
         desc = "Git Diff (Hunks)";
       };
@@ -311,7 +255,7 @@
     {
       mode = "n";
       key = "<leader>gfa";
-      action = ''<cmd>lua Snacks.picker.git_log_file()<cr>'';
+      action = "<cmd>lua Snacks.picker.git_log_file()<cr>";
       options = {
         desc = "Git Log File";
       };
@@ -320,7 +264,7 @@
     {
       mode = "n";
       key = "<leader>fd";
-      action = ''<cmd>lua Snacks.picker.diagnostics_buffer()<cr>'';
+      action = "<cmd>lua Snacks.picker.diagnostics_buffer()<cr>";
       options = {
         desc = "Find buffer diagnostics";
       };
@@ -328,7 +272,7 @@
     {
       mode = "n";
       key = "<leader>fD";
-      action = ''<cmd>lua Snacks.picker.diagnostics()<cr>'';
+      action = "<cmd>lua Snacks.picker.diagnostics()<cr>";
       options = {
         desc = "Find workspace diagnostics";
       };
@@ -336,7 +280,7 @@
     {
       mode = "n";
       key = "<leader>fl";
-      action = ''<cmd>lua Snacks.picker.lsp_symbols()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_symbols()<cr>";
       options = {
         desc = "Find lsp document symbols";
       };
@@ -344,7 +288,7 @@
     {
       mode = "n";
       key = "<leader>ld";
-      action = ''<cmd>lua Snacks.picker.lsp_definitions()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_definitions()<cr>";
       options = {
         desc = "Goto Definition";
       };
@@ -352,7 +296,7 @@
     {
       mode = "n";
       key = "<leader>li";
-      action = ''<cmd>lua Snacks.picker.lsp_implementations()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_implementations()<cr>";
       options = {
         desc = "Goto Implementation";
       };
@@ -360,7 +304,7 @@
     {
       mode = "n";
       key = "<leader>lD";
-      action = ''<cmd>lua Snacks.picker.lsp_references()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_references()<cr>";
       options = {
         desc = "Find references";
       };
@@ -368,7 +312,7 @@
     {
       mode = "n";
       key = "<leader>lt";
-      action = ''<cmd>lua Snacks.picker.lsp_type_definitions()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_type_definitions()<cr>";
       options = {
         desc = "Goto Type Definition";
       };
@@ -377,7 +321,7 @@
     {
       mode = "n";
       key = "gd";
-      action = ''<cmd>lua Snacks.picker.lsp_definitions()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_definitions()<cr>";
       options = {
         desc = "Goto Definition";
       };
@@ -385,7 +329,7 @@
     {
       mode = "n";
       key = "gD";
-      action = ''<cmd>lua Snacks.picker.lsp_declarations()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_declarations()<cr>";
       options = {
         desc = "Goto Declaration";
       };
@@ -393,7 +337,7 @@
     {
       mode = "n";
       key = "grr";
-      action = ''<cmd>lua Snacks.picker.lsp_references()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_references()<cr>";
       options = {
         desc = "Goto References";
         nowait = true;
@@ -402,7 +346,7 @@
     {
       mode = "n";
       key = "gri";
-      action = ''<cmd>lua Snacks.picker.lsp_implementations()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_implementations()<cr>";
       options = {
         desc = "Goto Implementation";
       };
@@ -410,14 +354,17 @@
     {
       mode = "n";
       key = "gy";
-      action = ''<cmd>lua Snacks.picker.lsp_type_definitions()<cr>'';
+      action = "<cmd>lua Snacks.picker.lsp_type_definitions()<cr>";
       options = {
         desc = "Goto T[y]pe Definition";
       };
     }
     # Code Actions
     {
-      mode = ["n" "v"];
+      mode = [
+        "n"
+        "v"
+      ];
       key = "<leader>ca";
       action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
       options = {

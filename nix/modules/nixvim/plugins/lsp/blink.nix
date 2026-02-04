@@ -1,15 +1,6 @@
 { pkgs, ... }:
 {
-  extraPlugins = with pkgs.vimPlugins; [
-    blink-ripgrep-nvim
-  ];
-
   plugins = {
-    blink-cmp-dictionary.enable = true;
-    blink-cmp-git.enable = true;
-    blink-cmp-spell.enable = true;
-    blink-emoji.enable = true;
-    blink-ripgrep.enable = true;
     blink-cmp = {
       enable = true;
       setupLspCapabilities = true;
@@ -23,7 +14,7 @@
             "sort_text"
           ];
           prebuilt_binaries = {
-            download = false;
+            download = true;
           };
         };
         keymap = {
@@ -41,7 +32,7 @@
             "fallback"
           ];
           "<Tab>" = [
-            "select_next"
+            "accept"
             "snippet_forward"
             "fallback"
           ];
@@ -84,39 +75,13 @@
 
         sources = {
           default = [
-            "buffer"
             "lsp"
+            "buffer"
             "path"
             "snippets"
-            # Community
-            "dictionary"
-            "emoji"
-            "git"
-            "spell"
-            "ripgrep"
           ];
           providers = {
-            ripgrep = {
-              name = "Ripgrep";
-              module = "blink-ripgrep";
-              score_offset = 1;
-            };
-            dictionary = {
-              name = "Dict";
-              module = "blink-cmp-dictionary";
-              min_keyword_length = 3;
-            };
-            emoji = {
-              name = "Emoji";
-              module = "blink-emoji";
-              score_offset = 1;
-            };
-            lsp.score_offset = 4;
-            spell = {
-              name = "Spell";
-              module = "blink-cmp-spell";
-              score_offset = 1;
-            };
+            lsp.score_offset = 1;  # Prioritize LSP results
             path = {
               score_offset = 55;
               opts = {
@@ -136,26 +101,6 @@
                     end
                   end
                 '';
-              };
-            };
-            git = {
-              name = "Git";
-              module = "blink-cmp-git";
-              enabled = true;
-              score_offset = 100;
-              should_show_items.__raw = ''
-                function()
-                  return vim.o.filetype == 'gitcommit' or vim.o.filetype == 'markdown'
-                end
-              '';
-              opts = {
-                git_centers = {
-                  github = {
-                    issue = {
-                      on_error.__raw = "function(_,_) return true end";
-                    };
-                  };
-                };
               };
             };
           };
@@ -235,6 +180,15 @@
               enabled = false;
             };
           };
+          list = {
+            max_items = 20;
+            selection = {
+              preselect = true;
+              auto_insert = false;
+            };
+          };
+          debounce = 100;
+          throttle = 50;
         };
       };
     };

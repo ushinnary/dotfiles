@@ -81,7 +81,7 @@
             "snippets"
           ];
           providers = {
-            lsp.score_offset = 1;  # Prioritize LSP results
+            lsp.score_offset = 1; # Prioritize LSP results
             path = {
               score_offset = 55;
               opts = {
@@ -187,8 +187,6 @@
               auto_insert = false;
             };
           };
-          debounce = 100;
-          throttle = 50;
         };
       };
     };

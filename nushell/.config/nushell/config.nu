@@ -946,4 +946,4 @@ use ssh-completions.nu *
 use tar-completions.nu *
 use zellij-completions.nu *
 use zoxide-completions.nu *
-use alias.nu 
+source alias.nu 

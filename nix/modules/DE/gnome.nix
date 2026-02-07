@@ -47,9 +47,27 @@ in
               "<Alt>F4"
               "<Super>q"
             ];
+            switch-to-workspace-left = [ "<Super>h" ];
+            switch-to-workspace-right = [ "<Super>l" ];
+            move-to-workspace-left = [ "<Super><Shift>h" ];
+            move-to-workspace-right = [ "<Super><Shift>l" ];
+            minimize = gvariant.mkEmptyArray (gvariant.type.string);
           };
           "org/gnome/desktop/interface" = {
             cursor-theme = "Bibata-Modern-Ice";
+          };
+          "org/gnome/desktop/input-sources" = {
+            per-window = true;
+            sources = [
+              (gvariant.mkTuple [ "xkb" "us" ])
+              (gvariant.mkTuple [ "xkb" "ru" ])
+            ];
+            mru-sources = [
+              (gvariant.mkTuple [ "xkb" "us" ])
+            ];
+          };
+          "org/gnome/shell/app-switcher" = {
+              current-workspace-only = true;
           };
           "org/gnome/shell" = {
             enabled-extensions = [
@@ -60,6 +78,19 @@ in
               "Vitals@CoreCoding.com"
               "nightthemeswitcher@romainvigier.fr"
             ];
+          };
+          "org/gnome/settings-daemon/plugins/media-keys" = {
+            custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+            screensaver = gvariant.mkEmptyArray (gvariant.type.string);
+          };
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+            name = "Terminal ";
+            binding = "<Super>t";
+            command = "ghostty";
+          };
+          "org/freedesktop/tracker/miner/files" = {
+            index-single-directories = gvariant.mkEmptyArray (gvariant.type.string);
+            index-recursive-directories = gvariant.mkEmptyArray (gvariant.type.string);
           };
         };
       }

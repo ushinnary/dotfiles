@@ -51,7 +51,7 @@ in
     environment.variables = {
       MANGOHUD = 1;
       MANGOHUD_CONFIG = concatStringsSep "," [
-        "fps_limit=${toString screenCfg.gamingRefreshRate}+60+30+0"
+        "fps_limit=${toString screenCfg.gamingRefreshRate}+${toString screenCfg.refreshRate}+60+30+0"
         "preset=0"
         "toggle_hud=Shift_L+F2"
         "position=top-left"
@@ -66,16 +66,6 @@ in
       # HDR Support for OLED
       ENABLE_HDR_WSI = if screenCfg.isOled then "1" else "0";
       DXVK_HDR = if screenCfg.isOled then "1" else "0";
-      # AMD GPU optimizations
-      RADV_PERFTEST = "all";
-      AMD_VULKAN_ICD = "RADV";
-      # AMD GPU specific fixes for RX6500XT input lag
-      AMDGPU_RESET_HANG_TIMEOUT = "10000";
-      AMDGPU_WATCHDOG_TIMEOUT = "0";
-      # Mesa optimizations with larger cache for RX6500XT
-      MESA_SHADER_CACHE_DISABLE = "false";
-      MESA_SHADER_CACHE_MAX_SIZE = "2GB";
-      MESA_SHADER_CACHE_PATH = "/tmp/mesa_shader_cache";
     };
 
     environment.sessionVariables = {

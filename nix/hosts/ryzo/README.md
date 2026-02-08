@@ -144,7 +144,6 @@ The configuration includes several GNOME extensions and optimizations:
 - **AppIndicator**: System tray support
 - **Night Theme Switcher**: Automatic dark/light theme switching
 - **Dash to Dock**: Enhanced dock functionality
-- **Vitals**: System monitoring in top bar
 
 #### GNOME Tweaks Applied
 

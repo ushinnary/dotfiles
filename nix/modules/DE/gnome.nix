@@ -13,6 +13,11 @@ in
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
 
+    # Environment variables for GNOME session
+    environment.sessionVariables = {
+      FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
+    };
+
     # Enable printing service
     services.printing.enable = true;
 
@@ -27,6 +32,7 @@ in
       epiphany
       gnome-music
     ];
+
     programs.dconf.enable = true;
     programs.dconf.profiles.user.databases = [
       {
@@ -75,8 +81,8 @@ in
               "dash-to-dock@micxgx.gmail.com"
               "gsconnect@andyholmes.github.io"
               "just-perfection-desktop@just-perfection"
-              "Vitals@CoreCoding.com"
               "nightthemeswitcher@romainvigier.fr"
+              "blur-my-shell@aunetx"
             ];
           };
           "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -107,7 +113,6 @@ in
       gnomeExtensions.appindicator
       gnomeExtensions.night-theme-switcher
       gnomeExtensions.dash-to-dock
-      gnomeExtensions.vitals
       nautilus
       sushi
       gnome-calculator
@@ -127,6 +132,8 @@ in
       refine
       pavucontrol
       gnome-disk-utility
+      # Passwords and Keys
+      seahorse
     ];
     security.pam.services = {
       login.enableGnomeKeyring = true;

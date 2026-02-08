@@ -9,7 +9,6 @@
     gnomeExtensions.appindicator
     gnomeExtensions.night-theme-switcher
     gnomeExtensions.dash-to-dock
-    gnomeExtensions.vitals
   ];
 
   dconf.settings = {

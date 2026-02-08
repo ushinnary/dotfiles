@@ -1,9 +1,10 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }:
-
+with lib;
 {
   imports = [
     ./hardware-configuration.nix
@@ -25,31 +26,30 @@
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Paris";
-
-  # Jovian-NixOS Configuration for Zotac Zone
-  jovian = {
-    # Enable Steam Deck-like experience
-    steam.enable = true;
-    steam.autoStart = true;
-    steam.user = "ushinnary";
-    steam.desktopSession = "gamescope-wayland"; # Keep gaming mode behavior
-
-    # Enable Decky Loader with built-in support
-    decky-loader.enable = true;
-    decky-loader.user = "ushinnary";
-
-    # Steam Deck device configuration (works well for Zotac Zone)
-    devices.steamdeck.enable = true;
-
-    # AMD GPU support
-    hardware.amd.gpu.enableEarlyModesetting = true;
-
-    # SteamOS-like configuration
-    steamos.useSteamOSConfig = true;
+  # Gamescope Auto Boot from TTY (example)
+services = {
+  xserver.enable = false; # Assuming no other Xserver needed
+  getty.autologinUser = "ushinnary";
+  greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${lib.getExe pkgs.gamescope} -W 1920 -H 1080 -f -e --xwayland-count 2 --hdr-enabled --hdr-itm-enabled -- steam -pipewire-dmabuf -gamepadui -steamdeck -steamos3 > /dev/null 2>&1";
+        user = "ushinnary";
+      };
+    };
   };
+};
+environment.systemPackages = with pkgs; [
+  gamescope-wsi # HDR won't work without this
+];
+programs.steam.extraCompatPackages = with pkgs; [
+  proton-ge-bin
+];
 
   # XDG Desktop Portals (required for Flatpak)
   xdg.portal.enable = true;
+  xdg.portal.config.common.default = "*";
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   # Enable the custom options

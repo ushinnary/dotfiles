@@ -43,9 +43,7 @@ in
       gamescope.enable = true;
     };
 
-    environment.systemPackages = with pkgs; [
-      mangohud
-    ];
+    environment.systemPackages = [ pkgs.mangohud ];
 
     environment.variables = {
       MANGOHUD = "1";

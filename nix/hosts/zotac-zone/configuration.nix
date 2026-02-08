@@ -33,6 +33,7 @@ with lib;
     handheld-daemon = {
       enable = true; 
       user = "ushinnary";
+      ui.enable = true;
     }; # Fixes buttons/gyro for generic handhelds
     greetd = {
       enable = true;
@@ -41,7 +42,7 @@ with lib;
           # Added: -r 120 (120Hz)
           # Fixed: --hdr-itm-enable (was enabled with 'd')
           # Added: --hdr-debug-force-output (fixes some OLED HDR issues)
-          command = "${lib.getExe pkgs.gamescope} -W 1920 -H 1080 -r 120 -f -e --xwayland-count 2 --hdr-enabled --hdr-itm-enable --hdr-debug-force-output -- steam -pipewire-dmabuf -gamepadui -steamdeck > /dev/null 2>&1";
+          command = "${lib.getExe pkgs.gamescope} -W 1920 -H 1080 -r 120 -f -e --xwayland-count 2 --hdr-enabled --hdr-itm-enable --hdr-debug-force-output -- steam -pipewire-dmabuf -gamepadui -steamdeck -steamos3 > /dev/null 2>&1";
           user = "ushinnary";
         };
       };
@@ -57,6 +58,14 @@ with lib;
 
   # Enable uinput for handheld-daemon to create virtual controllers
   hardware.uinput.enable = true;
+
+  # Sensors for auto-rotation and adaptive brightness
+  hardware.sensor.iio.enable = true;
+
+  # Ensure SD card permissions
+  systemd.tmpfiles.rules = [
+    "d /mnt/sdcard 0770 ushinnary users -"
+  ];
 
   # Add user to hardware groups
   users.users.ushinnary.extraGroups = [

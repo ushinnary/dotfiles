@@ -22,6 +22,14 @@ with lib;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
+  # Handheld Daemon (HHD) rules for Zotac Zone
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", ATTRS{idVendor}=="1973", ATTRS{idProduct}=="2000", MODE="0660", TAG+="uaccess"
+    KERNEL=="hidraw*", ATTRS{idVendor}=="1973", ATTRS{idProduct}=="2001", MODE="0660", TAG+="uaccess"
+    # Enable brightness control for everyone (fixes slider in Steam)
+    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+  '';
+
   networking.hostName = "zotac-zone";
   networking.networkmanager.enable = true;
 
@@ -30,6 +38,7 @@ with lib;
   services = {
     xserver.enable = false; # Assuming no other Xserver needed
     getty.autologinUser = "ushinnary";
+    udisks2.enable = true; # Required for SD card mounting support in Steam
     handheld-daemon = {
       enable = true; 
       user = "ushinnary";
@@ -42,7 +51,8 @@ with lib;
           # Added: -r 120 (120Hz)
           # Fixed: --hdr-itm-enable (was enabled with 'd')
           # Added: --hdr-debug-force-output (fixes some OLED HDR issues)
-          command = "${lib.getExe pkgs.gamescope} -W 1920 -H 1080 -r 120 -f -e --xwayland-count 2 --hdr-enabled --hdr-itm-enable --hdr-debug-force-output -- steam -pipewire-dmabuf -gamepadui -steamdeck -steamos3 > /dev/null 2>&1";
+          # Added: --mangoapp (performance overlay)
+          command = "${lib.getExe pkgs.gamescope} -W 1920 -H 1080 -r 120 -f -e --xwayland-count 2 --hdr-enabled --hdr-itm-enable --hdr-debug-force-output --mangoapp -- steam -pipewire-dmabuf -gamepadui -steamdeck -steamos3 > /dev/null 2>&1";
           user = "ushinnary";
         };
       };
@@ -65,7 +75,10 @@ with lib;
   # Ensure SD card permissions
   systemd.tmpfiles.rules = [
     "d /mnt/sdcard 0770 ushinnary users -"
-  ];
+  ]; 
+
+  # Force SD Card to be visible as mmcblk0p1 if it's not mounting automatically in Steam
+  environment.variables.STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/mnt/sdcard";
 
   # Add user to hardware groups
   users.users.ushinnary.extraGroups = [

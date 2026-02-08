@@ -47,11 +47,6 @@ programs.steam.extraCompatPackages = with pkgs; [
   proton-ge-bin
 ];
 
-  # XDG Desktop Portals (required for Flatpak)
-  xdg.portal.enable = true;
-  xdg.portal.config.common.default = "*";
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
   # Enable the custom options
   ushinnary = {
     amd.enable = true;

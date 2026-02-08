@@ -22,12 +22,30 @@ with lib;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
-  # Handheld Daemon (HHD) rules for Zotac Zone
+  # Early input support (Touchscreen, Gamepad)
+  boot.initrd.kernelModules = [
+    "hid-generic"
+    "hid-multitouch"
+    "i2c-designware-core"
+    "i2c-designware-platform"
+    "i2c-hid-acpi"
+    "usbhid"
+  ];
+
+  # Handheld Daemon (HHD) rules for Zotac Zone & Performance Tuning Permissions
   services.udev.extraRules = ''
     KERNEL=="hidraw*", ATTRS{idVendor}=="1973", ATTRS{idProduct}=="2000", MODE="0660", TAG+="uaccess"
     KERNEL=="hidraw*", ATTRS{idVendor}=="1973", ATTRS{idProduct}=="2001", MODE="0660", TAG+="uaccess"
+
+    # uinput for handheld-daemon and other tools
+    KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"
+
     # Enable brightness control for everyone (fixes slider in Steam)
     ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+
+    # AMDGPU Performance Control (TDP/Clocks) - Allows TDP control in Steam/HHD
+    ACTION=="add", SUBSYSTEM=="pci", DRIVER=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power_dpm_force_performance_level /sys/%p/pp_od_clk_voltage"
+    ACTION=="add", SUBSYSTEM=="hwmon", ATTR{name}=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power1_cap /sys/%p/power2_cap"
   '';
 
   networking.hostName = "zotac-zone";

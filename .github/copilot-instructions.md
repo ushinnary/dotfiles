@@ -4,7 +4,7 @@
 This is a NixOS dotfiles repository using flakes for reproducible system configurations. It manages configurations for multiple hosts (desktop PC and gaming handheld) with modular Nix modules.
 
 ## Architecture
-- **Flake-based NixOS**: Uses `flake.nix` with inputs for nixpkgs, home-manager, nixvim, and jovian (for Steam Deck-like handheld)
+- **Flake-based NixOS**: Uses `flake.nix` with inputs for nixpkgs, home-manager, nixvim
 - **Modular Structure**: Configurations split into reusable modules in `nix/modules/`
 - **Host Configurations**: Machine-specific configs in `nix/hosts/` (e.g., `ryzo` for AMD desktop, `zotac-zone` for NVIDIA handheld)
 - **Custom Options**: All features under `ushinnary.*` namespace, defaulting to `false` - must be explicitly enabled
@@ -53,7 +53,6 @@ ushinnary = {
 
 ## Integration Points
 - **Home Manager**: Manages user configs and dotfiles
-- **Jovian-NixOS**: For handheld gaming (Steam, Gamescope, Decky Loader)
 - **GNOME Extensions**: Installed via `home.packages` in `home.nix`
 - **Distro Scripts**: Handle package installation for Fedora/Ubuntu/Arch
 

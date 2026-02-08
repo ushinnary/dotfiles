@@ -20,7 +20,6 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
   networking.hostName = "ryzo";
@@ -34,6 +33,7 @@
     amd.enable = true;
     desktopEnvironment.gnome = true;
     software.enableDevPackages = true;
+    software.davinciResolve = true;
     gaming.enable = true;
     screen = {
       refreshRate = 90; # Normal desktop use

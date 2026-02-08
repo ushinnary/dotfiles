@@ -4,6 +4,7 @@
     # Enable "Silent boot"
     consoleLogLevel = 3;
     initrd.verbose = false;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "quiet"
       "splash"
@@ -38,5 +39,8 @@
   };
   nix.settings.auto-optimise-store = true;
   services.fstrim.enable = true;
+  services.openssh = {
+    enable = true;
+  };
 
 }

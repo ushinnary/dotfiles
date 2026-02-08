@@ -61,6 +61,12 @@ with lib;
           default = false;
           description = "Enable all dev packages with Nixvim included";
         };
+
+        davinciResolve = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable DaVinci Resolve Studio";
+        };
       };
 
       gaming = {

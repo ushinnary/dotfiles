@@ -53,6 +53,15 @@ with lib;
     # Additional HHD rules
     KERNEL=="event*", SUBSYSTEM=="input", TAG+="uaccess"
     KERNEL=="js*", SUBSYSTEM=="input", TAG+="uaccess"
+
+    # Enables manual GPU clock control in Steam
+    # - /sys/class/drm/card0/device/power_dpm_force_performance_level
+    # - /sys/class/drm/card0/device/pp_od_clk_voltage
+    ACTION=="add", SUBSYSTEM=="pci", DRIVER=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power_dpm_force_performance_level /sys/%p/pp_od_clk_voltage"
+
+    # Enables manual TDP limiter in Steam
+    # - /sys/class/hwmon/hwmon*/power{1,2}_cap
+    ACTION=="add", SUBSYSTEM=="hwmon", ATTR{name}=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power1_cap /sys/%p/power2_cap"
   '';
 
   networking.hostName = "zotac-zone";

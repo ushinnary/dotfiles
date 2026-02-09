@@ -18,43 +18,19 @@ in
         dedicatedServer.openFirewall = true;
         gamescopeSession = {
           enable = true;
-          args = [
-            "--adaptive-sync"
-            "--steam"
-            "--mangoapp"
-          ]
-          ++ (
-            if screenCfg.isOled then
-              [
-                "-r ${toString screenCfg.gamingRefreshRate}"
-                "-o ${toString screenCfg.gamingRefreshRate}"
-                "--hdr-enabled"
-                "--hdr-itm-enable"
-              ]
-            else
-              [
-                "-r ${toString screenCfg.gamingRefreshRate}"
-              ]
-          );
         };
       };
 
       gamemode.enable = true;
-      gamescope.enable = true;
+      gamescope = {
+        enable = true;
+        capSysNice = false;
+      };
     };
 
     environment.systemPackages = [ pkgs.mangohud ];
 
     environment.variables = {
-      MANGOHUD = "1";
-      MANGOHUD_CONFIGFILE = pkgs.writeText "mangohud.conf" ''
-        fps_limit=${toString screenCfg.gamingRefreshRate},${toString screenCfg.refreshRate},60,30,0
-        preset=0
-        toggle_hud=Shift_L+F2
-        position=top-left
-        font_size=18
-        background_alpha=0.3
-      '';
       TERMINAL = "ghostty";
       ENABLE_GAMESCOPE_WSI = "1";
       STEAM_MULTIPLE_XWAYLANDS = "1";

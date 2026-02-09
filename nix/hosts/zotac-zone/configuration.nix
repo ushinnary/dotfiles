@@ -66,7 +66,6 @@ with lib;
     handheld-daemon = {
       enable = true; 
       user = "ushinnary";
-      ui.enable = true;
       adjustor = {
         enable = true;
         loadAcpiCallModule = true;
@@ -96,10 +95,6 @@ with lib;
     brightnessctl # For brightness control
     mangohud # Performance overlay
     inputplumber # Input remapping for volume buttons
-    # Required for HHD UI
-    python3
-    python3Packages.pygame
-    python3Packages.evdev
     # For better device detection
     usbutils
     pciutils

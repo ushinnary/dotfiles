@@ -91,16 +91,6 @@ with lib;
       enable = true;
     };
   };
-  # Systemd service for Input Plumber (volume button handling)
-  systemd.services.inputplumber = {
-    description = "Input Plumber daemon for input remapping";
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.inputplumber}/bin/inputplumber";
-      User = "ushinnary";
-      Restart = "always";
-    };
-  };
   environment.systemPackages = with pkgs; [
     gamescope-wsi # HDR won't work without this
     brightnessctl # For brightness control

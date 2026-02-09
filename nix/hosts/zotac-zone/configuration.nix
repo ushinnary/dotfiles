@@ -62,6 +62,12 @@ with lib;
     # Enables manual TDP limiter in Steam
     # - /sys/class/hwmon/hwmon*/power{1,2}_cap
     ACTION=="add", SUBSYSTEM=="hwmon", ATTR{name}=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power1_cap /sys/%p/power2_cap"
+
+    # This rule is needed for basic functionality of the controller in Steam and keyboard/mouse emulation
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0660", TAG+="uaccess"
+
+    # Valve HID devices over USB hidraw
+    KERNEL=="hidraw*", ATTRS{idVendor}=="28de", MODE="0660", TAG+="uaccess"
   '';
 
   networking.hostName = "zotac-zone";

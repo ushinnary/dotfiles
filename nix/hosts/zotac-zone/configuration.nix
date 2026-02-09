@@ -30,6 +30,8 @@ with lib;
     "i2c-designware-platform"
     "i2c-hid-acpi"
     "usbhid"
+    "i2c-dev"
+    "i2c-i801"
   ];
 
   # Handheld Daemon (HHD) rules for Zotac Zone & Performance Tuning Permissions
@@ -46,6 +48,10 @@ with lib;
     # AMDGPU Performance Control (TDP/Clocks) - Allows TDP control in Steam/HHD
     ACTION=="add", SUBSYSTEM=="pci", DRIVER=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power_dpm_force_performance_level /sys/%p/pp_od_clk_voltage"
     ACTION=="add", SUBSYSTEM=="hwmon", ATTR{name}=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power1_cap /sys/%p/power2_cap"
+
+    # Additional HHD rules
+    KERNEL=="event*", SUBSYSTEM=="input", TAG+="uaccess"
+    KERNEL=="js*", SUBSYSTEM=="input", TAG+="uaccess"
   '';
 
   networking.hostName = "zotac-zone";
@@ -61,7 +67,12 @@ with lib;
       enable = true; 
       user = "ushinnary";
       ui.enable = true;
+      adjustor = {
+        enable = true;
+        loadAcpiCallModule = true;
+      };
     }; # Fixes buttons/gyro for generic handhelds
+    # power-profiles-daemon.enable = true; # Better power management
     greetd = {
       enable = true;
       settings = {
@@ -75,10 +86,33 @@ with lib;
         };
       };
     };
+    # Input Plumber for proper volume button handling
+    inputplumber = {
+      enable = true;
+    };
+  };
+  # Systemd service for Input Plumber (volume button handling)
+  systemd.services.inputplumber = {
+    description = "Input Plumber daemon for input remapping";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.inputplumber}/bin/inputplumber";
+      User = "ushinnary";
+      Restart = "always";
+    };
   };
   environment.systemPackages = with pkgs; [
     gamescope-wsi # HDR won't work without this
     brightnessctl # For brightness control
+    mangohud # Performance overlay
+    inputplumber # Input remapping for volume buttons
+    # Required for HHD UI
+    python3
+    python3Packages.pygame
+    python3Packages.evdev
+    # For better device detection
+    usbutils
+    pciutils
   ];
   programs.steam.extraCompatPackages = with pkgs; [
     proton-ge-bin

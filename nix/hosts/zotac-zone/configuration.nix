@@ -32,6 +32,7 @@ with lib;
     "usbhid"
     "i2c-dev"
     "i2c-i801"
+    "msr" # Required for ryzenadj TDP control
   ];
 
   # Handheld Daemon (HHD) rules for Zotac Zone & Performance Tuning Permissions
@@ -98,6 +99,9 @@ with lib;
     # For better device detection
     usbutils
     pciutils
+    # TDP control tools
+    ryzenadj # Command-line TDP adjustment for Ryzen
+    corectrl # GUI for hardware control including TDP
   ];
   programs.steam.extraCompatPackages = with pkgs; [
     proton-ge-bin

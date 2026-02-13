@@ -22,10 +22,6 @@ with lib;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
-   jovian = {
-    devices.steamdeck.enablePerfControlUdevRules = true;
-   };
-
   # Early input support (Touchscreen, Gamepad)
   boot.initrd.kernelModules = [
     "hid-generic"

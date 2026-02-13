@@ -14,11 +14,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    jovian = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
     {
       nixpkgs,
+      jovian,
       ...
     }@inputs:
     {
@@ -38,6 +44,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/zotac-zone/configuration.nix
+            jovian.nixosModules.default
           ];
         };
 

@@ -23,20 +23,20 @@ in
           "x"
         ];
         mappings = {
-          MkdnEnter = {
-            key = "<cr>";
-            modes = [
+          MkdnEnter = [
+            [
               "n"
               "i"
-            ];
-          };
-          MkdnToggleToDo = {
-            key = "<c-space>";
-            modes = [
+            ]
+            "<CR>"
+          ];
+          MkdnToggleToDo = [
+            [
               "n"
               "i"
-            ];
-          };
+            ]
+            "<c-space>"
+          ];
         };
       };
     };

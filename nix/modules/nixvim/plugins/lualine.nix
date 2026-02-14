@@ -14,7 +14,7 @@
             "alpha"
           ];
         };
-        theme = "ayu";
+        theme = "gruvbox";
       };
       sections = {
         lualine_a = [

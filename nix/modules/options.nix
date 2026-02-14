@@ -113,6 +113,21 @@ with lib;
         };
       };
 
+      security = {
+        sudo = {
+          noPasswdCommands = mkOption {
+            type = types.listOf types.str;
+            default = [
+              "/run/current-system/sw/bin/reboot"
+              "/run/current-system/sw/bin/nixos-rebuild"
+              "/run/current-system/sw/bin/nix-collect-garbage"
+              "/run/current-system/sw/bin/shutdown"
+            ];
+            description = "List of commands to run without sudo password";
+          };
+        };
+      };
+
       powerManagement = {
         tuned = {
           enable = mkOption {

@@ -58,6 +58,8 @@ in
             move-to-workspace-left = [ "<Super><Shift>h" ];
             move-to-workspace-right = [ "<Super><Shift>l" ];
             minimize = gvariant.mkEmptyArray (gvariant.type.string);
+            maximize = [ "<Super>f" ];
+            show-desktop = [ "<Super>d" ];
           };
           "org/gnome/desktop/interface" = {
             cursor-theme = "Bibata-Modern-Ice";
@@ -65,15 +67,24 @@ in
           "org/gnome/desktop/input-sources" = {
             per-window = true;
             sources = [
-              (gvariant.mkTuple [ "xkb" "us" ])
-              (gvariant.mkTuple [ "xkb" "ru" ])
+              (gvariant.mkTuple [
+                "xkb"
+                "us"
+              ])
+              (gvariant.mkTuple [
+                "xkb"
+                "ru"
+              ])
             ];
             mru-sources = [
-              (gvariant.mkTuple [ "xkb" "us" ])
+              (gvariant.mkTuple [
+                "xkb"
+                "us"
+              ])
             ];
           };
           "org/gnome/shell/app-switcher" = {
-              current-workspace-only = true;
+            current-workspace-only = true;
           };
           "org/gnome/shell" = {
             enabled-extensions = [
@@ -86,7 +97,9 @@ in
             ];
           };
           "org/gnome/settings-daemon/plugins/media-keys" = {
-            custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+            custom-keybindings = [
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+            ];
             screensaver = gvariant.mkEmptyArray (gvariant.type.string);
           };
           "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {

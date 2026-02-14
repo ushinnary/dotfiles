@@ -12,6 +12,7 @@
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
     ];
+    kernelModules = [ "i2c-dev" ];
 
     plymouth = {
       enable = true;
@@ -29,6 +30,9 @@
     loader.timeout = 0;
   };
 
+  zramSwap.enable = true;
+  zramSwap.algorithm = "zstd";
+
   # environment.systemPackages = with pkgs; [
   # ];
 
@@ -42,5 +46,9 @@
   services.openssh = {
     enable = true;
   };
+  services.udev.extraRules = ''
+    KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+  '';
+  users.users.ushinnary.extraGroups = [ "i2c" ];
 
 }

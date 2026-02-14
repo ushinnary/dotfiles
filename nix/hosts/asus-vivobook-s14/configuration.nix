@@ -22,9 +22,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
-  # Enable zram for better memory management on low-RAM systems
-  zramSwap.enable = true;
-
   networking.hostName = "asus-vivobook-s14";
   networking.networkmanager.enable = true;
 
@@ -58,4 +55,3 @@
 
   system.stateVersion = "25.11";
 }
-

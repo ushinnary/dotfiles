@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   users.users.ushinnary = {
     isNormalUser = true;
@@ -11,5 +16,15 @@
     shell = pkgs.nushell;
   };
 
-  users.groups.ushinnary = {};
+  users.groups.ushinnary = { };
+
+  security.sudo.extraRules = [
+    {
+      users = [ "ushinnary" ];
+      commands = map (command: {
+        command = command;
+        options = [ "NOPASSWD" ];
+      }) config.ushinnary.security.sudo.noPasswdCommands;
+    }
+  ];
 }

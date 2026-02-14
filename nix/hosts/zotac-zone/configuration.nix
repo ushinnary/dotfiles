@@ -80,7 +80,7 @@ with lib;
     getty.autologinUser = "ushinnary";
     udisks2.enable = true; # Required for SD card mounting support in Steam
     handheld-daemon = {
-      enable = true; 
+      enable = true;
       user = "ushinnary";
       adjustor = {
         enable = true;
@@ -131,7 +131,7 @@ with lib;
   # Ensure SD card permissions
   systemd.tmpfiles.rules = [
     "d /mnt/sdcard 0770 ushinnary users -"
-  ]; 
+  ];
 
   # Force SD Card to be visible as mmcblk0p1 if it's not mounting automatically in Steam
   environment.variables.STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/mnt/sdcard";
@@ -155,6 +155,11 @@ with lib;
       profile = "ryzen-desktop";
     };
   };
+
+  # services.fprintd.enable = true;
+  # services.fprintd.tod.enable = true;
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-elan; # Elan(04f3:0c4b) driver
+  # security.pam.services.sudo.fprintAuth = true; # PAM for sudo fingerprint
 
   # Home Manager Setup
   home-manager = {

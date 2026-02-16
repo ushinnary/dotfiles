@@ -81,5 +81,31 @@
       '';
       options.silent = true;
     }
+
+    # LSP Lines / Diagnostics
+    {
+      mode = [ "n" ];
+      key = "<leader>la";
+      action.__raw = "function() vim.diagnostic.config({ virtual_lines = { severity = { min = vim.diagnostic.severity.WARN } } }) end";
+      options.desc = "Display all virtual lines (Warn/Error)";
+    }
+    {
+      mode = [ "n" ];
+      key = "<leader>lh";
+      action.__raw = "function() vim.diagnostic.config({ virtual_lines = false }) end";
+      options.desc = "Hide all virtual lines";
+    }
+    {
+      mode = [ "n" ];
+      key = "<leader>lc";
+      action.__raw = "function() vim.diagnostic.config({ virtual_lines = { only_current_line = true, severity = { min = vim.diagnostic.severity.WARN } } }) end";
+      options.desc = "Display virtual lines for current line only (Warn/Error)";
+    }
+    {
+      mode = [ "n" ];
+      key = "<leader>ln";
+      action.__raw = "function() vim.diagnostic.config({ virtual_lines = { only_current_line = false, severity = { min = vim.diagnostic.severity.WARN } } }) end";
+      options.desc = "Hide current line virtual lines restriction (display all Warn/Error)";
+    }
   ];
 }

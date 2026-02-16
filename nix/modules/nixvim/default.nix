@@ -55,7 +55,12 @@ in
       ];
 
       diagnostic.settings = {
-        virtual_text = true;
+        virtual_text = false;
+        virtual_lines = {
+          severity = {
+            min = "WARN";
+          };
+        };
         signs = true;
         underline = true;
         update_in_insert = false;

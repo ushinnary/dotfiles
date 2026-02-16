@@ -1,5 +1,12 @@
-{ pkgs, ... }:
-
+{
+  pkgs,
+  osConfig,
+  lib,
+  ...
+}:
+let
+  cfg = osConfig.ushinnary.software;
+in
 {
   home.stateVersion = "25.11";
 
@@ -10,6 +17,16 @@
     gnomeExtensions.night-theme-switcher
     gnomeExtensions.dash-to-dock
   ];
+
+  programs.lazygit = {
+    enable = cfg.enableDevPackages;
+    settings = {
+      os = {
+        edit = "nvim --server $NVIM --remote-send '<cmd>edit {{filename}}<CR>'";
+        open = "nvim --server $NVIM --remote-send '<cmd>edit {{filename}}<CR>'";
+      };
+    };
+  };
 
   programs.mangohud = {
     enable = true;

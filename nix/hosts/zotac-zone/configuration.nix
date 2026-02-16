@@ -86,6 +86,9 @@ with lib;
         enable = true;
         loadAcpiCallModule = true;
       };
+      ui = {
+        enable = true;
+      };
     }; # Fixes buttons/gyro for generic handhelds
     # power-profiles-daemon.enable = true; # Better power management
     greetd = {
@@ -111,19 +114,10 @@ with lib;
     brightnessctl # For brightness control
     mangohud # Performance overlay
     inputplumber # Input remapping for volume buttons
-    # For better device detection
-    usbutils
-    pciutils
-    # TDP control tools
-    ryzenadj # Command-line TDP adjustment for Ryzen
-    corectrl # GUI for hardware control including TDP
   ];
   programs.steam.extraCompatPackages = with pkgs; [
     proton-ge-bin
   ];
-
-  # Enable uinput for handheld-daemon to create virtual controllers
-  hardware.uinput.enable = true;
 
   # Sensors for auto-rotation and adaptive brightness
   hardware.sensor.iio.enable = true;
@@ -140,6 +134,7 @@ with lib;
   users.users.ushinnary.extraGroups = [
     "video"
     "input"
+    "audio"
   ];
 
   # Enable the custom options

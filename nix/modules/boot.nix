@@ -16,13 +16,6 @@
 
     plymouth = {
       enable = true;
-      theme = "motion";
-      themePackages = with pkgs; [
-        # By default we would install all themes
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ "motion" ];
-        })
-      ];
     };
     # Hide the OS choice for bootloaders.
     # It's still possible to open the bootloader list by pressing any key

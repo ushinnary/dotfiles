@@ -6,17 +6,23 @@
 }:
 let
   cfg = osConfig.ushinnary.software;
+  isGnome = osConfig.ushinnary.desktopEnvironment.gnome;
 in
 {
   home.stateVersion = "25.11";
 
-  home.packages = with pkgs; [
-    gnomeExtensions.blur-my-shell
-    gnomeExtensions.just-perfection
-    gnomeExtensions.appindicator
-    gnomeExtensions.night-theme-switcher
-    gnomeExtensions.dash-to-dock
-  ];
+  home.packages =
+    if isGnome then
+      with pkgs;
+      [
+        gnomeExtensions.blur-my-shell
+        gnomeExtensions.just-perfection
+        gnomeExtensions.appindicator
+        gnomeExtensions.night-theme-switcher
+        gnomeExtensions.dash-to-dock
+      ]
+    else
+      [ ];
 
   programs.lazygit = {
     enable = cfg.enableDevPackages;
@@ -40,7 +46,7 @@ in
     };
   };
 
-  dconf.settings = {
+  dconf.settings = lib.mkIf isGnome {
     "org/gnome/mutter" = {
       experimental-features = [
         "scale-monitor-framebuffer"

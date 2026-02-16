@@ -72,6 +72,7 @@ with lib;
 
   networking.hostName = "zotac-zone";
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPorts = [ 5385 ];
 
   time.timeZone = "Europe/Paris";
   # Gamescope Auto Boot from TTY (example)

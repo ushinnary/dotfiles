@@ -31,6 +31,7 @@
   # Enable the custom options
   ushinnary = {
     amd.enable = true;
+    cpu.isAmd = true;
     desktopEnvironment.gnome = true;
     software.enableDevPackages = true;
     software.davinciResolve = true;
@@ -49,6 +50,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "backup";
     extraSpecialArgs = { inherit inputs; };
     users.ushinnary = import ../../modules/home.nix;
   };

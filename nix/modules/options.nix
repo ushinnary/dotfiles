@@ -122,6 +122,8 @@ with lib;
               "/run/current-system/sw/bin/nixos-rebuild"
               "/run/current-system/sw/bin/nix-collect-garbage"
               "/run/current-system/sw/bin/shutdown"
+              "/run/current-system/sw/bin/fwupd"
+              "/run/current-system/sw/bin/fwupdmgr"
             ];
             description = "List of commands to run without sudo password";
           };

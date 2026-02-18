@@ -72,7 +72,10 @@ with lib;
 
   networking.hostName = "zotac-zone";
   networking.networkmanager.enable = true;
-  networking.firewall.allowedTCPPorts = [ 5385 5335 ];
+  networking.firewall.allowedTCPPorts = [
+    5385
+    5335
+  ];
 
   time.timeZone = "Europe/Paris";
   # Gamescope Auto Boot from TTY (example)
@@ -141,6 +144,7 @@ with lib;
   # Enable the custom options
   ushinnary = {
     amd.enable = true;
+    cpu.isAmd = true;
     gaming.enable = true;
     screen = {
       isOled = true;
@@ -161,6 +165,7 @@ with lib;
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "backup";
     extraSpecialArgs = { inherit inputs; };
     users.ushinnary = import ../../modules/home.nix;
   };

@@ -24,15 +24,6 @@ in
     else
       [ ];
 
-  programs.lazygit = {
-    enable = cfg.enableDevPackages;
-    settings = {
-      os = {
-        edit = "nvim --server $NVIM --remote-send '<cmd>edit {{filename}}<CR>'";
-        open = "nvim --server $NVIM --remote-send '<cmd>edit {{filename}}<CR>'";
-      };
-    };
-  };
 
   programs.mangohud = {
     enable = true;

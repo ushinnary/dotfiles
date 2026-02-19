@@ -23,6 +23,33 @@
         lua_ls = {
           enable = true;
         };
+        bashls = {
+          enable = true;
+        };
+        csharp_ls = {
+          enable = true;
+        };
+        docker_language_server = {
+          enable = true;
+        };
+        markdown_oxide = {
+          enable = true;
+        };
+        nginx_language_server = {
+          enable = true;
+        };
+        svelte = {
+          enable = true;
+        };
+        systemd_ls = {
+          enable = true;
+        };
+        taplo = {
+          enable = true;
+        };
+        tsgo = {
+          enable = true;
+        };
         nil_ls = {
           enable = true;
         };

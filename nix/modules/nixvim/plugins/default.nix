@@ -20,5 +20,7 @@
     ./lsp/lsp.nix
     ./lsp/ast_grep.nix
     ./gitsigns.nix
+    ./web-devicons.nix
+    ./nix-develop.nix
   ];
 }

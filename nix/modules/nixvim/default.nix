@@ -19,9 +19,21 @@ in
     programs.nixvim = {
       enable = true;
       defaultEditor = true;
-      clipboard.providers.wl-copy.enable = true;
+      clipboard = {
+        register = "unnamedplus";
+        providers.wl-copy.enable = true;
+      };
 
-      colorschemes.gruvbox.enable = true;
+      colorschemes.catppuccin = {
+        enable = true;
+        settings = {
+          flavour = "auto";
+          background = {
+            light = "latte";
+            dark = "mocha";
+          };
+        };
+      };
 
       imports = [
         ./keymaps.nix
@@ -65,11 +77,6 @@ in
         underline = true;
         update_in_insert = false;
         severity_sort = false;
-      };
-
-      plugins = {
-        #bufferline.enable = true;
-        web-devicons.enable = true;
       };
     };
   };

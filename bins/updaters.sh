@@ -19,9 +19,6 @@ update_func "apt" "sudo apt update && sudo apt upgrade -y"
 # Update dnf if installed
 update_func "dnf" "sudo dnf upgrade -y"
 
-# Update nixos if installed
-update_func "nixos-rebuild" "sudo nixos-rebuild switch --upgrade"
-
 # Update rpm-ostree if installed
 update_func "rpm-ostree" "rpm-ostree upgrade"
 

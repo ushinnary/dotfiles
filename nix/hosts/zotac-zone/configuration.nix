@@ -43,25 +43,12 @@ with lib;
     # uinput for handheld-daemon and other tools
     KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"
 
-    # Enable brightness control for everyone (fixes slider in Steam)
+    # Allow brightness changes from handheld/game mode sessions
     ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
-
-    # AMDGPU Performance Control (TDP/Clocks) - Allows TDP control in Steam/HHD
-    ACTION=="add", SUBSYSTEM=="pci", DRIVER=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power_dpm_force_performance_level /sys/%p/pp_od_clk_voltage"
-    ACTION=="add", SUBSYSTEM=="hwmon", ATTR{name}=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power1_cap /sys/%p/power2_cap"
 
     # Additional HHD rules
     KERNEL=="event*", SUBSYSTEM=="input", TAG+="uaccess"
     KERNEL=="js*", SUBSYSTEM=="input", TAG+="uaccess"
-
-    # Enables manual GPU clock control in Steam
-    # - /sys/class/drm/card0/device/power_dpm_force_performance_level
-    # - /sys/class/drm/card0/device/pp_od_clk_voltage
-    ACTION=="add", SUBSYSTEM=="pci", DRIVER=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power_dpm_force_performance_level /sys/%p/pp_od_clk_voltage"
-
-    # Enables manual TDP limiter in Steam
-    # - /sys/class/hwmon/hwmon*/power{1,2}_cap
-    ACTION=="add", SUBSYSTEM=="hwmon", ATTR{name}=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power1_cap /sys/%p/power2_cap"
 
     # This rule is needed for basic functionality of the controller in Steam and keyboard/mouse emulation
     SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0660", TAG+="uaccess"
@@ -112,8 +99,14 @@ with lib;
   environment.systemPackages = with pkgs; [
     gamescope-wsi # HDR won't work without this
     brightnessctl # For brightness control
+    iio-sensor-proxy # Ambient light sensor support
+    pamixer # Reliable volume adjustment backend for button handlers
+    wireplumber # Provides wpctl used by handheld volume integrations
+    alsa-utils # amixer fallback for some handheld tooling
     mangohud # Performance overlay
   ];
+
+  services.udev.packages = [ pkgs.iio-sensor-proxy ];
   programs.steam.extraCompatPackages = with pkgs; [
     proton-ge-bin
   ];

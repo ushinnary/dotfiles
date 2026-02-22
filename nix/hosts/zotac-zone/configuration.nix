@@ -108,16 +108,11 @@ with lib;
         };
       };
     };
-    # Input Plumber for proper volume button handling
-    inputplumber = {
-      enable = true;
-    };
   };
   environment.systemPackages = with pkgs; [
     gamescope-wsi # HDR won't work without this
     brightnessctl # For brightness control
     mangohud # Performance overlay
-    inputplumber # Input remapping for volume buttons
   ];
   programs.steam.extraCompatPackages = with pkgs; [
     proton-ge-bin

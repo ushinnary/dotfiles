@@ -131,17 +131,33 @@ with lib;
       };
 
       powerManagement = {
-        tuned = {
+        rust = {
           enable = mkOption {
             type = types.bool;
             default = false;
-            description = "Enable tuned for dynamic power management";
+            description = "Enable Rust-first power management (system76-scheduler)";
           };
 
           profile = mkOption {
-            type = types.str;
+            type = types.enum [
+              "balanced"
+              "performance"
+              "powersave"
+            ];
             default = "balanced";
-            description = "Tuned profile to use";
+            description = "Power profile mapped to CPU governor";
+          };
+
+          enablePowerProfilesDaemon = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Enable power-profiles-daemon when desktop integration is needed";
+          };
+
+          enableSystem76Power = mkOption {
+            type = types.bool;
+            default = true;
+            description = "Enable system76-power daemon for power profile control";
           };
         };
       };

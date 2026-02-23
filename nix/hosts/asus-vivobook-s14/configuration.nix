@@ -18,7 +18,6 @@
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
@@ -40,9 +39,8 @@
       refreshRate = 60; # 60Hz OLED screen
       isOled = true;
     };
-    powerManagement.tuned = {
+    powerManagement.rust = {
       enable = true;
-      profile = "ryzen-mobile";
     };
   };
 

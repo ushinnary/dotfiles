@@ -1,43 +1,41 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib;
 let
-  cfg = config.ushinnary.powerManagement.tuned;
+  cfg = config.ushinnary.powerManagement.rust;
+  governorByProfile = {
+    balanced = "schedutil";
+    performance = "performance";
+    powersave = "powersave";
+  };
 in
 {
   config = mkIf cfg.enable {
-    services.tuned.enable = true;
+    services.tuned.enable = mkForce false;
+    services.system76-scheduler.enable = true;
+    services.power-profiles-daemon.enable = mkForce cfg.enablePowerProfilesDaemon;
 
-    # Set the active profile
-    environment.etc."tuned/active_profile".text = cfg.profile;
+    powerManagement.cpuFreqGovernor = mkDefault governorByProfile.${cfg.profile};
 
-    # Create custom tuned profiles
-    environment.etc = {
-      "tuned/ryzen-desktop/tuned.conf" = {
-        text = ''
-          [main]
-          summary=Profile for AMD Ryzen desktop with high performance
-          include=throughput-performance
+    environment.systemPackages = mkIf cfg.enableSystem76Power [
+      pkgs.system76-power
+    ];
 
-          [cpu]
-          governor=performance
-          scaling_max_freq=4000000
-        '';
-      };
-
-      "tuned/ryzen-mobile/tuned.conf" = {
-        text = ''
-          [main]
-          summary=Profile for AMD Ryzen mobile/laptop with balanced performance
-          include=balanced
-
-          [cpu]
-          governor=performance
-          scaling_max_freq=3000000
-        '';
+    systemd.services.system76-power = mkIf cfg.enableSystem76Power {
+      description = "System76 Power daemon";
+      wantedBy = [ "multi-user.target" ];
+      after = [
+        "dbus.service"
+        "systemd-logind.service"
+      ];
+      serviceConfig = {
+        ExecStart = "${pkgs.system76-power}/bin/system76-power daemon";
+        Restart = "on-failure";
+        RestartSec = "2s";
       };
     };
   };

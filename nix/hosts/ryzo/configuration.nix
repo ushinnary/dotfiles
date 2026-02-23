@@ -18,7 +18,6 @@
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
@@ -40,9 +39,8 @@
       refreshRate = 90; # Normal desktop use
       gamingRefreshRate = 144; # Gaming performance
     };
-    powerManagement.tuned = {
+    powerManagement.rust = {
       enable = true;
-      profile = "ryzen-desktop";
     };
   };
 

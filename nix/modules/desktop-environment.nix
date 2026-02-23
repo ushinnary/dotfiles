@@ -16,8 +16,8 @@ in
 
   config = mkMerge [
     {
-      # Power profiles daemon conflicts with tuned
-      services.power-profiles-daemon.enable = !config.ushinnary.powerManagement.tuned.enable;
+      # Keep power-profiles-daemon disabled by default when Rust power stack is enabled
+      services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.powerManagement.rust.enable);
     }
     (mkIf (cfg.gnome || cfg.cosmic) {
       environment.systemPackages = with pkgs; [

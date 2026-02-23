@@ -18,7 +18,6 @@ with lib;
   ];
 
   # Bootloader - optimized for fast boot on handheld
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
@@ -138,9 +137,8 @@ with lib;
       isOled = true;
       gamingRefreshRate = 120;
     };
-    powerManagement.tuned = {
+    powerManagement.rust = {
       enable = true;
-      profile = "ryzen-desktop";
     };
   };
 

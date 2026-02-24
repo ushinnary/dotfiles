@@ -34,7 +34,7 @@
     desktopEnvironment.gnome = true;
     software.enableDevPackages = true;
     software.davinciResolve = true;
-    gaming.enable = true;
+    gaming.enable = false;
     screen = {
       refreshRate = 90; # Normal desktop use
       gamingRefreshRate = 144; # Gaming performance

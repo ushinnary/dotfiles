@@ -53,7 +53,7 @@ in
     "org/gnome/desktop/interface" = {
       font-name = "Inter 11";
       document-font-name = "Inter 11";
-      monospace-font-name = "JetBrains Mono 10";
+      monospace-font-name = "JetBrainsMono Nerd Font 10";
     };
   };
 }

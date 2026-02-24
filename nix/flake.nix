@@ -13,6 +13,8 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs =
@@ -45,6 +47,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.nixos-hardware.nixosModules.asus-battery
             ./hosts/asus-vivobook-s14/configuration.nix
           ];
         };

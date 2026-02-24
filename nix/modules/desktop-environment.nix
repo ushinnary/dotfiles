@@ -37,14 +37,18 @@ in
       fonts = {
         packages = with pkgs; [
           inter
-          jetbrains-mono
+          nerd-fonts.jetbrains-mono
         ];
 
         fontconfig = {
           defaultFonts = {
             serif = [ "Inter" ];
             sansSerif = [ "Inter" ];
-            monospace = [ "JetBrains Mono" ];
+            monospace = [
+              "JetBrainsMono Nerd Font"
+              "JetBrainsMono Nerd Font Mono"
+              "JetBrains Mono"
+            ];
           };
 
           hinting.style = "none";

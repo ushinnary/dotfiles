@@ -21,7 +21,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
-  networking.hostName = "asus-vivobook-s14";
+  networking.hostName = "asus-vivobook-s14-m5406n";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Paris"; # Change this to your timezone
@@ -42,7 +42,15 @@
     powerManagement.rust = {
       enable = true;
     };
+    security.howdy.enable = true;
   };
+
+  # Asus specific configurations
+  services.asusd = {
+    enable = true;
+    enableUserService = true;
+  };
+  hardware.asus.battery.chargeUpto = 80;
 
   # Home Manager Setup
   home-manager = {

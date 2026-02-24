@@ -22,5 +22,6 @@
     ./virtualisation.nix
     ./power-management.nix
     ./services.nix
+    ./security.nix
   ];
 }

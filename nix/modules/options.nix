@@ -114,6 +114,14 @@ with lib;
       };
 
       security = {
+        howdy = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Enable Howdy for facial recognition authentication";
+          };
+        };
+
         sudo = {
           noPasswdCommands = mkOption {
             type = types.listOf types.str;

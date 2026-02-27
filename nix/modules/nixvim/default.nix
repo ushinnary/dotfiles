@@ -28,6 +28,7 @@ in
         enable = true;
         settings = {
           flavour = "auto";
+          transparent_background = true;
           background = {
             light = "latte";
             dark = "mocha";

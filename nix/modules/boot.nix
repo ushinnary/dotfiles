@@ -27,8 +27,7 @@
   zramSwap.enable = true;
   zramSwap.algorithm = "zstd";
 
-  # environment.systemPackages = with pkgs; [
-  # ];
+  hardware.bluetooth.enable = true;
 
   nix.gc = {
     automatic = true;

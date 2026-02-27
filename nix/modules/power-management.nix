@@ -20,6 +20,7 @@ in
     services.power-profiles-daemon.enable = mkForce cfg.enablePowerProfilesDaemon;
 
     powerManagement.cpuFreqGovernor = mkDefault governorByProfile.${cfg.profile};
+    services.upower.enable = true;
 
     environment.systemPackages = mkIf cfg.enableSystem76Power [
       pkgs.system76-power

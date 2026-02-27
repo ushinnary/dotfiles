@@ -15,8 +15,6 @@ in
     if isGnome then
       with pkgs;
       [
-        gnomeExtensions.blur-my-shell
-        gnomeExtensions.just-perfection
         gnomeExtensions.appindicator
         gnomeExtensions.night-theme-switcher
         gnomeExtensions.dash-to-dock

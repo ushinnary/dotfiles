@@ -91,9 +91,7 @@ in
               "appindicatorsupport@rgcjonas.gmail.com"
               "dash-to-dock@micxgx.gmail.com"
               "gsconnect@andyholmes.github.io"
-              "just-perfection-desktop@just-perfection"
               "nightthemeswitcher@romainvigier.fr"
-              "blur-my-shell@aunetx"
             ];
           };
           "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -121,8 +119,6 @@ in
       package = pkgs.gnomeExtensions.gsconnect;
     };
     environment.systemPackages = with pkgs; [
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.just-perfection
       gnomeExtensions.appindicator
       gnomeExtensions.night-theme-switcher
       gnomeExtensions.dash-to-dock

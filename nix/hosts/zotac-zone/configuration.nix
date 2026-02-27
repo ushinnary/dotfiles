@@ -57,7 +57,6 @@ with lib;
   '';
 
   networking.hostName = "zotac-zone";
-  networking.networkmanager.enable = true;
   networking.firewall.allowedTCPPorts = [
     5385
     5335

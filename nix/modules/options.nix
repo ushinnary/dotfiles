@@ -53,6 +53,12 @@ with lib;
           default = false;
           description = "Set Cosmic as DE";
         };
+
+        niri = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Set Niri as DE";
+        };
       };
 
       software = {

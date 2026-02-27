@@ -12,6 +12,7 @@ in
   imports = [
     ./DE/gnome.nix
     ./DE/cosmic.nix
+    ./DE/niri.nix
   ];
 
   config = mkMerge [
@@ -19,7 +20,7 @@ in
       # Keep power-profiles-daemon disabled by default when Rust power stack is enabled
       services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.powerManagement.rust.enable);
     }
-    (mkIf (cfg.gnome || cfg.cosmic) {
+    (mkIf (cfg.gnome || cfg.cosmic || cfg.niri) {
       environment.systemPackages = with pkgs; [
         bibata-cursors
       ];

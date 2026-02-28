@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  inputs,
   ...
 }:
 with lib;
@@ -9,44 +10,27 @@ let
   cfg = config.ushinnary.desktopEnvironment;
 in
 {
+  imports = [
+    inputs.dms.nixosModules.greeter
+  ];
+
   config = mkIf cfg.niri {
     programs.niri.enable = true;
 
-    # Using greetd to seamlessly log into Niri without pulling GNOME shell stuff
-    services.greetd = {
+    # DankGreeter — themed login screen (replaces tuigreet/greetd)
+    programs.dank-material-shell.greeter = {
       enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
-          user = "greeter";
-        };
-      };
+      compositor.name = "niri";
+      configHome = "/home/ushinnary"; # Sync DMS theme with greeter
     };
 
-    systemd.tmpfiles.rules = [
-      "d /var/cache/tuigreet 0755 greeter greeter -"
-    ];
-
     # Essential system components for Wayland and Niri
+    # DankMaterialShell replaces: mako, fuzzel, polkit-kde-agent, wl-clipboard,
+    # wl-clip-persist, cliphist, swaylock, swayidle, brightnessctl, playerctl
     environment.systemPackages = with pkgs; [
-      mako
-      fuzzel
-      kdePackages.polkit-kde-agent-1
       xwayland-satellite
       gnome-keyring
-
-      # Clipboard stack (persistence + history)
-      wl-clipboard
-      wl-clip-persist
-      cliphist
-
-      # Screen lock
-      swaylock
-      swayidle
-
-      # Media / brightness
-      brightnessctl
-      playerctl
+      nautilus
     ];
 
     xdg.portal = {
@@ -64,30 +48,32 @@ in
 
     # Security & Password Management (gnome-keyring)
     services.gnome.gnome-keyring.enable = true;
-    security.pam.services.greetd.enableGnomeKeyring = true;
-    security.pam.services.greetd-password.enableGnomeKeyring = true;
     security.pam.services.login.enableGnomeKeyring = true;
 
-    # Allow swaylock to authenticate via PAM
-    security.pam.services.swaylock = {};
-
-    # Polkit started via systemd user unit
-    systemd.user.services.polkit-kde-authentication-agent-1 = {
-      description = "polkit-kde-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
-    };
+    # DMS provides built-in polkit agent and lock screen — no swaylock/polkit-kde needed
 
     home-manager.users.ushinnary =
       { ... }:
       {
+        imports = [
+          inputs.dms.homeModules.dank-material-shell
+          inputs.dms.homeModules.niri
+          inputs.danksearch.homeModules.dsearch
+        ];
+
+        programs.dank-material-shell = {
+          enable = true;
+          enableClipboardPaste = true;
+          niri = {
+            enableSpawn = true;
+            enableKeybinds = false; # We manage keybinds in our config.kdl
+            includes.enable = false; # We manage our own config.kdl
+          };
+        };
+
+        # DankSearch — file search backend for DMS Spotlight
+        programs.dsearch.enable = true;
+
         xdg.configFile."ghostty/config".text = ''
                 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
           font-family = Jetbrains Mono
@@ -98,16 +84,11 @@ in
         '';
 
         xdg.configFile."niri/config.kdl".text = ''
-          spawn-at-startup "mako"
           spawn-at-startup "xwayland-satellite"
 
-          // Clipboard persistence: keep content alive after source app closes
-          spawn-at-startup "wl-clip-persist" "--clipboard" "both"
-          spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
-          spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
-
-          // Screen lock on idle (lock after 5 min, screen off after 10 min)
-          spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "swaylock -f"
+          // DankMaterialShell is auto-started via its systemd/niri integration
+          // It provides: notifications, launcher, clipboard, lock screen,
+          // idle management, polkit, media controls, and more
 
           environment {
               DISPLAY ":0"
@@ -129,6 +110,10 @@ in
 
           output "eDP-1" {
             mode "1920x1080@90"
+          }
+
+          output "DP-1" {
+            mode "2560x1600@90"
           }
 
           window-rule {
@@ -189,19 +174,31 @@ in
               // Applications
               Mod+T { spawn "ghostty"; }
               Mod+Return { spawn "ghostty"; }
-              Mod+Space { spawn "fuzzel"; }
-              Mod+D { spawn "fuzzel"; }
+              Mod+E { spawn "nautilus"; }
 
-              // Clipboard history (fuzzel picker)
-              Mod+V { spawn "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+              // DMS Spotlight launcher (replaces fuzzel)
+              Mod+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+              Mod+D { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
 
-              // Screenshot
-              Print { screenshot; }
-              Mod+Print { screenshot-window; }
-              Mod+Shift+Print { screenshot-screen; }
+              // DMS Clipboard history (replaces cliphist + fuzzel)
+              Mod+V { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
 
-              // Screen lock
-              Mod+Escape { spawn "swaylock" "-f"; }
+              // DMS Screenshot (with annotation editor)
+              Print { spawn "dms" "ipc" "call" "niri" "screenshot"; }
+              Mod+Print { spawn "dms" "ipc" "call" "niri" "screenshotWindow"; }
+              Mod+Shift+Print { spawn "dms" "ipc" "call" "niri" "screenshotScreen"; }
+
+              // DMS Lock screen (replaces swaylock)
+              Mod+Escape { spawn "dms" "ipc" "call" "lock" "lock"; }
+
+              // DMS Notification center
+              Mod+N { spawn "dms" "ipc" "call" "notifications" "toggle"; }
+
+              // DMS Settings
+              Mod+Comma { spawn "dms" "ipc" "call" "settings" "toggle"; }
+
+              // DMS Control center (network, bluetooth, audio, etc.)
+              Mod+A { spawn "dms" "ipc" "call" "control-center" "toggle"; }
 
               // Window management
               Mod+Q { close-window; }
@@ -266,20 +263,20 @@ in
               Mod+Shift+4 { move-column-to-workspace 4; }
               Mod+Shift+5 { move-column-to-workspace 5; }
 
-              // Media keys
-              XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
-              XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
-              XF86AudioMute        { spawn "wpctl" "set-mute"   "@DEFAULT_AUDIO_SINK@" "toggle"; }
-              XF86AudioMicMute     { spawn "wpctl" "set-mute"   "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+              // Media keys (via DMS IPC)
+              XF86AudioRaiseVolume { spawn "dms" "ipc" "call" "audio" "increment" "5"; }
+              XF86AudioLowerVolume { spawn "dms" "ipc" "call" "audio" "decrement" "5"; }
+              XF86AudioMute        { spawn "dms" "ipc" "call" "audio" "mute"; }
+              XF86AudioMicMute     { spawn "dms" "ipc" "call" "audio" "micmute"; }
 
-              // Brightness keys
-              XF86MonBrightnessUp   { spawn "brightnessctl" "set" "5%+"; }
-              XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+              // Brightness keys (via DMS IPC)
+              XF86MonBrightnessUp   { spawn "dms" "ipc" "call" "brightness" "increment" "5"; }
+              XF86MonBrightnessDown { spawn "dms" "ipc" "call" "brightness" "decrement" "5"; }
 
-              // Media player keys
-              XF86AudioPlay  { spawn "playerctl" "play-pause"; }
-              XF86AudioNext  { spawn "playerctl" "next"; }
-              XF86AudioPrev  { spawn "playerctl" "previous"; }
+              // Media player keys (via DMS MPRIS)
+              XF86AudioPlay  { spawn "dms" "ipc" "call" "mpris" "playPause"; }
+              XF86AudioNext  { spawn "dms" "ipc" "call" "mpris" "next"; }
+              XF86AudioPrev  { spawn "dms" "ipc" "call" "mpris" "previous"; }
 
               // Power key — lock instead of shutdown
               Mod+Shift+E { quit; }

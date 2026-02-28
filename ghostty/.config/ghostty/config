@@ -1,3 +1,8 @@
 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
 font-family = Jetbrains Mono
 font-size = 12
+
+cursor-style = block
+cursor-style-blink = true
+
+background-opacity = 0.9

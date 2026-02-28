@@ -60,18 +60,27 @@ with lib;
     decky-loader.enable = true;
   };
 
-  # steamos-manager crashes on non-Deck hardware (missing sysfs paths).
-  # Prevent it from blocking the entire gamescope session startup.
-  systemd.user.services.steamos-manager = {
-    overrideStrategy = "asDropin";
-    serviceConfig.Restart = lib.mkForce "on-failure";
-    serviceConfig.RestartSec = "5s";
-  };
-  # jovian-setup-desktop-session calls steamosctl which needs steamos-manager.
-  # If it fails, don't block graphical-session.target.
-  systemd.user.services.jovian-setup-desktop-session = {
-    overrideStrategy = "asDropin";
-    serviceConfig.TimeoutStartSec = "10s";
+  # ── Fix non-Steam Deck boot hangs ──────────────────────────────
+  # steamos-manager crashes on Zotac Zone (missing TDP sysfs paths)
+  # and jovian-setup-desktop-session hangs waiting on it via D-Bus.
+  # Direct drop-in files to prevent them from blocking the session.
+  environment.etc = {
+    # Disable jovian-setup-desktop-session entirely — it only sets the
+    # default desktop session, which is already configured via NixOS.
+    "systemd/user/jovian-setup-desktop-session.service.d/10-disable.conf".text = ''
+      [Unit]
+      ConditionPathExists=
+      ConditionPathExists=/run/jovian-setup-skip
+    '';
+    # Aggressive timeouts on steamos-manager so it fails fast
+    # instead of blocking the entire gamescope session for minutes.
+    "systemd/user/steamos-manager.service.d/10-fast-fail.conf".text = ''
+      [Service]
+      TimeoutStartSec=5
+      TimeoutStopSec=5
+      Restart=on-failure
+      RestartSec=2
+    '';
   };
 
   # SDDM (required by Jovian autoStart) — X11 backend for the login greeter,

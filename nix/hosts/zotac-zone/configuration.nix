@@ -65,8 +65,9 @@ with lib;
     decky-loader.enable = true;
   };
 
-  # SDDM (required by Jovian autoStart) needs Wayland mode
-  services.displayManager.sddm.wayland.enable = true;
+  # SDDM (required by Jovian autoStart) — X11 backend for the login greeter,
+  # gamescope-wayland session takes over immediately after autologin
+  services.xserver.enable = true;
 
   # Use latest kernel & Mesa — NOT Valve's pinned/forked versions
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;

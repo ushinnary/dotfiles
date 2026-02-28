@@ -1,4 +1,13 @@
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+let
+  cfg = config.ushinnary.firewall;
+in
 {
   networking.networkmanager.enable = true;
   networking.firewall = {
@@ -54,7 +63,7 @@
   # OpenSnitch intercepts EVERY outbound connection at the process level.
   # A popup asks you to Allow / Deny each new app→destination pair.
   # Rules are remembered so you only decide once per app.
-  services.opensnitch = {
+  services.opensnitch = mkIf cfg.opensnitch {
     enable = true;
     settings = {
       DefaultAction = "deny"; # deny unknown traffic when UI is not running
@@ -65,7 +74,7 @@
   };
 
   # OpenSnitch UI — shows popup prompts and lets you manage rules
-  environment.systemPackages = [ pkgs.opensnitch-ui ];
+  environment.systemPackages = mkIf cfg.opensnitch [ pkgs.opensnitch-ui ];
 
   services.tailscale.enable = true;
 }

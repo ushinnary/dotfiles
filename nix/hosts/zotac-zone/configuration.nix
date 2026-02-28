@@ -123,6 +123,7 @@ with lib;
 
   # Enable the custom options
   ushinnary = {
+    firewall.opensnitch = false; # No desktop for popup prompts in Gaming Mode
     amd.enable = true;
     cpu.isAmd = true;
     gaming.enable = true;

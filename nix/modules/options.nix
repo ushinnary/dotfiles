@@ -119,6 +119,14 @@ with lib;
         };
       };
 
+      firewall = {
+        opensnitch = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Enable OpenSnitch application firewall (needs a desktop for popup prompts)";
+        };
+      };
+
       security = {
         howdy = {
           enable = mkOption {

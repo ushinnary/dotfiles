@@ -33,21 +33,31 @@ in
       fuzzel
       kdePackages.polkit-kde-agent-1
       xwayland-satellite
-      wl-clipboard
       gnome-keyring
+
+      # Clipboard stack (persistence + history)
+      wl-clipboard
+      wl-clip-persist
+      cliphist
+
+      # Screen lock
+      swaylock
+      swayidle
+
+      # Media / brightness
+      brightnessctl
+      playerctl
     ];
 
     xdg.portal = {
       enable = true;
+      xdgOpenUsePortal = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-gnome
       ];
+      config.common.default = "*";
       config.niri = {
-        default = mkDefault [
-          "gnome"
-          "gtk"
-        ];
+        default = mkDefault [ "gtk" ];
         "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
       };
     };
@@ -57,6 +67,9 @@ in
     security.pam.services.greetd.enableGnomeKeyring = true;
     security.pam.services.greetd-password.enableGnomeKeyring = true;
     security.pam.services.login.enableGnomeKeyring = true;
+
+    # Allow swaylock to authenticate via PAM
+    security.pam.services.swaylock = {};
 
     # Polkit started via systemd user unit
     systemd.user.services.polkit-kde-authentication-agent-1 = {
@@ -88,8 +101,18 @@ in
           spawn-at-startup "mako"
           spawn-at-startup "xwayland-satellite"
 
+          // Clipboard persistence: keep content alive after source app closes
+          spawn-at-startup "wl-clip-persist" "--clipboard" "both"
+          spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
+          spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
+
+          // Screen lock on idle (lock after 5 min, screen off after 10 min)
+          spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "swaylock -f"
+
           environment {
               DISPLAY ":0"
+              NIXOS_OZONE_WL "1"
+              MOZ_ENABLE_WAYLAND "1"
           }
 
           prefer-no-csd
@@ -161,7 +184,7 @@ in
           binds {
               // General
               Mod+Shift+Slash { show-hotkey-overlay; }
-            Super { toggle-overview; }
+              Super { toggle-overview; }
 
               // Applications
               Mod+T { spawn "ghostty"; }
@@ -169,7 +192,18 @@ in
               Mod+Space { spawn "fuzzel"; }
               Mod+D { spawn "fuzzel"; }
 
-              // Window management (GNOME ports)
+              // Clipboard history (fuzzel picker)
+              Mod+V { spawn "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+
+              // Screenshot
+              Print { screenshot; }
+              Mod+Print { screenshot-window; }
+              Mod+Shift+Print { screenshot-screen; }
+
+              // Screen lock
+              Mod+Escape { spawn "swaylock" "-f"; }
+
+              // Window management
               Mod+Q { close-window; }
               Alt+F4 { close-window; }
 
@@ -197,11 +231,58 @@ in
               Mod+Shift+J     { move-window-down; }
               Mod+Shift+K     { move-window-up; }
 
-              // Home / End 
+              // Column width adjustment
+              Mod+Minus { set-column-width "-10%"; }
+              Mod+Equal { set-column-width "+10%"; }
+              Mod+Shift+Minus { set-window-height "-10%"; }
+              Mod+Shift+Equal { set-window-height "+10%"; }
+
+              // Center focused column
+              Mod+C { center-column; }
+
+              // Consume / expel windows (merge into or split from column)
+              Mod+BracketLeft  { consume-window-into-column; }
+              Mod+BracketRight { expel-window-from-column; }
+
+              // Home / End
               Mod+Home { focus-column-first; }
               Mod+End  { focus-column-last; }
+
+              // Workspaces
               Mod+Page_Down { focus-workspace-down; }
               Mod+Page_Up   { focus-workspace-up; }
+              Mod+Shift+Page_Down { move-column-to-workspace-down; }
+              Mod+Shift+Page_Up   { move-column-to-workspace-up; }
+
+              // Workspace by number
+              Mod+1 { focus-workspace 1; }
+              Mod+2 { focus-workspace 2; }
+              Mod+3 { focus-workspace 3; }
+              Mod+4 { focus-workspace 4; }
+              Mod+5 { focus-workspace 5; }
+              Mod+Shift+1 { move-column-to-workspace 1; }
+              Mod+Shift+2 { move-column-to-workspace 2; }
+              Mod+Shift+3 { move-column-to-workspace 3; }
+              Mod+Shift+4 { move-column-to-workspace 4; }
+              Mod+Shift+5 { move-column-to-workspace 5; }
+
+              // Media keys
+              XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+              XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+              XF86AudioMute        { spawn "wpctl" "set-mute"   "@DEFAULT_AUDIO_SINK@" "toggle"; }
+              XF86AudioMicMute     { spawn "wpctl" "set-mute"   "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+              // Brightness keys
+              XF86MonBrightnessUp   { spawn "brightnessctl" "set" "5%+"; }
+              XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+
+              // Media player keys
+              XF86AudioPlay  { spawn "playerctl" "play-pause"; }
+              XF86AudioNext  { spawn "playerctl" "next"; }
+              XF86AudioPrev  { spawn "playerctl" "previous"; }
+
+              // Power key — lock instead of shutdown
+              Mod+Shift+E { quit; }
           }
         '';
       };

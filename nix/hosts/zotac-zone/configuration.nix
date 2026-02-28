@@ -57,12 +57,21 @@ with lib;
     # AMD GPU: early KMS + backlight brightness control from Steam UI
     hardware.has.amd.gpu = true;
 
-    # TDP control udev rules (cherry-picked from steamdeck module)
-    # Enables power_dpm_force_performance_level, pp_od_clk_voltage, power1_cap
-    # so steamos-manager can adjust TDP from the Steam performance overlay
-    devices.steamdeck.enablePerfControlUdevRules = true;
-
     decky-loader.enable = true;
+  };
+
+  # steamos-manager crashes on non-Deck hardware (missing sysfs paths).
+  # Prevent it from blocking the entire gamescope session startup.
+  systemd.user.services.steamos-manager = {
+    overrideStrategy = "asDropin";
+    serviceConfig.Restart = lib.mkForce "on-failure";
+    serviceConfig.RestartSec = "5s";
+  };
+  # jovian-setup-desktop-session calls steamosctl which needs steamos-manager.
+  # If it fails, don't block graphical-session.target.
+  systemd.user.services.jovian-setup-desktop-session = {
+    overrideStrategy = "asDropin";
+    serviceConfig.TimeoutStartSec = "10s";
   };
 
   # SDDM (required by Jovian autoStart) — X11 backend for the login greeter,

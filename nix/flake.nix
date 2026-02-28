@@ -16,11 +16,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    jovian-nixos = {
-      url = "github:Jovian-Experiments/Jovian-NixOS";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,7 +48,6 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
-            inputs.jovian-nixos.nixosModules.default
             ./hosts/zotac-zone/configuration.nix
           ];
         };

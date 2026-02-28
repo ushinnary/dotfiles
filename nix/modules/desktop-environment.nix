@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.desktopEnvironment;
+  cfg = config.ushinnary.desktop;
 in
 {
   imports = [
@@ -18,7 +18,7 @@ in
   config = mkMerge [
     {
       # Keep power-profiles-daemon disabled by default when Rust power stack is enabled
-      services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.powerManagement.rust.enable);
+      services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.power.enable);
     }
     (mkIf (cfg.gnome || cfg.cosmic || cfg.niri) {
       environment.systemPackages = with pkgs; [

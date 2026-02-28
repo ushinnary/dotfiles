@@ -5,8 +5,8 @@
   ...
 }:
 let
-  cfg = osConfig.ushinnary.software;
-  isGnome = osConfig.ushinnary.desktopEnvironment.gnome;
+  cfg = osConfig.ushinnary.dev;
+  isGnome = osConfig.ushinnary.desktop.gnome;
 in
 {
   home.stateVersion = "25.11";

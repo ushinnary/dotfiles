@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.desktopEnvironment;
+  cfg = config.ushinnary.desktop;
 in
 {
   config = mkIf cfg.gnome {

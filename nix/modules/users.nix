@@ -27,7 +27,7 @@
       commands = map (command: {
         command = command;
         options = [ "NOPASSWD" ];
-      }) config.ushinnary.security.sudo.noPasswdCommands;
+      }) config.ushinnary.security.sudo.passwordlessCommands;
     }
   ];
 }

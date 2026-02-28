@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.virtualisation;
+  cfg = config.ushinnary.containers;
 in
 {
   config = mkIf cfg.enable {

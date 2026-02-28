@@ -5,10 +5,10 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.cpu;
+  cfg = config.ushinnary.hardware;
 in
 {
-  config = mkIf cfg.isAmd {
+  config = mkIf cfg.amdCpu {
     hardware.cpu.amd.updateMicrocode = true;
     services.fwupd.enable = true;
     boot.kernelParams = [

@@ -41,12 +41,6 @@
     ];
   };
 
-  fileSystems."/mnt/sdcard" = {
-    device = "/dev/disk/by-uuid/a9052f97-0ef5-470a-98b9-7f7706ed9e6f"; # Replace with actual UUID
-    fsType = "ext4"; # Or vfat for FAT32
-    options = [ "defaults" ];
-  };
-
   swapDevices = [
     { device = "/dev/disk/by-uuid/b3f5c491-edc9-43b8-9029-5c308db6bc0c"; }
   ];

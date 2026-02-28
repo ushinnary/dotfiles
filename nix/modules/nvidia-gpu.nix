@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.nvidia;
+  cfg = config.ushinnary.gpu.nvidia;
 in
 {
 
@@ -27,7 +27,7 @@ in
       modesetting.enable = true;
       powerManagement.enable = true;
       powerManagement.finegrained = false;
-      open = cfg.open;
+      open = cfg.openDriver;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };

@@ -86,9 +86,9 @@ sudo nixos-rebuild switch --flake .#asus-vivobook-s14
 
 ## 📞 Troubleshooting
 
-- If you encounter issues with AMD graphics, ensure `ushinnary.amd.enable = true` is set
-- For OLED display optimizations, `screen.isOled = true` is already configured
-- Virtualization is disabled by default for this laptop configuration
+- If you encounter issues with AMD graphics, ensure `ushinnary.gpu.amd.enable = true` is set
+- For OLED display optimizations, `display.oled = true` is already configured
+- Containers are disabled by default for this laptop configuration
 
 ## 🔗 Additional Resources
 

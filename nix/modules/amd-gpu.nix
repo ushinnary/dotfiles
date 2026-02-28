@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.amd;
+  cfg = config.ushinnary.gpu.amd;
 in
 {
 

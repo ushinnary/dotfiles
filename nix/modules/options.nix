@@ -4,184 +4,125 @@
 }:
 with lib;
 {
-  # Centralised options for this dotfiles repo. All option defaults are set
-  # to `false` as requested so features must be explicitly enabled in your
-  # machine-specific configuration.
-  options = {
-    # System-level options
-    ushinnary = {
-      nvidia = {
-        enable = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Enable NVIDIA GPU Drivers for desktop PC";
-        };
+  options.ushinnary = {
 
-        open = mkOption {
+    # ── GPU ───────────────────────────────────────────────────────
+    gpu = {
+      nvidia = {
+        enable = mkEnableOption "NVIDIA GPU drivers";
+
+        openDriver = mkOption {
           type = types.bool;
           default = true;
-          description = "Use open source NVIDIA drivers";
+          description = "Use the open-source NVIDIA kernel driver";
         };
 
-        # powerLimit is an integer when used but defaults to `false` here to
-        # follow the user's instruction. The service using this value should
-        # be gated by `enable` (so the false default won't be used at runtime).
         powerLimit = mkOption {
           type = with types; either bool int;
           default = false;
-          description = "Set power limit to nvidia GPU (positive int) or false to disable";
+          description = "Power limit in watts for the NVIDIA GPU, or false to leave unchanged";
         };
       };
 
-      amd = {
-        enable = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Enable AMD GPU Drivers for desktop PC";
-        };
+      amd.enable = mkEnableOption "AMD GPU drivers";
+    };
+
+    # ── Hardware ──────────────────────────────────────────────────
+    hardware = {
+      amdCpu = mkEnableOption "AMD CPU tweaks (microcode, pstate)";
+    };
+
+    # ── Desktop ───────────────────────────────────────────────────
+    desktop = {
+      gnome = mkEnableOption "GNOME desktop environment";
+      cosmic = mkEnableOption "COSMIC desktop environment";
+      niri = mkEnableOption "Niri Wayland compositor";
+    };
+
+    # ── Display ───────────────────────────────────────────────────
+    display = {
+      oled = mkEnableOption "OLED-specific optimizations (HDR, deeper blacks)";
+
+      refreshRate = mkOption {
+        type = types.int;
+        default = 60;
+        description = "Default refresh rate for normal desktop use";
       };
 
-      desktopEnvironment = {
-        gnome = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Set GNOME as DE";
-        };
+      gamingRefreshRate = mkOption {
+        type = types.int;
+        default = 144;
+        description = "Refresh rate used in gaming sessions";
+      };
+    };
 
-        cosmic = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Set Cosmic as DE";
-        };
+    # ── Development ───────────────────────────────────────────────
+    dev.enable = mkEnableOption "development tools and Nixvim editor";
 
-        niri = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Set Niri as DE";
-        };
+    # ── Applications ──────────────────────────────────────────────
+    apps = {
+      davinciResolve = mkEnableOption "DaVinci Resolve Studio";
+    };
+
+    # ── Gaming ────────────────────────────────────────────────────
+    gaming.enable = mkEnableOption "gaming packages and configuration (Steam, Gamescope, etc.)";
+
+    # ── Containers ────────────────────────────────────────────────
+    containers = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable Podman container runtime";
+      };
+    };
+
+    # ── Firewall ──────────────────────────────────────────────────
+    firewall = {
+      opensnitch = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable OpenSnitch application firewall";
+      };
+    };
+
+    # ── Security ──────────────────────────────────────────────────
+    security = {
+      howdy.enable = mkEnableOption "Howdy facial recognition authentication";
+
+      sudo.passwordlessCommands = mkOption {
+        type = types.listOf types.str;
+        default = [
+          "/run/current-system/sw/bin/reboot"
+          "/run/current-system/sw/bin/nixos-rebuild"
+          "/run/current-system/sw/bin/nix-collect-garbage"
+          "/run/current-system/sw/bin/shutdown"
+          "/run/current-system/sw/bin/fwupd"
+          "/run/current-system/sw/bin/fwupdmgr"
+        ];
+        description = "Commands that can be run with sudo without a password";
+      };
+    };
+
+    # ── Power ─────────────────────────────────────────────────────
+    power = {
+      enable = mkEnableOption "power management (system76-scheduler, CPU governor)";
+
+      profile = mkOption {
+        type = types.enum [
+          "balanced"
+          "performance"
+          "powersave"
+        ];
+        default = "balanced";
+        description = "Power profile mapped to CPU governor";
       };
 
-      software = {
-        enableDevPackages = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Enable all dev packages with Nixvim included";
-        };
+      profilesDaemon = mkEnableOption "power-profiles-daemon for desktop integration";
 
-        davinciResolve = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Enable DaVinci Resolve Studio";
-        };
-      };
-
-      gaming = {
-        enable = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Enable gaming-related packages and configurations";
-        };
-      };
-
-      screen = {
-        isOled = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Enable OLED-specific optimizations (HDR, deeper blacks)";
-        };
-
-        refreshRate = mkOption {
-          type = types.int;
-          default = 60;
-          description = "Default refresh rate for normal desktop use";
-        };
-
-        gamingRefreshRate = mkOption {
-          type = types.int;
-          default = 144;
-          description = "Refresh rate to use when gaming (higher for better performance)";
-        };
-      };
-
-      cpu = {
-        isAmd = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Apply AMD tweaks for CPU";
-        };
-      };
-
-      virtualisation = {
-        enable = mkOption {
-          type = types.bool;
-          default = true;
-          description = "Enable virtualization with podman";
-        };
-      };
-
-      firewall = {
-        opensnitch = mkOption {
-          type = types.bool;
-          default = true;
-          description = "Enable OpenSnitch application firewall (needs a desktop for popup prompts)";
-        };
-      };
-
-      security = {
-        howdy = {
-          enable = mkOption {
-            type = types.bool;
-            default = false;
-            description = "Enable Howdy for facial recognition authentication";
-          };
-        };
-
-        sudo = {
-          noPasswdCommands = mkOption {
-            type = types.listOf types.str;
-            default = [
-              "/run/current-system/sw/bin/reboot"
-              "/run/current-system/sw/bin/nixos-rebuild"
-              "/run/current-system/sw/bin/nix-collect-garbage"
-              "/run/current-system/sw/bin/shutdown"
-              "/run/current-system/sw/bin/fwupd"
-              "/run/current-system/sw/bin/fwupdmgr"
-            ];
-            description = "List of commands to run without sudo password";
-          };
-        };
-      };
-
-      powerManagement = {
-        rust = {
-          enable = mkOption {
-            type = types.bool;
-            default = false;
-            description = "Enable Rust-first power management (system76-scheduler)";
-          };
-
-          profile = mkOption {
-            type = types.enum [
-              "balanced"
-              "performance"
-              "powersave"
-            ];
-            default = "balanced";
-            description = "Power profile mapped to CPU governor";
-          };
-
-          enablePowerProfilesDaemon = mkOption {
-            type = types.bool;
-            default = false;
-            description = "Enable power-profiles-daemon when desktop integration is needed";
-          };
-
-          enableSystem76Power = mkOption {
-            type = types.bool;
-            default = true;
-            description = "Enable system76-power daemon for power profile control";
-          };
-        };
+      system76Power = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable system76-power daemon for power profile control";
       };
     };
   };

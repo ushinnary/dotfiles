@@ -5,12 +5,12 @@
   ...
 }:
 let
-  cfg = config.ushinnary.software;
+  cfg = config.ushinnary.dev;
 in
 {
   imports = [ ./nixvim/default.nix ];
 
-  environment.systemPackages = lib.mkIf cfg.enableDevPackages [
+  environment.systemPackages = lib.mkIf cfg.enable [
     pkgs.ast-grep
 
     pkgs.ghostty

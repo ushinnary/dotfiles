@@ -112,10 +112,6 @@ with lib;
   # Sensors for auto-rotation and adaptive brightness
   hardware.sensor.iio.enable = true;
 
-  # Ensure SD card permissions
-  systemd.tmpfiles.rules = [
-    "d /mnt/sdcard 0770 ushinnary users -"
-  ];
 
   # Force SD Card to be visible as mmcblk0p1 if it's not mounting automatically in Steam
   environment.variables.STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/mnt/sdcard";
@@ -129,16 +125,14 @@ with lib;
 
   # Enable the custom options
   ushinnary = {
-    amd.enable = true;
-    cpu.isAmd = true;
+    gpu.amd.enable = true;
+    hardware.amdCpu = true;
     gaming.enable = true;
-    screen = {
-      isOled = true;
+    display = {
+      oled = true;
       gamingRefreshRate = 120;
     };
-    powerManagement.rust = {
-      enable = true;
-    };
+    power.enable = true;
   };
 
   # services.fprintd.enable = true;

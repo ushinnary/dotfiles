@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.software;
+  cfg = config.ushinnary.apps;
 in
 {
   environment.systemPackages = with pkgs; [

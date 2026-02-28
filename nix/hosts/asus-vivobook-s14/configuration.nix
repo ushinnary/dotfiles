@@ -28,19 +28,17 @@
 
   # Enable the custom options
   ushinnary = {
-    amd.enable = true;
-    cpu.isAmd = true;
-    desktopEnvironment.gnome = true;
-    software.enableDevPackages = true;
+    gpu.amd.enable = true;
+    hardware.amdCpu = true;
+    desktop.gnome = true;
+    dev.enable = true;
     gaming.enable = false;
-    virtualisation.enable = false;
-    screen = {
+    containers.enable = false;
+    display = {
       refreshRate = 60; # 60Hz OLED screen
-      isOled = true;
+      oled = true;
     };
-    powerManagement.rust = {
-      enable = true;
-    };
+    power.enable = true;
     security.howdy.enable = true;
   };
 

@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.nvidia;
+  cfg = config.ushinnary.gpu.nvidia;
 in
 {
   # Option declarations for NVIDA are centralised in modules/options.nix

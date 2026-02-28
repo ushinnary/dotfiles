@@ -7,7 +7,7 @@
 }:
 with lib;
 let
-  cfg = config.ushinnary.software;
+  cfg = config.ushinnary.dev;
 in
 {
   imports = [
@@ -15,7 +15,7 @@ in
     inputs.nixvim.nixosModules.nixvim
   ];
 
-  config = mkIf cfg.enableDevPackages {
+  config = mkIf cfg.enable {
     programs.nixvim = {
       enable = true;
       defaultEditor = true;

@@ -28,19 +28,17 @@
 
   # Enable the custom options
   ushinnary = {
-    amd.enable = true;
-    cpu.isAmd = true;
-    desktopEnvironment.gnome = true;
-    software.enableDevPackages = true;
-    software.davinciResolve = true;
+    gpu.amd.enable = true;
+    hardware.amdCpu = true;
+    desktop.gnome = true;
+    dev.enable = true;
+    apps.davinciResolve = true;
     gaming.enable = false;
-    screen = {
+    display = {
       refreshRate = 90; # Normal desktop use
       gamingRefreshRate = 144; # Gaming performance
     };
-    powerManagement.rust = {
-      enable = true;
-    };
+    power.enable = true;
   };
 
   # Home Manager Setup

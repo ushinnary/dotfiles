@@ -59,6 +59,7 @@ in
           inputs.dms.homeModules.dank-material-shell
           inputs.dms.homeModules.niri
           inputs.danksearch.homeModules.dsearch
+          inputs.system76-scheduler-niri.homeModules.default
         ];
 
         programs.dank-material-shell = {
@@ -73,6 +74,8 @@ in
 
         # DankSearch — file search backend for DMS Spotlight
         programs.dsearch.enable = true;
+
+        services.system76-scheduler-niri.enable = config.services.system76-scheduler.enable;
 
         xdg.configFile."ghostty/config".text = ''
                 theme = dark:Catppuccin Mocha,light:Catppuccin Latte

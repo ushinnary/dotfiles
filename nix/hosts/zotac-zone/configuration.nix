@@ -62,6 +62,18 @@ with lib;
     5335
   ];
 
+  # SD card game library mount (non-blocking at boot)
+  fileSystems."/mnt/sdcard" = {
+    device = "/dev/disk/by-uuid/a9052f97-0ef5-470a-98b9-7f7706ed9e6f";
+    fsType = "ext4";
+    options = [
+      "nofail"
+      "x-systemd.automount"
+      "x-systemd.device-timeout=3s"
+      "x-systemd.idle-timeout=10min"
+    ];
+  };
+
   time.timeZone = "Europe/Paris";
   # Gamescope Auto Boot from TTY (example)
   services = {

@@ -158,7 +158,8 @@ with lib;
       oled = true;
       gamingRefreshRate = 120;
     };
-    power.enable = true;
+    # Disable custom System76 power stack on this host while using Jovian SteamOS stack.
+    power.enable = false;
   };
 
   # Home Manager Setup

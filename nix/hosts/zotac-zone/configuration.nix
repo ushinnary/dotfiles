@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   lib,
@@ -62,22 +63,38 @@ with lib;
     hardware.amd.gpu.enableEarlyModesetting = true;
     devices.steamdeck.enablePerfControlUdevRules = true;
 
-    decky-loader.enable = true;
+    # decky-loader.enable = true;
   };
 
   # ── Fix non-Steam Deck boot hangs ──────────────────────────────
   # steamos-manager crashes on Zotac Zone (missing TDP sysfs paths)
   # and jovian-setup-desktop-session hangs waiting on it via D-Bus.
-  # Mask the problematic services to prevent them from blocking the session.
+  # Keep services enabled, but bound startup time so they don't block sessions.
   systemd.user.services.jovian-setup-desktop-session = {
     overrideStrategy = "asDropin";
-    unitConfig.ConditionEnvironment = "JOVIAN_FORCE_ENABLE=1";
+    serviceConfig.TimeoutStartSec = lib.mkForce "10s";
   };
   systemd.user.services.steamos-manager = {
     overrideStrategy = "asDropin";
     serviceConfig = {
-      TimeoutStartSec = lib.mkForce "5s";
-      TimeoutStopSec = lib.mkForce "5s";
+      TimeoutStartSec = lib.mkForce "10s";
+      TimeoutStopSec = lib.mkForce "10s";
+    };
+  };
+
+  # Decky requires Steam CEF remote debugging to show up in Gaming Mode UI.
+  # Jovian intentionally doesn't toggle this automatically.
+  systemd.services.steam-cef-debug = lib.mkIf config.jovian.decky-loader.enable {
+    description = "Enable Steam CEF remote debugging for Decky";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "decky-loader.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart =
+        let
+          steamUser = config.jovian.steam.user;
+        in
+        "${pkgs.util-linux}/bin/runuser -u ${steamUser} -- ${pkgs.bash}/bin/bash -lc 'mkdir -p ~/.steam/steam && touch ~/.steam/steam/.cef-enable-remote-debugging'";
     };
   };
 
@@ -85,8 +102,8 @@ with lib;
   # gamescope-wayland session takes over immediately after autologin
   services.displayManager.sddm.wayland.enable = true;
 
-  # Use latest kernel & Mesa — NOT Valve's pinned/forked versions
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+  # Keep Jovian default kernel stack for handheld integration (TDP, power hooks).
+  # On Zotac Zone this is more reliable than forcing linuxPackages_latest.
 
   # ═══════════════════════════════════════════════════════════════
   #  Handheld-specific tweaks

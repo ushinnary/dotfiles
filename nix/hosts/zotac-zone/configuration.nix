@@ -63,7 +63,7 @@ with lib;
     hardware.amd.gpu.enableEarlyModesetting = true;
     devices.steamdeck.enablePerfControlUdevRules = true;
 
-    # decky-loader.enable = true;
+    decky-loader.enable = true;
   };
 
   # ── Fix non-Steam Deck boot hangs ──────────────────────────────
@@ -102,10 +102,6 @@ with lib;
   # gamescope-wayland session takes over immediately after autologin
   services.displayManager.sddm.wayland.enable = true;
 
-  # Use Jovian kernel on Zotac Zone to get handheld-specific platform support
-  # (including Zotac Zone drivers that can expose extra power/TDP interfaces).
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_jovian;
-
   # ═══════════════════════════════════════════════════════════════
   #  Handheld-specific tweaks
   # ═══════════════════════════════════════════════════════════════
@@ -122,15 +118,6 @@ with lib;
   };
 
   services.udisks2.enable = true; # Required for SD card mounting in Steam
-
-  environment.systemPackages = with pkgs; [
-    brightnessctl # For brightness control
-    iio-sensor-proxy # Ambient light sensor support
-    pamixer # Reliable volume adjustment backend for button handlers
-    wireplumber # Provides wpctl used by handheld volume integrations
-    alsa-utils # amixer fallback for some handheld tooling
-    mangohud # Performance overlay
-  ];
 
   services.udev.packages = [ pkgs.iio-sensor-proxy ];
   programs.steam.extraCompatPackages = with pkgs; [

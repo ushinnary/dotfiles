@@ -34,80 +34,78 @@ with lib;
     "msr" # Required for ryzenadj TDP control
   ];
 
-  # Handheld Daemon (HHD) rules for Zotac Zone & Performance Tuning Permissions
-  services.udev.extraRules = ''
-    KERNEL=="hidraw*", ATTRS{idVendor}=="1973", ATTRS{idProduct}=="2000", MODE="0660", TAG+="uaccess"
-    KERNEL=="hidraw*", ATTRS{idVendor}=="1973", ATTRS{idProduct}=="2001", MODE="0660", TAG+="uaccess"
-
-    # uinput for handheld-daemon and other tools
-    KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"
-
-    # Allow brightness changes from handheld/game mode sessions
-    ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
-
-    # Additional HHD rules
-    KERNEL=="event*", SUBSYSTEM=="input", TAG+="uaccess"
-    KERNEL=="js*", SUBSYSTEM=="input", TAG+="uaccess"
-
-    # This rule is needed for basic functionality of the controller in Steam and keyboard/mouse emulation
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0660", TAG+="uaccess"
-
-    # Valve HID devices over USB hidraw
-    KERNEL=="hidraw*", ATTRS{idVendor}=="28de", MODE="0660", TAG+="uaccess"
-  '';
-
   networking.hostName = "zotac-zone";
   networking.firewall.allowedTCPPorts = [
     5385
     5335
   ];
 
-  # SD card game library mount (non-blocking at boot)
-  fileSystems."/mnt/sdcard" = {
-    device = "/dev/disk/by-uuid/a9052f97-0ef5-470a-98b9-7f7706ed9e6f";
-    fsType = "ext4";
-    options = [
-      "nofail"
-      "x-systemd.automount"
-      "x-systemd.device-timeout=3s"
-      "x-systemd.idle-timeout=10min"
-    ];
+  time.timeZone = "Europe/Paris";
+
+  # ═══════════════════════════════════════════════════════════════
+  #  Jovian NixOS — SteamOS-like experience
+  # ═══════════════════════════════════════════════════════════════
+  jovian = {
+    steam = {
+      enable = true;
+      autoStart = true;
+      user = "ushinnary";
+      # No desktopSession — "Switch to Desktop" re-enters Gaming Mode
+      desktopSession = "gamescope-wayland";
+    };
+    steamos = {
+      enableAutoMountUdevRules = true; # For SD card auto-mount in Steam Library
+    };
+
+    # AMD GPU: early KMS + backlight brightness control from Steam UI
+    hardware.has.amd.gpu = true;
+    hardware.amd.gpu.enableEarlyModesetting = true;
+    devices.steamdeck.enablePerfControlUdevRules = true;
+
+    decky-loader.enable = true;
   };
 
-  time.timeZone = "Europe/Paris";
-  # Gamescope Auto Boot from TTY (example)
-  services = {
-    xserver.enable = false; # Assuming no other Xserver needed
-    getty.autologinUser = "ushinnary";
-    udisks2.enable = true; # Required for SD card mounting support in Steam
-    handheld-daemon = {
-      enable = true;
-      user = "ushinnary";
-      adjustor = {
-        enable = true;
-        loadAcpiCallModule = true;
-      };
-      ui = {
-        enable = true;
-      };
-    }; # Fixes buttons/gyro for generic handhelds
-    # power-profiles-daemon.enable = true; # Better power management
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          # Added: -r 120 (120Hz)
-          # Fixed: --hdr-itm-enable (was enabled with 'd')
-          # Added: --hdr-debug-force-output (fixes some OLED HDR issues)
-          # Added: --mangoapp (performance overlay)
-          command = "${lib.getExe pkgs.gamescope} -W 1920 -H 1080 -r 120 -f -e --xwayland-count 2 --hdr-enabled --hdr-itm-enable --hdr-debug-force-output --mangoapp -- steam -pipewire-dmabuf -gamepadui -steamdeck -steamos3 > /dev/null 2>&1";
-          user = "ushinnary";
-        };
-      };
+  # ── Fix non-Steam Deck boot hangs ──────────────────────────────
+  # steamos-manager crashes on Zotac Zone (missing TDP sysfs paths)
+  # and jovian-setup-desktop-session hangs waiting on it via D-Bus.
+  # Mask the problematic services to prevent them from blocking the session.
+  systemd.user.services.jovian-setup-desktop-session = {
+    overrideStrategy = "asDropin";
+    unitConfig.ConditionEnvironment = "JOVIAN_FORCE_ENABLE=1";
+  };
+  systemd.user.services.steamos-manager = {
+    overrideStrategy = "asDropin";
+    serviceConfig = {
+      TimeoutStartSec = lib.mkForce "5s";
+      TimeoutStopSec = lib.mkForce "5s";
     };
   };
+
+  # SDDM (required by Jovian autoStart) — X11 backend for the login greeter,
+  # gamescope-wayland session takes over immediately after autologin
+  services.displayManager.sddm.wayland.enable = true;
+
+  # Use latest kernel & Mesa — NOT Valve's pinned/forked versions
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+
+  # ═══════════════════════════════════════════════════════════════
+  #  Handheld-specific tweaks
+  # ═══════════════════════════════════════════════════════════════
+
+  # Handheld Daemon (HHD) for Zotac Zone controller/gyro support
+  services.handheld-daemon = {
+    enable = true;
+    user = "ushinnary";
+    adjustor = {
+      enable = true;
+      loadAcpiCallModule = true;
+    };
+    ui.enable = true;
+  };
+
+  services.udisks2.enable = true; # Required for SD card mounting in Steam
+
   environment.systemPackages = with pkgs; [
-    gamescope-wsi # HDR won't work without this
     brightnessctl # For brightness control
     iio-sensor-proxy # Ambient light sensor support
     pamixer # Reliable volume adjustment backend for button handlers
@@ -124,7 +122,6 @@ with lib;
   # Sensors for auto-rotation and adaptive brightness
   hardware.sensor.iio.enable = true;
 
-
   # Force SD Card to be visible as mmcblk0p1 if it's not mounting automatically in Steam
   environment.variables.STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/mnt/sdcard";
 
@@ -139,18 +136,13 @@ with lib;
   ushinnary = {
     gpu.amd.enable = true;
     hardware.amdCpu = true;
-    gaming.enable = true;
+    gaming.enable = false;
     display = {
       oled = true;
       gamingRefreshRate = 120;
     };
     power.enable = true;
   };
-
-  # services.fprintd.enable = true;
-  # services.fprintd.tod.enable = true;
-  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-elan; # Elan(04f3:0c4b) driver
-  # security.pam.services.sudo.fprintAuth = true; # PAM for sudo fingerprint
 
   # Home Manager Setup
   home-manager = {

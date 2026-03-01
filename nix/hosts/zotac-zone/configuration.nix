@@ -104,7 +104,7 @@ with lib;
 
   # Use Jovian kernel on Zotac Zone to get handheld-specific platform support
   # (including Zotac Zone drivers that can expose extra power/TDP interfaces).
-  boot.kernelPackages = pkgs.linuxPackages_jovian;
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_jovian;
 
   # ═══════════════════════════════════════════════════════════════
   #  Handheld-specific tweaks

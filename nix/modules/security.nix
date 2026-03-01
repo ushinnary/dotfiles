@@ -21,7 +21,7 @@ in
         KbdInteractiveAuthentication = false;
         X11Forwarding = false;
         MaxAuthTries = 3;
-        AllowTcpForwarding = false;
+        AllowTcpForwarding = "local";
         AllowAgentForwarding = false;
         ClientAliveInterval = 300;
         ClientAliveCountMax = 2;

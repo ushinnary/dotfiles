@@ -102,8 +102,9 @@ with lib;
   # gamescope-wayland session takes over immediately after autologin
   services.displayManager.sddm.wayland.enable = true;
 
-  # Keep Jovian default kernel stack for handheld integration (TDP, power hooks).
-  # On Zotac Zone this is more reliable than forcing linuxPackages_latest.
+  # Use Jovian kernel on Zotac Zone to get handheld-specific platform support
+  # (including Zotac Zone drivers that can expose extra power/TDP interfaces).
+  boot.kernelPackages = pkgs.linuxPackages_jovian;
 
   # ═══════════════════════════════════════════════════════════════
   #  Handheld-specific tweaks

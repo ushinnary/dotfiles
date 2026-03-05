@@ -7,6 +7,22 @@
 with lib;
 let
   cfg = config.ushinnary.desktop;
+
+  # Picks a random *.png / *.jpg from ~/wallpaper every ~10 minutes.
+  # Based on https://www.codedge.de/posts/random-wallpaper-swaybg/
+  rand-wallpaper = pkgs.writeShellScript "rand-wallpaper" ''
+    WP_FOLDER=~/wallpaper
+    WAIT_TIME=599
+
+    while true; do
+      PID=$(${pkgs.procps}/bin/pidof swaybg)
+      FILE=$(${pkgs.findutils}/bin/find "$WP_FOLDER" -type f \( -name '*.png' -o -name '*.jpg' \) | ${pkgs.coreutils}/bin/shuf -n1)
+      ${pkgs.swaybg}/bin/swaybg -i "$FILE" -m fill &
+      sleep 1
+      kill "$PID" 2>/dev/null || true
+      sleep "$WAIT_TIME"
+    done
+  '';
 in
 {
   config = mkIf cfg.niri {
@@ -14,12 +30,18 @@ in
     environment.systemPackages = with pkgs; [
       anyrun
       swaybg
+      adwaita-icon-theme
     ];
 
     home-manager.users.ushinnary =
-      { ... }:
+      { lib, ... }:
       {
         # Main config: only imports of the split config files.
+        # Ensure ~/wallpaper exists so the rand-wallpaper script has somewhere to look.
+        home.activation.createWallpaperDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          mkdir -p "$HOME/wallpaper"
+        '';
+
         xdg.configFile."niri/config.kdl".text = ''
           include "startup.kdl"
           include "environment.kdl"
@@ -37,9 +59,9 @@ in
           spawn-at-startup "swayosd-server"
           spawn-at-startup "xwayland-satellite"
 
-          // Wallpaper: runs on login; replace path with your image or keep solid colour.
-          // To find the layer namespace, run: niri msg layers
-          spawn-at-startup "swaybg" "-c" "#1e1e2e"
+          // Wallpaper: picks a random image from ~/wallpaper every ~10 min.
+          // Populate ~/wallpaper with *.png / *.jpg files before first login.
+          spawn-at-startup "${rand-wallpaper}"
 
           // Clipboard persistence: keep content alive after source app closes
           spawn-at-startup "wl-clip-persist" "--clipboard" "both"
@@ -159,11 +181,12 @@ in
 
           // ── Layer rules ─────────────────────────────────────────
 
-          // Ironbar: blur + floating pill (border-radius set in CSS)
+          // Ironbar: floating pill (border-radius set in CSS)
+          // NOTE: place-within-backdrop must NOT be set on a top-layer surface
+          // or niri will break the overview (bar gets moved into backdrop plane).
           layer-rule {
             match namespace="ironbar"
             opacity 0.95
-            place-within-backdrop true
 
           }
 

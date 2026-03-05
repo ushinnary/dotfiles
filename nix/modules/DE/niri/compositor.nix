@@ -133,12 +133,6 @@ in
             opacity 0.88
             draw-border-with-background false
 
-            # background-effect {
-            #   blur true
-            #   noise 0.05
-            #   saturation 2.5
-            # }
-
             shadow {
               on
               softness 30
@@ -156,11 +150,6 @@ in
             opacity 0.95
             place-within-backdrop true
 
-            # background-effect {
-            #   blur true
-            #   noise 0.05
-            #   saturation 1.8
-            # }
           }
 
           // swaync notification center
@@ -169,11 +158,6 @@ in
             opacity 0.92
             geometry-corner-radius 14
 
-            # background-effect {
-            #   blur true
-            #   noise 0.04
-            #   saturation 1.5
-            # }
           }
         '';
 
@@ -241,7 +225,7 @@ in
               Mod+Shift+Equal { set-window-height "+10%"; }
 
               // Center focused column (toggle: press again to restore)
-              Mod+C { toggle-center-column; }
+              Mod+C { center-column; }
 
               // Toggle floating
               Mod+V { toggle-window-floating; }

@@ -454,12 +454,6 @@ in
               color "#00000055"
             }
           }
-
-          // Blur the ironbar layer surface (bar background must be semi-transparent in CSS)
-          layer-rule {
-            match namespace="ironbar"
-            blur "on"
-          }
         '';
 
         xdg.configFile."niri/binds.kdl".text = ''

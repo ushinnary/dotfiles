@@ -48,7 +48,7 @@ in
                     {
                       type = "workspaces";
                       all_monitors = false;
-                      sort = "index";
+                      sort = "name";
                       favorites = [ "1" "2" "3" "4" "5" ];
                       name_map = {
                         "1" = "1";

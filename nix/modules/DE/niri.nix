@@ -458,12 +458,7 @@ in
           // Blur the ironbar layer surface (bar background must be semi-transparent in CSS)
           layer-rule {
             match namespace="ironbar"
-            geometry-corner-radius 0
-            blur {
-              on
-              radius 24
-              noise 0.05
-            }
+            blur on
           }
         '';
 

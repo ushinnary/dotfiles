@@ -23,6 +23,16 @@ in
         # ── Ironbar config ─────────────────────────────────────────
         xdg.configFile."ironbar/config.json".text =
           let
+            brightnessScript = pkgs.writeShellScript "ironbar-brightness" ''
+              pct="$(${pkgs.brightnessctl}/bin/brightnessctl -m 2>/dev/null | ${pkgs.coreutils}/bin/cut -d, -f4)"
+
+              if [ -n "$pct" ]; then
+                echo "󰃠  $pct"
+              else
+                echo "󰃠  n/a"
+              fi
+            '';
+
             batteryWidget = lib.optional config.ushinnary.hardware.hasBattery {
               type = "battery";
               format = "{percentage}%";
@@ -32,9 +42,13 @@ in
             };
 
             brightnessWidget = lib.optional config.ushinnary.hardware.hasBattery {
-              type = "brightness";
-              icon_label = "󰃠";
-              format = "{percentage}%";
+              type = "script";
+              cmd = "${brightnessScript}";
+              mode = "poll";
+              interval = 5000;
+              class = "brightness";
+              on_scroll_up = "${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+              on_scroll_down = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
             };
           in
           builtins.toJSON {
@@ -254,7 +268,9 @@ in
             .module-clock        { color: #cba6f7; font-weight: bold; font-size: 14px; }
             .module-music        { color: #fab387; }
             .module-volume       { color: #a6e3a1; }
-            .module-brightness   { color: #f9e2af; }
+            .module-brightness,
+            .script.brightness,
+            .module-script.brightness { color: #f9e2af; }
             .module-notifications   { color: #89dceb; }
 
             /* Tray */
@@ -389,7 +405,9 @@ in
             .module-clock        { color: #8839ef; font-weight: bold; font-size: 14px; }
             .module-music        { color: #fe640b; }
             .module-volume       { color: #40a02b; }
-            .module-brightness   { color: #df8e1d; }
+            .module-brightness,
+            .script.brightness,
+            .module-script.brightness { color: #df8e1d; }
             .module-notifications   { color: #04a5e5; }
 
             /* Tray */

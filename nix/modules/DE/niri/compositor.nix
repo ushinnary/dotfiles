@@ -13,6 +13,7 @@ in
     # anyrun is referenced in binds.kdl
     environment.systemPackages = with pkgs; [
       anyrun
+      swaybg
     ];
 
     home-manager.users.ushinnary =
@@ -36,6 +37,10 @@ in
           spawn-at-startup "swayosd-server"
           spawn-at-startup "xwayland-satellite"
 
+          // Wallpaper: runs on login; replace path with your image or keep solid colour.
+          // To find the layer namespace, run: niri msg layers
+          spawn-at-startup "swaybg" "-c" "#1e1e2e"
+
           // Clipboard persistence: keep content alive after source app closes
           spawn-at-startup "wl-clip-persist" "--clipboard" "both"
           spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
@@ -44,8 +49,10 @@ in
           // Screen lock on idle (lock after 5 min, screen off after 10 min)
           spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "swaylock -f"
 
-          // Set initial colour-scheme on login: light 08:00–19:59, dark otherwise
-          spawn-at-startup "sh" "-c" "h=$(date +%H); [ \"$h\" -ge 8 ] && [ \"$h\" -lt 20 ] && gsettings set org.gnome.desktop.interface color-scheme prefer-light || gsettings set org.gnome.desktop.interface color-scheme prefer-dark"
+          // Set initial colour-scheme on login: light 08:00–19:59, dark otherwise.
+          // sleep 1 ensures ironbar is already running and subscribed to dconf
+          // before we write, so it picks up the change via the settings watcher.
+          spawn-at-startup "sh" "-c" "sleep 1; h=$(date +%H); if [ \"$h\" -ge 8 ] && [ \"$h\" -lt 20 ]; then gsettings set org.gnome.desktop.interface color-scheme prefer-light; else gsettings set org.gnome.desktop.interface color-scheme prefer-dark; fi"
         '';
 
         xdg.configFile."niri/environment.kdl".text = ''
@@ -61,6 +68,11 @@ in
 
           overview {
             zoom 0.5
+            // Keep the backdrop dark when no layer-rule covers it.
+            backdrop-color "#1e1e2e"
+            workspace-shadow {
+              off
+            }
           }
 
           gestures {
@@ -88,6 +100,7 @@ in
               touchpad {
                   tap
                   natural-scroll
+                  accel-profile "adaptive"
                   accel-speed 0.2
               }
               mouse {
@@ -101,6 +114,8 @@ in
           layout {
               gaps 16
               center-focused-column "never"
+              // Transparent so the wallpaper shows through (stationary behind workspaces).
+              background-color "transparent"
 
               preset-column-widths {
                   proportion 0.33333
@@ -158,6 +173,14 @@ in
             opacity 0.92
             geometry-corner-radius 14
 
+          }
+
+          // Wallpaper: place swaybg inside the overview backdrop so it stays
+          // stationary and shows through the transparent workspace background.
+          // Run `niri msg layers` if the namespace doesn't match.
+          layer-rule {
+            match namespace="swaybg"
+            place-within-backdrop true
           }
         '';
 

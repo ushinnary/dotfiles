@@ -302,7 +302,7 @@ in
           binds {
               // General
               Mod+Shift+Slash { show-hotkey-overlay; }
-              Super { toggle-overview; }
+              Super+Tab { toggle-overview; }
 
               // Applications
               Mod+T { spawn "ghostty"; }

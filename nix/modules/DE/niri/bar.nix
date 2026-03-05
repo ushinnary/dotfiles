@@ -30,101 +30,107 @@ in
               icon_size = 20;
             };
           in
-          builtins.toJSON [
-            # ── Top bar ───────────────────────────────────────────
-            {
-              layer = "top";
-              position = "top";
-              height = 44;
-              margin_top = 6;
-              margin_bottom = 0;
-              margin_left = 14;
-              margin_right = 14;
-
-              start = [
+          builtins.toJSON {
+            monitors = {
+              "" = [
+                # ── Top bar ───────────────────────────────────────────
                 {
-                  type = "workspaces";
-                  all_monitors = false;
-                  sort = "index";
-                  favorites = [ "1" "2" "3" "4" "5" ];
-                  name_map = {
-                    "1" = "1";
-                    "2" = "2";
-                    "3" = "3";
-                    "4" = "4";
-                    "5" = "5";
-                  };
-                  format = "{name}";
-                }
-              ];
+                  name = "top-bar";
+                  layer = "top";
+                  position = "top";
+                  height = 44;
+                  margin_top = 6;
+                  margin_bottom = 0;
+                  margin_left = 14;
+                  margin_right = 14;
 
-              center = [
-                {
-                  type = "clock";
-                  format = "󰅐  %I:%M %p";
-                  format_alt = "󰃶  %A, %B %d";
-                }
-              ];
-
-              end =
-                [
-                  {
-                    type = "tray";
-                    icon_size = 18;
-                    prefer_theme_icons = true;
-                    on_click_left = "default";
-                    on_click_right = "menu";
-                  }
-                ]
-                ++ batteryWidget
-                ++ [
-                  {
-                    type = "volume";
-                    format = "{icon}  {percentage}%";
-                  }
-                  {
-                    type = "notifications";
-                    show_count = true;
-                  }
-                ];
-            }
-
-            # ── Bottom launcher bar ───────────────────────────────
-            # Pinned apps always appear first; running apps are appended.
-            # Find app IDs with: ls /run/current-system/sw/share/applications/
-            {
-              layer = "top";
-              position = "bottom";
-              height = 54;
-              margin_top = 0;
-              margin_bottom = 6;
-              margin_left = 14;
-              margin_right = 14;
-
-              start = [
-                {
-                  type = "menu";
-                  label = "";
-                  app_icon_size = 22;
-                }
-              ];
-
-              center = [
-                {
-                  type = "launcher";
-                  favorites = [
-                    "ghostty"
-                    "org.gnome.Nautilus"
-                    "firefox"
+                  start = [
+                    {
+                      type = "workspaces";
+                      all_monitors = false;
+                      sort = "index";
+                      favorites = [ "1" "2" "3" "4" "5" ];
+                      name_map = {
+                        "1" = "1";
+                        "2" = "2";
+                        "3" = "3";
+                        "4" = "4";
+                        "5" = "5";
+                      };
+                      format = "{name}";
+                    }
                   ];
-                  show_names = false;
-                  show_icons = true;
-                  icon_size = 26;
-                  minimize_focused = true;
+
+                  center = [
+                    {
+                      type = "clock";
+                      format = "󰅐  %I:%M %p";
+                      format_alt = "󰃶  %A, %B %d";
+                    }
+                  ];
+
+                  end =
+                    [
+                      {
+                        type = "tray";
+                        icon_size = 18;
+                        prefer_theme_icons = true;
+                        on_click_left = "default";
+                        on_click_right = "menu";
+                      }
+                    ]
+                    ++ batteryWidget
+                    ++ [
+                      {
+                        type = "volume";
+                        format = "{icon}  {percentage}%";
+                      }
+                      {
+                        type = "notifications";
+                        show_count = true;
+                      }
+                    ];
+                }
+
+                # ── Bottom launcher bar ───────────────────────────────
+                # Pinned apps always appear first; running apps are appended.
+                # Find app IDs with: ls /run/current-system/sw/share/applications/
+                {
+                  name = "bottom-bar";
+                  layer = "top";
+                  position = "bottom";
+                  height = 54;
+                  margin_top = 0;
+                  margin_bottom = 6;
+                  margin_left = 14;
+                  margin_right = 14;
+
+                  start = [
+                    {
+                      type = "menu";
+                      label = "";
+                      app_icon_size = 22;
+                    }
+                  ];
+
+                  center = [
+                    {
+                      type = "launcher";
+                      favorites = [
+                        "ghostty"
+                        "org.gnome.Nautilus"
+                        "firefox"
+                      ];
+                      show_names = false;
+                      show_icons = true;
+                      icon_size = 26;
+                      minimize_focused = true;
+                    }
+                  ];
                 }
               ];
-            }
-          ];
+            };
+          };
 
         # ── Ironbar CSS — Catppuccin floating pills ─────────────────
         xdg.configFile."ironbar/style.css".text = ''

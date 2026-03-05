@@ -458,7 +458,7 @@ in
           // Blur the ironbar layer surface (bar background must be semi-transparent in CSS)
           layer-rule {
             match namespace="ironbar"
-            blur on
+            blur "on"
           }
         '';
 

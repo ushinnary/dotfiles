@@ -27,10 +27,22 @@ in
               type = "battery";
               format = "{percentage}%";
               show_icon = true;
-              icon_size = 20;
+              show_label = true;
+              icon_size = 18;
+            };
+
+            brightnessWidget = lib.optional config.ushinnary.hardware.hasBattery {
+              type = "brightness";
+              icon_label = "󰃠";
+              format = "{percentage}%";
             };
           in
           builtins.toJSON {
+            icon_theme = "Adwaita";
+            icon_overrides = {
+              "com.mitchellh.ghostty" = "ghostty";
+            };
+
             monitors = {
               "" = [
                 # ── Top bar ───────────────────────────────────────────
@@ -63,6 +75,16 @@ in
 
                   center = [
                     {
+                      type = "music";
+                      player_type = "mpris";
+                      format = "{title} / {artist}";
+                      show_status_icon = true;
+                      truncate = {
+                        mode = "end";
+                        max_length = 36;
+                      };
+                    }
+                    {
                       type = "clock";
                       format = "󰅐  %I:%M %p";
                       format_alt = "󰃶  %A, %B %d";
@@ -80,10 +102,19 @@ in
                       }
                     ]
                     ++ batteryWidget
+                    ++ brightnessWidget
                     ++ [
                       {
                         type = "volume";
                         format = "{icon}  {percentage}%";
+                        mute_format = "{icon}  muted";
+                        max_volume = 100;
+                        icons = {
+                          volume = "󰕾";
+                          muted = "󰝟";
+                          mic_volume = "";
+                          mic_muted = "";
+                        };
                       }
                       {
                         type = "notifications";
@@ -109,7 +140,9 @@ in
                     {
                       type = "menu";
                       label = "";
+                      label_icon = "󰍉";
                       app_icon_size = 22;
+                      launch_command = "${pkgs.gtk3}/bin/gtk-launch {app_name}";
                     }
                   ];
 
@@ -117,14 +150,14 @@ in
                     {
                       type = "launcher";
                       favorites = [
-                        "ghostty"
+                        "com.mitchellh.ghostty"
                         "org.gnome.Nautilus"
                         "firefox"
                       ];
                       show_names = false;
                       show_icons = true;
                       icon_size = 26;
-                      minimize_focused = true;
+                      launch_command = "${pkgs.gtk3}/bin/gtk-launch {app_name}";
                     }
                   ];
                 }
@@ -169,7 +202,7 @@ in
 
           /* ── Dark: Catppuccin Mocha ──────────────────────────── */
           @media (prefers-color-scheme: dark) {
-            #bar {
+            #top-bar, #bottom-bar {
               background-color: alpha(#1e1e2e, 0.55);
               color: #cdd6f4;
               border-radius: 16px;
@@ -219,7 +252,9 @@ in
 
             /* Per-module accent colours */
             .module-clock        { color: #cba6f7; font-weight: bold; font-size: 14px; }
+            .module-music        { color: #fab387; }
             .module-volume       { color: #a6e3a1; }
+            .module-brightness   { color: #f9e2af; }
             .module-notifications   { color: #89dceb; }
 
             /* Tray */
@@ -305,7 +340,7 @@ in
 
           /* ── Light: Catppuccin Latte ─────────────────────────── */
           @media (prefers-color-scheme: light) {
-            #bar {
+            #top-bar, #bottom-bar {
               background-color: alpha(#eff1f5, 0.6);
               color: #4c4f69;
               border-radius: 16px;
@@ -352,7 +387,9 @@ in
             }
 
             .module-clock        { color: #8839ef; font-weight: bold; font-size: 14px; }
+            .module-music        { color: #fe640b; }
             .module-volume       { color: #40a02b; }
+            .module-brightness   { color: #df8e1d; }
             .module-notifications   { color: #04a5e5; }
 
             /* Tray */

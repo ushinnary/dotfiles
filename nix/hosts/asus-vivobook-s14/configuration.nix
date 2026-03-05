@@ -59,6 +59,7 @@
       xdg.configFile."niri/outputs.kdl".text = lib.mkForce ''
         output "eDP-1" {
           mode "1920x1200@60"
+          scale 1.33;
         }
       '';
     };

@@ -111,6 +111,7 @@ in
 
           output "DP-1" {
             mode "2560x1600@${toString config.ushinnary.display.refreshRate}"
+            scale 1.33
           }
         '';
 

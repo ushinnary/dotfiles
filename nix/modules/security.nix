@@ -119,7 +119,9 @@ in
         };
       };
 
-      # GNOME PAM integration for Howdy
+      # Global PAM integration for Howdy (all services).
+      # NOTE: greetd is excluded in modules/DE/niri.nix via
+      # security.pam.services.greetd.howdy.enable = false
       security.pam.howdy.enable = true;
     })
   ];

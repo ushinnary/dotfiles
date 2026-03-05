@@ -22,19 +22,6 @@ in
     else
       [ ];
 
-
-  programs.mangohud = {
-    enable = true;
-    enableSessionWide = true;
-    settings = {
-      fps_limit = "120,60,30,0";
-      toggle_hud = "Shift_L+F2";
-      position = "top-left";
-      font_size = 18;
-      background_alpha = 0.3;
-    };
-  };
-
   dconf.settings = lib.mkIf isGnome {
     "org/gnome/mutter" = {
       experimental-features = [

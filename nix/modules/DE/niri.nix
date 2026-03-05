@@ -10,27 +10,53 @@ let
   cfg = config.ushinnary.desktop;
 in
 {
-  imports = [
-    inputs.dms.nixosModules.greeter
-  ];
-
   config = mkIf cfg.niri {
     programs.niri.enable = true;
 
-    # DankGreeter — themed login screen (replaces tuigreet/greetd)
-    programs.dank-material-shell.greeter = {
+    # Using greetd to seamlessly log into Niri without pulling GNOME shell stuff
+    services.greetd = {
       enable = true;
-      compositor.name = "niri";
-      configHome = "/home/ushinnary"; # Sync DMS theme with greeter
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
+          user = "greeter";
+        };
+      };
     };
 
-    # Essential system components for Wayland and Niri
-    # DankMaterialShell replaces: mako, fuzzel, polkit-kde-agent, wl-clipboard,
-    # wl-clip-persist, cliphist, swaylock, swayidle, brightnessctl, playerctl
+    systemd.tmpfiles.rules = [
+      "d /var/cache/tuigreet 0755 greeter greeter -"
+    ];
+
+    # Essential system components for Wayland and Niri (Rust-first where possible)
     environment.systemPackages = with pkgs; [
+      kdePackages.polkit-kde-agent-1
       xwayland-satellite
       gnome-keyring
+
+      ghostty # Terminal emulator
+
+      # Launcher, bar and shell UX
+      anyrun
+      ironbar
+      swaynotificationcenter
+      swayosd
+
+      # File manager
       nautilus
+
+      # Clipboard stack (persistence + history)
+      wl-clipboard
+      wl-clip-persist
+      cliphist
+
+      # Screen lock
+      swaylock
+      swayidle
+
+      # Media / brightness
+      brightnessctl
+      playerctl
     ];
 
     xdg.portal = {
@@ -47,33 +73,48 @@ in
     };
 
     # Security & Password Management (gnome-keyring)
+    # gnome-keyring is started via its systemd user service (services.gnome.gnome-keyring.enable).
+    # Do NOT plug it into the greetd PAM stack: its session module tries to contact the user
+    # D-Bus session which doesn't exist yet at greetd time, causing PAM session-open to fail
+    # and preventing login from proceeding.
     services.gnome.gnome-keyring.enable = true;
     security.pam.services.login.enableGnomeKeyring = true;
 
-    # DMS provides built-in polkit agent and lock screen — no swaylock/polkit-kde needed
+    # Give the greeter user camera access so howdy (if enabled on this host) can
+    # attempt face-auth without crashing the PAM module, and then fall through to
+    # password auth gracefully when no model is enrolled.
+    users.groups.video.members = [ "greeter" ];
+
+    # Prevent howdy (face recognition) from blocking greetd auth.
+    # security.pam.howdy.enable (set globally in security.nix) inserts the howdy
+    # PAM module into every service including greetd. Since howdy runs before
+    # password auth and fails when no model is enrolled / daemon isn't ready,
+    # it must be explicitly disabled for greetd.
+    security.pam.services.greetd.howdy.enable = false;
+
+    # Allow swaylock to authenticate via PAM
+    security.pam.services.swaylock = {};
+
+    # Polkit started via systemd user unit
+    systemd.user.services.polkit-kde-authentication-agent-1 = {
+      description = "polkit-kde-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
 
     home-manager.users.ushinnary =
       { ... }:
       {
         imports = [
-          inputs.dms.homeModules.dank-material-shell
-          inputs.dms.homeModules.niri
-          inputs.danksearch.homeModules.dsearch
           inputs.system76-scheduler-niri.homeModules.default
         ];
-
-        programs.dank-material-shell = {
-          enable = true;
-          enableClipboardPaste = true;
-          niri = {
-            enableSpawn = true;
-            enableKeybinds = false; # We manage keybinds in our config.kdl
-            includes.enable = false; # We manage our own config.kdl
-          };
-        };
-
-        # DankSearch — file search backend for DMS Spotlight
-        programs.dsearch.enable = true;
 
         services.system76-scheduler-niri.enable = config.services.system76-scheduler.enable;
 
@@ -86,19 +127,98 @@ in
                   background-blur = true
         '';
 
+        xdg.configFile."ironbar/config.json".text = ''
+          {
+            "position": "top",
+            "height": 32,
+            "start": [
+              {
+                "type": "workspaces",
+                "all_monitors": false,
+                "sort": "index",
+                "favorites": ["1", "2", "3", "4", "5"],
+                "name_map": {
+                  "1": "•",
+                  "2": "•",
+                  "3": "•",
+                  "4": "•",
+                  "5": "•"
+                },
+                "format": "{label}"
+              }
+            ],
+            "center": [],
+            "end": [
+              {
+                "type": "tray",
+                "icon_size": 18
+              },
+              {
+                "type": "volume",
+                "format": "{icon} {percentage}%"
+              },
+              {
+                "type": "notifications",
+                "show_count": false
+              },
+              {
+                "type": "clock",
+                "format": "%a %d %b  %H:%M"
+              }
+            ]
+          }
+        '';
+
+        xdg.configFile."ironbar/style.css".text = ''
+          .workspaces .item {
+            min-width: 10px;
+            padding: 0 3px;
+          }
+
+          .workspaces .item .text-icon {
+            font-size: 14px;
+          }
+        '';
+
+        # Main config: only imports of the split config files.
+        # To override/extend any section on a specific host, add another
+        # xdg.configFile."niri/<section>.kdl" with mkForce or place an
+        # additional include in the host's home-manager config.
         xdg.configFile."niri/config.kdl".text = ''
+          include "startup.kdl"
+          include "environment.kdl"
+          include "appearance.kdl"
+          include "outputs.kdl"
+          include "input.kdl"
+          include "layout.kdl"
+          include "window-rules.kdl"
+          include "binds.kdl"
+        '';
+
+        xdg.configFile."niri/startup.kdl".text = ''
+          spawn-at-startup "ironbar"
+          spawn-at-startup "swaync"
+          spawn-at-startup "swayosd-server"
           spawn-at-startup "xwayland-satellite"
 
-          // DankMaterialShell is auto-started via its systemd/niri integration
-          // It provides: notifications, launcher, clipboard, lock screen,
-          // idle management, polkit, media controls, and more
+          // Clipboard persistence: keep content alive after source app closes
+          spawn-at-startup "wl-clip-persist" "--clipboard" "both"
+          spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
+          spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
 
+          // Screen lock on idle (lock after 5 min, screen off after 10 min)
+          spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "swaylock -f"
+        '';
+
+        xdg.configFile."niri/environment.kdl".text = ''
           environment {
               DISPLAY ":0"
               NIXOS_OZONE_WL "1"
               MOZ_ENABLE_WAYLAND "1"
           }
+        '';
 
+        xdg.configFile."niri/appearance.kdl".text = ''
           prefer-no-csd
 
           overview {
@@ -110,31 +230,19 @@ in
               top-left
             }
           }
+        '';
 
+        xdg.configFile."niri/outputs.kdl".text = ''
           output "eDP-1" {
-            mode "1920x1080@90"
+            mode "2560x1600@${toString config.ushinnary.display.refreshRate}"
           }
 
           output "DP-1" {
-            mode "2560x1600@90"
+            mode "2560x1600@${toString config.ushinnary.display.refreshRate}"
           }
+        '';
 
-          window-rule {
-            match app-id=r#"(^ghostty$|^com\.mitchellh\.ghostty$)"#
-            opacity 0.92
-            geometry-corner-radius 10
-            clip-to-geometry true
-            draw-border-with-background false
-
-            shadow {
-              on
-              softness 24
-              spread 2
-              offset x=0 y=3
-              color "#00000055"
-            }
-          }
-
+        xdg.configFile."niri/input.kdl".text = ''
           input {
               keyboard {
                   xkb { }
@@ -149,7 +257,9 @@ in
                   accel-profile "flat"
               }
           }
+        '';
 
+        xdg.configFile."niri/layout.kdl".text = ''
           layout {
               gaps 16
               center-focused-column "never"
@@ -168,7 +278,27 @@ in
                   inactive-color "#505050"
               }
           }
+        '';
 
+        xdg.configFile."niri/window-rules.kdl".text = ''
+          window-rule {
+            match app-id=r#"(^ghostty$|^com\.mitchellh\.ghostty$)"#
+            opacity 0.92
+            geometry-corner-radius 10
+            clip-to-geometry true
+            draw-border-with-background false
+
+            shadow {
+              on
+              softness 24
+              spread 2
+              offset x=0 y=3
+              color "#00000055"
+            }
+          }
+        '';
+
+        xdg.configFile."niri/binds.kdl".text = ''
           binds {
               // General
               Mod+Shift+Slash { show-hotkey-overlay; }
@@ -179,29 +309,23 @@ in
               Mod+Return { spawn "ghostty"; }
               Mod+E { spawn "nautilus"; }
 
-              // DMS Spotlight launcher (replaces fuzzel)
-              Mod+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
-              Mod+D { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+              // Launcher
+              Mod+Space { spawn "anyrun"; }
+              Mod+P { spawn "anyrun"; }
 
-              // DMS Clipboard history (replaces cliphist + fuzzel)
-              Mod+V { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+              // Clipboard history (remapped to avoid conflicts)
+              Mod+Shift+V { spawn "sh" "-c" "cliphist list | anyrun --plugins ${pkgs.anyrun}/lib/libstdin.so | cliphist decode | wl-copy"; }
 
-              // DMS Screenshot (with annotation editor)
-              Print { spawn "dms" "ipc" "call" "niri" "screenshot"; }
-              Mod+Print { spawn "dms" "ipc" "call" "niri" "screenshotWindow"; }
-              Mod+Shift+Print { spawn "dms" "ipc" "call" "niri" "screenshotScreen"; }
+              // Screenshot
+              Print { screenshot; }
+              Mod+Print { screenshot-window; }
+              Mod+Shift+Print { screenshot-screen; }
 
-              // DMS Lock screen (replaces swaylock)
-              Mod+Escape { spawn "dms" "ipc" "call" "lock" "lock"; }
+              // Screen lock
+              Mod+Escape { spawn "swaylock" "-f"; }
 
-              // DMS Notification center
-              Mod+N { spawn "dms" "ipc" "call" "notifications" "toggle"; }
-
-              // DMS Settings
-              Mod+Comma { spawn "dms" "ipc" "call" "settings" "toggle"; }
-
-              // DMS Control center (network, bluetooth, audio, etc.)
-              Mod+A { spawn "dms" "ipc" "call" "control-center" "toggle"; }
+              // Notification center (remapped)
+              Mod+Shift+N { spawn "swaync-client" "-t"; }
 
               // Window management
               Mod+Q { close-window; }
@@ -266,22 +390,22 @@ in
               Mod+Shift+4 { move-column-to-workspace 4; }
               Mod+Shift+5 { move-column-to-workspace 5; }
 
-              // Media keys (via DMS IPC)
-              XF86AudioRaiseVolume { spawn "dms" "ipc" "call" "audio" "increment" "5"; }
-              XF86AudioLowerVolume { spawn "dms" "ipc" "call" "audio" "decrement" "5"; }
-              XF86AudioMute        { spawn "dms" "ipc" "call" "audio" "mute"; }
-              XF86AudioMicMute     { spawn "dms" "ipc" "call" "audio" "micmute"; }
+              // Media keys + OSD
+              XF86AudioRaiseVolume { spawn "swayosd-client" "--output-volume" "raise"; }
+              XF86AudioLowerVolume { spawn "swayosd-client" "--output-volume" "lower"; }
+              XF86AudioMute        { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
+              XF86AudioMicMute     { spawn "swayosd-client" "--input-volume" "mute-toggle"; }
 
-              // Brightness keys (via DMS IPC)
-              XF86MonBrightnessUp   { spawn "dms" "ipc" "call" "brightness" "increment" "5"; }
-              XF86MonBrightnessDown { spawn "dms" "ipc" "call" "brightness" "decrement" "5"; }
+              // Brightness keys + OSD
+              XF86MonBrightnessUp   { spawn "swayosd-client" "--brightness" "raise"; }
+              XF86MonBrightnessDown { spawn "swayosd-client" "--brightness" "lower"; }
 
-              // Media player keys (via DMS MPRIS)
-              XF86AudioPlay  { spawn "dms" "ipc" "call" "mpris" "playPause"; }
-              XF86AudioNext  { spawn "dms" "ipc" "call" "mpris" "next"; }
-              XF86AudioPrev  { spawn "dms" "ipc" "call" "mpris" "previous"; }
+              // Media player keys + OSD
+              XF86AudioPlay  { spawn "swayosd-client" "--playerctl" "play-pause"; }
+              XF86AudioNext  { spawn "swayosd-client" "--playerctl" "next"; }
+              XF86AudioPrev  { spawn "swayosd-client" "--playerctl" "previous"; }
 
-              // Power key — lock instead of shutdown
+              // Quit niri
               Mod+Shift+E { quit; }
           }
         '';

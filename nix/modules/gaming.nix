@@ -31,7 +31,6 @@ in
     environment.systemPackages = [ pkgs.mangohud ];
 
     environment.variables = {
-      TERMINAL = "ghostty";
       ENABLE_GAMESCOPE_WSI = "1";
       STEAM_MULTIPLE_XWAYLANDS = "1";
       PROTON_USE_NTSYNC = "1";
@@ -41,7 +40,8 @@ in
 
       # Hardware specific variables
       PROTON_ENABLE_NVAPI = if config.ushinnary.gpu.nvidia.enable then "1" else "0";
-    } // lib.optionalAttrs config.ushinnary.gpu.amd.enable {
+    }
+    // lib.optionalAttrs config.ushinnary.gpu.amd.enable {
       AMD_VULKAN_ICD = "radv";
       RADV_PERFTEST = "gpl";
       LD_BIND_NOW = "1";

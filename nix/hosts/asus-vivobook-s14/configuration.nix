@@ -1,5 +1,4 @@
 {
-  pkgs,
   inputs,
   ...
 }:
@@ -30,7 +29,7 @@
   ushinnary = {
     gpu.amd.enable = true;
     hardware.amdCpu = true;
-    desktop.gnome = true;
+    desktop.niri = true;
     dev.enable = true;
     gaming.enable = false;
     containers.enable = false;
@@ -39,13 +38,12 @@
       oled = true;
     };
     power.enable = true;
-    security.howdy.enable = true;
+    security.howdy.enable = false;
   };
 
   # Asus specific configurations
   services.asusd = {
     enable = true;
-    enableUserService = true;
   };
   hardware.asus.battery.chargeUpto = 80;
 
@@ -55,7 +53,14 @@
     useUserPackages = true;
     backupFileExtension = "backup";
     extraSpecialArgs = { inherit inputs; };
-    users.ushinnary = import ../../modules/home.nix;
+    users.ushinnary = { lib, ... }: {
+      imports = [ ../../modules/home.nix ];
+      xdg.configFile."niri/outputs.kdl".text = lib.mkForce ''
+        output "eDP-1" {
+          mode "1920x1200@60"
+        }
+      '';
+    };
   };
 
   system.stateVersion = "25.11";

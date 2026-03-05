@@ -12,7 +12,7 @@ in
   imports = [
     ./DE/gnome.nix
     ./DE/cosmic.nix
-    ./DE/niri.nix
+    ./DE/niri/default.nix
   ];
 
   config = mkMerge [

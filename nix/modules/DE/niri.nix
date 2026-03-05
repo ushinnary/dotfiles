@@ -57,6 +57,9 @@ in
       # Media / brightness
       brightnessctl
       playerctl
+
+      # GTK colour-scheme toggling (used by theme-switching timers)
+      glib
     ];
 
     xdg.portal = {
@@ -118,6 +121,41 @@ in
 
         services.system76-scheduler-niri.enable = config.services.system76-scheduler.enable;
 
+        # ── Automatic dark/light theme switching ──────────────────
+        # dark at 20:00, light at 08:00; gsettings triggers GTK apps
+        # (ironbar, ghostty, etc.) to switch their colour-scheme.
+        systemd.user.services.theme-dark = {
+          Unit.Description = "Switch to Catppuccin Mocha (dark)";
+          Service = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-dark";
+          };
+        };
+        systemd.user.timers.theme-dark = {
+          Unit.Description = "Switch to dark theme at 20:00";
+          Timer = {
+            OnCalendar = "*-*-* 20:00:00";
+            Persistent = true;
+          };
+          Install.WantedBy = [ "timers.target" ];
+        };
+
+        systemd.user.services.theme-light = {
+          Unit.Description = "Switch to Catppuccin Latte (light)";
+          Service = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme prefer-light";
+          };
+        };
+        systemd.user.timers.theme-light = {
+          Unit.Description = "Switch to light theme at 08:00";
+          Timer = {
+            OnCalendar = "*-*-* 08:00:00";
+            Persistent = true;
+          };
+          Install.WantedBy = [ "timers.target" ];
+        };
+
         xdg.configFile."ghostty/config".text = ''
                 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
           font-family = Jetbrains Mono
@@ -127,56 +165,173 @@ in
                   background-blur = true
         '';
 
-        xdg.configFile."ironbar/config.json".text = ''
-          {
-            "position": "top",
-            "height": 32,
-            "start": [
+        xdg.configFile."ironbar/config.json".text =
+          let
+            batteryWidget = lib.optional config.ushinnary.hardware.hasBattery {
+              type = "upower";
+              format = "{icon}  {percentage}%";
+            };
+          in
+          builtins.toJSON {
+            position = "top";
+            height = 36;
+            start = [
               {
-                "type": "workspaces",
-                "all_monitors": false,
-                "sort": "index",
-                "favorites": ["1", "2", "3", "4", "5"],
-                "name_map": {
-                  "1": "•",
-                  "2": "•",
-                  "3": "•",
-                  "4": "•",
-                  "5": "•"
-                },
-                "format": "{label}"
+                type = "workspaces";
+                all_monitors = false;
+                sort = "index";
+                favorites = [ "1" "2" "3" "4" "5" ];
+                name_map = {
+                  "1" = "•";
+                  "2" = "•";
+                  "3" = "•";
+                  "4" = "•";
+                  "5" = "•";
+                };
+                format = "{label}";
               }
-            ],
-            "center": [],
-            "end": [
-              {
-                "type": "tray",
-                "icon_size": 18
-              },
-              {
-                "type": "volume",
-                "format": "{icon} {percentage}%"
-              },
-              {
-                "type": "notifications",
-                "show_count": false
-              },
-              {
-                "type": "clock",
-                "format": "%a %d %b  %H:%M"
-              }
-            ]
-          }
-        '';
+            ];
+            center = [ ];
+            end =
+              [
+                {
+                  type = "tray";
+                  icon_size = 18;
+                }
+              ]
+              ++ batteryWidget
+              ++ [
+                {
+                  type = "volume";
+                  format = "{icon}  {percentage}%";
+                }
+                {
+                  type = "notifications";
+                  show_count = false;
+                }
+                {
+                  type = "clock";
+                  format = "%a %d %b  %H:%M";
+                }
+              ];
+          };
 
         xdg.configFile."ironbar/style.css".text = ''
-          .workspaces .item {
-            min-width: 10px;
-            padding: 0 3px;
+          /* ─────────────────────────────────────────────────────
+             Ironbar – Catppuccin Mocha (dark) / Latte (light)
+             ───────────────────────────────────────────────────── */
+
+          * {
+            font-family: "JetBrains Mono", "JetBrains Mono NF", monospace;
+            font-size: 13px;
+            padding: 0;
+            margin: 0;
           }
 
-          .workspaces .item .text-icon {
-            font-size: 14px;
+          .bar {
+            padding: 0 6px;
+          }
+
+          /* ── Dark: Catppuccin Mocha ────────────────────────── */
+          @media (prefers-color-scheme: dark) {
+            .bar {
+              background-color: rgba(30, 30, 46, 0.75);
+              color: #cdd6f4;
+              border-bottom: 2px solid rgba(49, 50, 68, 0.6);
+            }
+
+            .workspaces .item {
+              color: #6c7086;
+              background: transparent;
+              border-radius: 8px;
+              border: none;
+              padding: 2px 8px;
+              margin: 3px 1px;
+              min-width: 12px;
+            }
+            .workspaces .item .text-icon {
+              font-size: 14px;
+            }
+            .workspaces .item:hover {
+              color: #cdd6f4;
+              background-color: #313244;
+            }
+            .workspaces .item.active {
+              color: #89b4fa;
+              background-color: #313244;
+            }
+            .workspaces .item.occupied {
+              color: #bac2de;
+            }
+
+            .item {
+              color: #cdd6f4;
+              padding: 2px 8px;
+              margin: 3px 2px;
+              border-radius: 8px;
+            }
+            .item:hover {
+              background-color: #313244;
+            }
+
+            #clock .item    { color: #cba6f7; font-weight: bold; }
+            #volume .item   { color: #a6e3a1; }
+            #upower .item   { color: #f9e2af; }
+            #upower .item.charging { color: #a6e3a1; }
+            #upower .item.low      { color: #f38ba8; }
+            #notifications .item   { color: #89dceb; }
+            #tray .item { padding: 2px 4px; margin: 3px 1px; }
+          }
+
+          /* ── Light: Catppuccin Latte ───────────────────────── */
+          @media (prefers-color-scheme: light) {
+            .bar {
+              background-color: rgba(239, 241, 245, 0.75);
+              color: #4c4f69;
+              border-bottom: 2px solid rgba(204, 208, 218, 0.6);
+            }
+
+            .workspaces .item {
+              color: #9ca0b0;
+              background: transparent;
+              border-radius: 8px;
+              border: none;
+              padding: 2px 8px;
+              margin: 3px 1px;
+              min-width: 12px;
+            }
+            .workspaces .item .text-icon {
+              font-size: 14px;
+            }
+            .workspaces .item:hover {
+              color: #4c4f69;
+              background-color: #ccd0da;
+            }
+            .workspaces .item.active {
+              color: #1e66f5;
+              background-color: #ccd0da;
+            }
+            .workspaces .item.occupied {
+              color: #5c5f77;
+            }
+
+            .item {
+              color: #4c4f69;
+              padding: 2px 8px;
+              margin: 3px 2px;
+              border-radius: 8px;
+            }
+            .item:hover {
+              background-color: #ccd0da;
+            }
+
+            #clock .item    { color: #8839ef; font-weight: bold; }
+            #volume .item   { color: #40a02b; }
+            #upower .item   { color: #df8e1d; }
+            #upower .item.charging { color: #40a02b; }
+            #upower .item.low      { color: #d20f39; }
+            #notifications .item   { color: #04a5e5; }
+            #tray .item { padding: 2px 4px; margin: 3px 1px; }
           }
         '';
 
@@ -208,6 +363,9 @@ in
 
           // Screen lock on idle (lock after 5 min, screen off after 10 min)
           spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "swaylock -f"
+
+          // Set initial colour-scheme on login: light 08:00–19:59, dark otherwise
+          spawn-at-startup "sh" "-c" "h=$(date +%H); [ \"$h\" -ge 8 ] && [ \"$h\" -lt 20 ] && gsettings set org.gnome.desktop.interface color-scheme prefer-light || gsettings set org.gnome.desktop.interface color-scheme prefer-dark"
         '';
 
         xdg.configFile."niri/environment.kdl".text = ''
@@ -274,8 +432,8 @@ in
               focus-ring { off; }
               border {
                   width 4
-                  active-color "#7fc8ff"
-                  inactive-color "#505050"
+                  active-color "#89b4fa"   // Catppuccin Mocha blue
+                  inactive-color "#45475a" // Catppuccin Mocha surface1
               }
           }
         '';
@@ -294,6 +452,17 @@ in
               spread 2
               offset x=0 y=3
               color "#00000055"
+            }
+          }
+
+          // Blur the ironbar layer surface (bar background must be semi-transparent in CSS)
+          layer-rule {
+            match namespace="ironbar"
+            geometry-corner-radius 0
+            blur {
+              on
+              radius 24
+              noise 0.05
             }
           }
         '';

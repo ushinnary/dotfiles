@@ -37,18 +37,16 @@ in
 
       fonts = {
         packages = with pkgs; [
-          inter
-          nerd-fonts.jetbrains-mono
+          quicksand
+          googlesans-code
         ];
 
         fontconfig = {
           defaultFonts = {
-            serif = [ "Inter" ];
-            sansSerif = [ "Inter" ];
+            serif = [ "Quicksand" ];
+            sansSerif = [ "Quicksand" ];
             monospace = [
-              "JetBrainsMono Nerd Font"
-              "JetBrainsMono Nerd Font Mono"
-              "JetBrains Mono"
+              "Google Sans Code"
             ];
           };
 

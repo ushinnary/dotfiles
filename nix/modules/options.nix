@@ -30,6 +30,7 @@ with lib;
     # ── Hardware ──────────────────────────────────────────────────
     hardware = {
       amdCpu = mkEnableOption "AMD CPU tweaks (microcode, pstate)";
+      hasBattery = mkEnableOption "system has a battery (enables battery widget in bars, power-aware features, etc.)";
     };
 
     # ── Desktop ───────────────────────────────────────────────────

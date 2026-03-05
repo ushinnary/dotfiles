@@ -38,6 +38,7 @@
       oled = true;
     };
     power.enable = true;
+    hardware.hasBattery = true;
     security.howdy.enable = false;
   };
 

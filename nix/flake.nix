@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    dotfiles = {
+      url = "path:..";
+      flake = false;
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,7 +42,7 @@
         # Hostname: ryzo
         ryzo = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs; dotfiles = inputs.dotfiles; };
           modules = [
             ./hosts/ryzo/configuration.nix
           ];
@@ -46,7 +51,7 @@
         # Hostname: zotac-zone (Gaming Handheld)
         zotac-zone = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs; dotfiles = inputs.dotfiles; };
           modules = [
             inputs.jovian-nixos.nixosModules.default
             ./hosts/zotac-zone/configuration.nix
@@ -56,7 +61,7 @@
         # Hostname: asus-vivobook-s14 (Laptop)
         asus-vivobook-s14 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs; dotfiles = inputs.dotfiles; };
           modules = [
             inputs.nixos-hardware.nixosModules.asus-battery
             ./hosts/asus-vivobook-s14/configuration.nix

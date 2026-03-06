@@ -216,7 +216,7 @@ in
 
               // Applications
               Mod+T { spawn "ghostty"; }
-              Mod+Return { spawn "ghostty"; }
+              Mod+Return { toggle-windowed-fullscreen; }
               Mod+E { spawn "nautilus"; }
 
               // Launcher

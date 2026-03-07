@@ -47,7 +47,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: 6
-        color: briMouse.containsMouse ? Theme.surfaceHover : Theme.surface
+        color: briMouse.containsMouse ? Theme.surfaceHover : "transparent"
         Behavior on color { ColorAnimation { duration: 150 } }
     }
 

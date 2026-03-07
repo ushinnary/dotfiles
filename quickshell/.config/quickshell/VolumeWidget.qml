@@ -22,7 +22,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: 6
-        color: volMouse.containsMouse ? Theme.surfaceHover : Theme.surface
+        color: volMouse.containsMouse ? Theme.surfaceHover : "transparent"
         Behavior on color { ColorAnimation { duration: 150 } }
     }
 

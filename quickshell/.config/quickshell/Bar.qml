@@ -74,7 +74,7 @@ Scope {
                 spacing: Theme.widgetSpacing
                 layoutDirection: Qt.LeftToRight
 
-                SysTray {}
+                SysTray { barScreen: panel.modelData }
 
                 BatteryWidget {}
 

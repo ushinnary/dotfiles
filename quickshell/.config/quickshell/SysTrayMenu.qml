@@ -13,6 +13,10 @@ PopupWindow {
 
     required property var menuHandle  // QsMenuHandle from the tray item
     required property Item anchor_item // the tray icon Item to anchor to
+    // Set to the bar's ShellScreen for correct placement under fractional scaling.
+    property var itemScreen: null
+
+    screen: root.itemScreen
 
     // Anchor below the icon
     anchor {
@@ -39,6 +43,7 @@ PopupWindow {
     // A full-screen transparent panel behind the popup catches outside clicks.
     PanelWindow {
         id: dismissBackdrop
+        screen: root.itemScreen
         anchors { top: true; bottom: true; left: true; right: true }
         color: "transparent"
         WlrLayershell.exclusionMode: ExclusionMode.Ignore

@@ -11,6 +11,10 @@ import QtQuick
 Item {
     id: root
 
+    // Pass the bar's ShellScreen down so tray menus can set it on their popup
+    // windows — required for correct positioning with fractional scaling.
+    property var barScreen: null
+
     implicitWidth: row.implicitWidth
     implicitHeight: row.implicitHeight
 
@@ -25,6 +29,7 @@ Item {
             SysTrayItem {
                 required property SystemTrayItem modelData
                 item: modelData
+                barScreen: root.barScreen
 
                 // Dim passive items slightly (e.g. background helpers)
                 opacity: modelData.status === SystemTrayStatus.Passive ? 0.55 : 1.0

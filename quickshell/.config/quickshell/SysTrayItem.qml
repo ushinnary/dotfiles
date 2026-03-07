@@ -10,6 +10,9 @@ Item {
     id: root
 
     required property SystemTrayItem item
+    // Propagated from the bar's Variants screen so the popup and its
+    // backdrop PanelWindow land on the right screen with fractional scaling.
+    property var barScreen: null
 
     implicitWidth: 22
     implicitHeight: 22
@@ -114,6 +117,7 @@ Item {
         sourceComponent: SysTrayMenu {
             anchor_item: root
             menuHandle: root.item.menu
+            itemScreen: root.barScreen
 
             Component.onCompleted: visible = true
             onMenuClosed: menuLoader.active = false

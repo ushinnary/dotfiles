@@ -49,10 +49,13 @@ Item {
         onTriggered: batProc.running = true
     }
 
+    HoverHandler { id: batHover }
+
     Rectangle {
         anchors.fill: parent
         radius: 6
-        color: Theme.surface
+        color: batHover.hovered ? Theme.surfaceHover : "transparent"
+        Behavior on color { ColorAnimation { duration: 150 } }
     }
 
     RowLayout {

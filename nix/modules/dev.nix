@@ -32,7 +32,25 @@ let
     "nu"
     "html"
     "catppuccin"
+    "catppuccin-blur"
+    "catppuccin-icons"
     "surrealql"
+    "dockerfile"
+    "sql"
+    "vue"
+    "scss"
+    "lua"
+    "xml"
+    "csharp"
+    "svelte"
+    "emmet"
+    "nix"
+    "biome"
+    "csv"
+    "docker-compose"
+    "powershell"
+    "ini"
+    "nu"
   ];
 in
 {
@@ -114,11 +132,11 @@ in
             "zellij/config.kdl".source =
               "${dotfiles}/zellij/.config/zellij/config.kdl";
 
-            # ── Zed ──────────────────────────────────────────────
-            "zed/settings.json".source =
-              "${dotfiles}/zed/.config/zed/settings.json";
-            "zed/keymap.json".source =
-              "${dotfiles}/zed/.config/zed/keymap.json";
+            # # ── Zed ──────────────────────────────────────────────
+            # "zed/settings.json".source =
+            #   "${dotfiles}/zed/.config/zed/settings.json";
+            # "zed/keymap.json".source =
+            #   "${dotfiles}/zed/.config/zed/keymap.json";
 
             # ── Electron flags ────────────────────────────────────
             "electron-flags.conf".source =

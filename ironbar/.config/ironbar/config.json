@@ -1,0 +1,135 @@
+{
+    "icon_theme": "Adwaita",
+    "icon_overrides": {
+        "com.mitchellh.ghostty": "ghostty"
+    },
+    "monitors": {
+        "": [
+            {
+                "name": "top-bar",
+                "layer": "top",
+                "position": "top",
+                "height": 44,
+                "margin_top": 6,
+                "margin_bottom": 0,
+                "margin_left": 14,
+                "margin_right": 14,
+                "start": [
+                    {
+                        "type": "workspaces",
+                        "all_monitors": false,
+                        "sort": "name",
+                        "favorites": [
+                            "1",
+                            "2",
+                            "3",
+                            "4",
+                            "5"
+                        ],
+                        "name_map": {
+                            "1": "1",
+                            "2": "2",
+                            "3": "3",
+                            "4": "4",
+                            "5": "5"
+                        },
+                        "format": "{name}"
+                    }
+                ],
+                "center": [
+                    {
+                        "type": "music",
+                        "player_type": "mpris",
+                        "format": "{title} / {artist}",
+                        "show_status_icon": true,
+                        "truncate": {
+                            "mode": "end",
+                            "max_length": 36
+                        }
+                    },
+                    {
+                        "type": "clock",
+                        "format": "󰅐  %I:%M %p",
+                        "format_alt": "󰃶  %A, %B %d"
+                    }
+                ],
+                "end": [
+                    {
+                        "type": "tray",
+                        "icon_size": 18,
+                        "prefer_theme_icons": true,
+                        "on_click_left": "default",
+                        "on_click_right": "menu"
+                    },
+                    {
+                        "type": "battery",
+                        "format": "{percentage}%",
+                        "show_icon": true,
+                        "show_label": true,
+                        "icon_size": 18,
+                        "show_if": "ls /sys/class/power_supply/BAT* >/dev/null 2>&1"
+                    },
+                    {
+                        "type": "script",
+                        "cmd": "pct=\"$(brightnessctl -m 2>/dev/null | cut -d, -f4)\"; if [ -n \"$pct\" ]; then echo \"󰃠  $pct\"; else echo \"󰃠  n/a\"; fi",
+                        "mode": "poll",
+                        "interval": 5000,
+                        "class": "brightness",
+                        "show_if": "brightnessctl -m >/dev/null 2>&1",
+                        "on_scroll_up": "brightnessctl set +5%",
+                        "on_scroll_down": "brightnessctl set 5%-"
+                    },
+                    {
+                        "type": "volume",
+                        "format": "{icon}  {percentage}%",
+                        "mute_format": "{icon}  muted",
+                        "max_volume": 100,
+                        "icons": {
+                            "volume": "󰕾",
+                            "muted": "󰝟",
+                            "mic_volume": "",
+                            "mic_muted": ""
+                        }
+                    },
+                    {
+                        "type": "notifications",
+                        "show_count": true
+                    }
+                ]
+            },
+            {
+                "name": "bottom-bar",
+                "layer": "top",
+                "position": "bottom",
+                "height": 54,
+                "margin_top": 0,
+                "margin_bottom": 6,
+                "margin_left": 14,
+                "margin_right": 14,
+                "start": [
+                    {
+                        "type": "menu",
+                        "label": "",
+                        "label_icon": "󰍉",
+                        "app_icon_size": 22,
+                        "launch_command": "gtk-launch {app_name}"
+                    }
+                ],
+                "center": [
+                    {
+                        "type": "launcher",
+                        "favorites": [
+                            "com.mitchellh.ghostty",
+                            "org.gnome.Nautilus",
+                            "firefox"
+                        ],
+                        "show_names": false,
+                        "show_icons": true,
+                        "icon_size": 26,
+                        "launch_command": "gtk-launch {app_name}"
+                    }
+                ]
+            }
+        ]
+    }
+}

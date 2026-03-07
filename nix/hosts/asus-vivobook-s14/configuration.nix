@@ -1,5 +1,6 @@
 {
   inputs,
+  dotfiles,
   ...
 }:
 
@@ -56,12 +57,8 @@
     extraSpecialArgs = { inherit inputs; };
     users.ushinnary = { lib, ... }: {
       imports = [ ../../modules/home.nix ];
-      xdg.configFile."niri/outputs.kdl".text = lib.mkForce ''
-        output "eDP-1" {
-          mode "1920x1200@60"
-          scale 1.25;
-        }
-      '';
+      xdg.configFile."niri/outputs.kdl".source = lib.mkForce
+        "${dotfiles}/niri/.config/niri/hosts/asus-vivobook-s14/outputs.kdl";
     };
   };
 

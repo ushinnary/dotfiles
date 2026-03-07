@@ -19,6 +19,8 @@ stow zed/
 stow zellij/
 stow kitty/
 stow hypr/
+stow ironbar/
+stow niri/
 stow waybar/
 
 # Install fonts

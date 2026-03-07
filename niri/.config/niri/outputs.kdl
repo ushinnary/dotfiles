@@ -1,0 +1,10 @@
+// Host-specific layouts can override this file when needed.
+// The defaults below keep Niri usable with sane scaling out of the box.
+
+output "eDP-1" {
+  scale 1.0
+}
+
+output "DP-1" {
+  scale 1.33
+}

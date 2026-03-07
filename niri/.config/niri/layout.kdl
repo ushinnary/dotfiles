@@ -1,0 +1,20 @@
+layout {
+    gaps 16
+    center-focused-column "never"
+    // Transparent so the wallpaper shows through (stationary behind workspaces).
+    background-color "transparent"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+
+    focus-ring { off; }
+    border {
+        width 4
+        active-color "#89b4fa"   // Catppuccin Mocha blue
+        inactive-color "#45475a" // Catppuccin Mocha surface1
+    }
+}

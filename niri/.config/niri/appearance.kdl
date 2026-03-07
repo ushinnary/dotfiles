@@ -1,0 +1,16 @@
+prefer-no-csd
+
+overview {
+  zoom 0.5
+  // Keep the backdrop dark when no layer-rule covers it.
+  backdrop-color "#1e1e2e"
+  workspace-shadow {
+    off
+  }
+}
+
+gestures {
+  hot-corners {
+    top-left
+  }
+}

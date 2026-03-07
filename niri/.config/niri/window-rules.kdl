@@ -1,0 +1,47 @@
+// ── Window rules ────────────────────────────────────────
+
+// Rounded corners for all windows
+window-rule {
+  geometry-corner-radius 12
+  clip-to-geometry true
+}
+
+// Ghostty: blur + transparency + shadow
+window-rule {
+  match app-id=r#"(^ghostty$|^com\.mitchellh\.ghostty$)"#
+  opacity 0.88
+  draw-border-with-background false
+
+  shadow {
+    on
+    softness 30
+    spread 5
+    offset x=0 y=5
+    color "#00000060"
+  }
+}
+
+// ── Layer rules ─────────────────────────────────────────
+
+// Ironbar: floating pill (border-radius set in CSS)
+// NOTE: place-within-backdrop must NOT be set on a top-layer surface
+// or niri will break the overview (bar gets moved into backdrop plane).
+layer-rule {
+  match namespace="ironbar"
+  opacity 0.95
+}
+
+// swaync notification center
+layer-rule {
+  match namespace="swaync-control-center"
+  opacity 0.92
+  geometry-corner-radius 14
+}
+
+// Wallpaper: place swaybg inside the overview backdrop so it stays
+// stationary and shows through the transparent workspace background.
+// Run `niri msg layers` if the namespace doesn't match.
+layer-rule {
+  match namespace="swaybg"
+  place-within-backdrop true
+}

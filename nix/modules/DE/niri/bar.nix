@@ -8,7 +8,7 @@
 with lib;
 let
   cfg = config.ushinnary.desktop;
-  ironbar = "${dotfiles}/ironbar/.config/ironbar";
+  ironbarConfigDir = "${dotfiles}/ironbar/.config/ironbar";
   ironbarFiles = [
     "config.json"
     "style.css"
@@ -33,7 +33,7 @@ in
         xdg.configFile = builtins.listToAttrs (
           map (file: {
             name = "ironbar/${file}";
-            value = { source = "${ironbar}/${file}"; };
+            value = { source = "${ironbarConfigDir}/${file}"; };
           }) ironbarFiles
         );
       };

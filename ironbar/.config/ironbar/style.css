@@ -113,10 +113,10 @@ window,
   .launcher .item {
     background-color: alpha(#313244, 0.4);
     border-radius: 10px;
-    padding: 4px 8px;
-    margin: 3px 2px;
-    min-width: 36px;
-    min-height: 36px;
+    padding: 3px 6px;
+    margin: 2px 2px;
+    min-width: 28px;
+    min-height: 28px;
   }
   .launcher .item:hover {
     background-color: alpha(#313244, 0.9);
@@ -250,10 +250,10 @@ window,
   .launcher .item {
     background-color: alpha(#ccd0da, 0.45);
     border-radius: 10px;
-    padding: 4px 8px;
-    margin: 3px 2px;
-    min-width: 36px;
-    min-height: 36px;
+    padding: 3px 6px;
+    margin: 2px 2px;
+    min-width: 28px;
+    min-height: 28px;
   }
   .launcher .item:hover {
     background-color: alpha(#ccd0da, 0.95);

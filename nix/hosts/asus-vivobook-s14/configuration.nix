@@ -59,6 +59,8 @@
       imports = [ ../../modules/home.nix ];
       xdg.configFile."niri/outputs.kdl".source = lib.mkForce
         "${dotfiles}/niri/.config/niri/hosts/asus-vivobook-s14/outputs.kdl";
+      xdg.configFile."niri/input.kdl".source = lib.mkForce
+        "${dotfiles}/niri/.config/niri/hosts/asus-vivobook-s14/input.kdl";
     };
   };
 

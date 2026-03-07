@@ -13,7 +13,6 @@ in
   imports = [
     ./bar.nix
     ./terminal.nix
-    ./theme.nix
     ./compositor.nix
   ];
 

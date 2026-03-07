@@ -25,8 +25,22 @@ in
     ];
 
     home-manager.users.ushinnary =
-      { ... }:
+      { pkgs, ... }:
       {
+        # Force GTK dark mode so ironbar's @media (prefers-color-scheme: dark)
+        # CSS query is satisfied correctly.
+        gtk = {
+          enable = true;
+          iconTheme = {
+            name = "Adwaita";
+            package = pkgs.adwaita-icon-theme;
+          };
+          gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
+          gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+        };
+
+        dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
         # ── Home-manager: map existing dotfiles into place ─────────────
         # Files come from the `dotfiles` flake input (path:..) so editing
         # the source files and rebuilding is all that's needed — no stow.

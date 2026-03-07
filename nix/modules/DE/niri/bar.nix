@@ -22,6 +22,9 @@ let
     "BatteryWidget.qml"
     "BrightnessWidget.qml"
     "SysTray.qml"
+    "SysTrayItem.qml"
+    "SysTrayMenu.qml"
+    "SysTrayMenuEntry.qml"
   ];
 in
 {

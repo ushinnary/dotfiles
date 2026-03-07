@@ -22,6 +22,8 @@ in
       swaynotificationcenter    # Notification daemon + center panel
       swayosd                   # On-screen display for volume/brightness
       gtk3                      # gtk-launch for menu / launcher widgets
+      adwaita-icon-theme        # Icon theme for ironbar menu/launcher
+      hicolor-icon-theme        # Fallback icon theme for app icons
     ];
 
     home-manager.users.ushinnary =

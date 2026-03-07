@@ -1,5 +1,5 @@
 layout {
-    gaps 16
+    gaps 8
     center-focused-column "never"
     // Transparent so the wallpaper shows through (stationary behind workspaces).
     background-color "transparent"
@@ -13,7 +13,8 @@ layout {
 
     focus-ring { off; }
     border {
-        width 4
+        on
+        width 2
         active-color "#89b4fa"   // Catppuccin Mocha blue
         inactive-color "#45475a" // Catppuccin Mocha surface1
     }

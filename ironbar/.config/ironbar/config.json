@@ -1,7 +1,10 @@
 {
-    "icon_theme": "Adwaita",
+    "icon_theme": "Papirus-Dark",
     "icon_overrides": {
-        "com.mitchellh.ghostty": "ghostty"
+        "com.mitchellh.ghostty": "ghostty",
+        "org.gnome.Console": "utilities-terminal",
+        "org.gnome.Nautilus": "nautilus",
+        "org.gnome.Settings": "preferences-system"
     },
     "monitors": {
         "": [
@@ -14,6 +17,7 @@
                 "margin_bottom": 0,
                 "margin_left": 14,
                 "margin_right": 14,
+                "popup_gap": 8,
                 "start": [
                     {
                         "type": "workspaces",
@@ -98,20 +102,26 @@
                 ]
             },
             {
-                "name": "bottom-bar",
+                "name": "left-dock",
                 "layer": "top",
-                "position": "bottom",
-                "height": 32,
-                "margin_top": 0,
-                "margin_bottom": 4,
-                "margin_left": 14,
-                "margin_right": 14,
+                "position": "left",
+                "height": 52,
+                "margin_top": 34,
+                "margin_bottom": 8,
+                "margin_left": 8,
+                "margin_right": 0,
+                "popup_gap": 10,
                 "start": [
                     {
                         "type": "menu",
-                        "label": "",
-                        "label_icon": "󰍉",
-                        "app_icon_size": 22,
+                        "label": "󰍜",
+                        "app_icon_size": 20,
+                        "height": 640,
+                        "width": 320,
+                        "truncate": {
+                            "mode": "end",
+                            "max_length": 30
+                        },
                         "launch_command": "gtk-launch {app_name}"
                     }
                 ],
@@ -125,7 +135,9 @@
                         ],
                         "show_names": false,
                         "show_icons": true,
-                        "icon_size": 20,
+                        "icon_size": 24,
+                        "pagination_icon_size": 14,
+                        "page_size": 24,
                         "launch_command": "gtk-launch {app_name}"
                     }
                 ]

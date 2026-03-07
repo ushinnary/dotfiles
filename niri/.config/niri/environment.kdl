@@ -2,6 +2,6 @@ environment {
     DISPLAY ":0"
     NIXOS_OZONE_WL "1"
     MOZ_ENABLE_WAYLAND "1"
-    GTK_ICON_THEME "Adwaita"
-    GTK_THEME "Adwaita-dark"
+    GTK_ICON_THEME "Papirus-Dark"
+    GTK_THEME "Adwaita:dark"
 }

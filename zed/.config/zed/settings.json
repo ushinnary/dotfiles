@@ -1,78 +1,63 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "session": {
-    "trust_all_worktrees": false
+  "vim_mode": true,
+  "ui_font_weight": 500.0,
+  "ui_font_family": "Quicksand",
+  "buffer_font_family": "Google Sans Code",
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Mocha (Blur)"
   },
   "icon_theme": {
     "mode": "system",
-    "light": "Zed (Default)",
-    "dark": "Zed (Default)"
-  },
-  "agent": {
-    "default_model": {
-      "provider": "ollama",
-      "model": "qwen3:14b"
-    }
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Mocha"
   },
   "telemetry": {
-    "metrics": false,
-    "diagnostics": false
+    "diagnostics": false,
+    "metrics": false
   },
-  "language_models": {
-    "ollama": {
-      "available_models": [
-        {
-          "name": "gemma3:4b-it-qat",
-          "display_name": "Gemma3",
-          "max_tokens": 32768,
-          "supports_tools": false
-        },
-        {
-          "name": "qwen2.5-coder",
-          "display_name": "Qwen coder",
-          "max_tokens": 16384,
-          "supports_tools": true
-        }
-      ]
-    }
-  },
-  "features": {
-    "edit_prediction_provider": null
-  },
-  "vim_mode": true,
-  "ui_font_size": 16,
-  "buffer_font_size": 14,
-  "buffer_font_family": "Sono",
-  "buffer_font_weight": 500,
-  "buffer_line_height": "standard",
-  "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "One Dark"
-  },
-  "base_keymap": "VSCode",
-  "relative_line_numbers": "enabled",
+  "load_direnv": "shell_hook",
   "lsp": {
     "rust-analyzer": {
+      "binary": {
+        "path_lookup": true
+      },
       "initialization_options": {
         "check": {
           "command": "clippy"
         }
       }
+    },
+    "nix": {
+      "binary": {
+        "path_lookup": true
+      }
     }
   },
   "auto_install_extensions": {
-    "toml": true,
-    "surrealql": true,
-    "html": true,
     "catppuccin": true,
-    "nu": true
+    "html": true,
+    "nix": true,
+    "nu": true,
+    "rust": true,
+    "surrealql": true,
+    "toml": true,
+    "biome": true,
+    "catppuccin-blur": true,
+    "catppuccin-icons": true,
+    "csharp": true,
+    "csv": true,
+    "docker-compose": true,
+    "dockerfile": true,
+    "emmet": true,
+    "ini": true,
+    "lua": true,
+    "powershell": true,
+    "scss": true,
+    "sql": true,
+    "svelte": true,
+    "vue": true,
+    "xml": true
   }
 }

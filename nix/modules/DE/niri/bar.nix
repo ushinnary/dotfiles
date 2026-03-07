@@ -22,20 +22,21 @@ in
       swaynotificationcenter    # Notification daemon + center panel
       swayosd                   # On-screen display for volume/brightness
       gtk3                      # gtk-launch for menu / launcher widgets
-      adwaita-icon-theme        # Icon theme for ironbar menu/launcher
-      hicolor-icon-theme        # Fallback icon theme for app icons
+      papirus-icon-theme        # Broader icon coverage for menu/launcher/category icons
+      adwaita-icon-theme        # GTK fallback icons still used by some apps
+      hicolor-icon-theme        # Freedesktop fallback icon theme for app icons
     ];
 
     home-manager.users.ushinnary =
       { pkgs, ... }:
       {
-        # Force GTK dark mode so ironbar's @media (prefers-color-scheme: dark)
-        # CSS query is satisfied correctly.
+        # Keep ironbar/menu popups on a dark GTK theme and use a broad icon theme
+        # so category/app icons resolve more reliably.
         gtk = {
           enable = true;
           iconTheme = {
-            name = "Adwaita";
-            package = pkgs.adwaita-icon-theme;
+            name = "Papirus-Dark";
+            package = pkgs.papirus-icon-theme;
           };
           gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
           gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;

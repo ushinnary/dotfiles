@@ -25,33 +25,20 @@ let
     "zoxide"
   ];
 
-  zedExtensions = [
-    "nix"
-    "toml"
-    "rust"
-    "nu"
-    "html"
-    "catppuccin"
-    "catppuccin-blur"
-    "catppuccin-icons"
-    "surrealql"
-    "dockerfile"
-    "sql"
-    "vue"
-    "scss"
-    "lua"
-    "xml"
-    "csharp"
-    "svelte"
-    "emmet"
-    "nix"
-    "biome"
-    "csv"
-    "docker-compose"
-    "powershell"
-    "ini"
-    "nu"
-  ];
+  zedLspPackages =
+    with pkgs;
+    [
+      nodejs
+      nil
+      nixd
+      rust-analyzer
+      nushell
+      vscode-langservers-extracted
+      lua-language-server
+      biome
+      docker-language-server
+      powershell
+    ];
 in
 {
   imports = [ ./nixvim/default.nix ];
@@ -109,7 +96,7 @@ in
       {
         programs.zed-editor = {
           enable = true;
-          extensions = zedExtensions;
+          extraPackages = zedLspPackages;
           installRemoteServer = true;
         };
 
@@ -132,9 +119,9 @@ in
             "zellij/config.kdl".source =
               "${dotfiles}/zellij/.config/zellij/config.kdl";
 
-            # # ── Zed ──────────────────────────────────────────────
-            # "zed/settings.json".source =
-            #   "${dotfiles}/zed/.config/zed/settings.json";
+            # ── Zed ──────────────────────────────────────────────
+            "zed/settings.json".source =
+              "${dotfiles}/zed/.config/zed/settings.json";
             # "zed/keymap.json".source =
             #   "${dotfiles}/zed/.config/zed/keymap.json";
 

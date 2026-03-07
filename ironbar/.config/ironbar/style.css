@@ -1,14 +1,21 @@
-/* ─────────────────────────────────────────────────────────
-   Ironbar — Catppuccin Mocha (dark)
-   Floating pill design, blur-ready (semi-transparent)
-   NOTE: GTK3 does NOT support @media (prefers-color-scheme).
-   Dark styles are applied directly here.
-   ───────────────────────────────────────────────────────── */
+@define-color mantle #181825;
+@define-color base #1e1e2e;
+@define-color surface #313244;
+@define-color text #cdd6f4;
+@define-color subtext #a6adc8;
+@define-color overlay #6c7086;
+@define-color accent #89b4fa;
+@define-color pink #cba6f7;
+@define-color peach #fab387;
+@define-color green #a6e3a1;
+@define-color yellow #f9e2af;
+@define-color cyan #89dceb;
+@define-color red #f38ba8;
 
 * {
   font-family: "JetBrains Mono", "JetBrains Mono NF", monospace;
   font-size: 13px;
-  font-weight: normal;
+  font-weight: 500;
   border: none;
   border-radius: 0;
   box-shadow: none;
@@ -17,155 +24,299 @@
   outline: none;
   margin: 0;
   padding: 0;
-  transition-property: background-color, color, box-shadow, opacity;
-  transition-duration: 0.2s;
+  color: @text;
+  transition-property: color, background-color, box-shadow, opacity;
+  transition-duration: 0.18s;
   transition-timing-function: ease-in-out;
 }
 
-/* The ironbar GTK window itself must be transparent */
 window#ironbar,
 window,
-.background {
-  background-color: transparent;
-}
-.bar-container {
+.background,
+.bar-container,
+box,
+centerbox,
+label,
+image,
+picture {
   background-color: transparent;
 }
 
-/* ── Bar surface ───────────────────────────────────────── */
-#top-bar, #bottom-bar {
-  background-color: alpha(#1e1e2e, 0.55);
-  color: #cdd6f4;
-  border-radius: 16px;
-  border: 2px solid alpha(#89b4fa, 0.5);
+#top-bar,
+#left-dock {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-/* ── Per-module pill surfaces ─────────────────────────── */
+button {
+  background-color: transparent;
+  color: @text;
+}
+
+button:hover,
+button:active {
+  background-color: transparent;
+}
+
+/* ── Top bar ───────────────────────────────────────────── */
 .module {
-  color: #cdd6f4;
-  background-color: alpha(#313244, 0.4);
-  border-radius: 10px;
-  padding: 3px 10px;
-  margin: 2px 3px;
-}
-.module:hover {
-  background-color: alpha(#313244, 0.9);
-  color: #89b4fa;
-  box-shadow: 0 0 8px alpha(#89b4fa, 0.35);
+  background-color: transparent;
+  color: @subtext;
+  border-radius: 12px;
+  padding: 4px 8px;
+  margin: 0 2px;
 }
 
-/* ── Workspaces ────────────────────────────────────────── */
+#top-bar .module:hover,
+#top-bar button:hover {
+  color: @accent;
+  box-shadow: inset 0 -2px alpha(@accent, 0.75);
+}
+
 .module-workspaces {
   background-color: transparent;
   padding: 0;
   margin: 0 2px;
 }
+
 .module-workspaces button {
-  color: #6c7086;
-  background-color: alpha(#313244, 0.4);
+  color: @overlay;
+  background-color: transparent;
   border-radius: 10px;
-  padding: 3px 12px;
-  margin: 2px 2px;
-  font-weight: bold;
-}
-.module-workspaces button:hover {
-  background-color: alpha(#313244, 0.9);
-  color: #cdd6f4;
-}
-.module-workspaces button.focused {
-  background-color: alpha(#89b4fa, 0.8);
-  color: #1e1e2e;
-  box-shadow: 0 0 8px alpha(#89b4fa, 0.6);
-}
-.module-workspaces button.occupied {
-  color: #bac2de;
+  padding: 4px 10px;
+  margin: 0 2px;
+  font-weight: 700;
 }
 
-/* ── Per-module accent colours ────────────────────────── */
-.module-clock        { color: #cba6f7; font-weight: bold; font-size: 14px; }
-.module-music        { color: #fab387; }
-.module-volume       { color: #a6e3a1; }
+.module-workspaces button:hover {
+  color: @text;
+  box-shadow: inset 0 -2px alpha(@accent, 0.55);
+}
+
+.module-workspaces button.focused {
+  color: @text;
+  box-shadow: inset 0 -2px @accent;
+}
+
+.module-workspaces button.occupied {
+  color: @subtext;
+}
+
+.module-clock {
+  color: @pink;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.module-music {
+  color: @peach;
+}
+
+.module-volume {
+  color: @green;
+}
+
 .module-brightness,
 .script.brightness,
-.module-script.brightness { color: #f9e2af; }
-.module-notifications   { color: #89dceb; }
+.module-script.brightness {
+  color: @yellow;
+}
 
-/* ── Tray ──────────────────────────────────────────────── */
-.module-tray { background-color: transparent; padding: 2px 6px; }
-.tray .item { border-radius: 8px; padding: 2px; }
-.tray .item:hover { background-color: alpha(#313244, 0.9); }
-.tray .item.urgent { background-color: alpha(#f38ba8, 0.6); }
+.module-notifications {
+  color: @cyan;
+}
 
-/* ── Battery ───────────────────────────────────────────── */
-.module-battery      { color: #f9e2af; }
-.battery .icon       { color: #f9e2af; }
-.battery .label      { color: #f9e2af; }
-.battery.charging .icon  { color: #a6e3a1; }
-.battery.charging .label { color: #a6e3a1; }
-.battery.low .icon   { color: #f38ba8; }
-.battery.low .label  { color: #f38ba8; }
+.module-battery,
+.battery .icon,
+.battery .label {
+  color: @yellow;
+}
 
-/* ── Launcher (bottom bar) ─────────────────────────────── */
+.battery.charging .icon,
+.battery.charging .label {
+  color: @green;
+}
+
+.battery.low .icon,
+.battery.low .label {
+  color: @red;
+}
+
+.module-tray {
+  background-color: transparent;
+  padding: 0 4px;
+}
+
+.tray .item {
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 2px;
+  margin: 0 1px;
+}
+
+.tray .item:hover {
+  box-shadow: inset 0 -2px alpha(@accent, 0.55);
+}
+
+.tray .item.urgent {
+  box-shadow: inset 0 -2px @red;
+}
+
+/* ── Left dock ─────────────────────────────────────────── */
+#left-dock .menu,
+#left-dock .launcher .item,
+#left-dock .launcher .pagination button {
+  background-color: transparent;
+  border-radius: 14px;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+#left-dock .menu {
+  margin: 2px 0 10px 0;
+  padding: 8px 10px;
+}
+
+#left-dock .menu label {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+#left-dock .menu:hover {
+  color: @accent;
+  box-shadow: inset 3px 0 0 @accent;
+}
+
 .launcher {
   background-color: transparent;
   padding: 0;
 }
-.launcher .item {
-  background-color: alpha(#313244, 0.4);
-  border-radius: 10px;
-  padding: 3px 6px;
-  margin: 2px 2px;
-  min-width: 28px;
-  min-height: 28px;
-}
-.launcher .item:hover {
-  background-color: alpha(#313244, 0.9);
-  box-shadow: 0 0 8px alpha(#89b4fa, 0.35);
-}
-.launcher .item.open {
-  background-color: alpha(#45475a, 0.6);
-  border-bottom: 2px solid #89b4fa;
-}
-.launcher .item.focused {
-  background-color: alpha(#89b4fa, 0.8);
-  box-shadow: 0 0 8px alpha(#89b4fa, 0.6);
-}
-.launcher .item.urgent {
-  background-color: alpha(#f38ba8, 0.7);
+
+#left-dock .launcher .item {
+  padding: 6px;
+  margin: 3px 0;
 }
 
-/* ── Menu (bottom bar — app grid button) ───────────────── */
-.menu {
-  background-color: alpha(#313244, 0.4);
-  border-radius: 10px;
-  padding: 3px 12px;
-  margin: 2px 4px;
-  color: #cdd6f4;
-  font-size: 18px;
+#left-dock .launcher .item:hover,
+#left-dock .launcher .pagination button:hover {
+  box-shadow: inset 3px 0 0 alpha(@accent, 0.55);
 }
-.menu:hover {
-  background-color: alpha(#313244, 0.9);
-  color: #89b4fa;
-  box-shadow: 0 0 8px alpha(#89b4fa, 0.35);
+
+#left-dock .launcher .item.open {
+  box-shadow: inset 3px 0 0 alpha(@text, 0.8);
 }
-.popup-menu .main .category {
-  color: #cdd6f4;
-  background-color: alpha(#313244, 0.6);
+
+#left-dock .launcher .item.focused {
+  box-shadow: inset 3px 0 0 @accent;
+}
+
+#left-dock .launcher .item.urgent {
+  box-shadow: inset 3px 0 0 @red;
+}
+
+.launcher .pagination {
+  margin-top: 8px;
+}
+
+/* ── Popup / context menu surfaces only ────────────────── */
+popover,
+popover contents,
+.popup,
+.popup-menu,
+.popup-launcher,
+.tray popover contents,
+.tray popover box {
+  background-color: alpha(@mantle, 0.97);
+  color: @text;
+  border-radius: 16px;
+}
+
+popover,
+popover contents,
+.popup-menu,
+.popup-launcher,
+.tray popover contents {
+  border: 1px solid alpha(@accent, 0.18);
+}
+
+.popup,
+.popup-menu,
+.popup-launcher,
+.tray popover contents {
+  padding: 12px;
+}
+
+.popup-clock .calendar-clock {
+  color: @pink;
+  font-size: 1.55em;
+}
+
+.popup-clock .calendar .today {
+  background-color: alpha(@accent, 0.35);
   border-radius: 8px;
-  padding: 4px 10px;
-  margin: 2px 4px;
 }
-.popup-menu .main .category:hover,
-.popup-menu .main .category.open {
-  background-color: alpha(#89b4fa, 0.7);
-  color: #1e1e2e;
+
+scale > trough {
+  background-color: alpha(@surface, 0.85);
+  border-radius: 999px;
+  min-height: 6px;
 }
-.popup-menu .sub-menu .application {
-  color: #cdd6f4;
-  border-radius: 6px;
-  padding: 3px 8px;
+
+scale > trough > highlight {
+  background-color: @accent;
+  border-radius: 999px;
 }
-.popup-menu .sub-menu .application:hover {
-  background-color: alpha(#313244, 0.9);
-  color: #89b4fa;
+
+scale > trough > slider {
+  background-color: @text;
+  border-radius: 999px;
+  min-width: 12px;
+  min-height: 12px;
+}
+
+modelbutton,
+menuitem,
+.popup-menu .category,
+.popup-menu .application,
+.popup-launcher .popup-item {
+  background-color: transparent;
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: @text;
+}
+
+modelbutton:hover,
+menuitem:hover,
+.popup-menu .category:hover,
+.popup-menu .category.open,
+.popup-menu .application:hover,
+.popup-launcher .popup-item:hover {
+  background-color: alpha(@surface, 0.85);
+}
+
+.popup-menu .main,
+.popup-menu .sub-menu,
+.popup-menu .main .main-start,
+.popup-menu .main .main-center,
+.popup-menu .main .main-end {
+  background-color: transparent;
+}
+
+.popup-menu .category {
+  font-weight: 700;
+}
+
+.popup-menu .category.open {
+  color: @accent;
+}
+
+.popup-menu .sub-menu {
+  border-left: 1px solid alpha(@accent, 0.15);
+  padding-left: 10px;
+  margin-left: 10px;
+}
+
+.popup-launcher .popup-item {
+  padding: 10px 12px;
 }

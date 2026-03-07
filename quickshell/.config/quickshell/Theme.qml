@@ -4,6 +4,7 @@
 pragma Singleton
 
 import Quickshell
+import QtQuick
 
 Singleton {
     // ── Palette (dark, loosely Adwaita-dark) ─────────────────────

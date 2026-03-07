@@ -75,7 +75,6 @@ in
 
     environment.variables = {
       TERMINAL = "ghostty";
-      QT_SCALE_FACTOR = "1.33";
     };
 
     programs.nix-ld = {

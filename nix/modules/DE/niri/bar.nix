@@ -2,35 +2,45 @@
   pkgs,
   config,
   lib,
+  inputs,
   dotfiles,
   ...
 }:
 with lib;
 let
   cfg = config.ushinnary.desktop;
-  ironbarConfigDir = "${dotfiles}/ironbar/.config/ironbar";
-  ironbarFiles = [
-    "config.json"
-    "style.css"
+  quickshellPkg = inputs.quickshell.packages.${pkgs.system}.default;
+  quickshellConfigDir = "${dotfiles}/quickshell/.config/quickshell";
+  quickshellFiles = [
+    "shell.qml"
+    "Bar.qml"
+    "Theme.qml"
+    "Time.qml"
+    "ClockWidget.qml"
+    "Workspaces.qml"
+    "VolumeWidget.qml"
+    "BatteryWidget.qml"
+    "BrightnessWidget.qml"
+    "SysTray.qml"
   ];
 in
 {
   config = mkIf cfg.niri {
     # ── Bar-ecosystem packages ─────────────────────────────────────
-    environment.systemPackages = with pkgs; [
-      ironbar                   # Status bar
-      swaynotificationcenter    # Notification daemon + center panel
-      swayosd                   # On-screen display for volume/brightness
-      gtk3                      # gtk-launch for menu / launcher widgets
-      papirus-icon-theme        # Broader icon coverage for menu/launcher/category icons
-      adwaita-icon-theme        # GTK fallback icons still used by some apps
-      hicolor-icon-theme        # Freedesktop fallback icon theme for app icons
+    environment.systemPackages = [
+      quickshellPkg             # QML-based shell / status bar
+      pkgs.swaynotificationcenter  # Notification daemon + center panel
+      pkgs.swayosd              # On-screen display for volume/brightness
+      pkgs.gtk3                 # gtk-launch for menu / launcher widgets
+      pkgs.papirus-icon-theme   # Broader icon coverage for menu/launcher/category icons
+      pkgs.adwaita-icon-theme   # GTK fallback icons still used by some apps
+      pkgs.hicolor-icon-theme   # Freedesktop fallback icon theme for app icons
     ];
 
     home-manager.users.ushinnary =
       { pkgs, ... }:
       {
-        # Keep ironbar/menu popups on a dark GTK theme and use a broad icon theme
+        # Keep popups on a dark GTK theme and use a broad icon theme
         # so category/app icons resolve more reliably.
         gtk = {
           enable = true;
@@ -44,14 +54,14 @@ in
 
         dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
-        # ── Home-manager: map existing dotfiles into place ─────────────
+        # ── Home-manager: map quickshell QML config into place ─────────
         # Files come from the `dotfiles` flake input (path:..) so editing
-        # the source files and rebuilding is all that's needed — no stow.
+        # the source QML files and rebuilding is all that's needed.
         xdg.configFile = builtins.listToAttrs (
           map (file: {
-            name = "ironbar/${file}";
-            value = { source = "${ironbarConfigDir}/${file}"; };
-          }) ironbarFiles
+            name = "quickshell/${file}";
+            value = { source = "${quickshellConfigDir}/${file}"; };
+          }) quickshellFiles
         );
       };
   };

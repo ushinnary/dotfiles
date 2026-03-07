@@ -19,7 +19,7 @@ stow zed/
 stow zellij/
 stow kitty/
 stow hypr/
-stow ironbar/
+stow quickshell/
 stow niri/
 stow waybar/
 

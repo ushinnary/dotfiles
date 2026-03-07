@@ -23,11 +23,11 @@ window-rule {
 
 // ── Layer rules ─────────────────────────────────────────
 
-// Ironbar: floating pill (border-radius set in CSS)
+// Quickshell bar: semi-transparent top panel
 // NOTE: place-within-backdrop must NOT be set on a top-layer surface
 // or niri will break the overview (bar gets moved into backdrop plane).
 layer-rule {
-  match namespace="ironbar"
+  match namespace="quickshell-bar"
   opacity 0.95
 }
 

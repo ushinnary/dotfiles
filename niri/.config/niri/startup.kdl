@@ -1,4 +1,4 @@
-spawn-at-startup "ironbar"
+spawn-at-startup "quickshell"
 spawn-at-startup "swaync"
 spawn-at-startup "swayosd-server"
 spawn-at-startup "xwayland-satellite"
@@ -16,6 +16,6 @@ spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
 spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "swaylock -f"
 
 // Set initial colour-scheme on login: light 08:00–19:59, dark otherwise.
-// sleep 1 ensures ironbar is already running and subscribed to dconf
+// sleep 1 ensures the bar is already running and subscribed to dconf
 // before we write, so it picks up the change via the settings watcher.
 spawn-at-startup "sh" "-c" "sleep 1; h=$(date +%H); if [ \"$h\" -ge 8 ] && [ \"$h\" -lt 20 ]; then gsettings set org.gnome.desktop.interface color-scheme prefer-light; else gsettings set org.gnome.desktop.interface color-scheme prefer-dark; fi"

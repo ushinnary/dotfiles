@@ -19,6 +19,7 @@
       typescript
       yaml
       xml
+      qmljs
     ];
     settings.indent = {
       enable = true;

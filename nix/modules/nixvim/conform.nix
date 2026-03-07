@@ -122,6 +122,7 @@
           ];
           json = [ "jq" ];
           nu = [ "nufmt" ];
+          qml = [ "qmlformat" ];
           "_" = [ "trim_whitespace" ];
         };
 
@@ -152,6 +153,11 @@
           };
           nufmt = {
             command = "${lib.getExe pkgs.nufmt}";
+          };
+          qmlformat = {
+            command = "${pkgs.kdePackages.qtdeclarative}/bin/qmlformat";
+            args = [ "-i" "$FILENAME" ];
+            stdin = false;
           };
         };
       };

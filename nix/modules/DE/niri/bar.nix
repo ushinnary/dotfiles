@@ -13,6 +13,7 @@ let
   quickshellFiles = [
     "shell.qml"
     "Bar.qml"
+    "Dock.qml"
     "Theme.qml"
     "Time.qml"
     "ClockWidget.qml"

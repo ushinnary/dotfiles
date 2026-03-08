@@ -33,4 +33,11 @@ Singleton {
     readonly property int widgetSpacing: 10
     readonly property int barMarginH: 0
     readonly property int barMarginTop: 0
+
+    readonly property int dockWidth: 48
+    readonly property int dockPadding: 10
+    readonly property int dockItemSize: 32
+    readonly property int dockItemSpacing: 8
+    readonly property int dockIconSize: 24
+    readonly property int dockIndicatorWidth: 4
 }

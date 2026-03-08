@@ -3,7 +3,7 @@
 # version = "0.93.0"
 
 def create_left_prompt [] {
-    let dir = match (do --ignore-errors { $env.PWD | path relative-to $nu.home-path }) {
+    let dir = match (do --ignore-errors { $env.PWD | path relative-to $env.HOME }) {
         null => $env.PWD
         '' => '~'
         $relative_pwd => ([~ $relative_pwd] | path join)
@@ -114,10 +114,10 @@ $env.DOCKER_HOST = $"unix://($env.XDG_RUNTIME_DIR)/podman/podman.sock"
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')
 
-let starship_init = ($nu.home-path | path join ".cache" "starship" "init.nu")
-let zoxide_init = ($nu.home-path | path join ".zoxide.nu")
+let starship_init = ($env.HOME | path join ".cache" "starship" "init.nu")
+let zoxide_init = ($env.HOME | path join ".zoxide.nu")
 
-mkdir ($nu.home-path | path join ".cache" "starship")
+mkdir ($env.HOME | path join ".cache" "starship")
 if not ($starship_init | path exists) {
     starship init nu | save -f $starship_init
 }

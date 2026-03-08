@@ -11,5 +11,7 @@ import Quickshell
 Scope {
     id: root
 
+    Dock {}
+
     Bar {}
 }

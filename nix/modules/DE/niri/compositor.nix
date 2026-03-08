@@ -2,13 +2,12 @@
   pkgs,
   config,
   lib,
-  dotfiles,
   ...
 }:
 with lib;
 let
   cfg = config.ushinnary.desktop;
-  niri = "${dotfiles}/niri/.config/niri";
+  niriRelativeRoot = "niri/.config/niri";
   niriFiles = [
     "config.kdl"
     "startup.kdl"
@@ -33,7 +32,13 @@ in
     ];
 
     home-manager.users.ushinnary =
-      { lib, ... }:
+      { lib, config, ... }:
+      let
+        mkDotfileSymlink =
+          relativePath:
+          config.lib.file.mkOutOfStoreSymlink
+            "${config.home.homeDirectory}/dotfiles/${relativePath}";
+      in
       {
         # Ensure ~/wallpaper exists so the rand-wallpaper script has somewhere to look.
         home.activation.createWallpaperDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -41,12 +46,12 @@ in
         '';
 
         # ── Home-manager: map existing dotfiles into place ─────────────
-        # Files come from the `dotfiles` flake input (path:..) so editing
-        # the source files and rebuilding is all that's needed — no stow.
+        # Files are linked out-of-store to ~/dotfiles, so edits are picked up
+        # immediately (stow-like) without rebuilding.
         xdg.configFile = builtins.listToAttrs (
           map (file: {
             name = "niri/${file}";
-            value = { source = "${niri}/${file}"; };
+            value = { source = mkDotfileSymlink "${niriRelativeRoot}/${file}"; };
           }) niriFiles
         );
       };

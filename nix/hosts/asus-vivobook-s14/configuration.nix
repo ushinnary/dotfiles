@@ -1,6 +1,5 @@
 {
   inputs,
-  dotfiles,
   ...
 }:
 
@@ -55,12 +54,22 @@
     useUserPackages = true;
     backupFileExtension = "backup";
     extraSpecialArgs = { inherit inputs; };
-    users.ushinnary = { lib, ... }: {
+    users.ushinnary =
+      { lib, config, ... }:
+      let
+        mkDotfileSymlink =
+          relativePath:
+          config.lib.file.mkOutOfStoreSymlink
+            "${config.home.homeDirectory}/dotfiles/${relativePath}";
+      in
+      {
       imports = [ ../../modules/home.nix ];
-      xdg.configFile."niri/outputs.kdl".source = lib.mkForce
-        "${dotfiles}/niri/.config/niri/hosts/asus-vivobook-s14/outputs.kdl";
-      xdg.configFile."niri/input.kdl".source = lib.mkForce
-        "${dotfiles}/niri/.config/niri/hosts/asus-vivobook-s14/input.kdl";
+      xdg.configFile."niri/outputs.kdl".source = lib.mkForce (
+        mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14/outputs.kdl"
+      );
+      xdg.configFile."niri/input.kdl".source = lib.mkForce (
+        mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14/input.kdl"
+      );
     };
   };
 

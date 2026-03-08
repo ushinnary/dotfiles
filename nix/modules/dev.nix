@@ -2,16 +2,14 @@
   pkgs,
   lib,
   config,
-  dotfiles,
   ...
 }:
 let
   cfg = config.ushinnary.dev;
 
   # ── Dotfile helpers ─────────────────────────────────────────────
-  # `dotfiles` is the flake input (path:.. pointing to ~/dotfiles).
-  # Shortcuts for each stow package's config root.
-  nu     = "${dotfiles}/nushell/.config/nushell";
+  # Relative paths inside ~/dotfiles for out-of-store Home Manager symlinks.
+  nuRelativeRoot = "nushell/.config/nushell";
   nuCompletions = [
     "cargo"
     "dotnet"
@@ -88,10 +86,16 @@ in
     };
 
     # ── Home-manager: map existing dotfiles into place ─────────────
-    # Files come from the `dotfiles` flake input (path:..) so editing
-    # the source files and rebuilding is all that's needed — no stow.
+    # Files are linked out-of-store to ~/dotfiles, so edits are picked up
+    # immediately (stow-like) without rebuilding.
     home-manager.users.ushinnary =
-      { ... }:
+      { config, ... }:
+      let
+        mkDotfileSymlink =
+          relativePath:
+          config.lib.file.mkOutOfStoreSymlink
+            "${config.home.homeDirectory}/dotfiles/${relativePath}";
+      in
       {
         programs.zed-editor = {
           enable = true;
@@ -102,54 +106,56 @@ in
         xdg.configFile =
           {
             # ── Nushell ──────────────────────────────────────────
-            "nushell/config.nu".source = "${nu}/config.nu";
-            "nushell/env.nu".source    = "${nu}/env.nu";
-            "nushell/alias.nu".source  = "${nu}/alias.nu";
+            "nushell/config.nu".source = mkDotfileSymlink "${nuRelativeRoot}/config.nu";
+            "nushell/env.nu".source = mkDotfileSymlink "${nuRelativeRoot}/env.nu";
+            "nushell/alias.nu".source = mkDotfileSymlink "${nuRelativeRoot}/alias.nu";
 
             # ── Lazygit ──────────────────────────────────────────
             "lazygit/config.yml".source =
-              "${dotfiles}/lazygit/.config/lazygit/config.yml";
+              mkDotfileSymlink "lazygit/.config/lazygit/config.yml";
 
             # ── Starship ─────────────────────────────────────────
             "starship.toml".source =
-              "${dotfiles}/starship/.config/starship.toml";
+              mkDotfileSymlink "starship/.config/starship.toml";
 
             # ── Zellij ───────────────────────────────────────────
             "zellij/config.kdl".source =
-              "${dotfiles}/zellij/.config/zellij/config.kdl";
+              mkDotfileSymlink "zellij/.config/zellij/config.kdl";
 
             # ── Zed ──────────────────────────────────────────────
             "zed/settings.json".source =
-              "${dotfiles}/zed/.config/zed/settings.json";
+              mkDotfileSymlink "zed/.config/zed/settings.json";
             # "zed/keymap.json".source =
-            #   "${dotfiles}/zed/.config/zed/keymap.json";
+            #   mkDotfileSymlink "zed/.config/zed/keymap.json";
 
             # ── Electron flags ────────────────────────────────────
             "electron-flags.conf".source =
-              "${dotfiles}/electron/.config/electron-flags.conf";
+              mkDotfileSymlink "electron/.config/electron-flags.conf";
 
             # ── Kitty ─────────────────────────────────────────────
             "kitty/kitty.conf".source =
-              "${dotfiles}/kitty/.config/kitty/kitty.conf";
+              mkDotfileSymlink "kitty/.config/kitty/kitty.conf";
 
             # ── Pipewire ─────────────────────────────────────────
             "pipewire/pipewire.conf.d/hesuvi.conf".source =
-              "${dotfiles}/pipewire/.config/pipewire/pipewire.conf.d/hesuvi.conf";
+              mkDotfileSymlink "pipewire/.config/pipewire/pipewire.conf.d/hesuvi.conf";
           }
           # Nushell completion scripts — one entry per tool
           // builtins.listToAttrs (
             map (tool: {
               name  = "nushell/${tool}-completions.nu";
-              value = { source = "${nu}/${tool}-completions.nu"; };
+              value = {
+                source = mkDotfileSymlink "${nuRelativeRoot}/${tool}-completions.nu";
+              };
             }) nuCompletions
           );
 
         # ── Files that live in $HOME directly ──────────────────────
         home.file = {
           ".alacritty.toml".source =
-            "${dotfiles}/alacritty/.alacritty.toml";
+            mkDotfileSymlink "alacritty/.alacritty.toml";
           ".wezterm.lua".source =
-            "${dotfiles}/wezterm/.wezterm.lua";
+            mkDotfileSymlink "wezterm/.wezterm.lua";
         };
       };
   };

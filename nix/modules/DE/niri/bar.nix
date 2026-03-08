@@ -3,14 +3,13 @@
   config,
   lib,
   inputs,
-  dotfiles,
   ...
 }:
 with lib;
 let
   cfg = config.ushinnary.desktop;
   quickshellPkg = inputs.quickshell.packages.${pkgs.system}.default;
-  quickshellConfigDir = "${dotfiles}/quickshell/.config/quickshell";
+  quickshellRelativeRoot = "quickshell/.config/quickshell";
   quickshellFiles = [
     "shell.qml"
     "Bar.qml"
@@ -41,7 +40,13 @@ in
     ];
 
     home-manager.users.ushinnary =
-      { pkgs, ... }:
+      { pkgs, config, ... }:
+      let
+        mkDotfileSymlink =
+          relativePath:
+          config.lib.file.mkOutOfStoreSymlink
+            "${config.home.homeDirectory}/dotfiles/${relativePath}";
+      in
       {
         # Keep popups on a dark GTK theme and use a broad icon theme
         # so category/app icons resolve more reliably.
@@ -58,12 +63,12 @@ in
         dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
         # ── Home-manager: map quickshell QML config into place ─────────
-        # Files come from the `dotfiles` flake input (path:..) so editing
-        # the source QML files and rebuilding is all that's needed.
+        # Files are linked out-of-store to ~/dotfiles, so edits are picked up
+        # immediately (stow-like) without rebuilding.
         xdg.configFile = builtins.listToAttrs (
           map (file: {
             name = "quickshell/${file}";
-            value = { source = "${quickshellConfigDir}/${file}"; };
+            value = { source = mkDotfileSymlink "${quickshellRelativeRoot}/${file}"; };
           }) quickshellFiles
         );
       };

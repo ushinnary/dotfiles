@@ -29,8 +29,8 @@ PopupWindow {
     color: "transparent"
     visible: true
 
-    implicitWidth: Math.max(menuBg.implicitWidth + menuBg.padding * 2, 180)
-    implicitHeight: menuBg.implicitHeight + menuBg.padding * 2
+    implicitWidth: Math.max(menuBg.implicitWidth + menuBg.outerPadding * 2, 180)
+    implicitHeight: menuBg.implicitHeight + menuBg.outerPadding * 2
 
     signal menuClosed()
 
@@ -61,27 +61,29 @@ PopupWindow {
     Rectangle {
         id: menuBg
 
-        readonly property real padding: 5
+        readonly property real outerPadding: 5
+        readonly property real contentPadding: 5
 
         anchors {
             top: parent.top
-            topMargin: padding
+            topMargin: outerPadding
             left: parent.left
-            leftMargin: padding
+            leftMargin: outerPadding
             right: parent.right
-            rightMargin: padding
+            rightMargin: outerPadding
             bottom: parent.bottom
-            bottomMargin: padding
+            bottomMargin: outerPadding
         }
 
         radius: 10
         color: Theme.backgroundSecondary
         border.width: 1
         border.color: Theme.surface
+        clip: true
 
         // Size to content
-        implicitWidth: stack.currentItem ? stack.currentItem.implicitWidth : 180
-        implicitHeight: stack.currentItem ? stack.currentItem.implicitHeight : 40
+        implicitWidth: (stack.currentItem ? stack.currentItem.implicitWidth : 180) + contentPadding * 2
+        implicitHeight: (stack.currentItem ? stack.currentItem.implicitHeight : 40) + contentPadding * 2
 
         Behavior on implicitWidth  { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
         Behavior on implicitHeight { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
@@ -90,7 +92,7 @@ PopupWindow {
         StackView {
             id: stack
             anchors.fill: parent
-            anchors.margins: menuBg.padding
+            anchors.margins: menuBg.contentPadding
 
             pushEnter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 100 } }
             pushExit:  Transition { NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 80 } }
@@ -141,6 +143,7 @@ PopupWindow {
 
             ColumnLayout {
                 id: pageCol
+                anchors.fill: parent
                 spacing: 0
 
                 // ── Back button (submenus only) ───────────────────

@@ -25,7 +25,7 @@ Scope {
             }
             margins {
                 top: Theme.barMarginTop
-                left: Theme.barMarginH
+                left: Theme.barMarginH - Theme.dockWidth
                 right: Theme.barMarginH
             }
             implicitHeight: Theme.barHeight

@@ -81,16 +81,16 @@ binds {
     Mod+Shift+Page_Up   { move-column-to-workspace-up; }
 
     // Workspace by number
-    Mod+1 { focus-workspace Browser; }
-    Mod+2 { focus-workspace Code; }
-    Mod+3 { focus-workspace Chat; }
-    Mod+4 { focus-workspace Media; }
-    Mod+5 { focus-workspace 5; }
-    Mod+Shift+1 { move-column-to-workspace Browser; }
-    Mod+Shift+2 { move-column-to-workspace Code; }
-    Mod+Shift+3 { move-column-to-workspace Chat; }
-    Mod+Shift+4 { move-column-to-workspace Media; }
-    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+1 { focus-workspace "Browser"; }
+    Mod+2 { focus-workspace "Code"; }
+    Mod+3 { focus-workspace "Chat"; }
+    Mod+4 { focus-workspace "Media"; }
+    Mod+5 { focus-workspace "5"; }
+    Mod+Shift+1 { move-column-to-workspace "Browser"; }
+    Mod+Shift+2 { move-column-to-workspace "Code"; }
+    Mod+Shift+3 { move-column-to-workspace "Chat"; }
+    Mod+Shift+4 { move-column-to-workspace "Media"; }
+    Mod+Shift+5 { move-column-to-workspace "5"; }
 
     // Media keys + OSD
     XF86AudioRaiseVolume { spawn "swayosd-client" "--output-volume" "raise"; }

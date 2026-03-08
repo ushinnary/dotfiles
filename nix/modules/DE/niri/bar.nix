@@ -34,7 +34,6 @@ in
       pkgs.swaynotificationcenter  # Notification daemon + center panel
       pkgs.swayosd              # On-screen display for volume/brightness
       pkgs.gtk3                 # gtk-launch for menu / launcher widgets
-      pkgs.papirus-icon-theme   # Broader icon coverage for menu/launcher/category icons
       pkgs.adwaita-icon-theme   # GTK fallback icons still used by some apps
       pkgs.hicolor-icon-theme   # Freedesktop fallback icon theme for app icons
     ];
@@ -53,8 +52,8 @@ in
         gtk = {
           enable = true;
           iconTheme = {
-            name = "Papirus-Dark";
-            package = pkgs.papirus-icon-theme;
+            name = "Adwaita"; # Set Adwaita as the default icon theme to ensure all icons are available, including fallbacks
+            package = pkgs.adwaita-icon-theme; 
           };
           gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
           gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;

@@ -1,5 +1,5 @@
 {
-    "icon_theme": "Papirus-Dark",
+    "icon_theme": "Adwaita",
     "icon_overrides": {
         "com.mitchellh.ghostty": "ghostty",
         "org.gnome.Console": "utilities-terminal",

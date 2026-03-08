@@ -48,6 +48,6 @@ layer-rule {
 // stationary and shows through the transparent workspace background.
 // Run `niri msg layers` if the namespace doesn't match.
 layer-rule {
-  match namespace="^wallpaper$"
+  match namespace="swaybg"
   place-within-backdrop true
 }

@@ -9,8 +9,8 @@ binds {
     Mod+E { spawn "nautilus"; }
 
     // Launcher
-    Mod+Space { spawn "anyrun"; }
-    Mod+P { spawn "anyrun"; }
+    Mod+Space { spawn "anyrun" "--plugins" "libapplications.so"; }
+    Mod+P { spawn "anyrun" "--plugins" "libapplications.so"; }
 
     // Clipboard history
     Mod+Shift+V { spawn "sh" "-lc" "sh \"$HOME/.config/niri/scripts/cliphist-anyrun.sh\""; }

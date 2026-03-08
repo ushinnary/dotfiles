@@ -6,11 +6,17 @@ window-rule {
   clip-to-geometry true
 }
 
+window-rule {
+  match app-id="org.telegram.desktop"
+  open-on-workspace "Chat"
+}
+
 // Ghostty: blur + transparency + shadow
 window-rule {
   match app-id=r#"(^ghostty$|^com\.mitchellh\.ghostty$)"#
   opacity 0.88
   draw-border-with-background false
+  open-on-workspace "Code"
 
   shadow {
     on
@@ -42,6 +48,6 @@ layer-rule {
 // stationary and shows through the transparent workspace background.
 // Run `niri msg layers` if the namespace doesn't match.
 layer-rule {
-  match namespace="swaybg"
+  match namespace="^wallpaper$"
   place-within-backdrop true
 }

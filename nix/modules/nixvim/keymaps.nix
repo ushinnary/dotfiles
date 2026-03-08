@@ -107,5 +107,19 @@
       action.__raw = "function() vim.diagnostic.config({ virtual_lines = { only_current_line = false, severity = { min = vim.diagnostic.severity.WARN } } }) end";
       options.desc = "Hide current line virtual lines restriction (display all Warn/Error)";
     }
+
+    # Formatting toggles
+    {
+      mode = [ "n" ];
+      key = "<leader>uf";
+      action = "<cmd>FormatToggle<CR>";
+      options.desc = "Toggle format on save (global)";
+    }
+    {
+      mode = [ "n" ];
+      key = "<leader>uF";
+      action = "<cmd>FormatToggle!<CR>";
+      options.desc = "Toggle format on save (buffer)";
+    }
   ];
 }

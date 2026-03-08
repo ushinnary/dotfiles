@@ -109,14 +109,18 @@ $env.DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 1
 $env.VISUAL = "nvim"
 $env.EDITOR = "nvim"
 
-try { ^systemctl --user start podman.socket | ignore }
 $env.DOCKER_HOST = $"unix://($env.XDG_RUNTIME_DIR)/podman/podman.sock"
 
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')
 
-# Starship
-mkdir ~/.cache/starship
-starship init nu | save -f ~/.cache/starship/init.nu
-# Zoxide
-zoxide init nushell | save -f ~/.zoxide.nu
+let starship_init = ($nu.home-path | path join ".cache" "starship" "init.nu")
+let zoxide_init = ($nu.home-path | path join ".zoxide.nu")
+
+mkdir ($nu.home-path | path join ".cache" "starship")
+if not ($starship_init | path exists) {
+    starship init nu | save -f $starship_init
+}
+if not ($zoxide_init | path exists) {
+    zoxide init nushell | save -f $zoxide_init
+}

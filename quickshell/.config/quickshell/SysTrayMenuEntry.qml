@@ -15,7 +15,7 @@ Item {
     required property var menuEntry  // QsMenuEntry
     property bool forceIconColumn: false
 
-    signal dismiss()
+    signal dismiss
     signal openSubmenu(handle: var) // QsMenuHandle
 
     implicitWidth: contentRow.implicitWidth + 16
@@ -38,13 +38,18 @@ Item {
         anchors.fill: parent
         anchors.margins: 2
         radius: 6
-        color: hoverHandler.hovered && menuEntry.enabled
-            ? Theme.surfaceHover : "transparent"
+        color: hoverHandler.hovered && menuEntry.enabled ? Theme.surfaceHover : "transparent"
 
-        Behavior on color { ColorAnimation { duration: 100 } }
+        Behavior on color {
+            ColorAnimation {
+                duration: 100
+            }
+        }
     }
 
-    HoverHandler { id: hoverHandler }
+    HoverHandler {
+        id: hoverHandler
+    }
 
     TapHandler {
         enabled: !menuEntry.isSeparator && menuEntry.enabled
@@ -81,13 +86,9 @@ Item {
                 width: 10
                 height: 10
                 radius: menuEntry.buttonType === 2 ? 5 : 2 // 2 = RadioButton
-                color: menuEntry.checkState === Qt.Checked
-                    ? Theme.accentPrimary
-                    : "transparent"
+                color: menuEntry.checkState === Qt.Checked ? Theme.accentPrimary : "transparent"
                 border.width: 1.5
-                border.color: menuEntry.checkState === Qt.Checked
-                    ? Theme.accentPrimary
-                    : Theme.textDim
+                border.color: menuEntry.checkState === Qt.Checked ? Theme.accentPrimary : Theme.textDim
             }
         }
 

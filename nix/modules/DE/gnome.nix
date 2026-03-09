@@ -61,9 +61,6 @@ in
             maximize = [ "<Super>f" ];
             show-desktop = [ "<Super>d" ];
           };
-          "org/gnome/desktop/interface" = {
-            cursor-theme = "Bibata-Modern-Ice";
-          };
           "org/gnome/desktop/input-sources" = {
             per-window = true;
             sources = [

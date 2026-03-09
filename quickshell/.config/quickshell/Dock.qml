@@ -19,16 +19,16 @@ Scope {
     property var workspaces: []
 
     // ── Drag-and-drop state ───────────────────────────────────────
-    property int  dragSourceIndex: -1   // index in manualPinnedDesktopIds
+    property int dragSourceIndex: -1   // index in manualPinnedDesktopIds
     property bool dragActive: false
     property real dragCurrentY: 0       // Y in panel-window coords
 
     // ── Context menu state ────────────────────────────────────────
     // Shared across panel instances; the overlay Variants reads these.
-    property var  menuContextItem:  null
-    property bool menuVisible:      false
-    property real menuY:            0        // Y in dock-panel coordinates
-    property var  menuTargetScreen: null
+    property var menuContextItem: null
+    property bool menuVisible: false
+    property real menuY: 0        // Y in dock-panel coordinates
+    property var menuTargetScreen: null
 
     // ── Persistence helpers ───────────────────────────────────────
 
@@ -48,8 +48,7 @@ Scope {
         const json = JSON.stringify(dockRoot.manualPinnedDesktopIds);
         // Use printf to avoid echo interpretation; single-quote wrap is safe
         // because desktop IDs never contain single quotes.
-        writePinnedProc.exec(["sh", "-c",
-            "printf '%s' '" + json + "' > ~/.config/quickshell/pinned-apps.json"]);
+        writePinnedProc.exec(["sh", "-c", "printf '%s' '" + json + "' > ~/.config/quickshell/pinned-apps.json"]);
     }
 
     // ── Pin management ────────────────────────────────────────────
@@ -72,8 +71,9 @@ Scope {
     function unpinApp(desktopId) {
         if (!desktopId)
             return;
-        dockRoot.manualPinnedDesktopIds =
-            dockRoot.manualPinnedDesktopIds.filter(function(id) { return id !== desktopId; });
+        dockRoot.manualPinnedDesktopIds = dockRoot.manualPinnedDesktopIds.filter(function (id) {
+            return id !== desktopId;
+        });
         dockRoot.savePinnedApps();
     }
 
@@ -228,9 +228,7 @@ Scope {
             if (!window)
                 continue;
 
-            const workspaceId = window.workspace_id === undefined || window.workspace_id === null
-                ? ""
-                : String(window.workspace_id);
+            const workspaceId = window.workspace_id === undefined || window.workspace_id === null ? "" : String(window.workspace_id);
             if (screenName && workspaceId && !visibleWorkspaceIds[workspaceId])
                 continue;
 
@@ -245,9 +243,7 @@ Scope {
                     desktopId: desktopId,
                     entry: entry,
                     focused: false,
-                    label: entry && entry.name
-                        ? entry.name
-                        : (dockRoot.normalizedText(window.title) || appId || "App"),
+                    label: entry && entry.name ? entry.name : (dockRoot.normalizedText(window.title) || appId || "App"),
                     pinned: false,
                     primaryWindowId: -1,
                     running: true,
@@ -287,12 +283,8 @@ Scope {
 
             current.primaryWindowId = primaryWindow ? Number(primaryWindow.id || -1) : -1;
             current.sortLaunchId = earliestWindowId;
-            current.sortFocusSecs = primaryWindow && primaryWindow.focus_timestamp
-                ? Number(primaryWindow.focus_timestamp.secs || 0)
-                : 0;
-            current.sortFocusNanos = primaryWindow && primaryWindow.focus_timestamp
-                ? Number(primaryWindow.focus_timestamp.nanos || 0)
-                : 0;
+            current.sortFocusSecs = primaryWindow && primaryWindow.focus_timestamp ? Number(primaryWindow.focus_timestamp.secs || 0) : 0;
+            current.sortFocusNanos = primaryWindow && primaryWindow.focus_timestamp ? Number(primaryWindow.focus_timestamp.nanos || 0) : 0;
             current.windowCount = current.windows.length;
         }
 
@@ -331,11 +323,11 @@ Scope {
             });
         }
 
-        const runningOnly = Object.keys(grouped).map(function(key) {
+        const runningOnly = Object.keys(grouped).map(function (key) {
             return grouped[key];
         });
 
-        runningOnly.sort(function(a, b) {
+        runningOnly.sort(function (a, b) {
             if (a.sortLaunchId !== b.sortLaunchId)
                 return a.sortLaunchId - b.sortLaunchId;
 
@@ -350,14 +342,7 @@ Scope {
             return;
 
         if (item.running && item.primaryWindowId > 0) {
-            focusProc.exec([
-                "niri",
-                "msg",
-                "action",
-                "focus-window",
-                "--id",
-                String(item.primaryWindowId)
-            ]);
+            focusProc.exec(["niri", "msg", "action", "focus-window", "--id", String(item.primaryWindowId)]);
             return;
         }
 
@@ -374,8 +359,7 @@ Scope {
     }
 
     Component.onCompleted: {
-        readPinnedProc.exec(["sh", "-c",
-            "cat ~/.config/quickshell/pinned-apps.json 2>/dev/null || echo '[]'"]);
+        readPinnedProc.exec(["sh", "-c", "cat ~/.config/quickshell/pinned-apps.json 2>/dev/null || echo '[]'"]);
         dockRoot.refreshNiriState();
     }
 
@@ -394,7 +378,9 @@ Scope {
         }
     }
 
-    Process { id: writePinnedProc }
+    Process {
+        id: writePinnedProc
+    }
 
     Process {
         id: windowsProc
@@ -437,17 +423,17 @@ Scope {
             screen: modelData
 
             // ── Per-panel drag state ───────────────────────────────────
-            property int    panelDragSourceIndex: -1   // index in manualPinnedDesktopIds
-            property bool   panelDragActive: false
-            property real   panelDragY: 0              // cursor Y in panel coords
+            property int panelDragSourceIndex: -1   // index in manualPinnedDesktopIds
+            property bool panelDragActive: false
+            property real panelDragY: 0              // cursor Y in panel coords
             property string panelDragDesktopId: ""
 
             function pinnedDropIndex(cursorY) {
                 // account for workspace section + divider sitting above the app list
                 const topOff = wsSection.height + 7 + Theme.dockPadding;
-                const itemH  = Theme.dockItemSize + Theme.dockItemSpacing;
-                const relY   = cursorY - topOff;
-                const count  = dockRoot.manualPinnedDesktopIds.length;
+                const itemH = Theme.dockItemSize + Theme.dockItemSpacing;
+                const relY = cursorY - topOff;
+                const count = dockRoot.manualPinnedDesktopIds.length;
                 return Math.max(0, Math.min(count - 1, Math.round(relY / itemH)));
             }
 
@@ -497,12 +483,17 @@ Scope {
                     anchors.horizontalCenter: parent.horizontalCenter
                     color: Theme.accentPrimary
                     y: {
-                        const idx    = panel.pinnedDropIndex(panel.panelDragY);
+                        const idx = panel.pinnedDropIndex(panel.panelDragY);
                         const topOff = wsSection.height + 7 + Theme.dockPadding;
-                        const itemH  = Theme.dockItemSize + Theme.dockItemSpacing;
+                        const itemH = Theme.dockItemSize + Theme.dockItemSpacing;
                         return topOff + idx * itemH - Theme.dockItemSpacing * 0.5;
                     }
-                    Behavior on y { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
+                    Behavior on y {
+                        NumberAnimation {
+                            duration: 80
+                            easing.type: Easing.OutCubic
+                        }
+                    }
                 }
 
                 // Floating icon preview following cursor
@@ -518,11 +509,13 @@ Scope {
                     IconImage {
                         property string iconSrc: {
                             const did = panel.panelDragDesktopId;
-                            if (!did) return "";
+                            if (!did)
+                                return "";
                             const entry = dockRoot.resolveDesktopEntry(did);
                             if (entry && entry.icon) {
                                 const r = Quickshell.iconPath(entry.icon, true);
-                                if (r) return r;
+                                if (r)
+                                    return r;
                             }
                             return Quickshell.iconPath("application-x-executable", true) || "";
                         }
@@ -550,7 +543,7 @@ Scope {
                 Repeater {
                     model: {
                         const sn = panel.modelData ? panel.modelData.name.toLowerCase() : "";
-                        return dockRoot.workspaces.filter(function(ws) {
+                        return dockRoot.workspaces.filter(function (ws) {
                             return !sn || (ws.output && ws.output.toLowerCase() === sn);
                         });
                     }
@@ -561,7 +554,12 @@ Scope {
                         // active pill is tall enough to fit rotated text (⩾ longest ws name)
                         height: modelData.is_focused ? 80 : 8
 
-                        Behavior on height { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+                        Behavior on height {
+                            NumberAnimation {
+                                duration: 200
+                                easing.type: Easing.OutCubic
+                            }
+                        }
 
                         Rectangle {
                             width: modelData.is_focused ? parent.width - 10 : 26
@@ -569,13 +567,24 @@ Scope {
                             anchors.horizontalCenter: parent.horizontalCenter
                             radius: modelData.is_focused ? 9 : height / 2
                             color: {
-                                if (modelData.is_focused) return Theme.accentPrimary;
-                                if (wsPillMouse.containsMouse) return Theme.accentSecondary;
+                                if (modelData.is_focused)
+                                    return Theme.accentPrimary;
+                                if (wsPillMouse.containsMouse)
+                                    return Theme.accentSecondary;
                                 return Theme.surface;
                             }
 
-                            Behavior on color { ColorAnimation { duration: 200 } }
-                            Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 200
+                                }
+                            }
+                            Behavior on width {
+                                NumberAnimation {
+                                    duration: 200
+                                    easing.type: Easing.OutCubic
+                                }
+                            }
 
                             Text {
                                 visible: modelData.is_focused
@@ -599,10 +608,7 @@ Scope {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: switchWsProc.exec([
-                                "niri", "msg", "action", "focus-workspace",
-                                String(modelData.idx)
-                            ])
+                            onClicked: switchWsProc.exec(["niri", "msg", "action", "focus-workspace", String(modelData.idx)])
                         }
                     }
                 }
@@ -657,10 +663,12 @@ Scope {
                             property var dockItem: modelData
 
                             // Ghost the item being dragged (overlay takes its place visually)
-                            opacity: panel.panelDragActive
-                                && panel.panelDragDesktopId === dockButton.dockItem.desktopId
-                                ? 0.2 : 1.0
-                            Behavior on opacity { NumberAnimation { duration: 120 } }
+                            opacity: panel.panelDragActive && panel.panelDragDesktopId === dockButton.dockItem.desktopId ? 0.2 : 1.0
+                            Behavior on opacity {
+                                NumberAnimation {
+                                    duration: 120
+                                }
+                            }
 
                             width: dockColumn.width
                             height: Theme.dockItemSize
@@ -675,14 +683,26 @@ Scope {
                                 width: Theme.dockIndicatorWidth
                                 height: dockButton.dockItem.focused ? 22 : 12
                                 radius: Theme.dockIndicatorWidth / 2
-                                color: dockButton.dockItem.urgent
-                                    ? Theme.error
-                                    : (dockButton.dockItem.focused ? Theme.accentPrimary : Theme.accentSecondary)
+                                color: dockButton.dockItem.urgent ? Theme.error : (dockButton.dockItem.focused ? Theme.accentPrimary : Theme.accentSecondary)
                                 opacity: dockButton.dockItem.running ? 1 : 0
 
-                                Behavior on height  { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
-                                Behavior on color   { ColorAnimation  { duration: 180 } }
-                                Behavior on opacity { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
+                                Behavior on height {
+                                    NumberAnimation {
+                                        duration: 180
+                                        easing.type: Easing.OutCubic
+                                    }
+                                }
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 180
+                                    }
+                                }
+                                Behavior on opacity {
+                                    NumberAnimation {
+                                        duration: 180
+                                        easing.type: Easing.OutCubic
+                                    }
+                                }
                             }
 
                             // ── Icon background ───────────────────────────────────
@@ -704,8 +724,17 @@ Scope {
                                 scale: !panel.panelDragActive && mouseArea.containsMouse ? 1.04 : 1.0
                                 transformOrigin: Item.Center
 
-                                Behavior on color { ColorAnimation  { duration: 180 } }
-                                Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 180
+                                    }
+                                }
+                                Behavior on scale {
+                                    NumberAnimation {
+                                        duration: 180
+                                        easing.type: Easing.OutCubic
+                                    }
+                                }
                             }
 
                             IconImage {
@@ -725,42 +754,38 @@ Scope {
                                 id: mouseArea
                                 anchors.fill: parent
                                 hoverEnabled: true
-                                cursorShape: panel.panelDragActive && panel.panelDragDesktopId === dockButton.dockItem.desktopId
-                                    ? Qt.ClosedHandCursor
-                                    : Qt.PointingHandCursor
+                                cursorShape: panel.panelDragActive && panel.panelDragDesktopId === dockButton.dockItem.desktopId ? Qt.ClosedHandCursor : Qt.PointingHandCursor
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                                 preventStealing: true
 
                                 property real pressLocalY: 0
                                 property bool isDragging: false
 
-                                onPressed: function(mouse) {
+                                onPressed: function (mouse) {
                                     if (mouse.button === Qt.RightButton) {
                                         const global = mapToItem(null, mouse.x, mouse.y);
                                         const panelTop = Theme.barMarginTop + Theme.barHeight;
-                                        dockRoot.menuContextItem  = dockButton.dockItem;
-                                        dockRoot.menuY            = global.y - panelTop;
+                                        dockRoot.menuContextItem = dockButton.dockItem;
+                                        dockRoot.menuY = global.y - panelTop;
                                         dockRoot.menuTargetScreen = panel.modelData;
-                                        dockRoot.menuVisible      = true;
+                                        dockRoot.menuVisible = true;
                                         mouse.accepted = true;
                                         return;
                                     }
                                     pressLocalY = mouse.y;
-                                    isDragging  = false;
+                                    isDragging = false;
                                 }
 
-                                onPositionChanged: function(mouse) {
+                                onPositionChanged: function (mouse) {
                                     if (!pressed || mouse.buttons !== Qt.LeftButton)
                                         return;
                                     if (!dockButton.dockItem.pinned)
                                         return;
                                     if (!isDragging && Math.abs(mouse.y - pressLocalY) > 6) {
                                         isDragging = true;
-                                        panel.panelDragActive      = true;
-                                        panel.panelDragSourceIndex =
-                                            dockRoot.manualPinnedDesktopIds.indexOf(
-                                                dockButton.dockItem.desktopId);
-                                        panel.panelDragDesktopId   = dockButton.dockItem.desktopId;
+                                        panel.panelDragActive = true;
+                                        panel.panelDragSourceIndex = dockRoot.manualPinnedDesktopIds.indexOf(dockButton.dockItem.desktopId);
+                                        panel.panelDragDesktopId = dockButton.dockItem.desktopId;
                                     }
                                     if (isDragging) {
                                         const global = mapToItem(null, mouse.x, mouse.y);
@@ -769,13 +794,13 @@ Scope {
                                     }
                                 }
 
-                                onReleased: function(mouse) {
+                                onReleased: function (mouse) {
                                     if (isDragging) {
                                         const targetIdx = panel.pinnedDropIndex(panel.panelDragY);
                                         dockRoot.movePinnedApp(panel.panelDragSourceIndex, targetIdx);
-                                        panel.panelDragActive      = false;
+                                        panel.panelDragActive = false;
                                         panel.panelDragSourceIndex = -1;
-                                        panel.panelDragDesktopId   = "";
+                                        panel.panelDragDesktopId = "";
                                         isDragging = false;
                                         return;
                                     }
@@ -785,9 +810,9 @@ Scope {
 
                                 onCanceled: {
                                     if (isDragging) {
-                                        panel.panelDragActive      = false;
+                                        panel.panelDragActive = false;
                                         panel.panelDragSourceIndex = -1;
-                                        panel.panelDragDesktopId   = "";
+                                        panel.panelDragDesktopId = "";
                                         isDragging = false;
                                     }
                                 }
@@ -810,15 +835,18 @@ Scope {
             required property var modelData
             screen: modelData
 
-            visible: dockRoot.menuVisible
-                     && (dockRoot.menuTargetScreen?.name ?? "") === (modelData?.name ?? "")
+            visible: dockRoot.menuVisible && (dockRoot.menuTargetScreen?.name ?? "") === (modelData?.name ?? "")
 
             color: "transparent"
             exclusionMode: ExclusionMode.Ignore
             focusable: false
-            anchors { top: true; left: true; bottom: true }
+            anchors {
+                top: true
+                left: true
+                bottom: true
+            }
             margins {
-                top:  Theme.barMarginTop + Theme.barHeight
+                top: Theme.barMarginTop + Theme.barHeight
                 left: Theme.dockWidth
             }
             implicitWidth: 192
@@ -837,8 +865,7 @@ Scope {
             // Menu card
             Rectangle {
                 x: 4
-                y: Math.max(4, Math.min(parent.height - height - 4,
-                                        dockRoot.menuY - 12))
+                y: Math.max(4, Math.min(parent.height - height - 4, dockRoot.menuY - 12))
                 width: 184
                 height: menuCol.implicitHeight + 12
                 radius: 8
@@ -851,9 +878,12 @@ Scope {
                 Column {
                     id: menuCol
                     anchors {
-                        top: parent.top; topMargin: 6
-                        left: parent.left; leftMargin: 4
-                        right: parent.right; rightMargin: 4
+                        top: parent.top
+                        topMargin: 6
+                        left: parent.left
+                        leftMargin: 4
+                        right: parent.right
+                        rightMargin: 4
                     }
                     spacing: 1
 
@@ -864,10 +894,18 @@ Scope {
                         radius: 6
                         visible: !!dockRoot.menuContextItem && !!dockRoot.menuContextItem.desktopId
                         color: pinRow.containsMouse ? Theme.surface : "transparent"
-                        Behavior on color { ColorAnimation { duration: 100 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
 
                         Text {
-                            anchors { left: parent.left; leftMargin: 12; verticalCenter: parent.verticalCenter }
+                            anchors {
+                                left: parent.left
+                                leftMargin: 12
+                                verticalCenter: parent.verticalCenter
+                            }
                             text: dockRoot.menuContextItem?.pinned ? "Unpin from Dock" : "Pin to Dock"
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fontSizeMedium
@@ -878,7 +916,8 @@ Scope {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
-                                if (!dockRoot.menuContextItem) return;
+                                if (!dockRoot.menuContextItem)
+                                    return;
                                 if (dockRoot.menuContextItem.pinned)
                                     dockRoot.unpinApp(dockRoot.menuContextItem.desktopId);
                                 else
@@ -905,10 +944,18 @@ Scope {
                         radius: 6
                         visible: !!dockRoot.menuContextItem && !!dockRoot.menuContextItem.entry
                         color: launchRow.containsMouse ? Theme.surface : "transparent"
-                        Behavior on color { ColorAnimation { duration: 100 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
 
                         Text {
-                            anchors { left: parent.left; leftMargin: 12; verticalCenter: parent.verticalCenter }
+                            anchors {
+                                left: parent.left
+                                leftMargin: 12
+                                verticalCenter: parent.verticalCenter
+                            }
                             text: "Launch"
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fontSizeMedium
@@ -931,14 +978,20 @@ Scope {
                         width: menuCol.width
                         height: 32
                         radius: 6
-                        visible: !!dockRoot.menuContextItem
-                                 && dockRoot.menuContextItem.running
-                                 && dockRoot.menuContextItem.primaryWindowId > 0
+                        visible: !!dockRoot.menuContextItem && dockRoot.menuContextItem.running && dockRoot.menuContextItem.primaryWindowId > 0
                         color: closeRow.containsMouse ? Theme.surface : "transparent"
-                        Behavior on color { ColorAnimation { duration: 100 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
 
                         Text {
-                            anchors { left: parent.left; leftMargin: 12; verticalCenter: parent.verticalCenter }
+                            anchors {
+                                left: parent.left
+                                leftMargin: 12
+                                verticalCenter: parent.verticalCenter
+                            }
                             text: "Close"
                             font.family: Theme.fontFamily
                             font.pixelSize: Theme.fontSizeMedium
@@ -949,10 +1002,7 @@ Scope {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
-                                closeWindowProc.exec([
-                                    "niri", "msg", "action", "close-window",
-                                    "--id", String(dockRoot.menuContextItem.primaryWindowId)
-                                ]);
+                                closeWindowProc.exec(["niri", "msg", "action", "close-window", "--id", String(dockRoot.menuContextItem.primaryWindowId)]);
                                 dockRoot.menuVisible = false;
                             }
                         }
@@ -962,3 +1012,4 @@ Scope {
         }
     }
 }
+

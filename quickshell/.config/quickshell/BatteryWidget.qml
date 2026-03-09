@@ -19,13 +19,7 @@ Item {
     // ── Poll battery ─────────────────────────────────────────────
     Process {
         id: batProc
-        command: ["sh", "-c",
-            "for d in /sys/class/power_supply/BAT*; do " +
-            "  [ -d \"$d\" ] || exit 1; " +
-            "  echo \"{\\\"capacity\\\": $(cat $d/capacity), \\\"status\\\": \\\"$(cat $d/status)\\\"}\"; " +
-            "  exit 0; " +
-            "done; exit 1"
-        ]
+        command: ["sh", "-c", "for d in /sys/class/power_supply/BAT*; do " + "  [ -d \"$d\" ] || exit 1; " + "  echo \"{\\\"capacity\\\": $(cat $d/capacity), \\\"status\\\": \\\"$(cat $d/status)\\\"}\"; " + "  exit 0; " + "done; exit 1"]
         running: true
 
         stdout: StdioCollector {
@@ -49,13 +43,19 @@ Item {
         onTriggered: batProc.running = true
     }
 
-    HoverHandler { id: batHover }
+    HoverHandler {
+        id: batHover
+    }
 
     Rectangle {
         anchors.fill: parent
         radius: 6
         color: batHover.hovered ? Theme.surfaceHover : "transparent"
-        Behavior on color { ColorAnimation { duration: 150 } }
+        Behavior on color {
+            ColorAnimation {
+                duration: 150
+            }
+        }
     }
 
     RowLayout {
@@ -65,20 +65,29 @@ Item {
 
         Text {
             text: {
-                if (batRoot.status === "Charging") return "󰂄";
-                if (batRoot.percentage > 90) return "󰁹";
-                if (batRoot.percentage > 70) return "󰂁";
-                if (batRoot.percentage > 50) return "󰁿";
-                if (batRoot.percentage > 30) return "󰁽";
-                if (batRoot.percentage > 10) return "󰁻";
+                if (batRoot.status === "Charging")
+                    return "󰂄";
+                if (batRoot.percentage > 90)
+                    return "󰁹";
+                if (batRoot.percentage > 70)
+                    return "󰂁";
+                if (batRoot.percentage > 50)
+                    return "󰁿";
+                if (batRoot.percentage > 30)
+                    return "󰁽";
+                if (batRoot.percentage > 10)
+                    return "󰁻";
                 return "󰂃";
             }
             font.family: "Symbols Nerd Font"
             font.pixelSize: 14
             color: {
-                if (batRoot.status === "Charging") return Theme.success;
-                if (batRoot.percentage <= 15) return Theme.error;
-                if (batRoot.percentage <= 30) return Theme.warning;
+                if (batRoot.status === "Charging")
+                    return Theme.success;
+                if (batRoot.percentage <= 15)
+                    return Theme.error;
+                if (batRoot.percentage <= 30)
+                    return Theme.warning;
                 return Theme.textPrimary;
             }
         }

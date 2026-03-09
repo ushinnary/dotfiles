@@ -32,7 +32,7 @@ PopupWindow {
     implicitWidth: Math.max(menuBg.implicitWidth + menuBg.outerPadding * 2, 180)
     implicitHeight: menuBg.implicitHeight + menuBg.outerPadding * 2
 
-    signal menuClosed()
+    signal menuClosed
 
     function close() {
         root.visible = false;
@@ -44,7 +44,12 @@ PopupWindow {
     PanelWindow {
         id: dismissBackdrop
         screen: root.itemScreen
-        anchors { top: true; bottom: true; left: true; right: true }
+        anchors {
+            top: true
+            bottom: true
+            left: true
+            right: true
+        }
         color: "transparent"
         WlrLayershell.exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Top
@@ -85,8 +90,18 @@ PopupWindow {
         implicitWidth: (stack.currentItem ? stack.currentItem.implicitWidth : 180) + contentPadding * 2
         implicitHeight: (stack.currentItem ? stack.currentItem.implicitHeight : 40) + contentPadding * 2
 
-        Behavior on implicitWidth  { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
-        Behavior on implicitHeight { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+        Behavior on implicitWidth {
+            NumberAnimation {
+                duration: 150
+                easing.type: Easing.OutCubic
+            }
+        }
+        Behavior on implicitHeight {
+            NumberAnimation {
+                duration: 150
+                easing.type: Easing.OutCubic
+            }
+        }
 
         // ── Submenu stack ─────────────────────────────────────────
         StackView {
@@ -94,10 +109,38 @@ PopupWindow {
             anchors.fill: parent
             anchors.margins: menuBg.contentPadding
 
-            pushEnter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 100 } }
-            pushExit:  Transition { NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 80 } }
-            popEnter:  Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 100 } }
-            popExit:   Transition { NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 80 } }
+            pushEnter: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 100
+                }
+            }
+            pushExit: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 80
+                }
+            }
+            popEnter: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 100
+                }
+            }
+            popExit: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 80
+                }
+            }
 
             implicitWidth: currentItem ? currentItem.implicitWidth : 0
             implicitHeight: currentItem ? currentItem.implicitHeight : 0
@@ -157,14 +200,26 @@ PopupWindow {
                         anchors.margins: 2
                         radius: 6
                         color: backHover.hovered ? Theme.surfaceHover : "transparent"
-                        Behavior on color { ColorAnimation { duration: 100 } }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
                     }
 
-                    HoverHandler { id: backHover }
-                    TapHandler { onTapped: stack.pop() }
+                    HoverHandler {
+                        id: backHover
+                    }
+                    TapHandler {
+                        onTapped: stack.pop()
+                    }
 
                     RowLayout {
-                        anchors { fill: parent; leftMargin: 10; rightMargin: 10 }
+                        anchors {
+                            fill: parent
+                            leftMargin: 10
+                            rightMargin: 10
+                        }
                         spacing: 6
 
                         Text {
@@ -183,7 +238,12 @@ PopupWindow {
 
                     // separator after back
                     Rectangle {
-                        anchors { bottom: parent.bottom; left: parent.left; right: parent.right; margins: 4 }
+                        anchors {
+                            bottom: parent.bottom
+                            left: parent.left
+                            right: parent.right
+                            margins: 4
+                        }
                         height: 1
                         color: Theme.surfaceHover
                     }
@@ -200,7 +260,7 @@ PopupWindow {
                         Layout.fillWidth: true
 
                         onDismiss: root.close()
-                        onOpenSubmenu: function(handle) {
+                        onOpenSubmenu: function (handle) {
                             stack.push(menuPageComponent.createObject(stack, {
                                 handle: handle,
                                 isSubMenu: true

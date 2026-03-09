@@ -15,7 +15,9 @@ Item {
         color: clockMouse.containsMouse ? Theme.surfaceHover : "transparent"
 
         Behavior on color {
-            ColorAnimation { duration: 150 }
+            ColorAnimation {
+                duration: 150
+            }
         }
     }
 

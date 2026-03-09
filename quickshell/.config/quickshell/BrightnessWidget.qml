@@ -18,10 +18,7 @@ Item {
     // ── Poll brightness ──────────────────────────────────────────
     Process {
         id: briProc
-        command: ["sh", "-c",
-            "pct=\"$(brightnessctl -m 2>/dev/null | cut -d, -f4 | tr -d '%')\"; " +
-            "[ -n \"$pct\" ] && echo $pct || exit 1"
-        ]
+        command: ["sh", "-c", "pct=\"$(brightnessctl -m 2>/dev/null | cut -d, -f4 | tr -d '%')\"; " + "[ -n \"$pct\" ] && echo $pct || exit 1"]
         running: true
 
         stdout: StdioCollector {
@@ -48,7 +45,11 @@ Item {
         anchors.fill: parent
         radius: 6
         color: briMouse.containsMouse ? Theme.surfaceHover : "transparent"
-        Behavior on color { ColorAnimation { duration: 150 } }
+        Behavior on color {
+            ColorAnimation {
+                duration: 150
+            }
+        }
     }
 
     RowLayout {
@@ -79,7 +80,7 @@ Item {
         cursorShape: Qt.PointingHandCursor
         acceptedButtons: Qt.NoButton
 
-        onWheel: function(wheel) {
+        onWheel: function (wheel) {
             if (wheel.angleDelta.y > 0) {
                 briUpProc.running = true;
             } else if (wheel.angleDelta.y < 0) {

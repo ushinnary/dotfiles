@@ -24,7 +24,11 @@ Item {
         height: 26
         radius: 7
         color: mouse.containsMouse ? Theme.surfaceHover : "transparent"
-        Behavior on color { ColorAnimation { duration: 120 } }
+        Behavior on color {
+            ColorAnimation {
+                duration: 120
+            }
+        }
     }
 
     // ── Icon ──────────────────────────────────────────────────────
@@ -39,10 +43,19 @@ Item {
         source: root.item?.icon ?? ""
         opacity: mouse.containsMouse ? 1.0 : 0.78
 
-        Behavior on opacity { NumberAnimation { duration: 120 } }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 120
+            }
+        }
 
         scale: mouse.pressed ? 0.88 : (mouse.containsMouse ? 1.1 : 1.0)
-        Behavior on scale { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
+        Behavior on scale {
+            NumberAnimation {
+                duration: 120
+                easing.type: Easing.OutCubic
+            }
+        }
     }
 
     // ── Mouse handling ────────────────────────────────────────────
@@ -53,8 +66,9 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
         cursorShape: Qt.PointingHandCursor
 
-        onClicked: function(event) {
-            if (!root.item) return;
+        onClicked: function (event) {
+            if (!root.item)
+                return;
             if (event.button === Qt.LeftButton) {
                 if (!root.item.onlyMenu)
                     root.item.activate();
@@ -76,7 +90,8 @@ Item {
 
         property string label: {
             const t = root.item?.tooltipTitle ?? "";
-            if (t.length > 0) return t;
+            if (t.length > 0)
+                return t;
             return root.item?.title ?? root.item?.id ?? "";
         }
 

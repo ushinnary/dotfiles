@@ -23,7 +23,11 @@ Item {
         anchors.fill: parent
         radius: 6
         color: volMouse.containsMouse ? Theme.surfaceHover : "transparent"
-        Behavior on color { ColorAnimation { duration: 150 } }
+        Behavior on color {
+            ColorAnimation {
+                duration: 150
+            }
+        }
     }
 
     RowLayout {
@@ -33,10 +37,14 @@ Item {
 
         Text {
             text: {
-                if (volRoot.muted) return "󰝟";
-                if (volRoot.volume === 0) return "󰖁";
-                if (volRoot.volume < 30) return "󰕿";
-                if (volRoot.volume < 70) return "󰖀";
+                if (volRoot.muted)
+                    return "󰝟";
+                if (volRoot.volume === 0)
+                    return "󰖁";
+                if (volRoot.volume < 30)
+                    return "󰕿";
+                if (volRoot.volume < 70)
+                    return "󰖀";
                 return "󰕾";
             }
             font.family: "Symbols Nerd Font"
@@ -66,8 +74,9 @@ Item {
             }
         }
 
-        onWheel: function(wheel) {
-            if (!volRoot.sink || !volRoot.sink.audio) return;
+        onWheel: function (wheel) {
+            if (!volRoot.sink || !volRoot.sink.audio)
+                return;
             const step = 0.05; // 5%
             if (wheel.angleDelta.y > 0) {
                 volRoot.sink.audio.volume = Math.min(1.0, volRoot.sink.audio.volume + step);

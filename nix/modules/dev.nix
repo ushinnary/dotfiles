@@ -136,9 +136,9 @@ in
             "kitty/kitty.conf".source =
               mkDotfileSymlink "kitty/.config/kitty/kitty.conf";
 
-            # ── Pipewire ─────────────────────────────────────────
-            "pipewire/pipewire.conf.d/hesuvi.conf".source =
-              mkDotfileSymlink "pipewire/.config/pipewire/pipewire.conf.d/hesuvi.conf";
+            # # ── Pipewire ─────────────────────────────────────────
+            # "pipewire/pipewire.conf.d/hesuvi.conf".source =
+            #   mkDotfileSymlink "pipewire/.config/pipewire/pipewire.conf.d/hesuvi.conf";
           }
           # Nushell completion scripts — one entry per tool
           // builtins.listToAttrs (

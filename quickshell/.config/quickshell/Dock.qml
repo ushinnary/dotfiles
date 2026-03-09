@@ -653,7 +653,8 @@ Scope {
                     Item {
                         required property var modelData
                         width: wsSection.width
-                        height: modelData.is_focused ? 28 : 8
+                        // active pill is tall enough to fit rotated text (⩾ longest ws name)
+                        height: modelData.is_focused ? 80 : 8
 
                         Behavior on height { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
 
@@ -661,7 +662,7 @@ Scope {
                             width: modelData.is_focused ? parent.width - 10 : 26
                             height: parent.height
                             anchors.horizontalCenter: parent.horizontalCenter
-                            radius: modelData.is_focused ? 7 : height / 2
+                            radius: modelData.is_focused ? 9 : height / 2
                             color: {
                                 if (modelData.is_focused) return Theme.accentPrimary;
                                 if (wsPillMouse.containsMouse) return Theme.accentSecondary;
@@ -674,7 +675,10 @@ Scope {
                             Text {
                                 visible: modelData.is_focused
                                 anchors.centerIn: parent
-                                width: parent.width - 6
+                                // After rotation the layout width becomes the visual vertical extent,
+                                // so set it to the pill height minus a little breathing room.
+                                width: parent.height - 12
+                                rotation: -90   // reads top → bottom
                                 text: modelData.name || ("WS " + modelData.idx)
                                 font.family: Theme.fontFamily
                                 font.pixelSize: Theme.fontSizeSmall

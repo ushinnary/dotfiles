@@ -37,7 +37,7 @@ Scope {
                 anchors.fill: parent
                 radius: Theme.barRadius
                 color: Theme.backgroundPrimary
-                opacity: 0.92
+                opacity: 1.0
 
                 // subtle bottom shadow
                 layer.enabled: true

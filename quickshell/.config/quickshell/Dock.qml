@@ -7,7 +7,6 @@ import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Widgets
 import QtQuick
-import QtQuick.Controls
 
 Scope {
     id: dockRoot
@@ -23,6 +22,13 @@ Scope {
     property int  dragSourceIndex: -1   // index in manualPinnedDesktopIds
     property bool dragActive: false
     property real dragCurrentY: 0       // Y in panel-window coords
+
+    // ── Context menu state ────────────────────────────────────────
+    // Shared across panel instances; the overlay Variants reads these.
+    property var  menuContextItem:  null
+    property bool menuVisible:      false
+    property real menuY:            0        // Y in dock-panel coordinates
+    property var  menuTargetScreen: null
 
     // ── Persistence helpers ───────────────────────────────────────
 
@@ -463,7 +469,7 @@ Scope {
             Rectangle {
                 anchors.fill: parent
                 color: Theme.backgroundPrimary
-                opacity: 0.94
+                opacity: 1.0
 
                 Rectangle {
                     anchors {
@@ -474,107 +480,6 @@ Scope {
                     width: 1
                     color: Theme.surface
                     opacity: 0.7
-                }
-            }
-
-            // ── Context menu ──────────────────────────────────────────
-            Menu {
-                id: contextMenu
-                property var contextItem: null
-
-                background: Rectangle {
-                    implicitWidth: 180
-                    color: Theme.backgroundSecondary || Theme.backgroundPrimary
-                    radius: 8
-                    border.color: Theme.surface
-                    border.width: 1
-                }
-
-                MenuItem {
-                    text: contextMenu.contextItem && contextMenu.contextItem.pinned
-                          ? "Unpin from Dock"
-                          : "Pin to Dock"
-                    enabled: contextMenu.contextItem !== null
-                             && !!contextMenu.contextItem.desktopId
-
-                    contentItem: Text {
-                        text: parent.text
-                        color: Theme.textPrimary || "white"
-                        leftPadding: 12
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    background: Rectangle {
-                        color: parent.hovered ? (Theme.surface || "#333") : "transparent"
-                        radius: 6
-                    }
-
-                    onTriggered: {
-                        if (!contextMenu.contextItem)
-                            return;
-                        if (contextMenu.contextItem.pinned)
-                            dockRoot.unpinApp(contextMenu.contextItem.desktopId);
-                        else
-                            dockRoot.pinApp(contextMenu.contextItem.desktopId);
-                    }
-                }
-
-                MenuSeparator {
-                    contentItem: Rectangle {
-                        implicitHeight: 1
-                        color: Theme.surface || "#444"
-                    }
-                }
-
-                MenuItem {
-                    text: "Launch"
-                    enabled: contextMenu.contextItem !== null
-                             && contextMenu.contextItem.entry !== null
-
-                    contentItem: Text {
-                        text: parent.text
-                        color: (enabled ? (Theme.textPrimary || "white") : (Theme.textDisabled || "#666"))
-                        leftPadding: 12
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    background: Rectangle {
-                        color: parent.hovered && parent.enabled ? (Theme.surface || "#333") : "transparent"
-                        radius: 6
-                    }
-
-                    onTriggered: {
-                        if (contextMenu.contextItem && contextMenu.contextItem.entry)
-                            contextMenu.contextItem.entry.execute();
-                    }
-                }
-
-                MenuItem {
-                    text: "Close"
-                    enabled: contextMenu.contextItem !== null
-                             && contextMenu.contextItem.running
-                             && contextMenu.contextItem.primaryWindowId > 0
-
-                    contentItem: Text {
-                        text: parent.text
-                        color: (enabled ? (Theme.error || "tomato") : (Theme.textDisabled || "#666"))
-                        leftPadding: 12
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    background: Rectangle {
-                        color: parent.hovered && parent.enabled ? (Theme.surface || "#333") : "transparent"
-                        radius: 6
-                    }
-
-                    onTriggered: {
-                        if (!contextMenu.contextItem)
-                            return;
-                        closeWindowProc.exec([
-                            "niri", "msg", "action", "close-window",
-                            "--id", String(contextMenu.contextItem.primaryWindowId)
-                        ]);
-                    }
                 }
             }
 
@@ -831,8 +736,11 @@ Scope {
 
                                 onPressed: function(mouse) {
                                     if (mouse.button === Qt.RightButton) {
-                                        contextMenu.contextItem = dockButton.dockItem;
-                                        contextMenu.popup();
+                                        const pos = mapToItem(panel, mouse.x, mouse.y);
+                                        dockRoot.menuContextItem  = dockButton.dockItem;
+                                        dockRoot.menuY            = pos.y;
+                                        dockRoot.menuTargetScreen = panel.modelData;
+                                        dockRoot.menuVisible      = true;
                                         mouse.accepted = true;
                                         return;
                                     }
@@ -881,6 +789,165 @@ Scope {
                                         isDragging = false;
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // ── Context menu overlay ──────────────────────────────────────
+    // A separate layer-shell surface starting just to the right of the
+    // dock (margins.left: Theme.dockWidth) so the card is never clipped
+    // by the narrow dock window.
+    Variants {
+        model: Quickshell.screens
+
+        PanelWindow {
+            required property var modelData
+            screen: modelData
+
+            visible: dockRoot.menuVisible && dockRoot.menuTargetScreen === modelData
+
+            color: "transparent"
+            exclusionMode: ExclusionMode.Ignore
+            focusable: false
+            anchors { top: true; left: true; bottom: true }
+            margins {
+                top:  Theme.barMarginTop + Theme.barHeight
+                left: Theme.dockWidth
+            }
+            implicitWidth: 192
+            WlrLayershell.namespace: "quickshell-dock-menu"
+
+            // Transparent backdrop – click anywhere to dismiss
+            MouseArea {
+                anchors.fill: parent
+                z: 0
+                onPressed: dockRoot.menuVisible = false
+            }
+
+            // Menu card
+            Rectangle {
+                x: 4
+                y: Math.max(4, Math.min(parent.height - height - 4,
+                                        dockRoot.menuY - 12))
+                width: 184
+                height: menuCol.implicitHeight + 12
+                radius: 8
+                color: Theme.backgroundSecondary
+                border.color: Theme.surface
+                border.width: 1
+                z: 1
+                layer.enabled: true
+
+                Column {
+                    id: menuCol
+                    anchors {
+                        top: parent.top; topMargin: 6
+                        left: parent.left; leftMargin: 4
+                        right: parent.right; rightMargin: 4
+                    }
+                    spacing: 1
+
+                    // ── Pin / Unpin ────────────────────────────────────
+                    Rectangle {
+                        width: menuCol.width
+                        height: 32
+                        radius: 6
+                        visible: !!dockRoot.menuContextItem && !!dockRoot.menuContextItem.desktopId
+                        color: pinRow.containsMouse ? Theme.surface : "transparent"
+                        Behavior on color { ColorAnimation { duration: 100 } }
+
+                        Text {
+                            anchors { left: parent.left; leftMargin: 12; verticalCenter: parent.verticalCenter }
+                            text: dockRoot.menuContextItem?.pinned ? "Unpin from Dock" : "Pin to Dock"
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.fontSizeMedium
+                            color: Theme.textPrimary
+                        }
+                        MouseArea {
+                            id: pinRow
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                if (!dockRoot.menuContextItem) return;
+                                if (dockRoot.menuContextItem.pinned)
+                                    dockRoot.unpinApp(dockRoot.menuContextItem.desktopId);
+                                else
+                                    dockRoot.pinApp(dockRoot.menuContextItem.desktopId);
+                                dockRoot.menuVisible = false;
+                            }
+                        }
+                    }
+
+                    // ── Separator ──────────────────────────────────────
+                    Rectangle {
+                        width: menuCol.width - 8
+                        height: 1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        visible: !!dockRoot.menuContextItem && !!dockRoot.menuContextItem.desktopId
+                        color: Theme.surface
+                        opacity: 0.7
+                    }
+
+                    // ── Launch ─────────────────────────────────────────
+                    Rectangle {
+                        width: menuCol.width
+                        height: 32
+                        radius: 6
+                        visible: !!dockRoot.menuContextItem && !!dockRoot.menuContextItem.entry
+                        color: launchRow.containsMouse ? Theme.surface : "transparent"
+                        Behavior on color { ColorAnimation { duration: 100 } }
+
+                        Text {
+                            anchors { left: parent.left; leftMargin: 12; verticalCenter: parent.verticalCenter }
+                            text: "Launch"
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.fontSizeMedium
+                            color: Theme.textPrimary
+                        }
+                        MouseArea {
+                            id: launchRow
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                if (dockRoot.menuContextItem?.entry)
+                                    dockRoot.menuContextItem.entry.execute();
+                                dockRoot.menuVisible = false;
+                            }
+                        }
+                    }
+
+                    // ── Close window ───────────────────────────────────
+                    Rectangle {
+                        width: menuCol.width
+                        height: 32
+                        radius: 6
+                        visible: !!dockRoot.menuContextItem
+                                 && dockRoot.menuContextItem.running
+                                 && dockRoot.menuContextItem.primaryWindowId > 0
+                        color: closeRow.containsMouse ? Theme.surface : "transparent"
+                        Behavior on color { ColorAnimation { duration: 100 } }
+
+                        Text {
+                            anchors { left: parent.left; leftMargin: 12; verticalCenter: parent.verticalCenter }
+                            text: "Close"
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.fontSizeMedium
+                            color: Theme.error
+                        }
+                        MouseArea {
+                            id: closeRow
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                closeWindowProc.exec([
+                                    "niri", "msg", "action", "close-window",
+                                    "--id", String(dockRoot.menuContextItem.primaryWindowId)
+                                ]);
+                                dockRoot.menuVisible = false;
                             }
                         }
                     }

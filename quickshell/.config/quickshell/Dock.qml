@@ -808,7 +808,8 @@ Scope {
             required property var modelData
             screen: modelData
 
-            visible: dockRoot.menuVisible && dockRoot.menuTargetScreen === modelData
+            visible: dockRoot.menuVisible
+                     && (dockRoot.menuTargetScreen?.name ?? "") === (modelData?.name ?? "")
 
             color: "transparent"
             exclusionMode: ExclusionMode.Ignore
@@ -821,10 +822,13 @@ Scope {
             implicitWidth: 192
             WlrLayershell.namespace: "quickshell-dock-menu"
 
-            // Transparent backdrop – click anywhere to dismiss
+            // Transparent backdrop – click anywhere outside card to dismiss.
+            // Must be disabled when hidden, otherwise it swallows all
+            // clicks to the right of the dock even while the menu is closed.
             MouseArea {
                 anchors.fill: parent
                 z: 0
+                enabled: dockRoot.menuVisible
                 onPressed: dockRoot.menuVisible = false
             }
 

@@ -197,6 +197,7 @@ Scope {
                     pinned: false,
                     primaryWindowId: -1,
                     running: true,
+                    sortLaunchId: Number(window.id || Number.MAX_SAFE_INTEGER),
                     sortFocusNanos: 0,
                     sortFocusSecs: 0,
                     urgent: false,
@@ -222,8 +223,16 @@ Scope {
             const current = grouped[key];
             current.windows.sort(dockRoot.compareWindowPriority);
             const primaryWindow = current.windows.length > 0 ? current.windows[0] : null;
+            let earliestWindowId = Number.MAX_SAFE_INTEGER;
+
+            for (let windowIndex = 0; windowIndex < current.windows.length; windowIndex++) {
+                const candidateId = Number(current.windows[windowIndex].id || Number.MAX_SAFE_INTEGER);
+                if (candidateId < earliestWindowId)
+                    earliestWindowId = candidateId;
+            }
 
             current.primaryWindowId = primaryWindow ? Number(primaryWindow.id || -1) : -1;
+            current.sortLaunchId = earliestWindowId;
             current.sortFocusSecs = primaryWindow && primaryWindow.focus_timestamp
                 ? Number(primaryWindow.focus_timestamp.secs || 0)
                 : 0;
@@ -259,6 +268,7 @@ Scope {
                 pinned: true,
                 primaryWindowId: -1,
                 running: false,
+                sortLaunchId: Number.MAX_SAFE_INTEGER,
                 sortFocusNanos: 0,
                 sortFocusSecs: 0,
                 urgent: false,
@@ -272,14 +282,8 @@ Scope {
         });
 
         runningOnly.sort(function(a, b) {
-            if (!!a.focused !== !!b.focused)
-                return a.focused ? -1 : 1;
-            if (!!a.urgent !== !!b.urgent)
-                return a.urgent ? -1 : 1;
-            if (a.sortFocusSecs !== b.sortFocusSecs)
-                return b.sortFocusSecs - a.sortFocusSecs;
-            if (a.sortFocusNanos !== b.sortFocusNanos)
-                return b.sortFocusNanos - a.sortFocusNanos;
+            if (a.sortLaunchId !== b.sortLaunchId)
+                return a.sortLaunchId - b.sortLaunchId;
 
             return String(a.label || "").localeCompare(String(b.label || ""));
         });

@@ -60,7 +60,11 @@ in
           gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
         };
 
-        dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+        dconf.settings."org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          gtk-theme = "Adwaita";
+          icon-theme = "Adwaita";
+        };
 
         # ── Home-manager: map quickshell QML config into place ─────────
         # Files are linked out-of-store to ~/dotfiles, so edits are picked up

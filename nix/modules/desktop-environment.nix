@@ -25,6 +25,10 @@ in
         bibata-cursors
       ];
 
+    environment.variables = {
+      QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+    };
+
       services.gvfs.enable = true;
       services.flatpak.enable = true;
       systemd.services.flatpak-repo = {

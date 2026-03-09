@@ -11,6 +11,16 @@ window-rule {
   open-on-workspace "Chat"
 }
 
+window-rule {
+  match app-id="com.discordapp.Discord"
+  open-on-workspace "Chat"
+}
+
+window-rule {
+  match app-id="com.microsoft.Edge"
+  open-on-workspace "Browser"
+}
+
 // Ghostty: blur + transparency + shadow
 window-rule {
   match app-id=r#"(^ghostty$|^com\.mitchellh\.ghostty$)"#
@@ -34,13 +44,13 @@ window-rule {
 // or niri will break the overview (bar gets moved into backdrop plane).
 layer-rule {
   match namespace="quickshell-bar"
-  opacity 0.95
+  opacity 1.0
 }
 
 // swaync notification center
 layer-rule {
   match namespace="swaync-control-center"
-  opacity 0.92
+  opacity 1.0
   geometry-corner-radius 14
 }
 

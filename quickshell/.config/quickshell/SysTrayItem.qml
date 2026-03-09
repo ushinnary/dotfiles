@@ -14,15 +14,15 @@ Item {
     // backdrop PanelWindow land on the right screen with fractional scaling.
     property var barScreen: null
 
-    implicitWidth: 22
-    implicitHeight: 22
+    implicitWidth: 28
+    implicitHeight: 28
 
     // ── Hover background ──────────────────────────────────────────
     Rectangle {
         anchors.centerIn: parent
-        width: 20
-        height: 20
-        radius: 5
+        width: 26
+        height: 26
+        radius: 7
         color: mouse.containsMouse ? Theme.surfaceHover : "transparent"
         Behavior on color { ColorAnimation { duration: 120 } }
     }

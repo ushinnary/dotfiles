@@ -1,27 +1,89 @@
 // ── Left dock ───────────────────────────────────────────────────
-// Ubuntu-style icon dock that shows pinned apps plus currently
-// running applications for each monitor.
+// Shows pinned apps (user-managed, persisted) plus currently running
+// applications.  Right-click any icon for a context menu.  Pinned
+// apps can be reordered via drag-and-drop.
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Widgets
 import QtQuick
+import QtQuick.Controls
 
 Scope {
     id: dockRoot
 
-    // Add extra desktop IDs here if you want persistent pins regardless of
-    // GNOME favorites.
+    // ── Pinned apps – persisted to ~/.config/quickshell/pinned-apps.json
     property var manualPinnedDesktopIds: []
-    readonly property var defaultPinnedDesktopIds: [
-        "firefox.desktop",
-        "org.gnome.Nautilus.desktop",
-        "com.mitchellh.ghostty.desktop"
-    ]
 
-    property var gnomeFavoriteDesktopIds: []
+    // ── Window / workspace state ──────────────────────────────────
     property var windows: []
     property var workspaces: []
+
+    // ── Drag-and-drop state ───────────────────────────────────────
+    property int  dragSourceIndex: -1   // index in manualPinnedDesktopIds
+    property bool dragActive: false
+    property real dragCurrentY: 0       // Y in panel-window coords
+
+    // ── Persistence helpers ───────────────────────────────────────
+
+    function loadPinnedApps(text) {
+        if (!text || !text.trim())
+            return;
+        try {
+            const arr = JSON.parse(text.trim());
+            if (Array.isArray(arr))
+                dockRoot.manualPinnedDesktopIds = arr;
+        } catch (e) {
+            console.warn("Dock: failed to parse pinned-apps.json:", e);
+        }
+    }
+
+    function savePinnedApps() {
+        const json = JSON.stringify(dockRoot.manualPinnedDesktopIds);
+        // Use printf to avoid echo interpretation; single-quote wrap is safe
+        // because desktop IDs never contain single quotes.
+        writePinnedProc.exec(["sh", "-c",
+            "printf '%s' '" + json + "' > ~/.config/quickshell/pinned-apps.json"]);
+    }
+
+    // ── Pin management ────────────────────────────────────────────
+
+    function isPinned(desktopId) {
+        return !!desktopId && dockRoot.manualPinnedDesktopIds.indexOf(desktopId) >= 0;
+    }
+
+    function pinApp(desktopId) {
+        if (!desktopId)
+            return;
+        const ids = dockRoot.manualPinnedDesktopIds.slice();
+        if (ids.indexOf(desktopId) < 0) {
+            ids.push(desktopId);
+            dockRoot.manualPinnedDesktopIds = ids;
+            dockRoot.savePinnedApps();
+        }
+    }
+
+    function unpinApp(desktopId) {
+        if (!desktopId)
+            return;
+        dockRoot.manualPinnedDesktopIds =
+            dockRoot.manualPinnedDesktopIds.filter(function(id) { return id !== desktopId; });
+        dockRoot.savePinnedApps();
+    }
+
+    function movePinnedApp(fromIndex, toIndex) {
+        if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0)
+            return;
+        const ids = dockRoot.manualPinnedDesktopIds.slice();
+        if (fromIndex >= ids.length || toIndex >= ids.length)
+            return;
+        const removed = ids.splice(fromIndex, 1)[0];
+        ids.splice(toIndex, 0, removed);
+        dockRoot.manualPinnedDesktopIds = ids;
+        dockRoot.savePinnedApps();
+    }
+
+    // ── General utilities ─────────────────────────────────────────
 
     function uniqueStrings(values) {
         const seen = {};
@@ -40,16 +102,6 @@ Scope {
         }
 
         return result;
-    }
-
-    function parseFavoriteApps(text) {
-        const matches = text ? text.match(/'([^']+)'/g) : null;
-        if (!matches)
-            return [];
-
-        return dockRoot.uniqueStrings(matches.map(function(match) {
-            return match.substring(1, match.length - 1);
-        }));
     }
 
     function parseNiriArray(text, label) {
@@ -147,11 +199,7 @@ Scope {
     }
 
     function effectivePinnedDesktopIds() {
-        const basePinnedIds = dockRoot.gnomeFavoriteDesktopIds.length > 0
-            ? dockRoot.gnomeFavoriteDesktopIds
-            : dockRoot.defaultPinnedDesktopIds;
-
-        return dockRoot.uniqueStrings(basePinnedIds.concat(dockRoot.manualPinnedDesktopIds));
+        return dockRoot.uniqueStrings(dockRoot.manualPinnedDesktopIds);
     }
 
     function buildDockItems(screenName) {
@@ -320,7 +368,8 @@ Scope {
     }
 
     Component.onCompleted: {
-        favoriteAppsProc.exec(["gsettings", "get", "org.gnome.shell", "favorite-apps"]);
+        readPinnedProc.exec(["sh", "-c",
+            "cat ~/.config/quickshell/pinned-apps.json 2>/dev/null || echo '[]'"]);
         dockRoot.refreshNiriState();
     }
 
@@ -332,14 +381,14 @@ Scope {
     }
 
     Process {
-        id: favoriteAppsProc
+        id: readPinnedProc
 
         stdout: StdioCollector {
-            onStreamFinished: {
-                dockRoot.gnomeFavoriteDesktopIds = dockRoot.parseFavoriteApps(this.text);
-            }
+            onStreamFinished: dockRoot.loadPinnedApps(this.text)
         }
     }
+
+    Process { id: writePinnedProc }
 
     Process {
         id: windowsProc
@@ -365,6 +414,14 @@ Scope {
         id: focusProc
     }
 
+    Process {
+        id: closeWindowProc
+    }
+
+    Process {
+        id: switchWsProc
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -372,6 +429,21 @@ Scope {
             id: panel
             required property var modelData
             screen: modelData
+
+            // ── Per-panel drag state ───────────────────────────────────
+            property int    panelDragSourceIndex: -1   // index in manualPinnedDesktopIds
+            property bool   panelDragActive: false
+            property real   panelDragY: 0              // cursor Y in panel coords
+            property string panelDragDesktopId: ""
+
+            function pinnedDropIndex(cursorY) {
+                // account for workspace section + divider sitting above the app list
+                const topOff = wsSection.height + 7 + Theme.dockPadding;
+                const itemH  = Theme.dockItemSize + Theme.dockItemSpacing;
+                const relY   = cursorY - topOff;
+                const count  = dockRoot.manualPinnedDesktopIds.length;
+                return Math.max(0, Math.min(count - 1, Math.round(relY / itemH)));
+            }
 
             color: "transparent"
             exclusionMode: ExclusionMode.Auto
@@ -387,6 +459,7 @@ Scope {
             implicitWidth: Theme.dockWidth
             WlrLayershell.namespace: "quickshell-dock"
 
+            // ── Background ────────────────────────────────────────────
             Rectangle {
                 anchors.fill: parent
                 color: Theme.backgroundPrimary
@@ -404,11 +477,253 @@ Scope {
                 }
             }
 
+            // ── Context menu ──────────────────────────────────────────
+            Menu {
+                id: contextMenu
+                property var contextItem: null
+
+                background: Rectangle {
+                    implicitWidth: 180
+                    color: Theme.backgroundSecondary || Theme.backgroundPrimary
+                    radius: 8
+                    border.color: Theme.surface
+                    border.width: 1
+                }
+
+                MenuItem {
+                    text: contextMenu.contextItem && contextMenu.contextItem.pinned
+                          ? "Unpin from Dock"
+                          : "Pin to Dock"
+                    enabled: contextMenu.contextItem !== null
+                             && !!contextMenu.contextItem.desktopId
+
+                    contentItem: Text {
+                        text: parent.text
+                        color: Theme.textPrimary || "white"
+                        leftPadding: 12
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    background: Rectangle {
+                        color: parent.hovered ? (Theme.surface || "#333") : "transparent"
+                        radius: 6
+                    }
+
+                    onTriggered: {
+                        if (!contextMenu.contextItem)
+                            return;
+                        if (contextMenu.contextItem.pinned)
+                            dockRoot.unpinApp(contextMenu.contextItem.desktopId);
+                        else
+                            dockRoot.pinApp(contextMenu.contextItem.desktopId);
+                    }
+                }
+
+                MenuSeparator {
+                    contentItem: Rectangle {
+                        implicitHeight: 1
+                        color: Theme.surface || "#444"
+                    }
+                }
+
+                MenuItem {
+                    text: "Launch"
+                    enabled: contextMenu.contextItem !== null
+                             && contextMenu.contextItem.entry !== null
+
+                    contentItem: Text {
+                        text: parent.text
+                        color: (enabled ? (Theme.textPrimary || "white") : (Theme.textDisabled || "#666"))
+                        leftPadding: 12
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    background: Rectangle {
+                        color: parent.hovered && parent.enabled ? (Theme.surface || "#333") : "transparent"
+                        radius: 6
+                    }
+
+                    onTriggered: {
+                        if (contextMenu.contextItem && contextMenu.contextItem.entry)
+                            contextMenu.contextItem.entry.execute();
+                    }
+                }
+
+                MenuItem {
+                    text: "Close"
+                    enabled: contextMenu.contextItem !== null
+                             && contextMenu.contextItem.running
+                             && contextMenu.contextItem.primaryWindowId > 0
+
+                    contentItem: Text {
+                        text: parent.text
+                        color: (enabled ? (Theme.error || "tomato") : (Theme.textDisabled || "#666"))
+                        leftPadding: 12
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    background: Rectangle {
+                        color: parent.hovered && parent.enabled ? (Theme.surface || "#333") : "transparent"
+                        radius: 6
+                    }
+
+                    onTriggered: {
+                        if (!contextMenu.contextItem)
+                            return;
+                        closeWindowProc.exec([
+                            "niri", "msg", "action", "close-window",
+                            "--id", String(contextMenu.contextItem.primaryWindowId)
+                        ]);
+                    }
+                }
+            }
+
+            // ── Drag-and-drop overlay ─────────────────────────────────
+            Item {
+                visible: panel.panelDragActive
+                anchors.fill: parent
+                z: 100
+
+                // Insertion indicator line
+                Rectangle {
+                    width: Theme.dockItemSize
+                    height: 2
+                    radius: 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: Theme.accentPrimary
+                    y: {
+                        const idx    = panel.pinnedDropIndex(panel.panelDragY);
+                        const topOff = wsSection.height + 7 + Theme.dockPadding;
+                        const itemH  = Theme.dockItemSize + Theme.dockItemSpacing;
+                        return topOff + idx * itemH - Theme.dockItemSpacing * 0.5;
+                    }
+                    Behavior on y { NumberAnimation { duration: 80; easing.type: Easing.OutCubic } }
+                }
+
+                // Floating icon preview following cursor
+                Rectangle {
+                    width: Theme.dockItemSize
+                    height: Theme.dockItemSize
+                    radius: Theme.dockItemSize / 3
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: Theme.surfaceHover || Theme.surface
+                    opacity: 0.88
+                    y: Math.max(0, Math.min(panel.height - height, panel.panelDragY - height / 2))
+
+                    IconImage {
+                        property string iconSrc: {
+                            const did = panel.panelDragDesktopId;
+                            if (!did) return "";
+                            const entry = dockRoot.resolveDesktopEntry(did);
+                            if (entry && entry.icon) {
+                                const r = Quickshell.iconPath(entry.icon, true);
+                                if (r) return r;
+                            }
+                            return Quickshell.iconPath("application-x-executable", true) || "";
+                        }
+                        anchors.centerIn: parent
+                        width: Theme.dockIconSize
+                        height: Theme.dockIconSize
+                        implicitSize: Theme.dockIconSize
+                        source: iconSrc
+                        asynchronous: true
+                        mipmap: true
+                    }
+                }
+            }
+
+            // ── Workspace pills ───────────────────────────────────────
+            Column {
+                id: wsSection
+                width: parent.width
+                anchors {
+                    top: parent.top
+                    topMargin: Theme.dockPadding
+                }
+                spacing: 5
+
+                Repeater {
+                    model: {
+                        const sn = panel.modelData ? panel.modelData.name.toLowerCase() : "";
+                        return dockRoot.workspaces.filter(function(ws) {
+                            return !sn || (ws.output && ws.output.toLowerCase() === sn);
+                        });
+                    }
+
+                    Item {
+                        required property var modelData
+                        width: wsSection.width
+                        height: modelData.is_focused ? 28 : 8
+
+                        Behavior on height { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+
+                        Rectangle {
+                            width: modelData.is_focused ? parent.width - 10 : 26
+                            height: parent.height
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            radius: modelData.is_focused ? 7 : height / 2
+                            color: {
+                                if (modelData.is_focused) return Theme.accentPrimary;
+                                if (wsPillMouse.containsMouse) return Theme.accentSecondary;
+                                return Theme.surface;
+                            }
+
+                            Behavior on color { ColorAnimation { duration: 200 } }
+                            Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
+
+                            Text {
+                                visible: modelData.is_focused
+                                anchors.centerIn: parent
+                                width: parent.width - 6
+                                text: modelData.name || ("WS " + modelData.idx)
+                                font.family: Theme.fontFamily
+                                font.pixelSize: Theme.fontSizeSmall
+                                font.weight: Font.Medium
+                                color: Theme.backgroundPrimary
+                                elide: Text.ElideRight
+                                horizontalAlignment: Text.AlignHCenter
+                            }
+                        }
+
+                        MouseArea {
+                            id: wsPillMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: switchWsProc.exec([
+                                "niri", "msg", "action", "focus-workspace",
+                                String(modelData.idx)
+                            ])
+                        }
+                    }
+                }
+            }
+
+            // ── Divider between workspaces and app list ───────────────
+            Rectangle {
+                id: wsDivider
+                anchors {
+                    top: wsSection.bottom
+                    topMargin: 6
+                    left: parent.left
+                    leftMargin: 8
+                    right: parent.right
+                    rightMargin: 8
+                }
+                height: 1
+                color: Theme.surface
+                opacity: 0.6
+            }
+
+            // ── Scroll list ───────────────────────────────────────────
             Flickable {
                 id: dockFlick
                 anchors {
-                    fill: parent
+                    top: wsDivider.bottom
                     topMargin: Theme.dockPadding
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
                     bottomMargin: Theme.dockPadding
                 }
                 clip: true
@@ -416,7 +731,8 @@ Scope {
                 contentHeight: dockColumn.implicitHeight
                 boundsBehavior: Flickable.StopAtBounds
                 flickableDirection: Flickable.VerticalFlick
-                interactive: contentHeight > height
+                // Disable scroll grab while user is dragging an app
+                interactive: contentHeight > height && !panel.panelDragActive
 
                 Column {
                     id: dockColumn
@@ -431,9 +747,16 @@ Scope {
                             required property var modelData
                             property var dockItem: modelData
 
+                            // Ghost the item being dragged (overlay takes its place visually)
+                            opacity: panel.panelDragActive
+                                && panel.panelDragDesktopId === dockButton.dockItem.desktopId
+                                ? 0.2 : 1.0
+                            Behavior on opacity { NumberAnimation { duration: 120 } }
+
                             width: dockColumn.width
                             height: Theme.dockItemSize
 
+                            // ── Running indicator dot ─────────────────────────────
                             Rectangle {
                                 anchors {
                                     right: buttonBg.left
@@ -448,17 +771,12 @@ Scope {
                                     : (dockButton.dockItem.focused ? Theme.accentPrimary : Theme.accentSecondary)
                                 opacity: dockButton.dockItem.running ? 1 : 0
 
-                                Behavior on height {
-                                    NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
-                                }
-                                Behavior on color {
-                                    ColorAnimation { duration: 180 }
-                                }
-                                Behavior on opacity {
-                                    NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
-                                }
+                                Behavior on height  { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
+                                Behavior on color   { ColorAnimation  { duration: 180 } }
+                                Behavior on opacity { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
                             }
 
+                            // ── Icon background ───────────────────────────────────
                             Rectangle {
                                 id: buttonBg
                                 width: Theme.dockItemSize
@@ -474,15 +792,11 @@ Scope {
                                 }
                                 border.width: dockButton.dockItem.focused ? 1 : 0
                                 border.color: dockButton.dockItem.focused ? Theme.accentPrimary : "transparent"
-                                scale: mouseArea.containsMouse ? 1.04 : 1.0
+                                scale: !panel.panelDragActive && mouseArea.containsMouse ? 1.04 : 1.0
                                 transformOrigin: Item.Center
 
-                                Behavior on color {
-                                    ColorAnimation { duration: 180 }
-                                }
-                                Behavior on scale {
-                                    NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
-                                }
+                                Behavior on color { ColorAnimation  { duration: 180 } }
+                                Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
                             }
 
                             IconImage {
@@ -495,12 +809,74 @@ Scope {
                                 mipmap: true
                             }
 
+                            // ── Interaction ───────────────────────────────────────
+                            // Left-click: launch/focus  |  Right-click: context menu
+                            // Left-press + drag (pinned only): drag-to-reorder
                             MouseArea {
                                 id: mouseArea
                                 anchors.fill: parent
                                 hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: dockRoot.activateItem(dockButton.dockItem)
+                                cursorShape: panel.panelDragActive && panel.panelDragDesktopId === dockButton.dockItem.desktopId
+                                    ? Qt.ClosedHandCursor
+                                    : Qt.PointingHandCursor
+                                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                preventStealing: true
+
+                                property real pressLocalY: 0
+                                property bool isDragging: false
+
+                                onPressed: function(mouse) {
+                                    if (mouse.button === Qt.RightButton) {
+                                        contextMenu.contextItem = dockButton.dockItem;
+                                        contextMenu.popup();
+                                        mouse.accepted = true;
+                                        return;
+                                    }
+                                    pressLocalY = mouse.y;
+                                    isDragging  = false;
+                                }
+
+                                onPositionChanged: function(mouse) {
+                                    if (!pressed || mouse.buttons !== Qt.LeftButton)
+                                        return;
+                                    if (!dockButton.dockItem.pinned)
+                                        return;
+                                    if (!isDragging && Math.abs(mouse.y - pressLocalY) > 6) {
+                                        isDragging = true;
+                                        panel.panelDragActive      = true;
+                                        panel.panelDragSourceIndex =
+                                            dockRoot.manualPinnedDesktopIds.indexOf(
+                                                dockButton.dockItem.desktopId);
+                                        panel.panelDragDesktopId   = dockButton.dockItem.desktopId;
+                                    }
+                                    if (isDragging) {
+                                        const pos = mapToItem(panel, mouse.x, mouse.y);
+                                        panel.panelDragY = pos.y;
+                                    }
+                                }
+
+                                onReleased: function(mouse) {
+                                    if (isDragging) {
+                                        const targetIdx = panel.pinnedDropIndex(panel.panelDragY);
+                                        dockRoot.movePinnedApp(panel.panelDragSourceIndex, targetIdx);
+                                        panel.panelDragActive      = false;
+                                        panel.panelDragSourceIndex = -1;
+                                        panel.panelDragDesktopId   = "";
+                                        isDragging = false;
+                                        return;
+                                    }
+                                    if (mouse.button === Qt.LeftButton)
+                                        dockRoot.activateItem(dockButton.dockItem);
+                                }
+
+                                onCanceled: {
+                                    if (isDragging) {
+                                        panel.panelDragActive      = false;
+                                        panel.panelDragSourceIndex = -1;
+                                        panel.panelDragDesktopId   = "";
+                                        isDragging = false;
+                                    }
+                                }
                             }
                         }
                     }

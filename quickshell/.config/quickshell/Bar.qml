@@ -43,21 +43,6 @@ Scope {
                 layer.enabled: true
             }
 
-            // ── Left: Workspaces ─────────────────────────────────
-            RowLayout {
-                id: leftSection
-                anchors {
-                    left: parent.left
-                    leftMargin: 14
-                    verticalCenter: parent.verticalCenter
-                }
-                spacing: 6
-
-                Workspaces {
-                    screen: panel.modelData
-                }
-            }
-
             // ── Centre: Clock ────────────────────────────────────
             ClockWidget {
                 anchors.centerIn: parent

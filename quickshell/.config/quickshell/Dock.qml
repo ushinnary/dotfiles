@@ -736,9 +736,10 @@ Scope {
 
                                 onPressed: function(mouse) {
                                     if (mouse.button === Qt.RightButton) {
-                                        const pos = mapToItem(panel, mouse.x, mouse.y);
+                                        const global = mapToItem(null, mouse.x, mouse.y);
+                                        const panelTop = Theme.barMarginTop + Theme.barHeight;
                                         dockRoot.menuContextItem  = dockButton.dockItem;
-                                        dockRoot.menuY            = pos.y;
+                                        dockRoot.menuY            = global.y - panelTop;
                                         dockRoot.menuTargetScreen = panel.modelData;
                                         dockRoot.menuVisible      = true;
                                         mouse.accepted = true;
@@ -762,8 +763,9 @@ Scope {
                                         panel.panelDragDesktopId   = dockButton.dockItem.desktopId;
                                     }
                                     if (isDragging) {
-                                        const pos = mapToItem(panel, mouse.x, mouse.y);
-                                        panel.panelDragY = pos.y;
+                                        const global = mapToItem(null, mouse.x, mouse.y);
+                                        const panelTop = Theme.barMarginTop + Theme.barHeight;
+                                        panel.panelDragY = global.y - panelTop;
                                     }
                                 }
 

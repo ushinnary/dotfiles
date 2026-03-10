@@ -1,6 +1,7 @@
 // ── Quickshell entry point ────────────────────────────────────────
 // This is the root of the Quickshell configuration.
 
+import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
 

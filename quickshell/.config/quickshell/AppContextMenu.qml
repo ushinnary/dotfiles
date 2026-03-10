@@ -122,19 +122,9 @@ PopupWindow {
         implicitWidth: (stack.currentItem ? stack.currentItem.implicitWidth : 180) + innerPad * 2
         implicitHeight: (stack.currentItem ? stack.currentItem.implicitHeight : 40) + innerPad * 2
 
-        Behavior on implicitWidth {
-            NumberAnimation {
-                duration: 150
-                easing.type: Easing.OutCubic
-            }
-        }
-        Behavior on implicitHeight {
-            NumberAnimation {
-                duration: 150
-                easing.type: Easing.OutCubic
-            }
-        }
-
+        // Removed Behavior on implicitWidth and implicitHeight 
+        // to prevent slow "unfurling" as items are dynamically added over DBus.
+        
         // ── StackView (enables push/pop for submenus) ─────────────
         StackView {
             id: stack
@@ -245,9 +235,6 @@ PopupWindow {
             required property var handle  // QsMenuHandle
             property bool isSubMenu: false
             property bool hasIconColumn: false
-            // Items are populated asynchronously one-by-one; defer
-            // rendering until the burst of additions settles.
-            property bool itemsReady: false
 
             implicitWidth: trayCol.implicitWidth
             implicitHeight: trayCol.implicitHeight
@@ -266,31 +253,12 @@ PopupWindow {
                         }
                     }
                     trayPage.hasIconColumn = found;
-                    // Debounce: wait for the burst of item additions to settle
-                    readyTimer.restart();
                 }
-            }
-
-            // Fires once the item list stops changing for 60 ms
-            Timer {
-                id: readyTimer
-                interval: 60
-                repeat: false
-                onTriggered: trayPage.itemsReady = true
             }
 
             ColumnLayout {
                 id: trayCol
                 spacing: 0
-
-                // Fade in all-at-once when ready (avoids one-by-one appearance)
-                opacity: trayPage.itemsReady ? 1 : 0
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: 120
-                        easing.type: Easing.OutCubic
-                    }
-                }
 
                 // ── Back button (submenus only) ───────────────────
                 Item {

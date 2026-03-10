@@ -90,19 +90,9 @@ PopupWindow {
         implicitWidth: (stack.currentItem ? stack.currentItem.implicitWidth : 180) + contentPadding * 2
         implicitHeight: (stack.currentItem ? stack.currentItem.implicitHeight : 40) + contentPadding * 2
 
-        Behavior on implicitWidth {
-            NumberAnimation {
-                duration: 150
-                easing.type: Easing.OutCubic
-            }
-        }
-        Behavior on implicitHeight {
-            NumberAnimation {
-                duration: 150
-                easing.type: Easing.OutCubic
-            }
-        }
-
+        // Removed Behavior on implicitWidth and implicitHeight here
+        // to prevent the menu from "unfurling" slowly as items load over DBus
+        
         // ── Submenu stack ─────────────────────────────────────────
         StackView {
             id: stack

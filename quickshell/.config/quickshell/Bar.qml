@@ -48,7 +48,20 @@ Scope {
                 anchors.centerIn: parent
             }
 
-            // ── Right: tray + hardware widgets ───────────────────
+            // ── Left: focused app name + icon ────────────────────
+            RowLayout {
+                id: leftSection
+                anchors {
+                    left: parent.left
+                    leftMargin: 14
+                    verticalCenter: parent.verticalCenter
+                }
+                spacing: Theme.widgetSpacing
+
+                ActiveAppWidget {}
+            }
+
+            // ── Right: media + privacy + tray + hardware widgets ──
             RowLayout {
                 id: rightSection
                 anchors {
@@ -58,6 +71,10 @@ Scope {
                 }
                 spacing: Theme.widgetSpacing
                 layoutDirection: Qt.LeftToRight
+
+                MediaPlayerWidget {}
+
+                PrivacyIndicatorWidget {}
 
                 SysTray {
                     barScreen: panel.modelData

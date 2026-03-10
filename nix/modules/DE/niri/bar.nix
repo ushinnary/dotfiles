@@ -29,6 +29,10 @@ let
     "SysTrayMenuEntry.qml"
     "AppContextMenu.qml"
     "ContextMenuEntry.qml"
+    "ActiveAppWidget.qml"
+    "MediaPlayerWidget.qml"
+    "OsdManager.qml"
+    "PrivacyIndicatorWidget.qml"
   ];
 in
 {

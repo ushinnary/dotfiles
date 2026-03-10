@@ -128,13 +128,13 @@ PanelWindow {
             // Full radius = width/2 gives a pill shape
             radius: width / 2
             color: Qt.rgba(
-                Theme.backgroundPrimary.r,
-                Theme.backgroundPrimary.g,
-                Theme.backgroundPrimary.b,
-                0.93
+                Theme.backgroundSecondary.r,
+                Theme.backgroundSecondary.g,
+                Theme.backgroundSecondary.b,
+                0.97
             )
             border {
-                color: Qt.rgba(1.0, 1.0, 1.0, 0.07)
+                color: Qt.rgba(1.0, 1.0, 1.0, 0.15)
                 width: 1
             }
 
@@ -204,9 +204,9 @@ PanelWindow {
                     font {
                         family:    Theme.fontFamily
                         pixelSize: Theme.fontSizeSmall
-                        weight:    Font.Medium
+                        weight:    Font.SemiBold
                     }
-                    color: Theme.textSecondary
+                    color: Theme.textPrimary
                 }
             }
         }

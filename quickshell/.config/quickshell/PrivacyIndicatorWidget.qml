@@ -42,11 +42,11 @@ Item {
     function refreshPrivacy() {
         if (!camProc.running)
             camProc.exec(["sh", "-c",
-                "lsof /dev/video* 2>/dev/null | awk 'NR>1 {print $1}' | sort -u | tr '\\n' ',' | sed 's/,$//'"
+                "fuser /dev/video* 2>/dev/null | tr ' ' '\\n' | grep -v '^$' | while read pid; do cat /proc/$pid/comm 2>/dev/null; done | sort -u | tr '\\n' ',' | sed 's/,$//'"
             ])
         if (!micProc.running)
             micProc.exec(["sh", "-c",
-                "pactl list source-outputs 2>/dev/null | grep 'application.name' | sed 's/.*= .\\(.*\\)./\\1/' | sort -u | tr '\\n' ',' | sed 's/,$//' || true"
+                "pactl list source-outputs 2>/dev/null | grep -oP '(?<=application.name = \")[^\"]+' | sort -u | tr '\\n' ',' | sed 's/,$//' | grep -v '^$' || true"
             ])
     }
 

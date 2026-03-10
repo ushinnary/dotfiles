@@ -47,40 +47,42 @@ Item {
 
         stdout: StdioCollector {
             onStreamFinished: {
+                const raw = this.text.trim()
+
+                // ── 1. Parse niri JSON ────────────────────────────
+                let win = null
                 try {
-                    const raw = this.text.trim()
-                    if (!raw || raw === "null") {
-                        appRoot.appId = ""
-                        appRoot.appTitle = ""
-                        appRoot.iconSource = ""
-                        return
+                    if (raw && raw !== "null") {
+                        const data = JSON.parse(raw)
+                        // niri msg --json focused-window returns
+                        // {"FocusedWindow": {...}} or {"FocusedWindow": null}
+                        win = (data && data.FocusedWindow !== undefined)
+                            ? data.FocusedWindow
+                            : data
                     }
+                } catch (_) {}
 
-                    const data = JSON.parse(raw)
+                if (!win) {
+                    appRoot.appId    = ""
+                    appRoot.appTitle = ""
+                    appRoot.iconSource = ""
+                    return
+                }
 
-                    // niri returns {"FocusedWindow": {...}} or the object directly
-                    const win = data.FocusedWindow !== undefined ? data.FocusedWindow : data
+                // ── 2. Set title & id unconditionally ────────────
+                appRoot.appId    = String(win.app_id || "")
+                appRoot.appTitle = String(win.title || win.app_id || "")
 
-                    if (!win) {
-                        appRoot.appId = ""
-                        appRoot.appTitle = ""
-                        appRoot.iconSource = ""
-                        return
-                    }
-
-                    appRoot.appId = win.app_id || ""
-                    appRoot.appTitle = win.title || win.app_id || ""
-
-                    // Resolve icon from XDG desktop entries
-                    const entry = appRoot.appId ? DesktopEntries.heuristicLookup(appRoot.appId) : null
-                    const iconName = entry && entry.icon ? entry.icon : ""
+                // ── 3. Resolve icon separately (never kills title) ─
+                try {
+                    const entry = appRoot.appId
+                        ? DesktopEntries.heuristicLookup(appRoot.appId)
+                        : null
+                    const iconName = (entry && entry.icon) ? entry.icon : ""
                     appRoot.iconSource = iconName
                         ? (Quickshell.iconPath(iconName, true) || "")
-                        : (Quickshell.iconPath("application-x-executable", true) || "")
-
-                } catch (e) {
-                    appRoot.appId = ""
-                    appRoot.appTitle = ""
+                        : ""
+                } catch (_) {
                     appRoot.iconSource = ""
                 }
             }

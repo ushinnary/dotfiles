@@ -846,7 +846,7 @@ Scope {
                                 id: ctxMenuLoader
                                 active: false
 
-                                sourceComponent: ContextMenu {
+                                sourceComponent: AppContextMenu {
                                     anchorItem: dockButton
                                     menuItems: dockRoot.buildDockMenuItems(dockButton.dockItem)
                                     itemScreen: panel.modelData

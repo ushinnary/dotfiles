@@ -1,6 +1,6 @@
 // ── SysTrayItem ──────────────────────────────────────────────────
 // One tray icon.  Handles left / middle / right click and tooltip.
-// Right click opens a ContextMenu if the item exposes a menu handle.
+// Right click opens an AppContextMenu if the item exposes a menu handle.
 import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Wayland
@@ -130,7 +130,7 @@ Item {
 
         active: false
 
-        sourceComponent: ContextMenu {
+        sourceComponent: AppContextMenu {
             anchorItem: root
             menuHandle: root.item.menu
             itemScreen: root.barScreen

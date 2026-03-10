@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   ...
 }:
@@ -11,6 +12,25 @@ in
   config = mkIf cfg.amdCpu {
     hardware.cpu.amd.updateMicrocode = true;
     services.fwupd.enable = true;
+
+    systemd.services.fwupd-auto-update = {
+      description = "Automatic firmware updates via fwupd on boot";
+      after = [
+        "network-online.target"
+        "fwupd.service"
+      ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+        ${pkgs.fwupd}/bin/fwupdmgr refresh --force
+        ${pkgs.fwupd}/bin/fwupdmgr update --no-reboot-check -y
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = false;
+      };
+    };
+
     boot.kernelParams = [
       "amd_pstate=active"
     ];

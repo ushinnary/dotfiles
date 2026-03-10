@@ -22,6 +22,18 @@ in
 
     users.users.ushinnary.extraGroups = [ "podman" ];
 
+    systemd.services.podman-auto-update-boot = {
+      description = "Auto-update Podman containers on boot";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.podman}/bin/podman auto-update";
+        RemainAfterExit = false;
+      };
+    };
+
     environment.systemPackages = with pkgs; [
       podman-compose
     ];

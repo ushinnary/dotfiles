@@ -50,6 +50,21 @@ in
         '';
       };
 
+      systemd.services.flatpak-auto-update = {
+        description = "Automatically update Flatpak apps on boot";
+        after = [
+          "network-online.target"
+          "flatpak-repo.service"
+        ];
+        wants = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";
+          RemainAfterExit = false;
+        };
+      };
+
       fonts = {
         packages = with pkgs; [
           quicksand

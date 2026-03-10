@@ -70,10 +70,12 @@ Item {
                 id: trackText
                 anchors.verticalCenter: parent.verticalCenter
                 text: {
-                    if (!mediaRoot.activePlayer)
+                    if (!mediaRoot.activePlayer || !mediaRoot.activePlayer.track)
                         return ""
-                    const title = mediaRoot.activePlayer.trackTitle || "Unknown"
-                    const artist = mediaRoot.activePlayer.trackArtist || ""
+                    const trk = mediaRoot.activePlayer.track
+                    const title = trk.title || "Unknown"
+                    const artistList = trk.artists || []
+                    const artist = artistList.length > 0 ? artistList.join(", ") : ""
                     return artist ? title + " · " + artist : title
                 }
                 font.family: Theme.fontFamily

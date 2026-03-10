@@ -30,7 +30,7 @@ Item {
     // ── Niri IPC poll ─────────────────────────────────────────────
     function refreshFocused() {
         if (!focusedProc.running)
-            focusedProc.exec(["niri", "msg", "--json", "focused-window"])
+            focusedProc.running = true
     }
 
     Component.onCompleted: refreshFocused()
@@ -44,6 +44,7 @@ Item {
 
     Process {
         id: focusedProc
+        command: ["niri", "msg", "--json", "focused-window"]
 
         stdout: StdioCollector {
             onStreamFinished: {

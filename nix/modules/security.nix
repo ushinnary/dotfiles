@@ -120,8 +120,8 @@ in
       };
 
       # Global PAM integration for Howdy (all services).
-      # NOTE: greetd is excluded in modules/DE/niri.nix via
-      # security.pam.services.greetd.howdy.enable = false
+      # DankGreeter handles its own auth; Howdy is enabled globally
+      # and individual PAM services can opt out if needed.
       security.pam.howdy.enable = true;
     })
   ];

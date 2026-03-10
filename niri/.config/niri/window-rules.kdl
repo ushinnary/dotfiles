@@ -39,25 +39,6 @@ window-rule {
 
 // ── Layer rules ─────────────────────────────────────────
 
-// Quickshell bar: semi-transparent top panel
-// NOTE: place-within-backdrop must NOT be set on a top-layer surface
-// or niri will break the overview (bar gets moved into backdrop plane).
-layer-rule {
-  match namespace="quickshell-bar"
-  opacity 1.0
-}
-
-// swaync notification center
-layer-rule {
-  match namespace="swaync-control-center"
-  opacity 1.0
-  geometry-corner-radius 14
-}
-
-// Wallpaper: place swaybg inside the overview backdrop so it stays
-// stationary and shows through the transparent workspace background.
-// Run `niri msg layers` if the namespace doesn't match.
-layer-rule {
-  match namespace="swaybg"
-  place-within-backdrop true
-}
+// DankMaterialShell manages its own layer surfaces (bar, dock, OSD,
+// notifications, lock screen). Add custom layer-rules here only if
+// you need to override DMS defaults for specific namespaces.

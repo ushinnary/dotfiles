@@ -1,20 +1,4 @@
-spawn-at-startup "quickshell"
-spawn-at-startup "swaync"
+// DankMaterialShell starts via its systemd user service and provides:
+// bar, dock, OSD, notifications, clipboard, wallpaper, theme, lock/idle.
+
 spawn-at-startup "xwayland-satellite"
-
-// Wallpaper: picks a random image from ~/wallpaper every ~10 min.
-// Populate ~/wallpaper with *.png / *.jpg files before first login.
-spawn-at-startup "sh" "-lc" "sh \"$HOME/.config/niri/scripts/rand-wallpaper.sh\""
-
-// Clipboard persistence: keep content alive after source app closes
-spawn-at-startup "wl-clip-persist" "--clipboard" "both"
-spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
-spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
-
-// Screen lock on idle (lock after 5 min, screen off after 10 min)
-spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "swaylock -f"
-
-// Set initial colour-scheme on login: light 08:00–19:59, dark otherwise.
-// sleep 1 ensures the bar is already running and subscribed to dconf
-// before we write, so it picks up the change via the settings watcher.
-spawn-at-startup "sh" "-c" "sleep 1; h=$(date +%H); if [ \"$h\" -ge 8 ] && [ \"$h\" -lt 20 ]; then gsettings set org.gnome.desktop.interface color-scheme prefer-light; else gsettings set org.gnome.desktop.interface color-scheme prefer-dark; fi"

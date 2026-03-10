@@ -8,23 +8,29 @@ binds {
     Mod+Return { toggle-windowed-fullscreen; }
     Mod+E { spawn "nautilus"; }
 
-    // Launcher
-    Mod+Space { spawn "anyrun" "--plugins" "libapplications.so"; }
-    Mod+P { spawn "anyrun" "--plugins" "libapplications.so"; }
+    // Launcher (DMS spotlight)
+    Mod+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Mod+P { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
 
-    // Clipboard history
-    Mod+Shift+V { spawn "sh" "-lc" "sh \"$HOME/.config/niri/scripts/cliphist-anyrun.sh\""; }
+    // Clipboard history (DMS)
+    Mod+Shift+V { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
 
-    // Screenshot
-    Print { screenshot; }
-    Mod+Print { screenshot-window; }
-    Mod+Shift+Print { screenshot-screen; }
+    // Screenshot (DMS — opens in annotation editor)
+    Print { spawn "dms" "ipc" "call" "niri" "screenshot"; }
+    Mod+Print { spawn "dms" "ipc" "call" "niri" "screenshotWindow"; }
+    Mod+Shift+Print { spawn "dms" "ipc" "call" "niri" "screenshotScreen"; }
 
-    // Screen lock
-    Mod+Escape { spawn "swaylock" "-f"; }
+    // Screen lock (DMS)
+    Mod+Escape { spawn "dms" "ipc" "call" "lock" "lock"; }
 
-    // Notification center
-    Mod+Shift+N { spawn "swaync-client" "-t"; }
+    // Notification center (DMS)
+    Mod+Shift+N { spawn "dms" "ipc" "call" "notifications" "toggle"; }
+
+    // Control center / quick settings (DMS)
+    Mod+A { spawn "dms" "ipc" "call" "control-center" "toggle"; }
+
+    // Theme toggle (DMS)
+    Mod+Shift+T { spawn "dms" "ipc" "call" "theme" "toggle"; }
 
     // Window management
     Mod+Q { close-window; }
@@ -92,20 +98,20 @@ binds {
     Mod+Shift+4 { move-column-to-workspace "Media"; }
     Mod+Shift+5 { move-column-to-workspace "5"; }
 
-    // Media keys — wpctl changes PipeWire state; Quickshell OSD fires automatically
-    XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1.5" "@DEFAULT_AUDIO_SINK@" "5%+"; }
-    XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
-    XF86AudioMute        { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioMicMute     { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    // Media keys — routed through DMS IPC (handles OSD automatically)
+    XF86AudioRaiseVolume { spawn "dms" "ipc" "call" "audio" "increment" "5"; }
+    XF86AudioLowerVolume { spawn "dms" "ipc" "call" "audio" "decrement" "5"; }
+    XF86AudioMute        { spawn "dms" "ipc" "call" "audio" "mute"; }
+    XF86AudioMicMute     { spawn "dms" "ipc" "call" "audio" "micmute"; }
 
-    // Brightness keys — brightnessctl changes state; Quickshell OSD fires automatically
-    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+5%"; }
-    XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+    // Brightness keys — routed through DMS IPC (handles OSD automatically)
+    XF86MonBrightnessUp   { spawn "dms" "ipc" "call" "brightness" "increment" "5"; }
+    XF86MonBrightnessDown { spawn "dms" "ipc" "call" "brightness" "decrement" "5"; }
 
-    // Media player keys
-    XF86AudioPlay  { spawn "playerctl" "play-pause"; }
-    XF86AudioNext  { spawn "playerctl" "next"; }
-    XF86AudioPrev  { spawn "playerctl" "previous"; }
+    // Media player keys (DMS MPRIS)
+    XF86AudioPlay  { spawn "dms" "ipc" "call" "mpris" "playPause"; }
+    XF86AudioNext  { spawn "dms" "ipc" "call" "mpris" "next"; }
+    XF86AudioPrev  { spawn "dms" "ipc" "call" "mpris" "previous"; }
 
     // Quit niri
     Mod+Shift+E { quit; }

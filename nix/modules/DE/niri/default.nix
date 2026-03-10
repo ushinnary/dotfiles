@@ -19,23 +19,36 @@ in
   config = mkIf cfg.niri {
     programs.niri.enable = true;
 
-    # ── Login manager ─────────────────────────────────────────────
-    # Using greetd to seamlessly log into Niri without pulling GNOME shell stuff
-    services.greetd = {
+    # ── DankMaterialShell (bar, dock, OSD, notifications, clipboard,
+    #    wallpaper, theme, lock screen, media, brightness …) ───────
+    programs.dms-shell = {
       enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
-          user = "greeter";
-        };
+      systemd = {
+        enable = true;
+        restartIfChanged = true;
       };
+      enableSystemMonitoring = true;
+      enableDynamicTheming = true;
+      enableClipboardPaste = true;
     };
 
-    systemd.tmpfiles.rules = [
-      "d /var/cache/tuigreet 0755 greeter greeter -"
-    ];
+    # ── DankSearch ────────────────────────────────────────────────
+    programs.dsearch = {
+      enable = true;
+      systemd.enable = true;
+    };
+
+    # ── Login manager — DankGreeter ───────────────────────────────
+    services.displayManager.dms-greeter = {
+      enable = true;
+      compositor.name = "niri";
+      configHome = "/home/ushinnary"; # Sync DMS theme with the greeter
+    };
 
     # ── Core Wayland / session packages ───────────────────────────
+    # Packages previously needed for the custom shell stack (swaylock,
+    # swayidle, brightnessctl, playerctl, wl-clipboard, cliphist, etc.)
+    # are now provided or superseded by DankMaterialShell.
     environment.systemPackages = with pkgs; [
       kdePackages.polkit-kde-agent-1
       xwayland-satellite
@@ -43,19 +56,6 @@ in
 
       # File manager
       nautilus
-
-      # Clipboard stack (persistence + history)
-      wl-clipboard
-      wl-clip-persist
-      cliphist
-
-      # Screen lock
-      swaylock
-      swayidle
-
-      # Media / brightness
-      brightnessctl
-      playerctl
     ];
 
     # ── XDG portals ───────────────────────────────────────────────
@@ -73,21 +73,8 @@ in
     };
 
     # ── Security & Password Management ────────────────────────────
-    # gnome-keyring is started via its systemd user service.
-    # Do NOT plug it into the greetd PAM stack: its session module tries to
-    # contact the user D-Bus session which doesn't exist yet at greetd time.
     services.gnome.gnome-keyring.enable = true;
     security.pam.services.login.enableGnomeKeyring = true;
-
-    # Give the greeter user camera access so howdy (if enabled on this host)
-    # can attempt face-auth without crashing the PAM module.
-    users.groups.video.members = [ "greeter" ];
-
-    # Prevent howdy from blocking greetd auth.
-    security.pam.services.greetd.howdy.enable = false;
-
-    # Allow swaylock to authenticate via PAM
-    security.pam.services.swaylock = { };
 
     # ── Polkit ────────────────────────────────────────────────────
     systemd.user.services.polkit-kde-authentication-agent-1 = {

@@ -1,18 +1,7 @@
 // ── OsdWindow ────────────────────────────────────────────────────
-// Generic Android-style vertical pill OSD.
-// Registers with OsdManager so multiple pills stack side-by-side
-// instead of overlapping.  The rightmost slot (index 0) is the
-// first/oldest visible OSD; each new pill appears to its left.
-//
-// Usage:
-//   OsdWindow {
-//       id: myOsd
-//       icon: "󰕾"
-//       iconColor: Theme.accentPrimary
-//       value: 0.65        // 0.0 – 1.0
-//   }
-//   // To show: myOsd.trigger()
-//   // Value updates animate in real-time while visible.
+// Vertical pill OSD shared by volume and brightness.
+// Set icon / iconColor / value, then call trigger() to show it.
+// Auto-hides after hideDelay ms.
 
 import QtQuick
 import QtQuick.Layouts
@@ -27,21 +16,8 @@ PanelWindow {
     property real   value: 0.5      // clamped 0.0 – 1.0
     property int    hideDelay: 3000 // ms before auto-hide
 
-    // Stack slot assigned by OsdManager (0 = rightmost)
-    property int  stackIndex: 0
-    // Whether this pill is currently registered in the stack
-    property bool _registered: false
-
-    // Call this every time you want the OSD to appear / extend its timer.
+    // Show the pill and (re)start the auto-hide countdown.
     function trigger() {
-        // If we were in the middle of fading out, cancel the pending
-        // unregister so the pill stays in its current stack slot.
-        postFadeTimer.stop();
-
-        if (!_registered) {
-            OsdManager.register(osdWindow);
-            _registered = true;
-        }
         _wantVisible = true;
         hideTimer.restart();
     }
@@ -74,25 +50,6 @@ PanelWindow {
         onTriggered: osdWindow._wantVisible = false
     }
 
-    // Step 2: once the opacity animation has finished (~280 ms) unregister
-    // from the stack so the remaining pills slide right to fill the gap.
-    // Fired slightly after the opacity Behavior duration (280 ms).
-    Timer {
-        id: postFadeTimer
-        interval: 300
-        onTriggered: {
-            OsdManager.unregister(osdWindow);
-            osdWindow._registered = false;
-        }
-    }
-
-    // When _wantVisible flips to false, start the post-fade unregister.
-    onVisibleChanged: {
-        if (!_wantVisible && _registered) {
-            postFadeTimer.restart();
-        }
-    }
-
     // ── Visual layer ─────────────────────────────────────────────
     Item {
         id: osdContent
@@ -108,12 +65,8 @@ PanelWindow {
         }
 
         transform: Translate {
-            // When visible: shift left by (stackIndex × step) so pills
-            // sit side-by-side.  When hidden: park off-screen right so
-            // the next trigger() produces a slide-in animation.
-            x: osdWindow._wantVisible
-                ? -(osdWindow.stackIndex * (OsdManager.pillWidth + OsdManager.pillGap))
-                : 72
+            // Slide in from the right; park off-screen when hidden.
+            x: osdWindow._wantVisible ? 0 : 72
             Behavior on x {
                 NumberAnimation {
                     duration: 320
@@ -186,7 +139,7 @@ PanelWindow {
                         height: trackContainer.height * Math.max(0, Math.min(1, osdWindow.value))
                         radius: parent.width / 2
 
-                        color: Theme.accentPrimary
+                        color: osdWindow.iconColor
 
                         Behavior on height {
                             NumberAnimation {

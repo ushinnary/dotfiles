@@ -157,7 +157,6 @@ PanelWindow {
                     font {
                         family:    Theme.fontFamily
                         pixelSize: Theme.fontSizeSmall
-                        weight:    Font.SemiBold
                     }
                     color: Theme.textPrimary
                 }

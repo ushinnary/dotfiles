@@ -87,7 +87,7 @@ PanelWindow {
     }
 
     // When _wantVisible flips to false, start the post-fade unregister.
-    onWantVisibleChanged: {
+    onVisibleChanged: {
         if (!_wantVisible && _registered) {
             postFadeTimer.restart();
         }

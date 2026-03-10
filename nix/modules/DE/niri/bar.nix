@@ -19,7 +19,11 @@ let
     "ClockWidget.qml"
     "VolumeWidget.qml"
     "BatteryWidget.qml"
+    "Brightness.qml"
     "BrightnessWidget.qml"
+    "OsdWindow.qml"
+    "VolumeOsd.qml"
+    "BrightnessOsd.qml"
     "SysTray.qml"
     "SysTrayItem.qml"
     "SysTrayMenu.qml"
@@ -32,7 +36,6 @@ in
     environment.systemPackages = [
       quickshellPkg # QML-based shell / status bar
       pkgs.swaynotificationcenter # Notification daemon + center panel
-      pkgs.swayosd # On-screen display for volume/brightness
       pkgs.gtk3 # gtk-launch for menu / launcher widgets
       pkgs.adwaita-icon-theme # GTK fallback icons still used by some apps
       pkgs.hicolor-icon-theme # Freedesktop fallback icon theme for app icons

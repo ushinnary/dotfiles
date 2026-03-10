@@ -14,4 +14,9 @@ Scope {
     Dock {}
 
     Bar {}
+
+    // ── On-screen display overlays ────────────────────────────────
+    // Shown on change only; each auto-hides after 3 s.
+    VolumeOsd {}
+    BrightnessOsd {}
 }

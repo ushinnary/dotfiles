@@ -545,6 +545,8 @@ Scope {
                         const sn = panel.modelData ? panel.modelData.name.toLowerCase() : "";
                         return dockRoot.workspaces.filter(function (ws) {
                             return !sn || (ws.output && ws.output.toLowerCase() === sn);
+                        }).sort(function (a, b) {
+                            return (a.idx || 0) - (b.idx || 0);
                         });
                     }
 
@@ -844,12 +846,11 @@ Scope {
                 top: true
                 left: true
                 bottom: true
+                right: true
             }
             margins {
                 top: Theme.barMarginTop + Theme.barHeight
-                left: Theme.dockWidth
             }
-            implicitWidth: 192
             WlrLayershell.namespace: "quickshell-dock-menu"
 
             // Transparent backdrop – click anywhere outside card to dismiss.
@@ -864,7 +865,7 @@ Scope {
 
             // Menu card
             Rectangle {
-                x: 4
+                x: Theme.dockWidth + 4
                 y: Math.max(4, Math.min(parent.height - height - 4, dockRoot.menuY - 12))
                 width: 184
                 height: menuCol.implicitHeight + 12

@@ -1,5 +1,6 @@
 // ── Brightness widget ────────────────────────────────────────────
-// Uses brightnessctl.  Only visible when a backlight device exists.
+// Reads state from the Brightness singleton (no duplicate polling).
+// Only visible when a backlight device exists.
 // Scroll to adjust brightness.
 import Quickshell
 import Quickshell.Io
@@ -10,36 +11,10 @@ Item {
     id: briRoot
     implicitWidth: briRow.implicitWidth + 12
     implicitHeight: parent ? parent.height : 32
-    visible: hasBacklight
+    visible: Brightness.hasBacklight
 
-    property bool hasBacklight: false
-    property int percentage: 0
-
-    // ── Poll brightness ──────────────────────────────────────────
-    Process {
-        id: briProc
-        command: ["sh", "-c", "pct=\"$(brightnessctl -m 2>/dev/null | cut -d, -f4 | tr -d '%')\"; " + "[ -n \"$pct\" ] && echo $pct || exit 1"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                const val = parseInt(this.text.trim());
-                if (!isNaN(val)) {
-                    briRoot.hasBacklight = true;
-                    briRoot.percentage = val;
-                } else {
-                    briRoot.hasBacklight = false;
-                }
-            }
-        }
-    }
-
-    Timer {
-        interval: 3000
-        running: true
-        repeat: true
-        onTriggered: briProc.running = true
-    }
+    // Delegate to shared singleton — no local polling needed
+    property int percentage: Brightness.percentage
 
     Rectangle {
         anchors.fill: parent

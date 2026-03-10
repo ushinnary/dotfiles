@@ -166,7 +166,6 @@ Item {
                 width: 14
                 height: 14
                 source: root.trailingIcon
-                color: root.trailingDestructive && trailingBHandler.hovered ? Theme.backgroundPrimary : (root.trailingDestructive ? Theme.error : Theme.textPrimary)
                 asynchronous: true
                 mipmap: true
             }

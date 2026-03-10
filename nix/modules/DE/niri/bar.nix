@@ -26,8 +26,9 @@ let
     "BrightnessOsd.qml"
     "SysTray.qml"
     "SysTrayItem.qml"
-    "SysTrayMenu.qml"
     "SysTrayMenuEntry.qml"
+    "AppContextMenu.qml"
+    "ContextMenuEntry.qml"
   ];
 in
 {

@@ -32,7 +32,7 @@ Item {
                 barScreen: root.barScreen
 
                 // Dim passive items slightly (e.g. background helpers)
-                opacity: modelData.status === SystemTrayStatus.Passive ? 0.55 : 1.0
+                opacity: modelData.status === Status.Passive ? 0.55 : 1.0
                 Behavior on opacity {
                     NumberAnimation {
                         duration: 200

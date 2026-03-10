@@ -10,11 +10,17 @@ import QtQuick.Layouts
 Item {
     id: mediaRoot
 
-    readonly property MprisPlayer activePlayer: MprisController.activePlayer
+    // Find the first playing player, fall back to first available player
+    readonly property var activePlayer: {
+        for (let i = 0; i < Mpris.players.values.length; i++) {
+            const p = Mpris.players.values[i];
+            if (p.playbackState === MprisPlaybackState.Playing)
+                return p;
+        }
+        return Mpris.players.values.length > 0 ? Mpris.players.values[0] : null;
+    }
     readonly property bool playerAvailable: activePlayer !== null
-
-    // 1 = Playing in Quickshell's MprisPlaybackState enum
-    readonly property bool isPlaying: activePlayer !== null && activePlayer.playbackState === 1
+    readonly property bool isPlaying: activePlayer !== null && activePlayer.playbackState === MprisPlaybackState.Playing
 
     implicitWidth: playerAvailable ? contentRow.implicitWidth + 16 : 0
     implicitHeight: parent ? parent.height : 32

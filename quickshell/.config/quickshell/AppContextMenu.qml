@@ -208,6 +208,8 @@ PopupWindow {
 
                         label: modelData.label ?? ""
                         icon: modelData.icon ?? ""
+                        trailingIcon: modelData.trailingIcon ?? ""
+                        trailingDestructive: modelData.trailingDestructive ?? false
                         destructive: modelData.destructive ?? false
                         separator: modelData.separator ?? false
                         enabled: modelData.enabled !== false
@@ -217,6 +219,13 @@ PopupWindow {
                         onTriggered: {
                             root.triggered(index);
                             root.close();
+                        }
+                        
+                        onTrailingTriggered: {
+                            if (modelData.onTrailing) {
+                                modelData.onTrailing();
+                                root.close();
+                            }
                         }
                     }
                 }

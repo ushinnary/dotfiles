@@ -347,14 +347,50 @@ Scope {
 
     function buildDockMenuItems(item) {
         const arr = [];
+        
+        // 1. Grouped windows list
+        if (item && item.windows && item.windows.length > 0) {
+            for (let i = 0; i < item.windows.length; i++) {
+                const win = item.windows[i];
+                arr.push({
+                    label: win.title || "(Unnamed Window)",
+                    type: "focus_window",
+                    windowId: win.id,
+                    icon: item.entry && item.entry.icon ? Quickshell.iconPath(item.entry.icon, true) : "",
+                    trailingIcon: Quickshell.iconPath("window-close-symbolic", true) || Quickshell.iconPath("edit-delete", true),
+                    trailingDestructive: true,
+                    onTrailing: function() {
+                        closeWindowProc.exec(["niri", "msg", "action", "close-window", "--id", String(win.id)]);
+                    }
+                });
+            }
+            arr.push({separator: true});
+        }
+        
+        // 2. Desktop entry actions (e.g. Open new incognito window)
+        if (item && item.entry && item.entry.actions && item.entry.actions.length > 0) {
+            for (let i = 0; i < item.entry.actions.length; i++) {
+                const action = item.entry.actions[i];
+                arr.push({
+                    label: action.name,
+                    icon: action.icon ? Quickshell.iconPath(action.icon, true) : "",
+                    type: "desktop_action",
+                    actionObj: action
+                });
+            }
+            arr.push({separator: true});
+        }
+        
+        // 3. Application operations
         if (item && item.desktopId)
             arr.push({label: item.pinned ? "Unpin from Dock" : "Pin to Dock", type: "pin"});
-        if (item && item.desktopId && (item.entry || (item.running && item.primaryWindowId > 0)))
-            arr.push({separator: true});
+
         if (item && item.entry)
             arr.push({label: "Launch", type: "launch"});
+            
         if (item && item.running && item.primaryWindowId > 0)
-            arr.push({label: "Close", destructive: true, type: "close"});
+            arr.push({label: item.windows && item.windows.length > 1 ? "Close All" : "Close", destructive: true, type: "close"});
+            
         return arr;
     }
 
@@ -363,16 +399,24 @@ Scope {
         const action = arr[index];
         if (!action || action.separator)
             return;
-        if (action.type === "pin") {
-            if (item.pinned)
-                dockRoot.unpinApp(item.desktopId);
-            else
-                dockRoot.pinApp(item.desktopId);
+            
+        if (action.type === "focus_window") {
+            focusProc.exec(["niri", "msg", "action", "focus-window", "--id", String(action.windowId)]);
+        } else if (action.type === "desktop_action") {
+            if (action.actionObj) action.actionObj.execute();
+        } else if (action.type === "pin") {
+            if (item.pinned) dockRoot.unpinApp(item.desktopId);
+            else dockRoot.pinApp(item.desktopId);
         } else if (action.type === "launch") {
-            if (item.entry)
-                item.entry.execute();
+            if (item.entry) item.entry.execute();
         } else if (action.type === "close") {
-            closeWindowProc.exec(["niri", "msg", "action", "close-window", "--id", String(item.primaryWindowId)]);
+            if (item.windows && item.windows.length > 0) {
+                for (let i = 0; i < item.windows.length; i++) {
+                    closeWindowProc.exec(["niri", "msg", "action", "close-window", "--id", String(item.windows[i].id)]);
+                }
+            } else {
+                closeWindowProc.exec(["niri", "msg", "action", "close-window", "--id", String(item.primaryWindowId)]);
+            }
         }
     }
 

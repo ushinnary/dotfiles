@@ -35,9 +35,12 @@ Item {
     property int buttonType: 0   // 0=none 1=checkbox 2=radio
     property bool checked: false
     property bool hasSubmenu: false
+    property string trailingIcon: ""
+    property bool trailingDestructive: false
 
     signal triggered
     signal openSubmenu
+    signal trailingTriggered
 
     implicitWidth: contentRow.implicitWidth + 16
     implicitHeight: root.separator ? 9 : 32
@@ -147,6 +150,36 @@ Item {
             text: "›"
             font.pixelSize: Theme.fontSizeMedium
             color: Theme.textDim
+        }
+
+        // ── Trailing Action ───────────────────────────────────────
+        Rectangle {
+            id: trailingBtn
+            visible: root.trailingIcon.length > 0
+            implicitWidth: visible ? 20 : 0
+            implicitHeight: 20
+            radius: 10
+            color: trailingBHandler.hovered ? (root.trailingDestructive ? Theme.error : Theme.surfaceHover) : "transparent"
+
+            IconImage {
+                anchors.centerIn: parent
+                width: 14
+                height: 14
+                source: root.trailingIcon
+                color: root.trailingDestructive && trailingBHandler.hovered ? Theme.backgroundPrimary : (root.trailingDestructive ? Theme.error : Theme.textPrimary)
+                asynchronous: true
+                mipmap: true
+            }
+
+            HoverHandler {
+                id: trailingBHandler
+            }
+
+            TapHandler {
+                onTapped: {
+                    root.trailingTriggered()
+                }
+            }
         }
     }
 }

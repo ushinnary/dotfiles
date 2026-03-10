@@ -22,8 +22,6 @@ let
     "Brightness.qml"
     "BrightnessWidget.qml"
     "OsdWindow.qml"
-    "VolumeOsd.qml"
-    "BrightnessOsd.qml"
     "SysTray.qml"
     "SysTrayItem.qml"
     "SysTrayMenuEntry.qml"

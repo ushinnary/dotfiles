@@ -56,6 +56,7 @@ in
 
       # File manager
       nautilus
+      cups-pk-helper
     ];
 
     # ── XDG portals ───────────────────────────────────────────────

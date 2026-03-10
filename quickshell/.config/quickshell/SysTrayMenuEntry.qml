@@ -1,11 +1,9 @@
 // ── SysTrayMenuEntry ─────────────────────────────────────────────
-// A single row inside a tray context menu:
-//   [checkbox/radio] [icon] [label] [chevron if submenu]
-// Separators are rendered as a thin horizontal line.
+// Thin adapter that maps a QsMenuEntry onto the shared ContextMenuEntry
+// visual component.  Kept for any legacy call-sites; new code should
+// use ContextMenu directly (which handles tray entries inline).
 pragma ComponentBehavior: Bound
 
-import Quickshell
-import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
@@ -16,115 +14,29 @@ Item {
     property bool forceIconColumn: false
 
     signal dismiss
-    signal openSubmenu(handle: var) // QsMenuHandle
+    signal openSubmenu(handle: var)  // QsMenuHandle
 
-    implicitWidth: contentRow.implicitWidth + 16
-    implicitHeight: menuEntry.isSeparator ? 9 : 32
+    implicitWidth: entry.implicitWidth
+    implicitHeight: entry.implicitHeight
     Layout.fillWidth: true
 
-    // ── Separator ────────────────────────────────────────────────
-    Rectangle {
-        visible: menuEntry.isSeparator
-        anchors.centerIn: parent
-        width: parent.width - 16
-        height: 1
-        color: Theme.surfaceHover
-    }
-
-    // ── Normal row ───────────────────────────────────────────────
-    Rectangle {
-        id: rowBg
-        visible: !menuEntry.isSeparator
+    ContextMenuEntry {
+        id: entry
         anchors.fill: parent
-        anchors.margins: 2
-        radius: 6
-        color: hoverHandler.hovered && menuEntry.enabled ? Theme.surfaceHover : "transparent"
 
-        Behavior on color {
-            ColorAnimation {
-                duration: 100
-            }
+        label: root.menuEntry.text ?? ""
+        icon: root.menuEntry.icon ?? ""
+        forceIconColumn: root.forceIconColumn
+        separator: root.menuEntry.isSeparator ?? false
+        enabled: root.menuEntry.enabled ?? true
+        buttonType: root.menuEntry.buttonType ?? 0
+        checked: (root.menuEntry.checkState ?? 0) === Qt.Checked
+        hasSubmenu: root.menuEntry.hasChildren ?? false
+
+        onTriggered: {
+            root.menuEntry.triggered();
+            root.dismiss();
         }
-    }
-
-    HoverHandler {
-        id: hoverHandler
-    }
-
-    TapHandler {
-        enabled: !menuEntry.isSeparator && menuEntry.enabled
-        onTapped: {
-            if (menuEntry.hasChildren) {
-                root.openSubmenu(menuEntry);
-            } else {
-                menuEntry.triggered();
-                root.dismiss();
-            }
-        }
-    }
-
-    RowLayout {
-        id: contentRow
-        visible: !menuEntry.isSeparator
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            right: parent.right
-            leftMargin: 10
-            rightMargin: 10
-        }
-        spacing: 6
-
-        // ── Checkbox / radio state ────────────────────────────────
-        Item {
-            visible: menuEntry.buttonType !== 0 // 0 = QsMenuButtonType.None
-            implicitWidth: 14
-            implicitHeight: 14
-
-            Rectangle {
-                anchors.centerIn: parent
-                width: 10
-                height: 10
-                radius: menuEntry.buttonType === 2 ? 5 : 2 // 2 = RadioButton
-                color: menuEntry.checkState === Qt.Checked ? Theme.accentPrimary : "transparent"
-                border.width: 1.5
-                border.color: menuEntry.checkState === Qt.Checked ? Theme.accentPrimary : Theme.textDim
-            }
-        }
-
-        // ── Item icon ─────────────────────────────────────────────
-        Item {
-            visible: root.forceIconColumn || menuEntry.icon.length > 0
-            implicitWidth: 16
-            implicitHeight: 16
-
-            IconImage {
-                anchors.centerIn: parent
-                width: 16
-                height: 16
-                asynchronous: true
-                mipmap: true
-                source: menuEntry.icon ?? ""
-                visible: menuEntry.icon.length > 0
-            }
-        }
-
-        // ── Label ─────────────────────────────────────────────────
-        Text {
-            Layout.fillWidth: true
-            text: menuEntry.text
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSizeSmall
-            color: menuEntry.enabled ? Theme.textPrimary : Theme.textDim
-            elide: Text.ElideRight
-        }
-
-        // ── Submenu chevron ───────────────────────────────────────
-        Text {
-            visible: menuEntry.hasChildren
-            text: "›"
-            font.pixelSize: Theme.fontSizeMedium
-            color: Theme.textDim
-        }
+        onOpenSubmenu: root.openSubmenu(root.menuEntry)
     }
 }

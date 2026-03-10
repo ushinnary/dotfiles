@@ -92,20 +92,20 @@ binds {
     Mod+Shift+4 { move-column-to-workspace "Media"; }
     Mod+Shift+5 { move-column-to-workspace "5"; }
 
-    // Media keys + OSD
-    XF86AudioRaiseVolume { spawn "swayosd-client" "--output-volume" "raise"; }
-    XF86AudioLowerVolume { spawn "swayosd-client" "--output-volume" "lower"; }
-    XF86AudioMute        { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
-    XF86AudioMicMute     { spawn "swayosd-client" "--input-volume" "mute-toggle"; }
+    // Media keys — wpctl changes PipeWire state; Quickshell OSD fires automatically
+    XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1.5" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+    XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+    XF86AudioMute        { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
-    // Brightness keys + OSD
-    XF86MonBrightnessUp   { spawn "swayosd-client" "--brightness" "raise"; }
-    XF86MonBrightnessDown { spawn "swayosd-client" "--brightness" "lower"; }
+    // Brightness keys — brightnessctl changes state; Quickshell OSD fires automatically
+    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+5%"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
 
-    // Media player keys + OSD
-    XF86AudioPlay  { spawn "swayosd-client" "--playerctl" "play-pause"; }
-    XF86AudioNext  { spawn "swayosd-client" "--playerctl" "next"; }
-    XF86AudioPrev  { spawn "swayosd-client" "--playerctl" "previous"; }
+    // Media player keys
+    XF86AudioPlay  { spawn "playerctl" "play-pause"; }
+    XF86AudioNext  { spawn "playerctl" "next"; }
+    XF86AudioPrev  { spawn "playerctl" "previous"; }
 
     // Quit niri
     Mod+Shift+E { quit; }

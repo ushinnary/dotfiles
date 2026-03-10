@@ -1,6 +1,5 @@
 spawn-at-startup "quickshell"
 spawn-at-startup "swaync"
-spawn-at-startup "swayosd-server"
 spawn-at-startup "xwayland-satellite"
 
 // Wallpaper: picks a random image from ~/wallpaper every ~10 min.

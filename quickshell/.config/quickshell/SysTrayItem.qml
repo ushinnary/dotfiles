@@ -1,8 +1,9 @@
 // ── SysTrayItem ──────────────────────────────────────────────────
 // One tray icon.  Handles left / middle / right click and tooltip.
-// Right click opens SysTrayMenu if the item exposes a menu handle.
+// Right click opens a ContextMenu if the item exposes a menu handle.
 import Quickshell
 import Quickshell.Services.SystemTray
+import Quickshell.Wayland
 import Quickshell.Widgets
 import QtQuick
 
@@ -129,12 +130,14 @@ Item {
 
         active: false
 
-        sourceComponent: SysTrayMenu {
-            anchor_item: root
+        sourceComponent: ContextMenu {
+            anchorItem: root
             menuHandle: root.item.menu
             itemScreen: root.barScreen
+            anchorEdges: Edges.Bottom
+            anchorGravity: Edges.Bottom
+            slideAdjust: PopupAdjustment.SlideX
 
-            Component.onCompleted: visible = true
             onMenuClosed: menuLoader.active = false
         }
     }

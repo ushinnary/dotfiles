@@ -23,13 +23,6 @@ Scope {
     property bool dragActive: false
     property real dragCurrentY: 0       // Y in panel-window coords
 
-    // ── Context menu state ────────────────────────────────────────
-    // Shared across panel instances; the overlay Variants reads these.
-    property var menuContextItem: null
-    property bool menuVisible: false
-    property real menuY: 0        // Y in dock-panel coordinates
-    property var menuTargetScreen: null
-
     // ── Persistence helpers ───────────────────────────────────────
 
     function loadPinnedApps(text) {
@@ -348,6 +341,39 @@ Scope {
 
         if (item.entry)
             item.entry.execute();
+    }
+
+    // ── Dock context-menu helpers ─────────────────────────────────
+
+    function buildDockMenuItems(item) {
+        const arr = [];
+        if (item && item.desktopId)
+            arr.push({label: item.pinned ? "Unpin from Dock" : "Pin to Dock", type: "pin"});
+        if (item && item.desktopId && (item.entry || (item.running && item.primaryWindowId > 0)))
+            arr.push({separator: true});
+        if (item && item.entry)
+            arr.push({label: "Launch", type: "launch"});
+        if (item && item.running && item.primaryWindowId > 0)
+            arr.push({label: "Close", destructive: true, type: "close"});
+        return arr;
+    }
+
+    function executeDockMenuAction(index, item) {
+        const arr = dockRoot.buildDockMenuItems(item);
+        const action = arr[index];
+        if (!action || action.separator)
+            return;
+        if (action.type === "pin") {
+            if (item.pinned)
+                dockRoot.unpinApp(item.desktopId);
+            else
+                dockRoot.pinApp(item.desktopId);
+        } else if (action.type === "launch") {
+            if (item.entry)
+                item.entry.execute();
+        } else if (action.type === "close") {
+            closeWindowProc.exec(["niri", "msg", "action", "close-window", "--id", String(item.primaryWindowId)]);
+        }
     }
 
     function refreshNiriState() {
@@ -765,12 +791,7 @@ Scope {
 
                                 onPressed: function (mouse) {
                                     if (mouse.button === Qt.RightButton) {
-                                        const global = mapToItem(null, mouse.x, mouse.y);
-                                        const panelTop = Theme.barMarginTop + Theme.barHeight;
-                                        dockRoot.menuContextItem = dockButton.dockItem;
-                                        dockRoot.menuY = global.y - panelTop;
-                                        dockRoot.menuTargetScreen = panel.modelData;
-                                        dockRoot.menuVisible = true;
+                                        ctxMenuLoader.active = true;
                                         mouse.accepted = true;
                                         return;
                                     }
@@ -819,192 +840,25 @@ Scope {
                                     }
                                 }
                             }
-                        }
-                    }
-                }
-            }
-        }
-    }
 
-    // ── Context menu overlay ──────────────────────────────────────
-    // A separate layer-shell surface starting just to the right of the
-    // dock (margins.left: Theme.dockWidth) so the card is never clipped
-    // by the narrow dock window.
-    Variants {
-        model: Quickshell.screens
+                            // ── Context menu (lazy) ────────────────────────────────
+                            Loader {
+                                id: ctxMenuLoader
+                                active: false
 
-        PanelWindow {
-            required property var modelData
-            screen: modelData
+                                sourceComponent: ContextMenu {
+                                    anchorItem: dockButton
+                                    menuItems: dockRoot.buildDockMenuItems(dockButton.dockItem)
+                                    itemScreen: panel.modelData
+                                    anchorEdges: Edges.Right
+                                    anchorGravity: Edges.Right
+                                    slideAdjust: PopupAdjustment.SlideY
 
-            visible: dockRoot.menuVisible && (dockRoot.menuTargetScreen?.name ?? "") === (modelData?.name ?? "")
-
-            color: "transparent"
-            exclusionMode: ExclusionMode.Ignore
-            focusable: false
-            anchors {
-                top: true
-                left: true
-                bottom: true
-                right: true
-            }
-            margins {
-                top: Theme.barMarginTop + Theme.barHeight
-            }
-            WlrLayershell.namespace: "quickshell-dock-menu"
-
-            // Transparent backdrop – click anywhere outside card to dismiss.
-            // Must be disabled when hidden, otherwise it swallows all
-            // clicks to the right of the dock even while the menu is closed.
-            MouseArea {
-                anchors.fill: parent
-                z: 0
-                enabled: dockRoot.menuVisible
-                onPressed: dockRoot.menuVisible = false
-            }
-
-            // Menu card
-            Rectangle {
-                x: Theme.dockWidth + 4
-                y: Math.max(4, Math.min(parent.height - height - 4, dockRoot.menuY - 12))
-                width: 184
-                height: menuCol.implicitHeight + 12
-                radius: 8
-                color: Theme.backgroundSecondary
-                border.color: Theme.surface
-                border.width: 1
-                z: 1
-                layer.enabled: true
-
-                Column {
-                    id: menuCol
-                    anchors {
-                        top: parent.top
-                        topMargin: 6
-                        left: parent.left
-                        leftMargin: 4
-                        right: parent.right
-                        rightMargin: 4
-                    }
-                    spacing: 1
-
-                    // ── Pin / Unpin ────────────────────────────────────
-                    Rectangle {
-                        width: menuCol.width
-                        height: 32
-                        radius: 6
-                        visible: !!dockRoot.menuContextItem && !!dockRoot.menuContextItem.desktopId
-                        color: pinRow.containsMouse ? Theme.surface : "transparent"
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 100
-                            }
-                        }
-
-                        Text {
-                            anchors {
-                                left: parent.left
-                                leftMargin: 12
-                                verticalCenter: parent.verticalCenter
-                            }
-                            text: dockRoot.menuContextItem?.pinned ? "Unpin from Dock" : "Pin to Dock"
-                            font.family: Theme.fontFamily
-                            font.pixelSize: Theme.fontSizeMedium
-                            color: Theme.textPrimary
-                        }
-                        MouseArea {
-                            id: pinRow
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
-                                if (!dockRoot.menuContextItem)
-                                    return;
-                                if (dockRoot.menuContextItem.pinned)
-                                    dockRoot.unpinApp(dockRoot.menuContextItem.desktopId);
-                                else
-                                    dockRoot.pinApp(dockRoot.menuContextItem.desktopId);
-                                dockRoot.menuVisible = false;
-                            }
-                        }
-                    }
-
-                    // ── Separator ──────────────────────────────────────
-                    Rectangle {
-                        width: menuCol.width - 8
-                        height: 1
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        visible: !!dockRoot.menuContextItem && !!dockRoot.menuContextItem.desktopId
-                        color: Theme.surface
-                        opacity: 0.7
-                    }
-
-                    // ── Launch ─────────────────────────────────────────
-                    Rectangle {
-                        width: menuCol.width
-                        height: 32
-                        radius: 6
-                        visible: !!dockRoot.menuContextItem && !!dockRoot.menuContextItem.entry
-                        color: launchRow.containsMouse ? Theme.surface : "transparent"
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 100
-                            }
-                        }
-
-                        Text {
-                            anchors {
-                                left: parent.left
-                                leftMargin: 12
-                                verticalCenter: parent.verticalCenter
-                            }
-                            text: "Launch"
-                            font.family: Theme.fontFamily
-                            font.pixelSize: Theme.fontSizeMedium
-                            color: Theme.textPrimary
-                        }
-                        MouseArea {
-                            id: launchRow
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
-                                if (dockRoot.menuContextItem?.entry)
-                                    dockRoot.menuContextItem.entry.execute();
-                                dockRoot.menuVisible = false;
-                            }
-                        }
-                    }
-
-                    // ── Close window ───────────────────────────────────
-                    Rectangle {
-                        width: menuCol.width
-                        height: 32
-                        radius: 6
-                        visible: !!dockRoot.menuContextItem && dockRoot.menuContextItem.running && dockRoot.menuContextItem.primaryWindowId > 0
-                        color: closeRow.containsMouse ? Theme.surface : "transparent"
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 100
-                            }
-                        }
-
-                        Text {
-                            anchors {
-                                left: parent.left
-                                leftMargin: 12
-                                verticalCenter: parent.verticalCenter
-                            }
-                            text: "Close"
-                            font.family: Theme.fontFamily
-                            font.pixelSize: Theme.fontSizeMedium
-                            color: Theme.error
-                        }
-                        MouseArea {
-                            id: closeRow
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onClicked: {
-                                closeWindowProc.exec(["niri", "msg", "action", "close-window", "--id", String(dockRoot.menuContextItem.primaryWindowId)]);
-                                dockRoot.menuVisible = false;
+                                    onMenuClosed: ctxMenuLoader.active = false
+                                    onTriggered: function (index) {
+                                        dockRoot.executeDockMenuAction(index, dockButton.dockItem);
+                                    }
+                                }
                             }
                         }
                     }
@@ -1012,5 +866,5 @@ Scope {
             }
         }
     }
+
 }
-

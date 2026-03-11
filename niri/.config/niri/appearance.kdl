@@ -9,6 +9,10 @@ overview {
   }
 }
 
+hotkey-overlay {
+  skip-at-startup
+}
+
 gestures {
   hot-corners {
     top-left

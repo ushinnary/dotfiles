@@ -1,3 +1,5 @@
+binds {
     // Brightness keys — routed through DMS IPC (handles OSD automatically)
     XF86MonBrightnessUp   { spawn "dms" "ipc" "call" "brightness" "increment" "5" "backlight:amdgpu_bl1"; }
     XF86MonBrightnessDown { spawn "dms" "ipc" "call" "brightness" "decrement" "5" "backlight:amdgpu_bl1"; }
+}

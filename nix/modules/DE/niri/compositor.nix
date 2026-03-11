@@ -46,10 +46,10 @@ in
               source = mkDotfileSymlink "${niriRelativeRoot}/${file}";
             };
           }) niriFiles
-        );
-
-        xdg.configFile."DankMaterialShell/settings.json".source =
-          mkDotfileSymlink "${dankMaterialShellRelativeRoot}/settings.json";
+        ) // {
+          "DankMaterialShell/settings.json".source =
+            mkDotfileSymlink "${dankMaterialShellRelativeRoot}/settings.json";
+        };
       };
   };
 }

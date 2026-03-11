@@ -31,6 +31,7 @@ with lib;
     hardware = {
       amdCpu = mkEnableOption "AMD CPU tweaks (microcode, pstate)";
       hasBattery = mkEnableOption "system has a battery (enables battery widget in bars, power-aware features, etc.)";
+      hasWebCam = mkEnableOption "system has a webcam (enables clight for automatic brightness via camera)";
     };
 
     # ── Desktop ───────────────────────────────────────────────────

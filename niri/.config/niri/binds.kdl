@@ -32,6 +32,11 @@ binds {
     // Theme toggle (DMS)
     Mod+Shift+T { spawn "dms" "ipc" "call" "theme" "toggle"; }
 
+    // Wallpaper Carousel (DMS plugin)
+    Mod+W { spawn "dms" "ipc" "wallpaperCarousel" "toggle"; }
+    Mod+Ctrl+Right { spawn "dms" "ipc" "wallpaperCarousel" "cycleNext"; }
+    Mod+Ctrl+Left  { spawn "dms" "ipc" "wallpaperCarousel" "cyclePrevious"; }
+
     // Window management
     Mod+Q { close-window; }
     Alt+F4 { close-window; }

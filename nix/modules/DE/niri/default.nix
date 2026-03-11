@@ -36,6 +36,7 @@ in
         dankClight.enable = true;
         dankLauncherKeys.enable = true;
         dankPomodoroTimer.enable = true;
+        wallpaperCarousel.enable = true;
         dankBatteryAlerts.enable = hw.hasBattery;
       };
     };

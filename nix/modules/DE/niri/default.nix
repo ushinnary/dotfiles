@@ -8,9 +8,11 @@
 with lib;
 let
   cfg = config.ushinnary.desktop;
+  hw = config.ushinnary.hardware;
 in
 {
   imports = [
+    inputs.dms-plugin-registry.modules.default
     ./bar.nix
     ./terminal.nix
     ./compositor.nix
@@ -30,6 +32,12 @@ in
       enableSystemMonitoring = true;
       enableDynamicTheming = true;
       enableClipboardPaste = true;
+      plugins = {
+        dankClight.enable = true;
+        dankLauncherKeys.enable = true;
+        dankPomodoroTimer.enable = true;
+        dankBatteryAlerts.enable = hw.hasBattery;
+      };
     };
 
     # ── DankSearch ────────────────────────────────────────────────

@@ -24,17 +24,7 @@ window-rule {
 // Ghostty: blur + transparency + shadow
 window-rule {
   match app-id=r#"(^ghostty$|^com\.mitchellh\.ghostty$)"#
-  opacity 0.88
-  draw-border-with-background false
   open-on-workspace "Code"
-
-  shadow {
-    on
-    softness 30
-    spread 5
-    offset x=0 y=5
-    color "#00000060"
-  }
 }
 
 // ── Layer rules ─────────────────────────────────────────

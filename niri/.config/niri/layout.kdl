@@ -11,11 +11,11 @@ layout {
     }
     default-column-width { proportion 0.5; }
 
-    focus-ring { off; }
-    border {
-        on
-        width 2
-        active-color "#89b4fa"   // Catppuccin Mocha blue
-        inactive-color "#45475a" // Catppuccin Mocha surface1
-    }
+    // focus-ring { off; }
+    // border {
+    //     on
+    //     width 2
+        // active-color "#89b4fa"   // Catppuccin Mocha blue
+        // inactive-color "#45475a" // Catppuccin Mocha surface1
+    // }
 }

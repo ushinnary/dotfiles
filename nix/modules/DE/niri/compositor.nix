@@ -31,8 +31,7 @@ in
       let
         mkDotfileSymlink =
           relativePath:
-          config.lib.file.mkOutOfStoreSymlink
-            "${config.home.homeDirectory}/dotfiles/${relativePath}";
+          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
       in
       {
         # ── Home-manager: map existing dotfiles into place ─────────────
@@ -41,9 +40,14 @@ in
         xdg.configFile = builtins.listToAttrs (
           map (file: {
             name = "niri/${file}";
-            value = { source = mkDotfileSymlink "${niriRelativeRoot}/${file}"; };
+            value = {
+              source = mkDotfileSymlink "${niriRelativeRoot}/${file}";
+            };
           }) niriFiles
         );
+
+        xdg.configFile."DankMaterialShell/settings.json".source =
+          mkDotfileSymlink "DankMaterialShell/.config/DankMaterialShell/settings.json";
       };
   };
 }

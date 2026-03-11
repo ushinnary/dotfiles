@@ -8,6 +8,7 @@ with lib;
 let
   cfg = config.ushinnary.desktop;
   niriRelativeRoot = "niri/.config/niri";
+  dankMaterialShellRelativeRoot = "DankMaterialShell/.config/DankMaterialShell";
   niriFiles = [
     "config.kdl"
     "startup.kdl"
@@ -48,7 +49,7 @@ in
         );
 
         xdg.configFile."DankMaterialShell/settings.json".source =
-          mkDotfileSymlink "DankMaterialShell/.config/DankMaterialShell/settings.json";
+          mkDotfileSymlink "${dankMaterialShellRelativeRoot}/settings.json";
       };
   };
 }

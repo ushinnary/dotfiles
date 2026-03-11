@@ -18,6 +18,7 @@ let
     "layout.kdl"
     "window-rules.kdl"
     "binds.kdl"
+    "binds-custom.kdl"
   ];
 in
 {

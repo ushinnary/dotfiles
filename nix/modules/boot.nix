@@ -2,7 +2,7 @@
 {
   boot = {
     # Enable "Silent boot"
-    consoleLogLevel = 3;
+    consoleLogLevel = 0;
     initrd.verbose = false;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [

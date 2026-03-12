@@ -21,6 +21,7 @@ in
       services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.power.enable);
     }
     (mkIf (cfg.gnome || cfg.cosmic || cfg.niri) {
+      hardware.i2c.enable = true;
       environment.systemPackages = with pkgs; [
         bibata-cursors
       ];
@@ -53,11 +54,12 @@ in
       systemd.services.flatpak-auto-update = {
         description = "Automatically update Flatpak apps on boot";
         after = [
+          "display-manager.service"
           "network-online.target"
           "flatpak-repo.service"
         ];
         wants = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
+        wantedBy = [ "graphical.target" ];
         serviceConfig = {
           Type = "oneshot";
           ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";

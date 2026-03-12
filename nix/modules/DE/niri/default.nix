@@ -25,6 +25,7 @@ in
     #    wallpaper, theme, lock screen, media, brightness …) ───────
     programs.dms-shell = {
       enable = true;
+      quickshell.package = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
       systemd = {
         enable = true;
         restartIfChanged = true;

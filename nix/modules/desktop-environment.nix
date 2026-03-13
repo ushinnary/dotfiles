@@ -44,15 +44,11 @@ in
       services.gvfs.enable = true;
       services.flatpak.enable = true;
       systemd.services.flatpak-repo = {
-        description = "Add Flathub remote for Flatpak";
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          ExecStart = "${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo";
-        };
+        path = [ pkgs.flatpak ];
+        script = ''
+          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        '';
       };
 
       systemd.services.flatpak-auto-update = {

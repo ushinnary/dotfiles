@@ -33,7 +33,7 @@ in
       enableDynamicTheming = true;
       enableClipboardPaste = true;
       plugins = {
-        dankClight.enable = hw.hasWebCam;
+        dankClight.enable = false;
         dankLauncherKeys.enable = true;
         dankPomodoroTimer.enable = true;
         wallpaperCarousel.enable = true;
@@ -41,7 +41,7 @@ in
       };
     };
 
-    services.clight.enable = hw.hasWebCam;
+    services.clight.enable = false;
 
     # ── DankSearch ────────────────────────────────────────────────
     programs.dsearch = {

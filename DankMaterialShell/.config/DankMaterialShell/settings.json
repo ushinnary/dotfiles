@@ -423,10 +423,6 @@
           "enabled": true
         },
         {
-          "id": "dankClight",
-          "enabled": true
-        },
-        {
           "id": "memUsage",
           "enabled": true
         },

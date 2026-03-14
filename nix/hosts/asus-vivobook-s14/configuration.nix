@@ -29,7 +29,7 @@
   ushinnary = {
     gpu.amd.enable = true;
     hardware.amdCpu = true;
-    desktop.niri = true;
+    desktop.gnome = true;
     dev.enable = true;
     gaming.enable = false;
     containers.enable = false;

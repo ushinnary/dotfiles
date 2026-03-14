@@ -30,7 +30,7 @@
     gpu.amd.enable = true;
     hardware.amdCpu = true;
     desktop.gnome = true;
-    dev.enable = true;
+    dev.enable = false;
     gaming.enable = false;
     containers.enable = false;
     display = {

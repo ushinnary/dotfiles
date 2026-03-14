@@ -80,7 +80,7 @@ in
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
       always-center-icons = true;
-      apply-custom-theme = false;
+      apply-custom-theme = true;
       background-color = "rgb(0,0,0)";
       background-opacity = 1.0;
       custom-background-color = true;

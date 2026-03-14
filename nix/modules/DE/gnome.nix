@@ -49,6 +49,7 @@ in
       gnome-clocks
       gnome-contacts
       gnome-weather
+      gnome-console
       simple-scan
       loupe
       showtime

@@ -40,7 +40,7 @@
     power.enable = true;
     hardware.hasBattery = true;
     hardware.hasWebCam = true;
-    security.howdy.enable = true;
+    security.howdy.enable = false;
   };
 
   # Asus specific configurations

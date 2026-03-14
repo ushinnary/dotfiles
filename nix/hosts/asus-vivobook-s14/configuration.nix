@@ -68,9 +68,6 @@
       xdg.configFile."niri/outputs.kdl".source = lib.mkForce (
         mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14/outputs.kdl"
       );
-      xdg.configFile."niri/input.kdl".source = lib.mkForce (
-        mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14/input.kdl"
-      );
       xdg.configFile."niri/binds-custom.kdl".source = lib.mkForce (
         mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14/binds-custom.kdl"
       );

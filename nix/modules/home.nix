@@ -18,6 +18,7 @@ in
         gnomeExtensions.appindicator
         gnomeExtensions.night-theme-switcher
         gnomeExtensions.dash-to-dock
+        gnomeExtensions.blur-my-shell
       ]
     else
       [ ];

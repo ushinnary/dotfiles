@@ -89,6 +89,7 @@ in
               "dash-to-dock@micxgx.gmail.com"
               "gsconnect@andyholmes.github.io"
               "nightthemeswitcher@romainvigier.fr"
+              "blur-my-shell@aunetx"
             ];
           };
           "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -119,6 +120,7 @@ in
       gnomeExtensions.appindicator
       gnomeExtensions.night-theme-switcher
       gnomeExtensions.dash-to-dock
+      gnomeExtensions.blur-my-shell
       nautilus
       sushi
       gnome-calculator

@@ -34,82 +34,6 @@ in
     ];
 
     programs.dconf.enable = true;
-    programs.dconf.profiles.user.databases = [
-      {
-        settings = {
-          "org/gnome/mutter" = {
-            experimental-features = [
-              "scale-monitor-framebuffer" # Enables fractional scaling (125% 150% 175%)
-              "variable-refresh-rate" # Enables Variable Refresh Rate (VRR) on compatible displays
-              "xwayland-native-scaling" # Scales Xwayland applications to look crisp on HiDPI screens
-            ];
-          };
-          "org/gnome/desktop/peripherals/mouse" = {
-            natural-scroll = true; # Enable inverted/natural scroll for mouse
-            acceleration-profile = "flat"; # Use flat acceleration profile for mouse
-          };
-          "org/gnome/desktop/wm/keybindings" = {
-            close = [
-              "<Alt>F4"
-              "<Super>q"
-            ];
-            switch-to-workspace-left = [ "<Super>h" ];
-            switch-to-workspace-right = [ "<Super>l" ];
-            move-to-workspace-left = [ "<Super><Shift>h" ];
-            move-to-workspace-right = [ "<Super><Shift>l" ];
-            minimize = gvariant.mkEmptyArray (gvariant.type.string);
-            maximize = [ "<Super>f" ];
-            show-desktop = [ "<Super>d" ];
-          };
-          "org/gnome/desktop/input-sources" = {
-            per-window = true;
-            sources = [
-              (gvariant.mkTuple [
-                "xkb"
-                "us"
-              ])
-              (gvariant.mkTuple [
-                "xkb"
-                "ru"
-              ])
-            ];
-            mru-sources = [
-              (gvariant.mkTuple [
-                "xkb"
-                "us"
-              ])
-            ];
-          };
-          "org/gnome/shell/app-switcher" = {
-            current-workspace-only = true;
-          };
-          "org/gnome/shell" = {
-            enabled-extensions = [
-              "appindicatorsupport@rgcjonas.gmail.com"
-              "dash-to-dock@micxgx.gmail.com"
-              "gsconnect@andyholmes.github.io"
-              "nightthemeswitcher@romainvigier.fr"
-              "blur-my-shell@aunetx"
-            ];
-          };
-          "org/gnome/settings-daemon/plugins/media-keys" = {
-            custom-keybindings = [
-              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-            ];
-            screensaver = gvariant.mkEmptyArray (gvariant.type.string);
-          };
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-            name = "Terminal ";
-            binding = "<Super>t";
-            command = "ghostty";
-          };
-          "org/freedesktop/tracker/miner/files" = {
-            index-single-directories = gvariant.mkEmptyArray (gvariant.type.string);
-            index-recursive-directories = gvariant.mkEmptyArray (gvariant.type.string);
-          };
-        };
-      }
-    ];
 
     services.udev.packages = [ pkgs.gnome-settings-daemon ];
     programs.kdeconnect = {
@@ -117,10 +41,6 @@ in
       package = pkgs.gnomeExtensions.gsconnect;
     };
     environment.systemPackages = with pkgs; [
-      gnomeExtensions.appindicator
-      gnomeExtensions.night-theme-switcher
-      gnomeExtensions.dash-to-dock
-      gnomeExtensions.blur-my-shell
       nautilus
       sushi
       gnome-calculator

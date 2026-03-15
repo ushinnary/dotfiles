@@ -32,17 +32,20 @@ with lib;
     "usbhid"
     "i2c-dev"
     "i2c-i801"
-    "msr" # Required for ryzenadj / steamos-manager TDP control
+    "msr" # Kept for low-level MSR access (not the TDP path on Zotac Zone)
   ];
 
+  # Load the Zotac Zone platform driver at boot so firmware-attributes appear
+  # before steamos-manager starts up and sets TDP limits.
+  boot.kernelModules = [ "zotac_zone_platform" ];
+
   # ── Phoenix APU power management ─────────────────────────────
-  # ppfeaturemask=0xffffffff: instructs the amdgpu driver to enable all
-  # power-play features, which causes it to create power1_cap (fast PPT)
-  # and power2_cap (slow PPT) under /sys/class/hwmon/hwmon*/.
-  # Without this flag those sysfs files never appear on Phoenix (Ryzen Z1),
-  # steamos-manager crashes looking for them, and TDP control is unavailable.
-  # The existing enablePerfControlUdevRules already chmod a+w those files;
-  # this flag makes the files exist in the first place.
+  # ppfeaturemask=0xffffffff: unlocks pp_od_clk_voltage and related amdgpu
+  # hwmon attributes that steamos-manager uses for manual GPU clock control
+  # (the enablePerfControlUdevRules udev rule then chmod a+w those files).
+  # NOTE: the Zotac Zone's *TDP* control goes through firmware-attributes
+  # (/sys/class/firmware-attributes/zotac_zone_platform/) — NOT these hwmon
+  # files — so this flag is kept for GPU-clock granularity only.
   #
   # amd_pstate=active: enables the AMD P-State EPP driver for Phoenix so
   # the CPU scales frequency/voltage via hardware firmware hints (HWP),
@@ -59,6 +62,13 @@ with lib;
   ];
 
   time.timeZone = "Europe/Paris";
+
+  # ── Jovian kernel ────────────────────────────────────────────────────────────
+  # Required for ZOTAC_ZONE_PLATFORM and ZOTAC_ZONE_HID modules (and scx
+  # scheduler support). Without this kernel the firmware-attributes interface
+  # (/sys/class/firmware-attributes/zotac_zone_platform/) never appears and
+  # steamos-manager has nothing to drive for TDP control.
+  boot.kernelPackages = pkgs.linuxPackages_jovian;
 
   # ═══════════════════════════════════════════════════════════════
   #  Jovian NixOS — SteamOS-like experience
@@ -111,6 +121,14 @@ with lib;
   services.udisks2.enable = true; # Required for SD card mounting in Steam
 
   services.udev.packages = [ pkgs.iio-sensor-proxy ];
+
+  services.udev.extraRules = ''
+    # Set Zotac Zone platform-profile to "custom" on driver probe so that the
+    # firmware-attributes TDP attributes (ppt_pl1_spl / ppt_pl2_sppt /
+    # ppt_pl3_fppt) become writable.  steamos-manager then manages the profile
+    # dynamically; this just ensures it starts in a state where TDP is tunable.
+    ACTION=="add|change", SUBSYSTEM=="platform-profile", KERNELS=="platform-profile-0", ATTRS{name}=="zotac_zone_platform", RUN+="/bin/sh -c 'echo custom > /sys/class/platform-profile/platform-profile-0/profile'"
+  '';
   programs.steam.extraCompatPackages = with pkgs; [
     proton-ge-bin
   ];

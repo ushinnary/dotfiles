@@ -77,6 +77,7 @@ in
         "gsconnect@andyholmes.github.io"
         "nightthemeswitcher@romainvigier.fr"
         "blur-my-shell@aunetx"
+        "display-brightness-ddcutil@themightydeity.github.com"
       ];
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
@@ -141,6 +142,14 @@ in
     "org/gnome/shell/extensions/blur-my-shell/window-list" = {
       brightness = 0.6;
       sigma = 30;
+    };
+    "org/gnome/shell/extensions/display-brightness-ddcutil" = {
+      button-location = 1;
+      ddcutil-sleep-multiplier = 40.0;
+      decrease-brightness-shortcut = [ "<Control>XF86MonBrightnessDown" ];
+      increase-brightness-shortcut = [ "<Control>XF86MonBrightnessUp" ];
+      position-system-menu = 3.0;
+      step-change-keyboard = 2.0;
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [

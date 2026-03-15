@@ -32,7 +32,24 @@ with lib;
     "usbhid"
     "i2c-dev"
     "i2c-i801"
-    "msr" # Required for ryzenadj TDP control
+    "msr" # Required for ryzenadj / steamos-manager TDP control
+  ];
+
+  # ── Phoenix APU power management ─────────────────────────────
+  # ppfeaturemask=0xffffffff: instructs the amdgpu driver to enable all
+  # power-play features, which causes it to create power1_cap (fast PPT)
+  # and power2_cap (slow PPT) under /sys/class/hwmon/hwmon*/.
+  # Without this flag those sysfs files never appear on Phoenix (Ryzen Z1),
+  # steamos-manager crashes looking for them, and TDP control is unavailable.
+  # The existing enablePerfControlUdevRules already chmod a+w those files;
+  # this flag makes the files exist in the first place.
+  #
+  # amd_pstate=active: enables the AMD P-State EPP driver for Phoenix so
+  # the CPU scales frequency/voltage via hardware firmware hints (HWP),
+  # improving efficiency across the idle→boost curve.
+  boot.kernelParams = [
+    "amdgpu.ppfeaturemask=0xffffffff"
+    "amd_pstate=active"
   ];
 
   networking.hostName = "zotac-zone";
@@ -66,22 +83,6 @@ with lib;
     decky-loader.enable = true;
   };
 
-  # ── Fix non-Steam Deck boot hangs ──────────────────────────────
-  # steamos-manager crashes on Zotac Zone (missing TDP sysfs paths)
-  # and jovian-setup-desktop-session hangs waiting on it via D-Bus.
-  # Keep services enabled, but bound startup time so they don't block sessions.
-  systemd.user.services.jovian-setup-desktop-session = {
-    overrideStrategy = "asDropin";
-    serviceConfig.TimeoutStartSec = lib.mkForce "10s";
-  };
-  systemd.user.services.steamos-manager = {
-    overrideStrategy = "asDropin";
-    serviceConfig = {
-      TimeoutStartSec = lib.mkForce "10s";
-      TimeoutStopSec = lib.mkForce "10s";
-    };
-  };
-
   # Decky requires Steam CEF remote debugging to show up in Gaming Mode UI.
   # Jovian intentionally doesn't toggle this automatically.
   systemd.services.steam-cef-debug = lib.mkIf config.jovian.decky-loader.enable {
@@ -98,24 +99,9 @@ with lib;
     };
   };
 
-  # SDDM (required by Jovian autoStart) — X11 backend for the login greeter,
-  # gamescope-wayland session takes over immediately after autologin
-  services.displayManager.sddm.wayland.enable = true;
-
   # ═══════════════════════════════════════════════════════════════
   #  Handheld-specific tweaks
   # ═══════════════════════════════════════════════════════════════
-
-  # Handheld Daemon (HHD) for Zotac Zone controller/gyro support
-  services.handheld-daemon = {
-    enable = true;
-    user = "ushinnary";
-    adjustor = {
-      enable = true;
-      loadAcpiCallModule = true;
-    };
-    ui.enable = true;
-  };
 
   services.udisks2.enable = true; # Required for SD card mounting in Steam
 

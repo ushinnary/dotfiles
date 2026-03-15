@@ -68,7 +68,7 @@ with lib;
   # scheduler support). Without this kernel the firmware-attributes interface
   # (/sys/class/firmware-attributes/zotac_zone_platform/) never appears and
   # steamos-manager has nothing to drive for TDP control.
-  boot.kernelPackages = pkgs.linuxPackages_jovian;
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_jovian;
 
   # ═══════════════════════════════════════════════════════════════
   #  Jovian NixOS — SteamOS-like experience

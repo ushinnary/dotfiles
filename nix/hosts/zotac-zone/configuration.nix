@@ -5,6 +5,9 @@
   lib,
   ...
 }:
+let
+  compatPaths = lib.makeSearchPathOutput "steamcompattool" "" (with pkgs; [ proton-ge-bin ]);
+in
 with lib;
 {
   imports = [
@@ -80,6 +83,9 @@ with lib;
       user = "ushinnary";
       # No desktopSession — "Switch to Desktop" re-enters Gaming Mode
       desktopSession = "gamescope-wayland";
+      environment = {
+        STEAM_EXTRA_COMPAT_TOOLS_PATHS = compatPaths;
+      };
     };
     steamos = {
       enableAutoMountUdevRules = true; # For SD card auto-mount in Steam Library
@@ -129,9 +135,6 @@ with lib;
     # dynamically; this just ensures it starts in a state where TDP is tunable.
     ACTION=="add|change", SUBSYSTEM=="platform-profile", KERNELS=="platform-profile-0", ATTRS{name}=="zotac_zone_platform", RUN+="/bin/sh -c 'echo custom > /sys/class/platform-profile/platform-profile-0/profile'"
   '';
-  programs.steam.extraCompatPackages = with pkgs; [
-    proton-ge-bin
-  ];
 
   # Sensors for auto-rotation and adaptive brightness
   hardware.sensor.iio.enable = true;

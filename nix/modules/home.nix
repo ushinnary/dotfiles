@@ -18,6 +18,7 @@ in
       gnomeExtensions.night-theme-switcher
       gnomeExtensions.dash-to-dock
       gnomeExtensions.blur-my-shell
+      gnomeExtensions.brightness-control-using-ddcutil
     ]
   );
 

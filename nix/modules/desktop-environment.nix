@@ -24,6 +24,7 @@ in
       hardware.i2c.enable = true;
       environment.systemPackages = with pkgs; [
         bibata-cursors
+        ddcutil
       ];
 
       environment.variables = {

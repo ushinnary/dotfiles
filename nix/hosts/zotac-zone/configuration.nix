@@ -83,6 +83,11 @@ with lib;
     decky-loader.enable = true;
   };
 
+  services.handheld-daemon = {
+    enable = true;
+    user = "ushinnary";
+  };
+
   # Decky requires Steam CEF remote debugging to show up in Gaming Mode UI.
   # Jovian intentionally doesn't toggle this automatically.
   systemd.services.steam-cef-debug = lib.mkIf config.jovian.decky-loader.enable {

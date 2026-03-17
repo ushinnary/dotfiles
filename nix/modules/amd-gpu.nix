@@ -9,10 +9,6 @@ let
   cfg = config.ushinnary.gpu.amd;
 in
 {
-
-  imports = [
-  ];
-
   config = mkIf cfg.enable {
     # Enable OpenGL
     hardware.graphics = {

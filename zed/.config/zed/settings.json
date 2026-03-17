@@ -1,4 +1,7 @@
 {
+  "git_panel": {
+    "tree_view": true
+  },
   "vim_mode": true,
   "ui_font_weight": 500.0,
   "ui_font_family": "Quicksand",

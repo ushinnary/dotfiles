@@ -31,16 +31,18 @@ in
         QT_AUTO_SCREEN_SCALE_FACTOR = 1;
       };
 
-      home-manager.users.ushinnary = { ... }: {
-        dconf.settings = {
-          "org/gnome/desktop/interface" = {
-            cursor-theme = "Bibata-Modern-Ice";
-            font-name = "Quicksand 11";
-            document-font-name = "Quicksand 11";
-            monospace-font-name = "Google Sans Code 10";
+      home-manager.users.ushinnary =
+        { ... }:
+        {
+          dconf.settings = {
+            "org/gnome/desktop/interface" = {
+              cursor-theme = "Bibata-Modern-Ice";
+              font-name = "Quicksand 11";
+              document-font-name = "Quicksand 11";
+              monospace-font-name = "Google Sans Code 10";
+            };
           };
         };
-      };
 
       services.gvfs.enable = true;
       services.flatpak.enable = true;

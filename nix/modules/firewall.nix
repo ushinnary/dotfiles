@@ -57,7 +57,7 @@ in
     ];
   };
 
-  networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
+  networking.firewall.extraCommands = "iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns";
 
   # ── Egress (outbound) application firewall ─────────────────────
   # OpenSnitch intercepts EVERY outbound connection at the process level.

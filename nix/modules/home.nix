@@ -101,7 +101,7 @@ in
       show-apps-at-top = true;
       transparency-mode = "FIXED";
     };
-     "org/gnome/shell/extensions/blur-my-shell" = {
+    "org/gnome/shell/extensions/blur-my-shell" = {
       settings-version = 2;
     };
     "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
@@ -112,7 +112,10 @@ in
       blur = true;
       dynamic-opacity = false;
       opacity = 234;
-      whitelist = [ "com.mitchellh.ghostty" ];
+      whitelist = [
+        "com.mitchellh.ghostty"
+        "dev.zed.Zed"
+      ];
     };
     "org/gnome/shell/extensions/blur-my-shell/coverflow-alt-tab" = {
       pipeline = "pipeline_default";

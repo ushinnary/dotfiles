@@ -31,7 +31,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-     dms-plugin-registry = {
+    dms-plugin-registry = {
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -47,7 +47,10 @@
         # Hostname: ryzo
         ryzo = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; dotfiles = inputs.dotfiles; };
+          specialArgs = {
+            inherit inputs;
+            dotfiles = inputs.dotfiles;
+          };
           modules = [
             ./hosts/ryzo/configuration.nix
           ];
@@ -56,7 +59,10 @@
         # Hostname: zotac-zone (Gaming Handheld)
         zotac-zone = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; dotfiles = inputs.dotfiles; };
+          specialArgs = {
+            inherit inputs;
+            dotfiles = inputs.dotfiles;
+          };
           modules = [
             inputs.jovian-nixos.nixosModules.default
             ./hosts/zotac-zone/configuration.nix
@@ -66,7 +72,10 @@
         # Hostname: asus-vivobook-s14 (Laptop)
         asus-vivobook-s14 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; dotfiles = inputs.dotfiles; };
+          specialArgs = {
+            inherit inputs;
+            dotfiles = inputs.dotfiles;
+          };
           modules = [
             inputs.nixos-hardware.nixosModules.asus-battery
             ./hosts/asus-vivobook-s14/configuration.nix

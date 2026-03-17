@@ -8,7 +8,6 @@
 let
   compatPaths = lib.makeSearchPathOutput "steamcompattool" "" (with pkgs; [ proton-ge-bin ]);
 in
-with lib;
 {
   imports = [
     ./hardware-configuration.nix

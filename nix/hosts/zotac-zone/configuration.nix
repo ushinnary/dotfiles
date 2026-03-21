@@ -37,10 +37,6 @@ in
     "msr" # Kept for low-level MSR access (not the TDP path on Zotac Zone)
   ];
 
-  # Load the Zotac Zone platform driver at boot so firmware-attributes appear
-  # before steamos-manager starts up and sets TDP limits.
-  boot.kernelModules = [ "zotac_zone_platform" ];
-
   # ── Phoenix APU power management ─────────────────────────────
   # ppfeaturemask=0xffffffff: unlocks pp_od_clk_voltage and related amdgpu
   # hwmon attributes that steamos-manager uses for manual GPU clock control
@@ -64,13 +60,6 @@ in
   ];
 
   time.timeZone = "Europe/Paris";
-
-  # ── Jovian kernel ────────────────────────────────────────────────────────────
-  # Required for ZOTAC_ZONE_PLATFORM and ZOTAC_ZONE_HID modules (and scx
-  # scheduler support). Without this kernel the firmware-attributes interface
-  # (/sys/class/firmware-attributes/zotac_zone_platform/) never appears and
-  # steamos-manager has nothing to drive for TDP control.
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_jovian;
 
   # ═══════════════════════════════════════════════════════════════
   #  Jovian NixOS — SteamOS-like experience

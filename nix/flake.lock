@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774055499,
-        "narHash": "sha256-8Br5CVZQH0ZYf+yT1cmhqWN/qDzW9MxbMJRoUtZZMyY=",
+        "lastModified": 1774121087,
+        "narHash": "sha256-fgfVn9PSIAeAbA9j8xlhYC5Vcsuk79EGU1KXT3e0BEw=",
         "owner": "AvengeMedia",
         "repo": "dms-plugin-registry",
-        "rev": "3aad8d18fad8688ecb85074f8d276c80b9ee6a17",
+        "rev": "2488702b2310d38cbfecd268083f89baa77beeef",
         "type": "github"
       },
       "original": {
@@ -60,11 +60,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774007980,
-        "narHash": "sha256-FOnZjElEI8pqqCvB6K/1JRHTE8o4rer8driivTpq2uo=",
+        "lastModified": 1774135471,
+        "narHash": "sha256-TVeIGOxnfSPM6JvkRkXHpJECnj1OG2dXkWMSA4elzzQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9670de2921812bc4e0452f6e3efd8c859696c183",
+        "rev": "856b01ebd1de3f53c3929ce8082d9d67d799d816",
         "type": "github"
       },
       "original": {
@@ -81,11 +81,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1773949806,
-        "narHash": "sha256-W25eg57cTQSwey9nEf1AhHy895Yiwq74PgyJl2EuY3Q=",
+        "lastModified": 1774168156,
+        "narHash": "sha256-+pwZSARdlM2RQQ6V0q76+WMKW9aNIcxkSOIThcz/f0A=",
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
-        "rev": "425b357e190632600ca2b2daea3bdf28d57e3047",
+        "rev": "939caad56508542d0f19cab963e2bc693f5f2831",
         "type": "github"
       },
       "original": {

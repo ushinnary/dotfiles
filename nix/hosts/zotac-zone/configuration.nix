@@ -82,7 +82,7 @@ in
     # AMD GPU: early KMS + backlight brightness control from Steam UI
     hardware.has.amd.gpu = true;
     hardware.amd.gpu.enableEarlyModesetting = true;
-    devices.steamdeck.enablePerfControlUdevRules = true;
+    devices.steamdeck.enablePerfControlUdevRules = false;
 
     decky-loader.enable = true;
   };
@@ -126,9 +126,6 @@ in
 
   # Sensors for auto-rotation and adaptive brightness
   hardware.sensor.iio.enable = true;
-
-  # Force SD Card to be visible as mmcblk0p1 if it's not mounting automatically in Steam
-  environment.variables.STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/mnt/sdcard";
 
   # Add user to hardware groups
   users.users.ushinnary.extraGroups = [

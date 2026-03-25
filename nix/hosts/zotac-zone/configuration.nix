@@ -37,20 +37,8 @@ in
     "msr" # Kept for low-level MSR access (not the TDP path on Zotac Zone)
   ];
 
-  # ── Phoenix APU power management ─────────────────────────────
-  # ppfeaturemask=0xffffffff: unlocks pp_od_clk_voltage and related amdgpu
-  # hwmon attributes that steamos-manager uses for manual GPU clock control
-  # (the enablePerfControlUdevRules udev rule then chmod a+w those files).
-  # NOTE: the Zotac Zone's *TDP* control goes through firmware-attributes
-  # (/sys/class/firmware-attributes/zotac_zone_platform/) — NOT these hwmon
-  # files — so this flag is kept for GPU-clock granularity only.
-  #
-  # amd_pstate=active: enables the AMD P-State EPP driver for Phoenix so
-  # the CPU scales frequency/voltage via hardware firmware hints (HWP),
-  # improving efficiency across the idle→boost curve.
   boot.kernelParams = [
     "amdgpu.ppfeaturemask=0xffffffff"
-    "amd_pstate=active"
   ];
 
   networking.hostName = "zotac-zone";
@@ -111,8 +99,6 @@ in
   # ═══════════════════════════════════════════════════════════════
   #  Handheld-specific tweaks
   # ═══════════════════════════════════════════════════════════════
-
-  services.udisks2.enable = true; # Required for SD card mounting in Steam
 
   services.udev.packages = [ pkgs.iio-sensor-proxy ];
 

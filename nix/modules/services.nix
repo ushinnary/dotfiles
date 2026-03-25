@@ -3,16 +3,15 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.hardware;
 in
 {
-  config = mkIf cfg.amdCpu {
-    hardware.cpu.amd.updateMicrocode = true;
+  config = {
+    hardware.cpu.amd.updateMicrocode = cfg.amdCpu;
     services.fwupd.enable = true;
-
-    boot.kernelParams = [
+    services.udisks2.enable = true;
+    boot.kernelParams = lib.optionals cfg.amdCpu [
       "amd_pstate=active"
     ];
   };

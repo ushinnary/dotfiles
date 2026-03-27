@@ -21,7 +21,13 @@ in
       services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.power.enable);
     }
     (mkIf (cfg.gnome || cfg.cosmic || cfg.niri) {
+      boot.kernelModules = [ "i2c-dev" ];
       hardware.i2c.enable = true;
+      services.udev.extraRules = ''
+        KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+      '';
+      users.users.ushinnary.extraGroups = [ "i2c" ];
+
       environment.systemPackages = with pkgs; [
         bibata-cursors
         ddcutil

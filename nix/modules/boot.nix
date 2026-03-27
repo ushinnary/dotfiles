@@ -11,7 +11,6 @@
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
     ];
-    kernelModules = [ "i2c-dev" ];
 
     # Plymouth disabled for faster boot (~3.8s saving)
     plymouth.enable = false;
@@ -48,9 +47,4 @@
   services.openssh = {
     enable = true;
   };
-  services.udev.extraRules = ''
-    KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
-  '';
-  users.users.ushinnary.extraGroups = [ "i2c" ];
-
 }

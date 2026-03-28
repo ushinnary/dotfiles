@@ -39,6 +39,7 @@ in
 
   boot.kernelParams = [
     "amdgpu.ppfeaturemask=0xffffffff"
+    "iomem=relaxed" # Required for ryzenadj (SimpleDeckyTDP) to access SMU registers
   ];
 
   networking.hostName = "zotac-zone";
@@ -112,6 +113,9 @@ in
 
   # Sensors for auto-rotation and adaptive brightness
   hardware.sensor.iio.enable = true;
+
+  # ryzenadj for SimpleDeckyTDP TDP control
+  environment.systemPackages = [ pkgs.ryzenadj ];
 
   # Add user to hardware groups
   users.users.ushinnary.extraGroups = [

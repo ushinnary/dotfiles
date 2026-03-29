@@ -62,7 +62,6 @@ in
       pkgs.gh
       pkgs.dotnet-sdk
 
-      pkgs.stow
       pkgs.git-credential-manager
 
       pkgs.vscode

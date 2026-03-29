@@ -24,4 +24,11 @@
     ./services.nix
     ./security.nix
   ];
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  hardware.enableRedistributableFirmware = true;
 }

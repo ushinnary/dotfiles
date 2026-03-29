@@ -11,6 +11,8 @@ in
 {
   home.stateVersion = "25.11";
 
+  xdg.userDirs.createDirectories = true;
+
   home.packages = lib.optionals isGnome (
     with pkgs;
     [

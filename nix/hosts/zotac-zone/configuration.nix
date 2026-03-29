@@ -15,11 +15,6 @@ in
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
   # Bootloader - optimized for fast boot on handheld
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
@@ -129,6 +124,7 @@ in
     gpu.amd.enable = true;
     hardware.amdCpu = true;
     gaming.enable = false;
+    containers.enable = false;
     display = {
       oled = true;
       gamingRefreshRate = 120;

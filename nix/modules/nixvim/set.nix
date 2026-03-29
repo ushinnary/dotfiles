@@ -11,6 +11,8 @@
     undofile = true;
     hlsearch = false;
     incsearch = true;
+    ignorecase = true; # Case-insensitive search with '/'
+    smartcase = true; # Override ignorecase if pattern has uppercase
     termguicolors = true;
     scrolloff = 8;
     signcolumn = "yes";

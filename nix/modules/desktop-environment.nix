@@ -21,12 +21,23 @@ in
       services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.power.enable);
     }
     (mkIf (cfg.gnome || cfg.cosmic || cfg.niri) {
+      # Enable printing service
+      services.printing.enable = true;
+      hardware.sane.enable = true;
+      services.colord.enable = true;
+      hardware.sensor.iio.enable = config.ushinnary.hardware.hasWebCam;
+      services.avahi.enable = true; # For network discovery of printers and other devices
+
       boot.kernelModules = [ "i2c-dev" ];
       hardware.i2c.enable = true;
       services.udev.extraRules = ''
         KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
       '';
-      users.users.ushinnary.extraGroups = [ "i2c" ];
+      users.users.ushinnary.extraGroups = [
+        "i2c"
+        "scanner"
+        "lp"
+      ];
 
       environment.systemPackages = with pkgs; [
         bibata-cursors

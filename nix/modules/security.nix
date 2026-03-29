@@ -119,6 +119,8 @@ in
         };
       };
 
+      security.apparmor.enable = true;
+
       # Global PAM integration for Howdy (all services).
       # DankGreeter handles its own auth; Howdy is enabled globally
       # and individual PAM services can opt out if needed.

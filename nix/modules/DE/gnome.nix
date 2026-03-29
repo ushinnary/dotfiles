@@ -18,9 +18,6 @@ in
       FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
     };
 
-    # Enable printing service
-    services.printing.enable = true;
-
     # To disable installing GNOME's suite of applications
     # and only be left with GNOME shell.
     services.gnome.core-apps.enable = false;
@@ -70,6 +67,5 @@ in
     };
 
     services.gnome.gnome-keyring.enable = true;
-    services.colord.enable = true;
   };
 }

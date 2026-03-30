@@ -99,6 +99,9 @@ in
 
       # ── Restrict su to wheel group only ─────────────────────────
       security.pam.services.su.requireWheel = true;
+
+      # ── Mandatory Access Control ─────────────────────────────────
+      security.apparmor.enable = true;
     }
 
     # ═══════════════════════════════════════════════════════════════
@@ -118,8 +121,6 @@ in
           };
         };
       };
-
-      security.apparmor.enable = true;
 
       # Global PAM integration for Howdy (all services).
       # DankGreeter handles its own auth; Howdy is enabled globally

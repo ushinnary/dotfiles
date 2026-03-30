@@ -47,4 +47,21 @@
   services.openssh = {
     enable = true;
   };
+
+  # ── Journald log size limits ──────────────────────────────────
+  services.journald.extraConfig = ''
+    SystemMaxUse=1G
+    MaxRetentionSec=2weeks
+  '';
+
+  # ── Automatic weekly rebuild from local dotfiles flake ────────
+  # Applies any pending dotfile changes without manual intervention.
+  # Run `nix flake update` in ~/dotfiles/nix to also pull new nixpkgs.
+  system.autoUpgrade = {
+    enable = true;
+    flake = "/home/ushinnary/dotfiles/nix";
+    allowReboot = false;
+    dates = "weekly";
+    randomizedDelaySec = "45min";
+  };
 }

@@ -25,9 +25,10 @@ in
       80
       443
       22
-      139 # NetBIOS / SMB — remove if you don't share files on LAN
-      445 # SMB — remove if you don't share files on LAN
       34445
+    ] ++ lib.optionals cfg.smbSharing [
+      139 # NetBIOS / Samba
+      445 # SMB / Samba
     ];
     allowedTCPPortRanges = [
       # KDE Connect
@@ -45,19 +46,21 @@ in
         from = 8000;
         to = 8010;
       }
-      {
-        from = 137;
-        to = 138;
-      }
       # KDE Connect
       {
         from = 1714;
         to = 1764;
       }
+    ] ++ lib.optionals cfg.smbSharing [
+      {
+        from = 137; # NetBIOS/Samba
+        to = 138;
+      }
     ];
   };
 
-  networking.firewall.extraCommands = "iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns";
+  networking.firewall.extraCommands = lib.optionalString cfg.smbSharing
+    "iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns";
 
   # ── Egress (outbound) application firewall ─────────────────────
   # OpenSnitch intercepts EVERY outbound connection at the process level.

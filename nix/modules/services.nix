@@ -11,6 +11,7 @@ in
     hardware.cpu.amd.updateMicrocode = cfg.amdCpu;
     services.fwupd.enable = true;
     services.udisks2.enable = true;
+    services.resolved.enable = true;
     boot.kernelParams = lib.optionals cfg.amdCpu [
       "amd_pstate=active"
     ];

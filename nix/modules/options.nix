@@ -85,6 +85,8 @@ with lib;
         default = false;
         description = "Enable OpenSnitch application firewall";
       };
+
+      smbSharing = mkEnableOption "SMB/Samba file sharing ports in firewall (139, 445) — enable on LAN desktops only";
     };
 
     # ── Security ──────────────────────────────────────────────────

@@ -42,6 +42,16 @@ in
       environment.systemPackages = with pkgs; [
         bibata-cursors
         ddcutil
+
+        # Media codecs
+        ffmpeg
+        gst_all_1.gstreamer
+        gst_all_1.gst-plugins-base
+        gst_all_1.gst-plugins-good
+        gst_all_1.gst-plugins-bad
+        gst_all_1.gst-plugins-ugly
+        gst_all_1.gst-libav
+        gst_all_1.gst-vaapi
       ];
 
       environment.variables = {
@@ -68,23 +78,8 @@ in
         path = [ pkgs.flatpak ];
         script = ''
           flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak update -y
         '';
-      };
-
-      systemd.services.flatpak-auto-update = {
-        description = "Automatically update Flatpak apps on boot";
-        after = [
-          "display-manager.service"
-          "network-online.target"
-          "flatpak-repo.service"
-        ];
-        wants = [ "network-online.target" ];
-        wantedBy = [ "graphical.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";
-          RemainAfterExit = false;
-        };
       };
 
       fonts = {

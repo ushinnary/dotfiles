@@ -77,9 +77,37 @@ in
         wantedBy = [ "multi-user.target" ];
         path = [ pkgs.flatpak ];
         script = ''
-          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak update -y
+          flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
         '';
+      };
+
+      systemd.services.flatpak-update = {
+        description = "Update Flatpak apps and runtimes";
+        after = [
+          "network-online.target"
+          "flatpak-repo.service"
+        ];
+        wants = [
+          "network-online.target"
+          "flatpak-repo.service"
+        ];
+        path = [ pkgs.flatpak ];
+        serviceConfig = {
+          Type = "oneshot";
+        };
+        script = ''
+          flatpak update --system -y --noninteractive
+        '';
+      };
+
+      systemd.timers.flatpak-update = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnBootSec = "5m";
+          OnUnitActiveSec = "1d";
+          Persistent = true;
+          RandomizedDelaySec = "15m";
+        };
       };
 
       fonts = {

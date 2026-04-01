@@ -11,6 +11,7 @@ let
 in
 {
   config = mkIf cfg.enable {
+    boot.kernelModules = [ "ntsync" ];
     programs = {
       steam = {
         enable = true;

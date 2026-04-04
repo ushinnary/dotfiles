@@ -75,6 +75,7 @@ in
     enable = true;
     user = "ushinnary";
     ui.enable = true;
+    adjustor.enable = true; # For SimpleDeckyTDP support on AMD CPUs without ryzenadj MSR access
   };
 
   # Decky requires Steam CEF remote debugging to show up in Gaming Mode UI.

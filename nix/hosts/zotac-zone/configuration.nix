@@ -76,6 +76,7 @@ in
     user = "ushinnary";
     ui.enable = true;
     adjustor.enable = true; # For SimpleDeckyTDP support on AMD CPUs without ryzenadj MSR access
+    adjustor.loadAcpiCallModule = true; # Load acpi_call kernel module for TDP control on AMD CPUs without ryzenadj MSR access
   };
 
   # Decky requires Steam CEF remote debugging to show up in Gaming Mode UI.

@@ -41,6 +41,7 @@
   # Asus specific configurations
   services.asusd = {
     enable = true;
+    enableUserService = true;
   };
   hardware.asus.battery.chargeUpto = 80;
 

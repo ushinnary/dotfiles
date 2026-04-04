@@ -12,6 +12,7 @@ in
   imports = [
     ./DE/gnome.nix
     ./DE/cosmic.nix
+    ./DE/plasma.nix
     ./DE/niri/default.nix
   ];
 
@@ -20,7 +21,7 @@ in
       # Keep power-profiles-daemon disabled by default when Rust power stack is enabled
       services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.power.enable);
     }
-    (mkIf (cfg.gnome || cfg.cosmic || cfg.niri) {
+    (mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
       # Enable printing service
       services.printing.enable = true;
       hardware.sane.enable = true;

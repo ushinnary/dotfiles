@@ -38,6 +38,7 @@ with lib;
     desktop = {
       gnome = mkEnableOption "GNOME desktop environment";
       cosmic = mkEnableOption "COSMIC desktop environment";
+      plasma = mkEnableOption "Plasma desktop environment";
       niri = mkEnableOption "Niri Wayland compositor";
     };
 

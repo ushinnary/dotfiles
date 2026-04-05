@@ -13,6 +13,7 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # TODO: remove once using disko
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/f1c34fe7-94b9-4d91-bf76-c36c002d7e86";
       fsType = "ext4";

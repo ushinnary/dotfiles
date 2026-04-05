@@ -8,6 +8,14 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # Optional, once ready for a full disk encryption setup with LUKS and BTRFS:
+    # (import ../../modules/disko-luks-btrfs.nix {
+    #   device = "/dev/nvme0n1";
+    #   swapSize = "16G";
+    #   isSsd = true;
+    # })
+    # Optional after first successful boot/install:
+    # ../../modules/secure-boot.nix
     ../../modules/default.nix
     inputs.home-manager.nixosModules.home-manager
   ];

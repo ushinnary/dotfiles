@@ -3,6 +3,7 @@
   pkgs,
   inputs,
   lib,
+  vars,
   ...
 }:
 let
@@ -52,7 +53,7 @@ in
     steam = {
       enable = true;
       autoStart = true;
-      user = "ushinnary";
+      user = vars.userName;
       # No desktopSession — "Switch to Desktop" re-enters Gaming Mode
       desktopSession = "gamescope-wayland";
       environment = {
@@ -73,7 +74,7 @@ in
 
   services.handheld-daemon = {
     enable = true;
-    user = "ushinnary";
+    user = vars.userName;
     ui.enable = true;
     adjustor.enable = true; # For SimpleDeckyTDP support on AMD CPUs without ryzenadj MSR access
     adjustor.loadAcpiCallModule = true; # Load acpi_call kernel module for TDP control on AMD CPUs without ryzenadj MSR access
@@ -108,7 +109,7 @@ in
   environment.systemPackages = [ pkgs.ryzenadj ];
 
   # Add user to hardware groups
-  users.users.ushinnary.extraGroups = [
+  users.users."${vars.userName}".extraGroups = [
     "video"
     "input"
     "audio"
@@ -133,8 +134,10 @@ in
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs; };
-    users.ushinnary = import ../../modules/home.nix;
+    extraSpecialArgs = {
+      inherit inputs vars;
+    };
+    users."${vars.userName}" = import ../../modules/home.nix;
   };
 
   system.stateVersion = "25.11";

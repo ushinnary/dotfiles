@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  vars,
   ...
 }:
 with lib;
@@ -20,7 +21,7 @@ in
       pkgs.hicolor-icon-theme
     ];
 
-    home-manager.users.ushinnary =
+    home-manager.users."${vars.userName}" =
       { pkgs, ... }:
       {
         gtk = {

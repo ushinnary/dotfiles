@@ -3,6 +3,7 @@
   config,
   lib,
   inputs,
+  vars,
   ...
 }:
 with lib;
@@ -53,7 +54,7 @@ in
     services.displayManager.dms-greeter = {
       enable = true;
       compositor.name = "niri";
-      configHome = "/home/ushinnary"; # Sync DMS theme with the greeter
+      configHome = "/home/${vars.userName}"; # Sync DMS theme with the greeter
     };
 
     # ── Core Wayland / session packages ───────────────────────────
@@ -75,12 +76,17 @@ in
       enable = true;
       xdgOpenUsePortal = true;
       extraPortals = [
+        pkgs.xdg-desktop-portal-gnome
         pkgs.xdg-desktop-portal-gtk
       ];
       config.common.default = "*";
       config.niri = {
-        default = mkDefault [ "gtk" ];
+        default = mkDefault [
+          "gnome"
+          "gtk"
+        ];
         "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+        "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
       };
     };
 
@@ -103,7 +109,7 @@ in
     };
 
     # ── Home Manager base ─────────────────────────────────────────
-    home-manager.users.ushinnary =
+    home-manager.users."${vars.userName}" =
       { ... }:
       {
         imports = [

@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, vars, ... }:
 {
   boot = {
     # Enable "Silent boot"
@@ -59,7 +59,7 @@
   # Run `nix flake update` in ~/dotfiles/nix to also pull new nixpkgs.
   system.autoUpgrade = {
     enable = true;
-    flake = "/home/ushinnary/dotfiles/nix";
+    flake = "/home/${vars.userName}/dotfiles/nix";
     allowReboot = false;
     dates = "weekly";
     randomizedDelaySec = "45min";

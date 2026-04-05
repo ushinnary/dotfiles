@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  vars,
   ...
 }:
 with lib;
@@ -22,8 +23,19 @@ in
       services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.power.enable);
     }
     (mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
-      # Enable printing service
-      services.printing.enable = true;
+      # Enable CUPS printing services
+      # CUPS (Common Unix Printing System) handles all printer communication
+      services.printing = {
+        enable = true;
+
+        # Required drivers for most modern printers
+        # cups-filters: provides filters for converting documents to printer-ready formats
+        # cups-browsed: enables automatic printer discovery on the network
+        drivers = with pkgs; [
+          cups-filters
+          cups-browsed
+        ];
+      };
       hardware.sane.enable = true;
       services.colord.enable = true;
       hardware.sensor.iio.enable = config.ushinnary.hardware.hasWebCam;
@@ -34,7 +46,7 @@ in
       services.udev.extraRules = ''
         KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
       '';
-      users.users.ushinnary.extraGroups = [
+      users.users."${vars.userName}".extraGroups = [
         "i2c"
         "scanner"
         "lp"
@@ -59,7 +71,7 @@ in
         QT_AUTO_SCREEN_SCALE_FACTOR = 1;
       };
 
-      home-manager.users.ushinnary =
+      home-manager.users."${vars.userName}" =
         { ... }:
         {
           dconf.settings = {

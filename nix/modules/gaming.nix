@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  vars,
   ...
 }:
 with lib;
@@ -52,6 +53,6 @@ in
       NIXOS_OZONE_WL = "1";
     };
 
-    users.users.ushinnary.extraGroups = [ "gamemode" ];
+    users.users."${vars.userName}".extraGroups = [ "gamemode" ];
   };
 }

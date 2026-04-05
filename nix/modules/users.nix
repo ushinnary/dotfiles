@@ -1,12 +1,13 @@
 {
   config,
+  vars,
   ...
 }:
 {
-  users.users.ushinnary = {
+  users.users."${vars.userName}" = {
     isNormalUser = true;
     description = "Alexander";
-    group = "ushinnary";
+    group = vars.userName;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -16,11 +17,11 @@
     ];
   };
 
-  users.groups.ushinnary = { };
+  users.groups."${vars.userName}" = { };
 
   security.sudo.extraRules = [
     {
-      users = [ "ushinnary" ];
+      users = [ vars.userName ];
       commands = map (command: {
         command = command;
         options = [ "NOPASSWD" ];

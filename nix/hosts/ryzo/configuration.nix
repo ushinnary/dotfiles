@@ -1,5 +1,6 @@
 {
   inputs,
+  vars,
   ...
 }:
 
@@ -40,8 +41,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs; };
-    users.ushinnary = import ../../modules/home.nix;
+    extraSpecialArgs = {
+      inherit inputs vars;
+    };
+    users."${vars.userName}" = import ../../modules/home.nix;
   };
 
   system.stateVersion = "25.11";

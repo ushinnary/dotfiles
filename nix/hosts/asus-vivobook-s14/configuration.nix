@@ -1,5 +1,6 @@
 {
   inputs,
+  vars,
   ...
 }:
 
@@ -41,7 +42,6 @@
   # Asus specific configurations
   services.asusd = {
     enable = true;
-    enableUserService = true;
   };
   hardware.asus.battery.chargeUpto = 80;
 
@@ -50,8 +50,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs; };
-    users.ushinnary =
+    extraSpecialArgs = {
+      inherit inputs vars;
+    };
+    users."${vars.userName}" =
       { lib, config, ... }:
       let
         mkDotfileSymlink =

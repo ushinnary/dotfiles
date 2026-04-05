@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  vars,
   ...
 }:
 with lib;
@@ -28,7 +29,7 @@ in
       adwaita-icon-theme
     ];
 
-    home-manager.users.ushinnary =
+    home-manager.users."${vars.userName}" =
       { lib, config, ... }:
       let
         mkDotfileSymlink =

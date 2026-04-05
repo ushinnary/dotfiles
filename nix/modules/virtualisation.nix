@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  vars,
   ...
 }:
 with lib;
@@ -20,7 +21,7 @@ in
       };
     };
 
-    users.users.ushinnary.extraGroups = [ "podman" ];
+    users.users."${vars.userName}".extraGroups = [ "podman" ];
 
     systemd.services.podman-auto-update-boot = {
       description = "Auto-update Podman containers on boot";

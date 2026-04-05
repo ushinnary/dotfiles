@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  vars,
   ...
 }:
 let
@@ -40,7 +41,7 @@ in
   imports = [ ./nixvim/default.nix ];
 
   config = lib.mkIf cfg.enable {
-    users.users.ushinnary.shell = pkgs.nushell;
+    users.users."${vars.userName}".shell = pkgs.nushell;
 
     environment.systemPackages = [
       pkgs.ast-grep
@@ -83,7 +84,7 @@ in
     # ── Home-manager: map existing dotfiles into place ─────────────
     # Files are linked out-of-store to ~/dotfiles, so edits are picked up
     # immediately (stow-like) without rebuilding.
-    home-manager.users.ushinnary =
+    home-manager.users."${vars.userName}" =
       { config, ... }:
       let
         mkDotfileSymlink =

@@ -42,6 +42,9 @@
       nixpkgs,
       ...
     }@inputs:
+    let
+      vars = import ./vars.nix;
+    in
     {
       nixosConfigurations = {
         # Hostname: ryzo
@@ -50,6 +53,7 @@
           specialArgs = {
             inherit inputs;
             dotfiles = inputs.dotfiles;
+            inherit vars;
           };
           modules = [
             ./hosts/ryzo/configuration.nix
@@ -62,6 +66,7 @@
           specialArgs = {
             inherit inputs;
             dotfiles = inputs.dotfiles;
+            inherit vars;
           };
           modules = [
             inputs.jovian-nixos.nixosModules.default
@@ -75,6 +80,7 @@
           specialArgs = {
             inherit inputs;
             dotfiles = inputs.dotfiles;
+            inherit vars;
           };
           modules = [
             inputs.nixos-hardware.nixosModules.asus-battery

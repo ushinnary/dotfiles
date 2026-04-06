@@ -107,28 +107,5 @@ with lib;
         description = "Commands that can be run with sudo without a password";
       };
     };
-
-    # ── Power ─────────────────────────────────────────────────────
-    power = {
-      enable = mkEnableOption "power management (system76-scheduler, CPU governor)";
-
-      profile = mkOption {
-        type = types.enum [
-          "balanced"
-          "performance"
-          "powersave"
-        ];
-        default = "balanced";
-        description = "Power profile mapped to CPU governor";
-      };
-
-      profilesDaemon = mkEnableOption "power-profiles-daemon for desktop integration";
-
-      system76Power = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable system76-power daemon for power profile control";
-      };
-    };
   };
 }

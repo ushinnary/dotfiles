@@ -74,9 +74,10 @@ On first boot, enter the LUKS passphrase you set during formatting.
 
 A reusable module exists at `nix/modules/secure-boot.nix`.
 
-It is intentionally not enabled by default on ASUS to keep first install simple and passphrase-based.
+On ASUS, this module may already be enabled in `nix/hosts/asus-vivobook-s14/configuration.nix`.
+If it is enabled, create keys before the first Secure Boot rebuild.
 
-### 1. Enable module import on ASUS host
+### 1. Enable module import on ASUS host (if currently disabled)
 
 In `nix/hosts/asus-vivobook-s14/configuration.nix`, uncomment:
 
@@ -90,16 +91,24 @@ to:
 ../../modules/secure-boot.nix
 ```
 
-### 2. Rebuild
+### 2. Create Secure Boot keys
+
+On a fresh system, generate keys first so Lanzaboote can find `db.pem`:
+
+```bash
+sudo nix shell nixpkgs#sbctl -c sbctl create-keys
+sudo ls /var/lib/sbctl/keys/db/db.pem
+```
+
+### 3. Rebuild with Lanzaboote
 
 ```bash
 sudo nixos-rebuild switch --flake ./nix#asus-vivobook-s14
 ```
 
-### 3. Create and enroll Secure Boot keys
+### 4. Enroll Secure Boot keys
 
 ```bash
-sudo sbctl create-keys
 sudo sbctl verify
 ```
 
@@ -113,7 +122,7 @@ bootctl status
 
 Then enable Secure Boot in firmware.
 
-### 4. Optional TPM2 LUKS auto-unlock
+### 5. Optional TPM2 LUKS auto-unlock
 
 If you later want TPM2 auto-unlock, enroll TPM2 for the LUKS device (example command):
 

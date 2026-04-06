@@ -1,4 +1,9 @@
-{ pkgs, lib, vars, ... }:
+{
+  pkgs,
+  lib,
+  vars,
+  ...
+}:
 {
   boot = {
     # Enable "Silent boot"
@@ -10,10 +15,11 @@
       "boot.shell_on_fail"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
+      "splash"
     ];
 
     # Plymouth disabled for faster boot (~3.8s saving)
-    plymouth.enable = false;
+    plymouth.enable = true;
 
     # Hide the OS choice for bootloaders.
     # It's still possible to open the bootloader list by pressing any key

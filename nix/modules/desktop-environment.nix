@@ -19,8 +19,7 @@ in
 
   config = mkMerge [
     {
-      # Keep power-profiles-daemon disabled by default when Rust power stack is enabled
-      services.power-profiles-daemon.enable = mkDefault (!config.ushinnary.power.enable);
+      services.power-profiles-daemon.enable = true;
     }
     (mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
       # Enable CUPS printing services
@@ -36,6 +35,11 @@ in
           cups-browsed
         ];
       };
+
+      powerManagement = {
+        enable = true;
+      };
+      services.upower.enable = true;
       hardware.sane.enable = true;
       services.colord.enable = true;
       hardware.sensor.iio.enable = config.ushinnary.hardware.hasWebCam;

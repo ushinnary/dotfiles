@@ -20,5 +20,9 @@ in
       plasma-browser-integration
       kwin-x11
     ];
+
+    programs.kdeconnect = {
+      enable = true;
+    };
   };
 }

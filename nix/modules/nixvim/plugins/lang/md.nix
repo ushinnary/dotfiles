@@ -17,11 +17,6 @@ in
     mkdnflow = {
       enable = true;
       settings = {
-        toDo.symbols = [
-          " "
-          "⧖"
-          "x"
-        ];
         mappings = {
           MkdnEnter = [
             [

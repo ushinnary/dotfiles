@@ -14,20 +14,20 @@
   boot.extraModulePackages = [ ];
 
   # TODO: remove once using disko
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f1c34fe7-94b9-4d91-bf76-c36c002d7e86";
-      fsType = "ext4";
-    };
+  # fileSystems."/" =
+  #   { device = "/dev/disk/by-uuid/f1c34fe7-94b9-4d91-bf76-c36c002d7e86";
+  #     fsType = "ext4";
+  #   };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/4250-4E69";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+  # fileSystems."/boot" =
+  #   { device = "/dev/disk/by-uuid/4250-4E69";
+  #     fsType = "vfat";
+  #     options = [ "fmask=0077" "dmask=0077" ];
+  #   };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/ec84ae90-7ccc-49cb-aca7-0936961c8655"; }
-    ];
+  # swapDevices =
+  #   [ { device = "/dev/disk/by-uuid/ec84ae90-7ccc-49cb-aca7-0936961c8655"; }
+  #   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

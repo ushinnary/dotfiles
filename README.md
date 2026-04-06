@@ -49,6 +49,8 @@ nmtui
 
 git clone https://github.com/ushinnary/dotfiles.git
 cd dotfiles
+
+sudo nixos-generate-config --no-filesystems && cat /etc/nixos/hardware-configuration.nix
 ```
 
 ### 3. Partition + format + mount using disko
@@ -56,9 +58,7 @@ cd dotfiles
 WARNING: This erases `/dev/nvme0n1`.
 
 ```bash
-sudo nix --experimental-features "nix-command flakes" \
-	run github:nix-community/disko/latest -- \
-	--mode destroy,format,mount --flake ./nix#asus-vivobook-s14
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount --flake ./nix#asus-vivobook-s14
 ```
 
 ### 4. Install NixOS from the flake

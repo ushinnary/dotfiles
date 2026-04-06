@@ -15,7 +15,7 @@
       isSsd = true;
     })
     # Optional after first successful boot/install:
-    # ../../modules/secure-boot.nix
+    ../../modules/secure-boot.nix
     ../../modules/default.nix
     inputs.home-manager.nixosModules.home-manager
   ];

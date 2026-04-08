@@ -81,6 +81,10 @@ in
 
         # — Restrict perf_event (no unprivileged profiling) —
         "kernel.perf_event_paranoid" = 2;
+
+        "kernel.yama.ptrace_scope" = 1;
+        "kernel.sysrq" = 176;
+        "net.core.bpf_jit_harden" = 2;
       };
 
       # ── Prevent core dumps (may leak secrets) ───────────────────
@@ -92,6 +96,7 @@ in
           value = "0";
         }
       ];
+      security.auditd.enable = true;
       systemd.coredump.extraConfig = ''
         Storage=none
         ProcessSizeMax=0

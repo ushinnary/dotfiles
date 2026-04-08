@@ -118,9 +118,6 @@ in
           # "zed/keymap.json".source =
           #   mkDotfileSymlink "zed/.config/zed/keymap.json";
 
-          # ── Electron flags ────────────────────────────────────
-          "electron-flags.conf".source = mkDotfileSymlink "electron/.config/electron-flags.conf";
-
           # ── Kitty ─────────────────────────────────────────────
           "kitty/kitty.conf".source = mkDotfileSymlink "kitty/.config/kitty/kitty.conf";
 

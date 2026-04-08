@@ -34,6 +34,25 @@ The ASUS host now uses a declarative `disko` layout:
 
 By default, this setup prompts for your LUKS passphrase at boot.
 
+### One-shot Installer Script (recommended)
+
+Instead of manually running steps 2, 3 and 4, you can use:
+
+./scripts/clone-and-install.sh
+
+The script will:
+
+- clone the repo to /tmp
+- display available hosts from nixosConfigurations and prompt selection
+- run step 2 hardware scan command
+- run disko for the selected host (step 3)
+- run nixos-install for the selected host (step 4)
+- prompt you to set the main user password before reboot
+
+Default repository is https://github.com/ushinnary/dotfiles.git. You can override it:
+
+./scripts/clone-and-install.sh https://github.com/ushinnary/dotfiles.git
+
 ### 1. Boot the NixOS ISO
 
 Use the official NixOS installer ISO and boot in UEFI mode.

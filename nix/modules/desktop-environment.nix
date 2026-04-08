@@ -8,6 +8,8 @@
 with lib;
 let
   cfg = config.ushinnary.desktop;
+  electronFlagsSrc = ../../electron/.config/electron-flags.conf;
+  edgeFlagsAmdSrc = ../../flatpaks/.var/app/com.microsoft.Edge/config/edge-flags-amd.conf;
 in
 {
   imports = [
@@ -76,7 +78,7 @@ in
       };
 
       home-manager.users."${vars.userName}" =
-        { ... }:
+        { pkgs, ... }:
         {
           dconf.settings = {
             "org/gnome/desktop/interface" = {
@@ -84,6 +86,34 @@ in
               font-name = "Quicksand 11";
               document-font-name = "Quicksand 11";
               monospace-font-name = "Google Sans Code 10";
+            };
+          };
+
+          systemd.user.services.copy-wayland-flags = {
+            Unit = {
+              Description = "Copy Electron and Edge flags for Wayland sessions";
+              After = [ "graphical-session.target" ];
+              PartOf = [ "graphical-session.target" ];
+            };
+
+            Install = {
+              WantedBy = [ "graphical-session.target" ];
+            };
+
+            Service = {
+              Type = "oneshot";
+              ExecStart = "${pkgs.writeShellScript "copy-wayland-flags" ''
+                set -eu
+
+                if [ "''${XDG_SESSION_TYPE:-}" != "wayland" ] && [ -z "''${WAYLAND_DISPLAY:-}" ]; then
+                  exit 0
+                fi
+
+                ${pkgs.coreutils}/bin/install -Dm644 ${electronFlagsSrc} "$HOME/.config/electron-flags.conf"
+                ${optionalString config.ushinnary.gpu.amd.enable ''
+                  ${pkgs.coreutils}/bin/install -Dm644 ${edgeFlagsAmdSrc} "$HOME/.var/app/com.microsoft.Edge/config/edge-flags.conf"
+                ''}
+              ''}";
             };
           };
         };

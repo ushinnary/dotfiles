@@ -22,10 +22,10 @@ in
 
     # ── Inbound allow-list ───────────────────────────────────────
     allowedTCPPorts = [
-      80
-      443
+      # 80
+      # 443
       22
-      34445
+      # 34445
     ] ++ lib.optionals cfg.smbSharing [
       139 # NetBIOS / Samba
       445 # SMB / Samba

@@ -3,7 +3,10 @@
 set -euo pipefail
 
 REPO_URL="${1:-https://github.com/ushinnary/dotfiles.git}"
-WORKDIR="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-install.XXXXXX")"
+TMPDIR="${TMPDIR:-/var/tmp/dotfiles-installer}"
+mkdir -p "$TMPDIR"
+export TMPDIR
+WORKDIR="$(mktemp -d "$TMPDIR/dotfiles-install.XXXXXX")"
 
 require_cmd() {
   local cmd="$1"
@@ -17,10 +20,12 @@ ensure_free_space() {
   local path="${1:-/tmp}"
   local min_gb="${2:-10}"
   local avail_kb
+  local avail_gb
 
   avail_kb=$(df --output=avail -k "$path" | tail -n1 | tr -d '[:space:]')
+  avail_gb=$((avail_kb / 1024 / 1024))
   if [ -n "$avail_kb" ] && [ "$avail_kb" -lt $((min_gb * 1024 * 1024)) ]; then
-    echo "ERROR: Less than ${min_gb}GB free at $(df --output=target "$path" | tail -n1)."
+    echo "ERROR: Only ${avail_gb}GB free at $(df --output=target "$path" | tail -n1); need at least ${min_gb}GB."
     echo "Please free space or set TMPDIR to a filesystem with more room."
     exit 1
   fi
@@ -107,13 +112,13 @@ if [ "$confirm" != "YES" ]; then
   exit 1
 fi
 
-sudo nix --experimental-features "nix-command flakes" \
+sudo --preserve-env=TMPDIR nix --experimental-features "nix-command flakes" \
   run github:nix-community/disko/latest -- \
   --mode destroy,format,mount --flake "./nix#$HOST_NAME"
 
 echo
 echo "Running nixos-install (README step 4)..."
-sudo nixos-install --flake "./nix#$HOST_NAME"
+sudo --preserve-env=TMPDIR nixos-install --flake "./nix#$HOST_NAME"
 
 echo
 echo "Set password for user '$USERNAME' in the newly installed system:"

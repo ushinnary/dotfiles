@@ -6,6 +6,9 @@ REPO_URL="${1:-https://github.com/ushinnary/dotfiles.git}"
 TMPDIR="${TMPDIR:-/var/tmp/dotfiles-installer}"
 mkdir -p "$TMPDIR"
 export TMPDIR
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-$TMPDIR/xdg-cache}"
+mkdir -p "$XDG_CACHE_HOME"
+export XDG_CACHE_HOME
 WORKDIR="$(mktemp -d "$TMPDIR/dotfiles-install.XXXXXX")"
 
 require_cmd() {
@@ -26,7 +29,11 @@ ensure_free_space() {
   avail_gb=$((avail_kb / 1024 / 1024))
   if [ -n "$avail_kb" ] && [ "$avail_kb" -lt $((min_gb * 1024 * 1024)) ]; then
     echo "ERROR: Only ${avail_gb}GB free at $(df --output=target "$path" | tail -n1); need at least ${min_gb}GB."
-    echo "Please free space or set TMPDIR to a filesystem with more room."
+    if [ "$path" = "/nix" ]; then
+      echo "Live ISO /nix store is too small. Use a VM with more RAM or mount a dedicated cache disk on /nix before running this script."
+    else
+      echo "Please free space or set TMPDIR to a filesystem with more room."
+    fi
     exit 1
   fi
 }
@@ -79,6 +86,7 @@ fi
 
 echo "Installer workspace: $WORKDIR"
 ensure_free_space "$(dirname "$WORKDIR")" 3
+ensure_free_space "/nix" 3
 
 echo "Cloning dotfiles repo..."
 git clone "$REPO_URL" "$WORKDIR"
@@ -105,6 +113,7 @@ cat /etc/nixos/hardware-configuration.nix
 echo
 echo "Running disko (README step 3)..."
 ensure_free_space "$(dirname "$WORKDIR")" 3
+ensure_free_space "/nix" 3
 echo "WARNING: This will erase disks configured by host $HOST_NAME."
 read -r -p "Type YES to continue: " confirm
 if [ "$confirm" != "YES" ]; then
@@ -112,13 +121,13 @@ if [ "$confirm" != "YES" ]; then
   exit 1
 fi
 
-sudo --preserve-env=TMPDIR nix --experimental-features "nix-command flakes" \
+sudo --preserve-env=TMPDIR,XDG_CACHE_HOME nix --experimental-features "nix-command flakes" \
   run github:nix-community/disko/latest -- \
   --mode destroy,format,mount --flake "./nix#$HOST_NAME"
 
 echo
 echo "Running nixos-install (README step 4)..."
-sudo --preserve-env=TMPDIR nixos-install --flake "./nix#$HOST_NAME"
+sudo --preserve-env=TMPDIR,XDG_CACHE_HOME nixos-install --flake "./nix#$HOST_NAME"
 
 echo
 echo "Set password for user '$USERNAME' in the newly installed system:"

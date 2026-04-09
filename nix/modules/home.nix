@@ -15,6 +15,26 @@ in
 
   xdg.userDirs.createDirectories = true;
 
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+      nvimconfig = "nvim ~/.config/nvim";
+      nfc = "nix flake check";
+      nfu = "nix flake update";
+      "??" = "gh copilot suggest";
+    };
+    bashrcExtra = ''
+      nrfs() {
+        if [ "$#" -ne 1 ]; then
+          echo "Usage: nrfs <flake>"
+          return 1
+        fi
+
+        sudo nixos-rebuild switch --flake "$1"
+      }
+    '';
+  };
+
   home.packages = lib.optionals isGnome (
     with pkgs;
     [

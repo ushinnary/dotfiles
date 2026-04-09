@@ -11,7 +11,7 @@
     # Optional, once ready for a full disk encryption setup with LUKS and BTRFS:
     (import ../../modules/disko-luks-btrfs.nix {
       # VirtualBox default disk path for the guest
-      device = "/dev/sda";
+      device = "/dev/vda";
       swapSize = "2G";
       isSsd = false;
     })

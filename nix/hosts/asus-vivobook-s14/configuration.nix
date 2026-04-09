@@ -46,11 +46,12 @@
     security.howdy.enable = false;
   };
 
-  # Asus specific configurations
-  services.asusd = {
-    enable = true;
+  services.thermald.enable = true;
+  powerManagement.cpuFreqGovernor = "powersave";
+  hardware.asus.battery={
+    chargeUpto = 80;
+    enableChargeUptoScript = true;
   };
-  hardware.asus.battery.chargeUpto = 80;
 
   # Home Manager Setup
   home-manager = {

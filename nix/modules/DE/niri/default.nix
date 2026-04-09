@@ -33,6 +33,9 @@ in
       enableSystemMonitoring = true;
       enableDynamicTheming = true;
       enableClipboardPaste = true;
+      enableVPN = false;
+      enableCalendarEvents = false;
+      enableAudioWavelength = false;
       plugins = {
         dankClight.enable = false;
         dankLauncherKeys.enable = true;
@@ -55,6 +58,15 @@ in
       enable = true;
       compositor.name = "niri";
       configHome = "/home/${vars.userName}"; # Sync DMS theme with the greeter
+      logs = {
+        save = true;
+        path = "/var/log/dms-greeter.log";
+      };
+      configFiles = [
+        "/home/${vars.userName}/.config/DankMaterialShell/settings.json"
+        "/home/${vars.userName}/.local/state/DankMaterialShell/session.json"
+        "/home/${vars.userName}/.cache/DankMaterialShell/dms-colors.json"
+      ];
     };
 
     # ── Core Wayland / session packages ───────────────────────────

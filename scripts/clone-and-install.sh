@@ -73,7 +73,7 @@ if [ "$(id -u)" -eq 0 ]; then
 fi
 
 echo "Installer workspace: $WORKDIR"
-ensure_free_space "$(dirname "$WORKDIR")" 10
+ensure_free_space "$(dirname "$WORKDIR")" 3
 
 echo "Cloning dotfiles repo..."
 git clone "$REPO_URL" "$WORKDIR"
@@ -99,7 +99,7 @@ cat /etc/nixos/hardware-configuration.nix
 
 echo
 echo "Running disko (README step 3)..."
-ensure_free_space "$(dirname "$WORKDIR")" 10
+ensure_free_space "$(dirname "$WORKDIR")" 3
 echo "WARNING: This will erase disks configured by host $HOST_NAME."
 read -r -p "Type YES to continue: " confirm
 if [ "$confirm" != "YES" ]; then

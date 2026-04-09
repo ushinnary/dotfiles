@@ -3,12 +3,25 @@
 set -euo pipefail
 
 REPO_URL="${1:-https://github.com/ushinnary/dotfiles.git}"
-WORKDIR="/tmp/dotfiles-install"
+WORKDIR="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-install.XXXXXX")"
 
 require_cmd() {
   local cmd="$1"
   if ! command -v "$cmd" >/dev/null 2>&1; then
     echo "Missing required command: $cmd"
+    exit 1
+  fi
+}
+
+ensure_free_space() {
+  local path="${1:-/tmp}"
+  local min_gb="${2:-10}"
+  local avail_kb
+
+  avail_kb=$(df --output=avail -k "$path" | tail -n1 | tr -d '[:space:]')
+  if [ -n "$avail_kb" ] && [ "$avail_kb" -lt $((min_gb * 1024 * 1024)) ]; then
+    echo "ERROR: Less than ${min_gb}GB free at $(df --output=target "$path" | tail -n1)."
+    echo "Please free space or set TMPDIR to a filesystem with more room."
     exit 1
   fi
 }
@@ -59,8 +72,8 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-echo "Cleaning previous installer workspace..."
-rm -rf "$WORKDIR"
+echo "Installer workspace: $WORKDIR"
+ensure_free_space "$(dirname "$WORKDIR")" 10
 
 echo "Cloning dotfiles repo..."
 git clone "$REPO_URL" "$WORKDIR"
@@ -86,6 +99,7 @@ cat /etc/nixos/hardware-configuration.nix
 
 echo
 echo "Running disko (README step 3)..."
+ensure_free_space "$(dirname "$WORKDIR")" 10
 echo "WARNING: This will erase disks configured by host $HOST_NAME."
 read -r -p "Type YES to continue: " confirm
 if [ "$confirm" != "YES" ]; then

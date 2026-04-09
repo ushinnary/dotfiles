@@ -2,6 +2,7 @@
   pkgs,
   osConfig,
   lib,
+  config,
   ...
 }:
 let
@@ -10,6 +11,7 @@ let
 in
 {
   home.stateVersion = "25.11";
+  gtk.gtk4.theme = config.gtk.theme;
 
   xdg.userDirs.createDirectories = true;
 

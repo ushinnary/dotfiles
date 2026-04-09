@@ -79,6 +79,11 @@ with lib;
       };
     };
 
+    # ── Virtualisation ───────────────────────────────────────────
+    virtualisation = {
+      host.enable = mkEnableOption "host virtualization stack for running VMs (VirtualBox)";
+    };
+
     # ── Firewall ──────────────────────────────────────────────────
     firewall = {
       opensnitch = mkOption {

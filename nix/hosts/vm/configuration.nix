@@ -8,6 +8,13 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # Optional, once ready for a full disk encryption setup with LUKS and BTRFS:
+    (import ../../modules/disko-luks-btrfs.nix {
+      # VirtualBox default disk path for the guest
+      device = "/dev/sda";
+      swapSize = "2G";
+      isSsd = false;
+    })
     ../../modules/default.nix
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -16,24 +23,26 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
-  networking.hostName = "ryzo";
+  networking.hostName = "vm";
 
   time.timeZone = "Europe/Paris"; # Change this to your timezone
   # Locale is set via modules/locale.nix
 
   # Enable the custom options
   ushinnary = {
-    gpu.amd.enable = true;
-    hardware.amdCpu = true;
-    desktop.gnome = true;
-    dev.enable = true;
-    apps.davinciResolve = true;
+    gpu.amd.enable = false;
+    hardware.amdCpu = false;
+    desktop.niri = true;
+    dev.enable = false;
     gaming.enable = false;
+    containers.enable = false;
     display = {
-      refreshRate = 90; # Normal desktop use
-      gamingRefreshRate = 144; # Gaming performance
+      refreshRate = 60;
+      oled = false;
     };
-    virtualisation.host.enable = true;
+    hardware.hasBattery = false;
+    hardware.hasWebCam = false;
+    security.howdy.enable = false;
   };
 
   # Home Manager Setup

@@ -97,6 +97,19 @@
             ./hosts/asus-vivobook-s14/configuration.nix
           ];
         };
+
+        # Hostname: vm (VirtualBox guest)
+        vm = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+            dotfiles = inputs.dotfiles;
+            inherit vars;
+          };
+          modules = [
+            ./hosts/vm/configuration.nix
+          ];
+        };
       };
     };
 }

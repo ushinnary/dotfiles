@@ -99,8 +99,12 @@ sudo --preserve-env=TMPDIR,XDG_CACHE_HOME nix --experimental-features "nix-comma
   --mode destroy,format,mount --flake "./nix#$HOST_NAME"
 
 echo
+sudo mkdir -p /mnt/tmp
+sudo mkswap -U clear --size 8G --file /mnt/swapfile
+sudo swapon /mnt/swapfile
+
 echo "Running nixos-install (README step 4)..."
-sudo --preserve-env=TMPDIR,XDG_CACHE_HOME nixos-install --flake "./nix#$HOST_NAME"
+sudo --preserve-env=TMPDIR=/mnt/tmp,XDG_CACHE_HOME nixos-install --root /mnt --flake "./nix#$HOST_NAME"
 
 echo
 echo "Set password for user '$USERNAME' in the newly installed system:"

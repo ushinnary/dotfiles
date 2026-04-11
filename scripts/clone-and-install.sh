@@ -2,38 +2,20 @@
 
 set -euo pipefail
 
-REPO_URL="${1:-https://github.com/ushinnary/dotfiles.git}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." >/dev/null 2>&1 && pwd)"
+NIX_DIR="$REPO_ROOT/nix"
 TMPDIR="${TMPDIR:-/var/tmp/dotfiles-installer}"
 mkdir -p "$TMPDIR"
 export TMPDIR
 XDG_CACHE_HOME="${XDG_CACHE_HOME:-$TMPDIR/xdg-cache}"
 mkdir -p "$XDG_CACHE_HOME"
 export XDG_CACHE_HOME
-WORKDIR="$(mktemp -d "$TMPDIR/dotfiles-install.XXXXXX")"
 
 require_cmd() {
   local cmd="$1"
   if ! command -v "$cmd" >/dev/null 2>&1; then
     echo "Missing required command: $cmd"
-    exit 1
-  fi
-}
-
-ensure_free_space() {
-  local path="${1:-/tmp}"
-  local min_gb="${2:-10}"
-  local avail_kb
-  local avail_gb
-
-  avail_kb=$(df --output=avail -k "$path" | tail -n1 | tr -d '[:space:]')
-  avail_gb=$((avail_kb / 1024 / 1024))
-  if [ -n "$avail_kb" ] && [ "$avail_kb" -lt $((min_gb * 1024 * 1024)) ]; then
-    echo "ERROR: Only ${avail_gb}GB free at $(df --output=target "$path" | tail -n1); need at least ${min_gb}GB."
-    if [ "$path" = "/nix" ]; then
-      echo "Live ISO /nix store is too small. Use a VM with more RAM or mount a dedicated cache disk on /nix before running this script."
-    else
-      echo "Please free space or set TMPDIR to a filesystem with more room."
-    fi
     exit 1
   fi
 }
@@ -73,7 +55,6 @@ pick_host() {
   done
 }
 
-require_cmd git
 require_cmd nix
 require_cmd nixos-install
 require_cmd nixos-generate-config
@@ -84,13 +65,12 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-echo "Installer workspace: $WORKDIR"
-ensure_free_space "$(dirname "$WORKDIR")" 3
-ensure_free_space "/nix" 3
+if [ ! -d "$NIX_DIR" ] || [ ! -e "$NIX_DIR/flake.nix" ]; then
+  echo "Unable to locate nix flake in $NIX_DIR. Run this script from the cloned dotfiles repository."
+  exit 1
+fi
 
-echo "Cloning dotfiles repo..."
-git clone "$REPO_URL" "$WORKDIR"
-cd "$WORKDIR"
+cd "$REPO_ROOT"
 
 pick_host
 
@@ -105,15 +85,8 @@ echo "Selected host: $HOST_NAME"
 echo "Configured main user: $USERNAME"
 
 echo
-echo "Generating hardware scan (no filesystems), matching README step 2..."
-sudo nixos-generate-config --no-filesystems
-echo "Current /etc/nixos/hardware-configuration.nix:"
-cat /etc/nixos/hardware-configuration.nix
 
-echo
-echo "Running disko (README step 3)..."
-ensure_free_space "$(dirname "$WORKDIR")" 3
-ensure_free_space "/nix" 3
+echo "Running disko..."
 echo "WARNING: This will erase disks configured by host $HOST_NAME."
 read -r -p "Type YES to continue: " confirm
 if [ "$confirm" != "YES" ]; then

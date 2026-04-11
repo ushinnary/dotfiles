@@ -6,11 +6,16 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." >/dev/null 2>&1 && pwd)"
 NIX_DIR="$REPO_ROOT/nix"
 TMPDIR="${TMPDIR:-/var/tmp/dotfiles-installer}"
+INSTALL_NIX_STORE="/tmp/nix-store"
+INSTALL_NIX_STATE="/tmp/nix-state"
+INSTALL_TMPDIR="/tmp/nix-tmp"
 mkdir -p "$TMPDIR"
+mkdir -p "$INSTALL_NIX_STORE"
+mkdir -p "$INSTALL_NIX_STATE"
+mkdir -p "$INSTALL_TMPDIR"
 export TMPDIR
-XDG_CACHE_HOME="${XDG_CACHE_HOME:-$TMPDIR/xdg-cache}"
-mkdir -p "$XDG_CACHE_HOME"
-export XDG_CACHE_HOME
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$TMPDIR/xdg-cache}"
+export NIX_STATE_DIR="$INSTALL_NIX_STATE"
 
 require_cmd() {
   local cmd="$1"
@@ -94,7 +99,7 @@ if [ "$confirm" != "YES" ]; then
   exit 1
 fi
 
-sudo --preserve-env=TMPDIR,XDG_CACHE_HOME nix --experimental-features "nix-command flakes" \
+sudo --preserve-env=TMPDIR,XDG_CACHE_HOME,NIX_STATE_DIR nix --store "$INSTALL_NIX_STORE" --experimental-features "nix-command flakes" \
   run github:nix-community/disko/latest -- \
   --mode destroy,format,mount --flake "./nix#$HOST_NAME"
 
@@ -104,7 +109,7 @@ sudo mkswap -U clear --size 8G --file /mnt/swapfile
 sudo swapon /mnt/swapfile
 
 echo "Running nixos-install (README step 4)..."
-sudo --preserve-env=TMPDIR=/mnt/tmp,XDG_CACHE_HOME nixos-install --root /mnt --flake "./nix#$HOST_NAME"
+sudo --preserve-env=TMPDIR=/mnt/tmp,XDG_CACHE_HOME,NIX_STATE_DIR nixos-install --store "$INSTALL_NIX_STORE" --root /mnt --flake "./nix#$HOST_NAME"
 
 echo
 echo "Set password for user '$USERNAME' in the newly installed system:"

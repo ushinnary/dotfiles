@@ -33,7 +33,6 @@
       refreshRate = 90; # Normal desktop use
       gamingRefreshRate = 144; # Gaming performance
     };
-    virtualisation.host.enable = true;
   };
 
   # Home Manager Setup

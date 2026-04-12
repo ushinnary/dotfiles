@@ -62,12 +62,28 @@ in
     };
     steamos = {
       enableAutoMountUdevRules = true; # For SD card auto-mount in Steam Library
+      enableBluetoothConfig = true;
+      enableDefaultCmdlineConfig = true;
+      enableSysctlConfig = true;
+      enableZram = true;
     };
 
-    # AMD GPU: early KMS + backlight brightness control from Steam UI
-    hardware.has.amd.gpu = true;
-    hardware.amd.gpu.enableEarlyModesetting = true;
-    devices.steamdeck.enablePerfControlUdevRules = true;
+    devices.steamdeck = {
+      enable = true;
+      enableControllerUdevRules = true;
+      enablePerfControlUdevRules = true;
+      enableOsFanControl = true;
+      enableDefaultStage1Modules = true;
+      enableKernelPatches = true;
+      enableSoundSupport = true;
+      enableVendorDrivers = false;
+    };
+
+    hardware = {
+      has.amd.gpu = true;
+      amd.gpu.enableEarlyModesetting = true;
+      amd.gpu.enableBacklightControl = true;
+    };
 
     decky-loader.enable = true;
   };
@@ -79,6 +95,10 @@ in
     adjustor.enable = true; # For SimpleDeckyTDP support on AMD CPUs without ryzenadj MSR access
     adjustor.loadAcpiCallModule = true; # Load acpi_call kernel module for TDP control on AMD CPUs without ryzenadj MSR access
   };
+  powerManagement = {
+    enable = true;
+  };
+  services.upower.enable = true;
 
   # Decky requires Steam CEF remote debugging to show up in Gaming Mode UI.
   # Jovian intentionally doesn't toggle this automatically.
@@ -119,6 +139,7 @@ in
   ushinnary = {
     gpu.amd.enable = true;
     hardware.amdCpu = true;
+    hardware.hasBattery = true;
     gaming.enable = false;
     containers.enable = false;
     display = {

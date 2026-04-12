@@ -18,7 +18,6 @@ in
   programs.bash = {
     enable = true;
     shellAliases = {
-      nvimconfig = "nvim ~/.config/nvim";
       nfc = "nix flake check";
       nfu = "nix flake update";
       "??" = "gh copilot suggest";

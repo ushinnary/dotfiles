@@ -24,6 +24,10 @@ in
       services.power-profiles-daemon.enable = true;
     }
     (mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
+
+      environment.sessionVariables = {
+        NIXOS_OZONE_WL = "1";
+      };
       # Enable CUPS printing services
       # CUPS (Common Unix Printing System) handles all printer communication
       services.printing = {
@@ -35,8 +39,15 @@ in
         drivers = with pkgs; [
           cups-filters
           cups-browsed
+          gutenprint
+          hplipWithPlugin
         ];
+
       };
+
+      networking.firewall.allowedUDPPorts = [
+        5353
+      ];
 
       powerManagement = {
         enable = true;

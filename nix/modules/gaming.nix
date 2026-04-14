@@ -49,9 +49,6 @@ in
       LD_BIND_NOW = "1";
     };
 
-    environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-    };
 
     users.users."${vars.userName}".extraGroups = [ "gamemode" ];
   };

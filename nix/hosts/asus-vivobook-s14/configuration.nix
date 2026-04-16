@@ -34,7 +34,7 @@
     gpu.amd.enable = true;
     hardware.amdCpu = true;
     desktop.cosmic = true;
-    dev ={
+    dev = {
       enable = true;
       editors = [ "zed" ];
     };
@@ -50,8 +50,8 @@
   };
 
   services.thermald.enable = true;
-  powerManagement.cpuFreqGovernor = "powersave";
-  hardware.asus.battery={
+  powerManagement.cpuFreqGovernor = "ondemand";
+  hardware.asus.battery = {
     chargeUpto = 80;
     enableChargeUptoScript = true;
   };

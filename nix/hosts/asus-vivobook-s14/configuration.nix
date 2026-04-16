@@ -33,7 +33,7 @@
   ushinnary = {
     gpu.amd.enable = true;
     hardware.amdCpu = true;
-    desktop.cosmic = true;
+    desktop.gnome = true;
     dev = {
       enable = true;
       editors = [ "zed" ];

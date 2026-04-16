@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  vars,
   ...
 }:
 with lib;
@@ -15,6 +16,17 @@ in
 
     # Enable the COSMIC desktop environment
     services.desktopManager.cosmic.enable = true;
+    security.pam.services.login.enableGnomeKeyring = true;
+    environment.systemPackages = with pkgs; [
+      seahorse
+    ];
+
+    home-manager.users."${vars.userName}" =
+      { config, ... }:
+      {
+        services.gnome-keyring.enable = true;
+        home.packages = [ pkgs.gcr ];
+      };
 
     services.system76-scheduler.enable = true;
 

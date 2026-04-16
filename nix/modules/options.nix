@@ -60,7 +60,18 @@ with lib;
     };
 
     # ── Development ───────────────────────────────────────────────
-    dev.enable = mkEnableOption "development tools and Nixvim editor";
+    dev = {
+      enable = mkEnableOption "development tools and Nixvim editor";
+
+      editors = mkOption {
+        type = types.listOf (types.enum [ "nixvim" "vscode" "zed" ]);
+        default = [ "nixvim" "vscode" "zed" ];
+        description = ''
+          Select which development editors to install when dev.enable is true.
+          Supported values are "nixvim", "vscode" and "zed".
+        '';
+      };
+    };
 
     # ── Applications ──────────────────────────────────────────────
     apps = {

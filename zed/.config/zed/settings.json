@@ -1,6 +1,6 @@
 {
   "git_panel": {
-    "tree_view": true
+    "tree_view": true,
   },
   "vim_mode": true,
   "ui_font_weight": 500.0,
@@ -9,34 +9,51 @@
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Catppuccin Mocha (Blur)"
+    "dark": "Catppuccin Mocha (Blur)",
   },
   "icon_theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Catppuccin Mocha"
+    "dark": "Catppuccin Mocha",
   },
   "telemetry": {
     "diagnostics": false,
-    "metrics": false
+    "metrics": false,
   },
   "load_direnv": "shell_hook",
+  "terminal": {
+    "env": {
+      "DIRENV_ENABLED": "1",
+    },
+  },
+  "languages": {
+    "Nix": {
+      "language_servers": ["nil"],
+    },
+    "Lua": {
+      "language_servers": ["lua-language-server"],
+    },
+    "Nu": {
+      "language_servers": ["nushell"],
+    },
+  },
   "lsp": {
     "rust-analyzer": {
       "binary": {
-        "path_lookup": true
+        "command": "rust-analyzer", // Loaded from your Nix shell PATH
+        "arguments": [],
       },
       "initialization_options": {
         "check": {
-          "command": "clippy"
-        }
-      }
+          "command": "clippy",
+        },
+      },
     },
-    "nix": {
+    "nixd": {
       "binary": {
-        "path_lookup": true
-      }
-    }
+        "path_lookup": true,
+      },
+    },
   },
   "auto_install_extensions": {
     "catppuccin": true,
@@ -61,6 +78,6 @@
     "sql": true,
     "svelte": true,
     "vue": true,
-    "xml": true
-  }
+    "xml": true,
+  },
 }

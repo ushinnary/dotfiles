@@ -8,6 +8,8 @@
 with lib;
 let
   cfg = config.ushinnary.dev;
+  selectedEditors = cfg.editors;
+  hasEditor = editor: builtins.elem editor selectedEditors;
 in
 {
   imports = [
@@ -15,7 +17,7 @@ in
     inputs.nixvim.nixosModules.nixvim
   ];
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && hasEditor "nixvim") {
     programs.nixvim = {
       enable = true;
       defaultEditor = true;

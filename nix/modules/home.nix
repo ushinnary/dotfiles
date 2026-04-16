@@ -20,7 +20,6 @@ in
     shellAliases = {
       nfc = "nix flake check";
       nfu = "nix flake update";
-      "??" = "gh copilot suggest";
     };
     bashrcExtra = ''
       nrfs() {

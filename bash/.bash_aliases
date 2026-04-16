@@ -4,7 +4,6 @@
 alias nvimconfig='nvim ~/.config/nvim'
 alias nfc='nix flake check'
 alias nfu='nix flake update'
-alias '??'='gh copilot suggest'
 
 nrfs() {
   if [ "$#" -ne 1 ]; then

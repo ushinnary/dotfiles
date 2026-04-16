@@ -34,7 +34,10 @@
     gpu.amd.enable = true;
     hardware.amdCpu = true;
     desktop.plasma = true;
-    dev.enable = false;
+    dev ={
+      enable = true;
+      editors = [ "zed" ];
+    };
     gaming.enable = false;
     containers.enable = false;
     display = {

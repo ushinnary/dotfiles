@@ -26,7 +26,10 @@
     gpu.amd.enable = true;
     hardware.amdCpu = true;
     desktop.gnome = true;
-    dev.enable = true;
+    dev ={
+      enable = true;
+      editors = [ "vscode" "nixvim" ];
+    };
     apps.davinciResolve = true;
     gaming.enable = false;
     display = {

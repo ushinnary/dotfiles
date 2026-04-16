@@ -8,6 +8,9 @@
 let
   cfg = config.ushinnary.dev;
 
+  selectedEditors = cfg.editors;
+  hasEditor = editor: builtins.elem editor selectedEditors;
+
   # ── Dotfile helpers ─────────────────────────────────────────────
   # Relative paths inside ~/dotfiles for out-of-store Home Manager symlinks.
   nuRelativeRoot = "nushell/.config/nushell";
@@ -25,7 +28,7 @@ let
   ];
 
   zedLspPackages = with pkgs; [
-    nodejs
+    nodejs_24
     nil
     nixd
     rust-analyzer
@@ -57,16 +60,12 @@ in
       pkgs.fzf
       pkgs.lazygit
       pkgs.zoxide
-      pkgs.zellij
+      # pkgs.zellij
       pkgs.difftastic
-      pkgs.dust
-      pkgs.gh
-      pkgs.dotnet-sdk
+      pkgs.dotnet-sdk_10
 
       pkgs.git-credential-manager
-
-      pkgs.vscode
-    ];
+    ] ++ lib.optional (hasEditor "vscode") pkgs.vscode;
 
     environment.variables = {
       TERMINAL = "ghostty";
@@ -92,7 +91,7 @@ in
           config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
       in
       {
-        programs.zed-editor = {
+        programs.zed-editor = lib.mkIf (hasEditor "zed") {
           enable = true;
           extraPackages = zedLspPackages;
           installRemoteServer = true;

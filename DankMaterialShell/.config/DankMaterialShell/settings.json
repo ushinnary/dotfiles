@@ -115,8 +115,8 @@
       "width": 50
     }
   ],
-  "showWorkspaceIndex": false,
-  "showWorkspaceName": true,
+  "showWorkspaceIndex": true,
+  "showWorkspaceName": false,
   "showWorkspacePadding": false,
   "workspaceScrolling": false,
   "showWorkspaceApps": false,
@@ -139,6 +139,18 @@
     "Code": {
       "type": "icon",
       "value": "integration_instructions"
+    },
+    "Browser": {
+      "type": "icon",
+      "value": "work"
+    },
+    "Chat": {
+      "type": "icon",
+      "value": "forum"
+    },
+    "Media": {
+      "type": "icon",
+      "value": "music_note"
     }
   },
   "waveProgressEnabled": true,
@@ -166,6 +178,17 @@
   "centeringMode": "index",
   "clockDateFormat": "",
   "lockDateFormat": "",
+  "greeterRememberLastSession": true,
+  "greeterRememberLastUser": true,
+  "greeterEnableFprint": false,
+  "greeterEnableU2f": false,
+  "greeterWallpaperPath": "",
+  "greeterUse24HourClock": true,
+  "greeterShowSeconds": false,
+  "greeterPadHours12Hour": false,
+  "greeterLockDateFormat": "",
+  "greeterFontFamily": "",
+  "greeterWallpaperFillMode": "",
   "mediaSize": 1,
   "appLauncherViewMode": "list",
   "spotlightModalViewMode": "list",
@@ -233,7 +256,7 @@
   "acLockTimeout": 900,
   "acSuspendTimeout": 7200,
   "acSuspendBehavior": 0,
-  "acProfileName": "",
+  "acProfileName": "1",
   "batteryMonitorTimeout": 300,
   "batteryLockTimeout": 300,
   "batterySuspendTimeout": 900,
@@ -265,16 +288,16 @@
   "matugenTemplateNiri": true,
   "matugenTemplateHyprland": false,
   "matugenTemplateMangowc": false,
-  "matugenTemplateQt5ct": true,
-  "matugenTemplateQt6ct": true,
+  "matugenTemplateQt5ct": false,
+  "matugenTemplateQt6ct": false,
   "matugenTemplateFirefox": true,
-  "matugenTemplatePywalfox": true,
-  "matugenTemplateZenBrowser": true,
+  "matugenTemplatePywalfox": false,
+  "matugenTemplateZenBrowser": false,
   "matugenTemplateVesktop": false,
   "matugenTemplateEquibop": false,
   "matugenTemplateGhostty": false,
-  "matugenTemplateKitty": true,
-  "matugenTemplateFoot": true,
+  "matugenTemplateKitty": false,
+  "matugenTemplateFoot": false,
   "matugenTemplateAlacritty": false,
   "matugenTemplateNeovim": false,
   "matugenTemplateWezterm": false,
@@ -282,6 +305,7 @@
   "matugenTemplateKcolorscheme": true,
   "matugenTemplateVscode": false,
   "matugenTemplateEmacs": false,
+  "matugenTemplateZed": false,
   "showDock": true,
   "dockAutoHide": false,
   "dockSmartAutoHide": true,
@@ -323,6 +347,8 @@
   "lockAtStartup": false,
   "enableFprint": false,
   "maxFprintTries": 15,
+  "enableU2f": false,
+  "u2fMode": "or",
   "lockScreenActiveMonitor": "all",
   "lockScreenInactiveColor": "#000000",
   "lockScreenNotificationMode": 0,
@@ -341,11 +367,11 @@
   "notificationHistorySaveNormal": true,
   "notificationHistorySaveCritical": true,
   "notificationRules": [],
-  "osdAlwaysShowValue": false,
+  "osdAlwaysShowValue": true,
   "osdPosition": 7,
   "osdVolumeEnabled": true,
   "osdMediaVolumeEnabled": true,
-  "osdMediaPlaybackEnabled": false,
+  "osdMediaPlaybackEnabled": true,
   "osdBrightnessEnabled": true,
   "osdIdleInhibitorEnabled": true,
   "osdMicMuteEnabled": true,
@@ -507,7 +533,7 @@
           "enabled": true
         },
         {
-          "id": "weather",
+          "id": "powerMenuButton",
           "enabled": true
         }
       ],

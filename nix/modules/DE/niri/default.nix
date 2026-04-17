@@ -58,10 +58,10 @@ in
       enable = true;
       compositor.name = "niri";
       configHome = "/home/${vars.userName}"; # Sync DMS theme with the greeter
-      logs = {
-        save = true;
-        path = "/var/log/dms-greeter.log";
-      };
+      #logs = {
+      #  save = true;
+      #  path = "/var/log/dms-greeter.log";
+      #};
       configFiles = [
         "/home/${vars.userName}/.config/DankMaterialShell/settings.json"
         "/home/${vars.userName}/.local/state/DankMaterialShell/session.json"

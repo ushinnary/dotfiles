@@ -1,4 +1,5 @@
 {
+  "diff_view_style": "unified",
   "show_edit_predictions": false,
   "edit_predictions": {
     "mode": "eager",
@@ -46,7 +47,7 @@
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Catppuccin Mocha (Blur)",
+    "dark": "Catppuccin Mocha",
   },
   "icon_theme": {
     "mode": "system",
@@ -77,18 +78,12 @@
   "lsp": {
     "rust-analyzer": {
       "binary": {
-        "command": "rust-analyzer", // Loaded from your Nix shell PATH
         "arguments": [],
       },
       "initialization_options": {
         "check": {
           "command": "clippy",
         },
-      },
-    },
-    "nixd": {
-      "binary": {
-        "path_lookup": true,
       },
     },
   },

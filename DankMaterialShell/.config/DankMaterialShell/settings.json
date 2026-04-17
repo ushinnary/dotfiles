@@ -441,11 +441,11 @@
           "enabled": true
         },
         {
-          "id": "cpuUsage",
+          "id": "keyboard_layout_name",
           "enabled": true
         },
         {
-          "id": "wallpaperCarousel",
+          "id": "cpuUsage",
           "enabled": true
         },
         {

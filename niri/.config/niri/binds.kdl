@@ -11,7 +11,7 @@ binds {
     // Launcher (DMS spotlight)
     Mod+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Mod+P { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
-    Mod+Shift+Space repeat=false { switch-layout "next"; }
+    Alt+Space repeat=false { switch-layout "next"; }
 
     // Clipboard history (DMS)
     Mod+Shift+V { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
@@ -33,8 +33,6 @@ binds {
     // Theme toggle (DMS)
     Mod+Shift+T { spawn "dms" "ipc" "call" "theme" "toggle"; }
 
-    // Wallpaper Carousel (DMS plugin)
-    Mod+W { spawn "dms" "ipc" "wallpaperCarousel" "toggle"; }
     Mod+Ctrl+Right { spawn "dms" "ipc" "wallpaperCarousel" "cycleNext"; }
     Mod+Ctrl+Left  { spawn "dms" "ipc" "wallpaperCarousel" "cyclePrevious"; }
 

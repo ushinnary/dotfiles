@@ -13,7 +13,6 @@ let
 in
 {
   imports = [
-    inputs.dms-plugin-registry.modules.default
     ./bar.nix
     ./terminal.nix
     ./compositor.nix
@@ -40,7 +39,6 @@ in
         dankClight.enable = false;
         dankLauncherKeys.enable = true;
         dankPomodoroTimer.enable = true;
-        wallpaperCarousel.enable = true;
         dankBatteryAlerts.enable = hw.hasBattery;
       };
     };

@@ -36,26 +36,6 @@
         "type": "github"
       }
     },
-    "dms-plugin-registry": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1776432345,
-        "narHash": "sha256-MVs1WxWylOMsTPIljyhoXnG9ulqyCayeK62m4GRyZrk=",
-        "owner": "AvengeMedia",
-        "repo": "dms-plugin-registry",
-        "rev": "e7559b4467ba65b2e154cb936e81b9bbec85532f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "dms-plugin-registry",
-        "type": "github"
-      }
-    },
     "dotfiles": {
       "flake": false,
       "locked": {
@@ -293,7 +273,6 @@
     "root": {
       "inputs": {
         "disko": "disko",
-        "dms-plugin-registry": "dms-plugin-registry",
         "dotfiles": "dotfiles",
         "home-manager": "home-manager",
         "jovian-nixos": "jovian-nixos",

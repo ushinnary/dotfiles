@@ -52,19 +52,30 @@ in
       showtime
       dconf-editor
       simple-scan
+
+      # Icon themes (ensure hicolor fallback + Adwaita are available to the GNOME session)
       adwaita-icon-theme
+      hicolor-icon-theme
       adwaita-fonts
+
       gnome-tweaks
+
+      # Native apps / utilities (ensure these come from the flake's nixpkgs/unstable)
       refine
       pavucontrol
       gnome-disk-utility
       ffmpegthumbnailer
+
       # Passwords and Keys
       seahorse
+      libsecret
+
+      # Ensure gnome-keyring package is available from nixpkgs (match GNOME stable/unstable as per flake)
+      gnome-keyring
     ];
     security.pam.services = {
       login.enableGnomeKeyring = true;
-      gdm.enableGnomeKeyring = true;
+      gdm-password.enableGnomeKeyring = true;
     };
 
     services.gnome.gnome-keyring.enable = true;

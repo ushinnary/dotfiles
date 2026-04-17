@@ -130,10 +130,20 @@ in
       brightness = 0.6;
       sigma = 30;
     };
+    # Blur My Shell - applications settings
+    # Whitelist apps by desktop id / WM_CLASS. To discover a window's WM_CLASS, run:
+    #   xprop WM_CLASS
+    # while the app's window is focused and use that value in the whitelist.
+    # Static blur (pipeline-based) is more reliable for sandboxed/Electron apps; dynamic blur
+    # can produce transparency without an actual blur for some apps (especially XWayland/Electron/Flatpak).
     "org/gnome/shell/extensions/blur-my-shell/applications" = {
       blur = true;
       dynamic-opacity = false;
       opacity = 234;
+      # Use a static pipeline to ensure the extension applies the configured blur pipeline
+      # instead of falling back to dynamic translucency.
+      pipeline = "pipeline_default";
+      static-blur = true;
       whitelist = [
         "com.mitchellh.ghostty"
         "dev.zed.Zed"

@@ -1,4 +1,41 @@
 {
+  "show_edit_predictions": false,
+  "edit_predictions": {
+    "mode": "eager",
+    "provider": "copilot",
+  },
+  "agent": {
+    "default_profile": "write",
+    "tool_permissions": {
+      "tools": {
+        "fetch": {
+          "always_allow": [
+            {
+              "pattern": "^https?://github\\.com",
+            },
+            {
+              "pattern": "^https?://search\\.nixos\\.org",
+            },
+          ],
+        },
+      },
+    },
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini",
+      "enable_thinking": false,
+      "effort": "high",
+    },
+    "favorite_models": [
+      {
+        "model": "gpt-5-mini",
+        "provider": "copilot_chat",
+        "effort": "high",
+        "enable_thinking": true,
+      },
+    ],
+    "model_parameters": [],
+  },
   "git_panel": {
     "tree_view": true,
   },

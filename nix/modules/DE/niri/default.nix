@@ -9,7 +9,6 @@
 with lib;
 let
   cfg = config.ushinnary.desktop;
-  hw = config.ushinnary.hardware;
 in
 {
   imports = [
@@ -73,6 +72,7 @@ in
       # File manager
       nautilus
       cups-pk-helper
+      seahorse
     ];
 
     # ── XDG portals ───────────────────────────────────────────────

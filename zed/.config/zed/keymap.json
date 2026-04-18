@@ -1,34 +1,233 @@
 // Zed keymap
 //
-// For information on binding keys, see the Zed
-// documentation: https://zed.dev/docs/key-bindings
+// Combined & curated keymap: based on the example at
+// https://raw.githubusercontent.com/jellydn/zed-101-setup/main/keymap.json
+// plus your custom bindings preserved (e.g. "space g g", "space space", "space s g").
+//
+// For information on binding keys, see the Zed documentation:
+// https://zed.dev/docs/key-bindings
 //
 // To see the default key bindings run `zed: open default keymap`
 // from the command palette.
+
 [
-  {
-    "context": "Workspace",
-    "bindings": {
-      // "shift shift": "file_finder::Toggle"
-    },
-  },
-  {
-    "context": "Editor && vim_mode == insert",
-    "bindings": {
-      // "j k": "vim::NormalBefore"
-    },
-  },
+  // Editor mode - normal & visual (shared)
   {
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
+      // Git
+      "space g h d": "editor::ToggleSelectedDiffHunks",
+      "space g s": "git_panel::ToggleFocus",
+      // Preserve user's custom git binding
       "space g g": "git_panel::ToggleFocus",
+
+      // Toggle inlay hints
+      "space t i": "editor::ToggleInlayHints",
+      // Toggle soft wrap
+      "space u w": "editor::ToggleSoftWrap",
+      // Zen / centered layout
+      "space c z": "workspace::ToggleCenteredLayout",
+      // Markdown preview
+      "space m p": "markdown::OpenPreview",
+      "space m P": "markdown::OpenPreviewToTheSide",
+      // Recent projects
+      "space f p": "projects::OpenRecent",
+      // Search word under cursor / deploy search
+      "space s w": "pane::DeploySearch",
+      // Search current buffer
+      "space s b": "buffer_search::Deploy",
+      // Chat with AI
+      "space a c": "agent::ToggleFocus",
+      // Go to file with `gf`
+      "g f": "editor::OpenExcerpts",
     },
   },
+
+  // Editor mode - normal only
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
+      // Pane navigation (Ctrl+h/j/k/l)
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+
+      // LSP / code actions / navigation
+      "space c a": "editor::ToggleCodeActions",
+      "space .": "editor::ToggleCodeActions",
+      "space c r": "editor::Rename",
+      "g d": "editor::GoToDefinition",
+      "g D": "editor::GoToDefinitionSplit",
+      "g i": "editor::GoToImplementation",
+      "g I": "editor::GoToImplementationSplit",
+      "g t": "editor::GoToTypeDefinition",
+      "g T": "editor::GoToTypeDefinitionSplit",
+      "g r": "editor::FindAllReferences",
+      "] d": "editor::GoToDiagnostic",
+      "[ d": "editor::GoToPreviousDiagnostic",
+      "] e": "editor::GoToDiagnostic",
+      "[ e": "editor::GoToPreviousDiagnostic",
+
+      // Symbols & outline
+      "s s": "outline::Toggle",
+      "s S": "project_symbols::Toggle",
+
+      // Diagnostics
+      "space x x": "diagnostics::Deploy",
+
+      // Git hunk navigation
+      "] h": "editor::GoToHunk",
+      "[ h": "editor::GoToPreviousHunk",
+
+      // Buffer switching & closing
+      "shift-h": "pane::ActivatePreviousItem",
+      "shift-l": "pane::ActivateNextItem",
+      "shift-q": "pane::CloseActiveItem",
+      "ctrl-q": "pane::CloseActiveItem",
+      "space b d": "pane::CloseActiveItem",
+      "space b o": "pane::CloseOtherItems",
+
+      // Save
+      "ctrl-s": "workspace::Save",
+
+      // File finder (preserve your `space space` binding)
       "space space": "file_finder::Toggle",
+
+      // Project search (also keep your project search mapping)
+      "space /": "pane::DeploySearch",
       "space s g": "pane::DeploySearch",
+
+      // Reveal current file in project panel
+      "space e": "pane::RevealInProjectPanel",
     },
   },
+
+  // Empty pane or shared screens (no active editor)
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      "space space": "file_finder::Toggle",
+      "space f p": "projects::OpenRecent",
+    },
+  },
+
+  // Visual mode specific
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+    "bindings": {
+      "g c": "editor::ToggleComments",
+    },
+  },
+
+  // Better escape in insert mode
+  {
+    "context": "Editor && vim_mode == insert && !menu",
+    "bindings": {
+      "j j": "vim::NormalBefore",
+      "j k": "vim::NormalBefore",
+    },
+  },
+
+  // Rename / operator handling
+  {
+    "context": "Editor && vim_operator == c",
+    "bindings": {
+      "c": "vim::CurrentLine",
+      "r": "editor::Rename",
+      "a": "editor::ToggleCodeActions",
+    },
+  },
+
+  // Terminal toggle in workspace
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-\\": "terminal_panel::ToggleFocus",
+      // Keep a workspace-level file finder binding commented for reference
+      // "shift shift": "file_finder::Toggle"
+    },
+  },
+
+  // Terminal pane navigation
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+    },
+  },
+
+  // Project (file) panel actions - netrw-like
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Delete",
+      "x": "project_panel::Cut",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "q": "workspace::ToggleRightDock",
+      "space e": "workspace::ToggleRightDock",
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+    },
+  },
+
+  // Dock navigation
+  {
+    "context": "Dock",
+    "bindings": {
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w j": "workspace::ActivatePaneDown",
+    },
+  },
+
+  // Workspace extras
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-b": "workspace::ToggleRightDock",
+    },
+  },
+
+  // Run nearest task (works in empty pane, shared screen or normal vim mode)
+  {
+    "context": "EmptyPane || SharedScreen || vim_mode == normal",
+    "bindings": {
+      "space r t": [
+        "editor::SpawnNearestTask",
+        {
+          "reveal": "no_focus",
+        },
+      ],
+    },
+  },
+
+  // Sneak motion (using vim sneak-like actions)
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      "s": ["vim::PushSneak", {}],
+      "S": ["vim::PushSneakBackward", {}],
+    },
+  },
+
+  // Which-key style tweak: disable default vim wrapping right in VimControl
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "space": null,
+    },
+  },
+
+  // Note: you can add more mappings below following the structure used above.
 ]

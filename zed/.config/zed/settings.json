@@ -12,11 +12,14 @@
         "fetch": {
           "always_allow": [
             {
-              "pattern": "^https?://github\\.com",
+              "pattern": "^https?://github\\.com"
             },
             {
-              "pattern": "^https?://search\\.nixos\\.org",
+              "pattern": "^https?://search\\.nixos\\.org"
             },
+            {
+              "pattern": "^https?://raw\\.githubusercontent\\.com"
+            }
           ],
         },
       },

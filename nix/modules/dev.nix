@@ -65,7 +65,8 @@ in
       pkgs.dotnet-sdk_10
 
       pkgs.git-credential-manager
-    ] ++ lib.optional (hasEditor "vscode") pkgs.vscode;
+    ]
+    ++ lib.optional (hasEditor "vscode") pkgs.vscode;
 
     environment.variables = {
       TERMINAL = "ghostty";
@@ -114,8 +115,7 @@ in
 
           # ── Zed ──────────────────────────────────────────────
           "zed/settings.json".source = mkDotfileSymlink "zed/.config/zed/settings.json";
-          # "zed/keymap.json".source =
-          #   mkDotfileSymlink "zed/.config/zed/keymap.json";
+          "zed/keymap.json".source = mkDotfileSymlink "zed/.config/zed/keymap.json";
 
           # ── Kitty ─────────────────────────────────────────────
           "kitty/kitty.conf".source = mkDotfileSymlink "kitty/.config/kitty/kitty.conf";

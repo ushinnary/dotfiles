@@ -35,12 +35,6 @@ in
       enableVPN = false;
       enableCalendarEvents = false;
       enableAudioWavelength = false;
-      plugins = {
-        dankClight.enable = false;
-        dankLauncherKeys.enable = true;
-        dankPomodoroTimer.enable = true;
-        dankBatteryAlerts.enable = hw.hasBattery;
-      };
     };
 
     services.clight.enable = false;

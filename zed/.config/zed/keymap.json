@@ -40,6 +40,9 @@
       "space a c": "agent::ToggleFocus",
       // Go to file with `gf`
       "g f": "editor::OpenExcerpts",
+
+      // Toggle in-buffer search with Ctrl+F
+      "ctrl-f": "buffer_search::Deploy",
     },
   },
 
@@ -52,6 +55,7 @@
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-f": "buffer_search::Deploy",
 
       // LSP / code actions / navigation
       "space c a": "editor::ToggleCodeActions",
@@ -126,6 +130,8 @@
     "bindings": {
       "j j": "vim::NormalBefore",
       "j k": "vim::NormalBefore",
+      // Allow Ctrl+F to toggle in-buffer search while in insert mode
+      "ctrl-f": "buffer_search::Deploy",
     },
   },
 

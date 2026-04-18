@@ -32,7 +32,17 @@
   zramSwap.enable = true;
   zramSwap.algorithm = "zstd";
 
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+    settings = {
+      General = {
+        # Shows battery charge of connected devices on supported
+        # Bluetooth adapters. Defaults to 'false'.
+        Experimental = true;
+      };
+    };
+  };
 
   # ── Boot time optimizations ───────────────────────────────────
 

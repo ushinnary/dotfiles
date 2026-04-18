@@ -19,6 +19,9 @@
             },
             {
               "pattern": "^https?://raw\\.githubusercontent\\.com"
+            },
+            {
+              "pattern": "^https?://nixos\\.org"
             }
           ],
         },

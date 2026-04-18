@@ -16,6 +16,9 @@
     })
     # Optional after first successful boot/install:
     ../../modules/secure-boot.nix
+    (import ../../modules/cpu-max-frequency.nix {
+      frequency = "3000Mhz";
+    })
     ../../modules/default.nix
     inputs.home-manager.nixosModules.home-manager
   ];

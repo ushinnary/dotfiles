@@ -43,6 +43,12 @@
 
       // Toggle in-buffer search with Ctrl+F
       "ctrl-f": "buffer_search::Deploy",
+
+      // Native move line bindings (normal & visual Vim modes)
+      // Alt+J -> move line(s) down
+      // Alt+K -> move line(s) up
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp",
     },
   },
 
@@ -128,8 +134,6 @@
   {
     "context": "Editor && vim_mode == insert && !menu",
     "bindings": {
-      "j j": "vim::NormalBefore",
-      "j k": "vim::NormalBefore",
       // Allow Ctrl+F to toggle in-buffer search while in insert mode
       "ctrl-f": "buffer_search::Deploy",
     },

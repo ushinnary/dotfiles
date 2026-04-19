@@ -34,6 +34,9 @@
             },
             {
               "pattern": "^https?://api\\.github\\.com"
+            },
+            {
+              "pattern": "^https?://danklinux\\.com"
             }
           ],
         },

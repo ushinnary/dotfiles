@@ -7,6 +7,8 @@ binds {
     Mod+T { spawn "ghostty"; }
     Mod+Return { toggle-windowed-fullscreen; }
     Mod+E { spawn "nautilus"; }
+    // Color picker (DMS) — pick color and auto-copy to clipboard
+    Mod+Shift+C { spawn "dms" "color" "pick" "-a"; }
 
     // Launcher (DMS spotlight)
     Mod+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
@@ -16,8 +18,12 @@ binds {
     // Clipboard history (DMS)
     Mod+Shift+V { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
 
-    // Screenshot (DMS — opens in annotation editor)
-    Print { spawn "dms" "ipc" "call" "niri" "screenshot"; }
+    // Screenshot (DMS)
+    // Print -> interactive screenshot, no file (returns to stdout / clipboard per DMS behaviour)
+    Print { spawn "dms" "screenshot" "--no-file"; }
+    // Shift+Print -> full-screen screenshot, no file
+    Shift+Print { spawn "dms" "screenshot" "full" "--no-file"; }
+    // Keep modifier variants for window/screen-specific captures (DMS IPC handlers)
     Mod+Print { spawn "dms" "ipc" "call" "niri" "screenshotWindow"; }
     Mod+Shift+Print { spawn "dms" "ipc" "call" "niri" "screenshotScreen"; }
 

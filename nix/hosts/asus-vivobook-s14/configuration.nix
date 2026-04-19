@@ -52,8 +52,6 @@
     security.howdy.enable = false;
   };
 
-  services.thermald.enable = true;
-  powerManagement.cpuFreqGovernor = "ondemand";
   hardware.asus.battery = {
     chargeUpto = 80;
     enableChargeUptoScript = true;

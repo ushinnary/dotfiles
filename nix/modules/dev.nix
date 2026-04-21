@@ -62,7 +62,7 @@ in
       pkgs.zoxide
       # pkgs.zellij
       pkgs.difftastic
-      pkgs.dotnet-sdk_10
+      # pkgs.dotnet-sdk_10
 
       pkgs.git-credential-manager
     ]

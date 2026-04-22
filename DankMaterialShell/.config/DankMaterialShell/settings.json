@@ -3,7 +3,7 @@
   "currentThemeCategory": "dynamic",
   "customThemeFile": "",
   "registryThemeVariants": {},
-  "matugenScheme": "scheme-tonal-spot",
+  "matugenScheme": "scheme-vibrant",
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
   "popupTransparency": 1,
@@ -175,8 +175,8 @@
   "runningAppsGroupByApp": false,
   "runningAppsCurrentMonitor": false,
   "appIdSubstitutions": [],
-  "centeringMode": "index",
-  "clockDateFormat": "",
+  "centeringMode": "geometric",
+  "clockDateFormat": "ddd MMM d",
   "lockDateFormat": "",
   "greeterRememberLastSession": true,
   "greeterRememberLastUser": true,
@@ -202,7 +202,9 @@
   "spotlightSectionViewModes": {
     "apps": "list"
   },
-  "appDrawerSectionViewModes": {},
+  "appDrawerSectionViewModes": {
+    "apps": "list"
+  },
   "niriOverviewOverlayEnabled": true,
   "dankLauncherV2Size": "compact",
   "dankLauncherV2BorderEnabled": false,
@@ -284,13 +286,13 @@
   "syncModeWithPortal": true,
   "terminalsAlwaysDark": false,
   "runDmsMatugenTemplates": true,
-  "matugenTemplateGtk": true,
+  "matugenTemplateGtk": false,
   "matugenTemplateNiri": true,
   "matugenTemplateHyprland": false,
   "matugenTemplateMangowc": false,
   "matugenTemplateQt5ct": false,
   "matugenTemplateQt6ct": false,
-  "matugenTemplateFirefox": true,
+  "matugenTemplateFirefox": false,
   "matugenTemplatePywalfox": false,
   "matugenTemplateZenBrowser": false,
   "matugenTemplateVesktop": false,
@@ -302,11 +304,11 @@
   "matugenTemplateNeovim": false,
   "matugenTemplateWezterm": false,
   "matugenTemplateDgop": true,
-  "matugenTemplateKcolorscheme": true,
+  "matugenTemplateKcolorscheme": false,
   "matugenTemplateVscode": false,
   "matugenTemplateEmacs": false,
   "matugenTemplateZed": false,
-  "showDock": true,
+  "showDock": false,
   "dockAutoHide": false,
   "dockSmartAutoHide": true,
   "dockGroupByApp": true,
@@ -421,15 +423,18 @@
       ],
       "showOnLastDisplay": true,
       "leftWidgets": [
-        "focusedWindow",
+        {
+          "id": "focusedWindow",
+          "enabled": true,
+          "focusedWindowCompactMode": false
+        },
         {
           "id": "music",
           "enabled": true
         }
       ],
       "centerWidgets": [
-        "clock",
-        "weather"
+        "clock"
       ],
       "rightWidgets": [
         {
@@ -438,18 +443,6 @@
         },
         {
           "id": "clipboard",
-          "enabled": true
-        },
-        {
-          "id": "keyboard_layout_name",
-          "enabled": true
-        },
-        {
-          "id": "cpuUsage",
-          "enabled": true
-        },
-        {
-          "id": "memUsage",
           "enabled": true
         },
         {
@@ -507,8 +500,8 @@
       "clickThrough": false
     },
     {
-      "id": "bar1773348549025",
-      "name": "Bar 2",
+      "id": "bar1776868693113",
+      "name": "Bar 4",
       "enabled": true,
       "position": 2,
       "screenPreferences": [
@@ -516,24 +509,40 @@
       ],
       "showOnLastDisplay": false,
       "leftWidgets": [
-        "workspaceSwitcher",
         {
-          "id": "runningApps",
-          "enabled": true,
-          "runningAppsCompactMode": true,
-          "runningAppsGroupByApp": false,
-          "runningAppsCurrentWorkspace": true,
-          "runningAppsCurrentMonitor": false
-        }
-      ],
-      "centerWidgets": [],
-      "rightWidgets": [
-        {
-          "id": "idleInhibitor",
+          "id": "powerMenuButton",
           "enabled": true
         },
         {
-          "id": "powerMenuButton",
+          "id": "colorPicker",
+          "enabled": true
+        },
+        {
+          "id": "workspaceSwitcher",
+          "enabled": true
+        }
+      ],
+      "centerWidgets": [
+        {
+          "id": "launcherButton",
+          "enabled": true
+        },
+        {
+          "id": "appsDock",
+          "enabled": true
+        }
+      ],
+      "rightWidgets": [
+        {
+          "id": "weather",
+          "enabled": true
+        },
+        {
+          "id": "keyboard_layout_name",
+          "enabled": true
+        },
+        {
+          "id": "network_speed_monitor",
           "enabled": true
         }
       ],
@@ -652,6 +661,12 @@
   "builtInPluginSettings": {
     "dms_settings_search": {
       "trigger": "?"
+    },
+    "dms_sysmon": {
+      "enabled": false
+    },
+    "dms_notepad": {
+      "enabled": false
     }
   },
   "clipboardEnterToPaste": false,

@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  inputs,
   vars,
   ...
 }:
@@ -28,7 +27,7 @@ in
         enable = true;
         restartIfChanged = true;
       };
-      enableSystemMonitoring = true;
+      enableSystemMonitoring = false;
       enableDynamicTheming = true;
       enableClipboardPaste = true;
       enableVPN = false;
@@ -111,16 +110,5 @@ in
         TimeoutStopSec = 10;
       };
     };
-
-    # ── Home Manager base ─────────────────────────────────────────
-    home-manager.users."${vars.userName}" =
-      { ... }:
-      {
-        imports = [
-          inputs.system76-scheduler-niri.homeModules.default
-        ];
-
-        services.system76-scheduler-niri.enable = config.services.system76-scheduler.enable;
-      };
   };
 }

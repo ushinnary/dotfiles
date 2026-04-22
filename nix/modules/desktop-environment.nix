@@ -21,7 +21,9 @@ in
 
   config = mkMerge [
     {
-      services.tuned.enable = true;
+      services.tuned = {
+        enable = true;
+      };
     }
     (mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
 
@@ -52,7 +54,6 @@ in
       powerManagement = {
         enable = true;
         powertop.enable = true;
-        cpuFreqGovernor = "ondemand";
       };
       services.upower.enable = true;
       hardware.sane.enable = true;

@@ -54,11 +54,6 @@
     enableChargeUptoScript = true;
   };
 
-  powerManagement = {
-    cpufreq.max = 3000000; # Limit CPU max frequency to 3GHz for better thermals and battery life
-    cpufreq.min = 400000; # Limit CPU max frequency to 400MHz for better thermals and battery life when idle
-  };
-
   # Home Manager Setup
   home-manager = {
     useGlobalPkgs = true;

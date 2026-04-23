@@ -98,7 +98,6 @@ in
   powerManagement = {
     enable = true;
   };
-  services.upower.enable = true;
 
   # Decky requires Steam CEF remote debugging to show up in Gaming Mode UI.
   # Jovian intentionally doesn't toggle this automatically.
@@ -127,6 +126,10 @@ in
 
   # ryzenadj for SimpleDeckyTDP TDP control
   environment.systemPackages = [ pkgs.ryzenadj ];
+  environment.variables = {
+    RYZENADJ_PATH = "${pkgs.ryzenadj}/bin/ryzenadj";
+    LOCAL_RYZENADJ = "${pkgs.ryzenadj}/bin/ryzenadj";
+  };
 
   # Add user to hardware groups
   users.users."${vars.userName}".extraGroups = [

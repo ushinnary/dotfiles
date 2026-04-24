@@ -1,4 +1,26 @@
 {
+  "git": {
+    "inline_blame": {
+      "show_commit_summary": false
+    }
+  },
+  "project_panel": {
+    "git_status_indicator": true,
+    "diagnostic_badges": false,
+    "dock": "right"
+  },
+  "title_bar": {
+    "show_branch_icon": true
+  },
+  "allow_rewrap": "anywhere",
+  "vim": {
+    "use_smartcase_find": true,
+    "toggle_relative_line_numbers": true
+  },
+  "gutter": {
+    "min_line_number_digits": 12
+  },
+  "auto_update": false,
   "sticky_scroll": {
     "enabled": true
   },
@@ -9,8 +31,10 @@
     "provider": "copilot",
   },
   "agent": {
+    "play_sound_when_agent_done": "when_hidden",
+    "dock": "left",
     "use_modifier_to_send": true,
-    "notify_when_agent_waiting": "all_screens",
+    "notify_when_agent_waiting": "never",
     "enable_feedback": false,
     "default_profile": "write",
     "tool_permissions": {
@@ -37,6 +61,9 @@
             },
             {
               "pattern": "^https?://danklinux\\.com"
+            },
+            {
+              "pattern": "^https?://status\\.nixos\\.org"
             }
           ],
         },
@@ -74,6 +101,7 @@
     "model_parameters": [],
   },
   "git_panel": {
+    "file_icons": true,
     "tree_view": true,
   },
   "vim_mode": true,

@@ -4,3 +4,4 @@ history.txt
 systemd/.config/systemd/user/default.target.wants
 pipewire/.config/pipewire/atmos.wav
 .direnv/
+niri/.config/niri/dms/colors.kdl

@@ -97,6 +97,7 @@
       "ctrl-q": "pane::CloseActiveItem",
       "space b d": "pane::CloseActiveItem",
       "space b o": "pane::CloseOtherItems",
+      "space b a": "pane::CloseAllItems",
 
       // Save
       "ctrl-s": "workspace::Save",

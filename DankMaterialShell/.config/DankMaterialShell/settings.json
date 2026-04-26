@@ -446,9 +446,7 @@
           "enabled": true
         }
       ],
-      "centerWidgets": [
-        "clock"
-      ],
+      "centerWidgets": [],
       "rightWidgets": [
         {
           "id": "systemTray",
@@ -465,6 +463,11 @@
         {
           "id": "controlCenterButton",
           "enabled": true
+        },
+        {
+          "id": "clock",
+          "enabled": true,
+          "clockCompactMode": true
         },
         {
           "id": "notificationButton",

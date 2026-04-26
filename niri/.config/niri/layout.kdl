@@ -10,12 +10,26 @@ layout {
         proportion 0.66667
     }
     default-column-width { proportion 0.5; }
+  focus-ring {
+    off
+    width 1
+  }
 
-    // focus-ring { off; }
-    // border {
-    //     on
-    //     width 2
-        // active-color "#89b4fa"   // Catppuccin Mocha blue
-        // inactive-color "#45475a" // Catppuccin Mocha surface1
-    // }
+  shadow {
+    on
+    softness 1
+    spread 0.5
+    offset x=0 y=0
+    draw-behind-window true
+    color "#11111177"
+  }
+
+  border {
+    on
+    width 0.5
+
+    active-color   "#FFFFFF50"
+    inactive-color "#FFFFFF15"
+    urgent-color   "#eb6f92"
+  }
 }

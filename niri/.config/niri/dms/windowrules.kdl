@@ -4,7 +4,7 @@
 // @id=wr_1776454790204036157 @name=dev.zed.Zed
 window-rule {
     match app-id="^dev.zed.Zed$"
-    open-maximized-to-edges true
+    open-maximized true
     open-on-workspace "code"
 }
 
@@ -25,6 +25,6 @@ window-rule {
 // @id=wr_1776513350487749316 @name=discord
 window-rule {
     match app-id="^discord$"
-    open-maximized-to-edges true
+    open-maximized true
     open-on-workspace "chat"
 }

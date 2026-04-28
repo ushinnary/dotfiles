@@ -1,4 +1,10 @@
 {
+  "outline_panel": {
+    "dock": "right",
+  },
+  "collaboration_panel": {
+    "dock": "right",
+  },
   "git": {
     "inline_blame": {
       "show_commit_summary": false,
@@ -101,6 +107,7 @@
     "model_parameters": [],
   },
   "git_panel": {
+    "dock": "left",
     "file_icons": true,
     "tree_view": true,
   },

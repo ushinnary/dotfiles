@@ -37,6 +37,7 @@
     dev = {
       enable = true;
       editors = [ "zed" ];
+      aiAgents = true;
     };
     gaming.enable = false;
     containers.enable = false;

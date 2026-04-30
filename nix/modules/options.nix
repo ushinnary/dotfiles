@@ -71,6 +71,8 @@ with lib;
           Supported values are "nixvim", "vscode" and "zed".
         '';
       };
+
+      aiAgents = mkEnableOption "AI agent CLI tools (kilocode-cli)";
     };
 
     # ── Applications ──────────────────────────────────────────────

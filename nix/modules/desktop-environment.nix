@@ -30,6 +30,10 @@ in
       environment.sessionVariables = {
         NIXOS_OZONE_WL = "1";
       };
+
+      security = {
+        polkit.enable = true;
+      };
       # Enable CUPS printing services
       # CUPS (Common Unix Printing System) handles all printer communication
       services.printing = {

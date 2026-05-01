@@ -1,4 +1,5 @@
 {
+  "agent_servers": {},
   "outline_panel": {
     "dock": "right",
   },
@@ -16,7 +17,7 @@
     "dock": "right",
   },
   "title_bar": {
-    "show_branch_icon": true,
+    "show_branch_status_icon": true,
   },
   "allow_rewrap": "anywhere",
   "vim": {

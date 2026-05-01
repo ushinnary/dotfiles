@@ -64,8 +64,18 @@ with lib;
       enable = mkEnableOption "development tools and Nixvim editor";
 
       editors = mkOption {
-        type = types.listOf (types.enum [ "nixvim" "vscode" "zed" ]);
-        default = [ "nixvim" "vscode" "zed" ];
+        type = types.listOf (
+          types.enum [
+            "nixvim"
+            "vscode"
+            "zed"
+          ]
+        );
+        default = [
+          "nixvim"
+          "vscode"
+          "zed"
+        ];
         description = ''
           Select which development editors to install when dev.enable is true.
           Supported values are "nixvim", "vscode" and "zed".
@@ -85,11 +95,7 @@ with lib;
 
     # ── Containers ────────────────────────────────────────────────
     containers = {
-      enable = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable Podman container runtime";
-      };
+      enable = mkEnableOption "Enable Podman container runtime";
     };
 
     # ── Virtualisation ───────────────────────────────────────────
@@ -99,12 +105,7 @@ with lib;
 
     # ── Firewall ──────────────────────────────────────────────────
     firewall = {
-      opensnitch = mkOption {
-        type = types.bool;
-        default = false;
-        description = "Enable OpenSnitch application firewall";
-      };
-
+      opensnitch = mkEnableOption "Enable OpenSnitch application firewall";
       smbSharing = mkEnableOption "SMB/Samba file sharing ports in firewall (139, 445) — enable on LAN desktops only";
     };
 

@@ -35,13 +35,6 @@ in
         };
       };
     };
-    glow = {
-      enable = true;
-      lazyLoad.settings = {
-        ft = "markdown";
-        cmd = "Glow";
-      };
-    };
   };
 
   autoCmd = [

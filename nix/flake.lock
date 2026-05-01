@@ -114,11 +114,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777594677,
-        "narHash": "sha256-h90sHwoRJLRvaTpZroTvU2JRHDFj0czUafM8eqLe1RI=",
+        "lastModified": 1777647296,
+        "narHash": "sha256-B2dllLZyocJ9fN4io22eadYPWynvAdRq/zC2NSjw52k=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "899c08a15beae5da51a5cecd6b2b994777a948da",
+        "rev": "d181e6ac2ad01e50c914220d7478fed50b1dbf68",
         "type": "github"
       },
       "original": {
@@ -145,6 +145,26 @@
       "original": {
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
+        "type": "github"
+      }
+    },
+    "kilocode": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1777625672,
+        "narHash": "sha256-iTxr6460P3bR95cXP5xdgXsGTfWYlI2QwP4eiLVj7Z4=",
+        "owner": "Kilo-Org",
+        "repo": "kilocode",
+        "rev": "2be87d2abf45a76a1bdc94b0bbe880d4b89b91d4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kilo-Org",
+        "repo": "kilocode",
         "type": "github"
       }
     },
@@ -276,6 +296,7 @@
         "dotfiles": "dotfiles",
         "home-manager": "home-manager",
         "jovian-nixos": "jovian-nixos",
+        "kilocode": "kilocode",
         "lanzaboote": "lanzaboote",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

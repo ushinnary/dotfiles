@@ -33,6 +33,7 @@
         "vscode"
         "nixvim"
       ];
+      servers = [ "zed" ];
     };
     apps.davinciResolve = true;
     gaming.enable = false;

@@ -82,6 +82,20 @@ with lib;
         '';
       };
 
+      servers = mkOption {
+        type = types.listOf (
+          types.enum [
+            "vscode"
+            "zed"
+          ]
+        );
+        default = [];
+        description = ''
+          Select which development servers to install when dev.enable is true.
+          Supported values are "vscode" and "zed".
+        '';
+      };
+
       aiAgents = mkEnableOption "AI agent CLI tools (kilocode-cli)";
     };
 

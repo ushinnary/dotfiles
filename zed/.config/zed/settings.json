@@ -1,4 +1,5 @@
 {
+  "minimum_split_diff_width": 0.0,
   "agent_servers": {},
   "outline_panel": {
     "dock": "right",
@@ -31,7 +32,7 @@
   "sticky_scroll": {
     "enabled": true,
   },
-  "diff_view_style": "unified",
+  "diff_view_style": "split",
   "show_edit_predictions": true,
   "edit_predictions": {
     "mode": "eager",

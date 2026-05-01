@@ -3,13 +3,16 @@
   lib,
   config,
   vars,
+  inputs,
   ...
 }:
 let
   cfg = config.ushinnary.dev;
 
   selectedEditors = cfg.editors;
+  selectedServers = cfg.servers;
   hasEditor = editor: builtins.elem editor selectedEditors;
+  hasServer = server: builtins.elem server selectedServers;
 
   # ── Dotfile helpers ─────────────────────────────────────────────
   # Relative paths inside ~/dotfiles for out-of-store Home Manager symlinks.
@@ -66,7 +69,7 @@ in
 
       pkgs.git-credential-manager
     ]
-    ++ lib.optionals cfg.aiAgents [ pkgs.kilocode-cli ]
+    ++ lib.optionals cfg.aiAgents [ inputs.kilocode.packages.${pkgs.system}.default ]
     ++ lib.optional (hasEditor "vscode") pkgs.vscode;
 
     environment.variables = {
@@ -139,6 +142,12 @@ in
         home.file = {
           ".alacritty.toml".source = mkDotfileSymlink "alacritty/.alacritty.toml";
           ".wezterm.lua".source = mkDotfileSymlink "wezterm/.wezterm.lua";
+        };
+
+        # Zed server
+        home.file.".zed_server" = lib.mkIf (!hasEditor "zed" && hasServer "zed") {
+          source = "${pkgs.zed-editor.remote_server}/bin";
+          recursive = true;
         };
       };
   };

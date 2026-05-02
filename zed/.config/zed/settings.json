@@ -119,8 +119,8 @@
   "buffer_font_family": "Google Sans Code",
   "theme": {
     "mode": "system",
-    "light": "Catppuccin Latte",
-    "dark": "Catppuccin Mocha",
+    "light": "Catppuccin Latte (Blur)",
+    "dark": "Catppuccin Mocha (Blur)",
   },
   "icon_theme": {
     "mode": "system",

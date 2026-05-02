@@ -6,6 +6,9 @@ window-rule {
     match app-id="^dev.zed.Zed$"
     open-maximized true
     open-on-workspace "code"
+       background-effect {
+        blur true
+    }
 }
 
 // @id=wr_1776454863299402498 @name=firefox
@@ -27,4 +30,17 @@ window-rule {
     match app-id="^discord$"
     open-maximized true
     open-on-workspace "chat"
+}
+
+// @id=wr_1777706130088335019 @name=com.mitchellh.ghostty
+window-rule {
+    match app-id="^com.mitchellh.ghostty$"
+    opacity 0.85
+}
+
+// Block out sensitive components from screencasts
+layer-rule {
+    match namespace="^dms:clipboard$"
+
+    block-out-from "screencast"
 }

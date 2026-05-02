@@ -1,4 +1,4 @@
 // DankMaterialShell starts via its systemd user service and provides:
 // bar, dock, OSD, notifications, clipboard, wallpaper, theme, lock/idle.
-
 spawn-at-startup "xwayland-satellite"
+

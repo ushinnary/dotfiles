@@ -41,6 +41,7 @@ let
     biome
     docker-language-server
     powershell
+    tree-sitter-grammars.tree-sitter-kdl
   ];
 in
 {
@@ -57,6 +58,7 @@ in
 
       pkgs.yazi
       pkgs.nufmt
+      pkgs.kdlfmt
       pkgs.starship
       pkgs.ripgrep
       pkgs.fd

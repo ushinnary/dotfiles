@@ -1,37 +1,32 @@
 // ── Window rules ────────────────────────────────────────
-
 // Rounded corners for all windows
 window-rule {
-  geometry-corner-radius 12
-  clip-to-geometry true
-       background-effect {
+    geometry-corner-radius 12
+    clip-to-geometry true
+    background-effect {
         blur true
     }
 }
-
 window-rule {
-  match app-id="org.telegram.desktop"
-  open-on-workspace "Chat"
+    match app-id="org.telegram.desktop"
+    open-on-workspace "Chat"
 }
-
 window-rule {
-  match app-id="com.discordapp.Discord"
-  open-on-workspace "Chat"
+    match app-id="com.discordapp.Discord"
+    open-on-workspace "Chat"
 }
-
 window-rule {
-  match app-id="com.microsoft.Edge"
-  open-on-workspace "Browser"
+    match app-id="com.microsoft.Edge"
+    open-on-workspace "Browser"
 }
-
 // Ghostty: blur + transparency + shadow
 window-rule {
-  match app-id=r#"(^ghostty$|^com\.mitchellh\.ghostty$)"#
-  open-on-workspace "Code"
+    match app-id="(^ghostty$|^com\\.mitchellh\\.ghostty$)"
+    open-on-workspace "Code"
 }
-
-// ── Layer rules ─────────────────────────────────────────
+ // ── Layer rules ─────────────────────────────────────────
 
 // DankMaterialShell manages its own layer surfaces (bar, dock, OSD,
 // notifications, lock screen). Add custom layer-rules here only if
 // you need to override DMS defaults for specific namespaces.
+

@@ -4,6 +4,7 @@
 alias nvimconfig='nvim ~/.config/nvim'
 alias nfc='nix flake check'
 alias nfu='nix flake update'
+alias ncg='sudo nix-collect-garbage -d'
 
 nrfs() {
   if [ "$#" -ne 1 ]; then

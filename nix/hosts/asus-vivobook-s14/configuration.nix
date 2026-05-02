@@ -36,7 +36,9 @@
     desktop.niri = true;
     dev = {
       enable = true;
-      editors = [ "zed" ];
+      editors = [
+        "zed"
+      ];
       aiAgents = true;
     };
     gaming.enable = false;

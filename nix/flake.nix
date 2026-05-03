@@ -36,10 +36,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    kilocode = {
-      url = "github:Kilo-Org/kilocode";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =

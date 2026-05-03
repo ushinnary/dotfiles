@@ -70,7 +70,7 @@
                     "subvol=nix"
                   ];
                 };
-
+              } // lib.optionalAttrs (swapSize != "0G") {
                 "/swap" = {
                   mountpoint = "/.swapvol";
                   mountOptions = [

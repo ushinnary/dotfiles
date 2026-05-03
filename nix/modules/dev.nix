@@ -3,7 +3,6 @@
   lib,
   config,
   vars,
-  inputs,
   ...
 }:
 let
@@ -71,7 +70,6 @@ in
 
       pkgs.git-credential-manager
     ]
-    # ++ lib.optionals cfg.aiAgents [ inputs.kilocode.packages.${pkgs.system}.default ]
     ++ lib.optional cfg.aiAgents pkgs.kilocode-cli
     ++ lib.optional (hasEditor "vscode") pkgs.vscode;
 

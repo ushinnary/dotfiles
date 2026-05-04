@@ -1,4 +1,5 @@
 include "startup.kdl"
+include "dms/colors.kdl"
 include "environment.kdl"
 include "appearance.kdl"
 include "outputs.kdl"
@@ -7,11 +8,10 @@ include "layout.kdl"
 include "window-rules.kdl"
 include "binds.kdl"
 include "binds-custom.kdl"
-
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
-include "dms/colors.kdl"
 include "dms/cursor.kdl"
 include "dms/outputs.kdl"
 include "dms/windowrules.kdl"
 include "dms/wpblur.kdl"
+

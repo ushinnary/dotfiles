@@ -1,6 +1,11 @@
 {
   "minimum_split_diff_width": 0.0,
-  "agent_servers": {},
+  "agent_servers": {
+    "KiloCode": {
+      "type": "custom",
+      "command": "/run/current-system/sw/bin/kilocode",
+    },
+  },
   "outline_panel": {
     "dock": "right",
   },
@@ -170,7 +175,6 @@
     },
   },
   "auto_install_extensions": {
-    "catppuccin": true,
     "html": true,
     "nix": true,
     "nu": true,

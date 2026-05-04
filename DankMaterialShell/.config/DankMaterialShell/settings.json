@@ -1,7 +1,7 @@
 {
-  "currentThemeName": "dynamic",
-  "currentThemeCategory": "dynamic",
-  "customThemeFile": "/home/ushinnary/dotfiles/DankMaterialShell/.config/DankMaterialShell/oled.json",
+  "currentThemeName": "custom",
+  "currentThemeCategory": "custom",
+  "customThemeFile": "/home/ushinnary/dotfiles/DankMaterialShell/.config/DankMaterialShell/catppuccin.json",
   "registryThemeVariants": {
     "amoledBlack": {
       "dark": {
@@ -12,7 +12,11 @@
     "catppuccin": {
       "dark": {
         "flavor": "mocha",
-        "accent": "mauve"
+        "accent": "lavender"
+      },
+      "light": {
+        "flavor": "latte",
+        "accent": "lavender"
       }
     }
   },
@@ -21,10 +25,10 @@
   "matugenTargetMonitor": "",
   "popupTransparency": 1,
   "dockTransparency": 1,
-  "widgetBackgroundColor": "sch",
+  "widgetBackgroundColor": "sth",
   "widgetColorMode": "default",
   "controlCenterTileColorMode": "primary",
-  "buttonColorMode": "primaryContainer",
+  "buttonColorMode": "primary",
   "cornerRadius": 12,
   "niriLayoutGapsOverride": -1,
   "niriLayoutRadiusOverride": -1,

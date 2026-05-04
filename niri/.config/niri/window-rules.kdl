@@ -1,7 +1,7 @@
 // ── Window rules ────────────────────────────────────────
 // Rounded corners for all windows
 window-rule {
-    geometry-corner-radius 12
+    geometry-corner-radius 10
     clip-to-geometry true
     background-effect {
         blur true
@@ -24,9 +24,20 @@ window-rule {
     match app-id="(^ghostty$|^com\\.mitchellh\\.ghostty$)"
     open-on-workspace "Code"
 }
- // ── Layer rules ─────────────────────────────────────────
-
+// Block out sensitive components from screencasts
+layer-rule {
+    match namespace="^dms:clipboard$"
+    block-out-from "screencast"
+}
+// ── Layer rules ─────────────────────────────────────────
 // DankMaterialShell manages its own layer surfaces (bar, dock, OSD,
 // notifications, lock screen). Add custom layer-rules here only if
 // you need to override DMS defaults for specific namespaces.
+layer-rule {
+    match layer="top"
+    match layer="overlay"
+    background-effect {
+        xray false
+    }
+}
 

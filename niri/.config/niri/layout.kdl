@@ -1,5 +1,5 @@
 layout {
-    gaps 8
+    gaps 4
     center-focused-column "never"
     // Transparent so the wallpaper shows through (stationary behind workspaces).
     background-color "transparent"
@@ -13,7 +13,7 @@ layout {
     }
     focus-ring {
         off
-        width 1
+        width 0
     }
     shadow {
         on

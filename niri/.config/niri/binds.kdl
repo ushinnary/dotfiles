@@ -21,13 +21,13 @@ binds {
         spawn "dms" "color" "pick" "-a"
     }
     // Launcher (DMS spotlight)
-    Mod+Space {
+    Alt+Space {
         spawn "dms" "ipc" "call" "spotlight" "toggle"
     }
     Mod+P {
         spawn "dms" "ipc" "call" "spotlight" "toggle"
     }
-    Alt+Space repeat=false {
+    Mod+Space repeat=false {
         switch-layout "next"
     }
     // Clipboard history (DMS)

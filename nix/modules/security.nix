@@ -97,10 +97,6 @@ in
         }
       ];
       security.auditd.enable = true;
-      systemd.coredump.extraConfig = ''
-        Storage=none
-        ProcessSizeMax=0
-      '';
 
       # ── Restrict su to wheel group only ─────────────────────────
       security.pam.services.su.requireWheel = true;

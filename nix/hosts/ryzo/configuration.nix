@@ -8,6 +8,12 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # Full disk encryption with LUKS and BTRFS:
+    (import ../../modules/disko-luks-btrfs.nix {
+      device = "/dev/nvme0n1";
+      swapSize = "0G";
+      isSsd = true;
+    })
     ../../modules/default.nix
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -25,7 +31,7 @@
   ushinnary = {
     gpu.amd.enable = true;
     hardware.amdCpu = true;
-    desktop.gnome = true;
+    desktop.niri = true;
     containers.enable = true;
     dev = {
       enable = true;

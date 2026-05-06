@@ -19,7 +19,7 @@
     ];
 
     # Plymouth disabled for faster boot (~3.8s saving)
-    plymouth.enable = true;
+    plymouth.enable = false;
 
     # Hide the OS choice for bootloaders.
     # It's still possible to open the bootloader list by pressing any key
@@ -59,16 +59,6 @@
     options = "--delete-older-than 3d";
   };
   nix.settings.auto-optimise-store = true;
-  services.fstrim.enable = true;
-  services.openssh = {
-    enable = true;
-  };
-
-  # ── Journald log size limits ──────────────────────────────────
-  services.journald.extraConfig = ''
-    SystemMaxUse=1G
-    MaxRetentionSec=2weeks
-  '';
 
   # ── Automatic weekly rebuild from local dotfiles flake ────────
   # Applies any pending dotfile changes without manual intervention.

@@ -1,9 +1,10 @@
 {
   "minimum_split_diff_width": 0.0,
   "agent_servers": {
-    "KiloCode": {
+    "OpenCode": {
       "type": "custom",
-      "command": "/run/current-system/sw/bin/kilocode",
+      "command": "/run/current-system/sw/bin/opencode",
+      "args": ["acp"],
     },
   },
   "outline_panel": {

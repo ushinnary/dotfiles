@@ -70,7 +70,7 @@ in
 
       pkgs.git-credential-manager
     ]
-    ++ lib.optional cfg.aiAgents pkgs.kilocode-cli
+    ++ lib.optional cfg.aiAgents pkgs.opencode
     ++ lib.optional (hasEditor "vscode") pkgs.vscode;
 
     environment.variables = {

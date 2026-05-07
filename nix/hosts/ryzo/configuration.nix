@@ -34,9 +34,7 @@
     dev = {
       enable = true;
       editors = [
-        "vscode"
         "nixvim"
-        "zed"
       ];
       servers = [
         "zed"

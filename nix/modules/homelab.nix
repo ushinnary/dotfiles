@@ -79,6 +79,8 @@ in
         "enp*"
         "wlp*"
       ];
+
+      allowedTCPPorts = [ 9090 ];
     };
 
     environment.systemPackages = with pkgs; [

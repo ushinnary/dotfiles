@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  vars,
   ...
 }:
 let
@@ -29,6 +30,7 @@ in
     services.cockpit = {
       enable = true;
       port = 9090;
+      openFirewall = true;
       settings = {
         WebService = {
           AllowUnencrypted = true;
@@ -84,8 +86,6 @@ in
         "enp*"
         "wlp*"
       ];
-
-      allowedTCPPorts = [ 9090 ];
     };
 
     environment.systemPackages = with pkgs; [
@@ -102,6 +102,8 @@ in
       MaxRetentionSec=1week
       SystemKeepFree=100M
     '';
+
+    users.users."${vars.userName}".extraGroups = [ "render" ];
 
     # services.fstrim.enable = false;
     # services.udisks2.enable = false;

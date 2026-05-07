@@ -67,6 +67,8 @@ in
     #   chmod 755 /srv/samba/data
     #   chmod 755 /srv/samba/media
     # '';
+    #
+    nixpkgs.config.rocmSupport = isAmd;
 
     services.ollama = {
       enable = true;

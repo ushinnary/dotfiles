@@ -22,6 +22,7 @@ in
     hardware.amdgpu.opencl.enable = true;
     hardware.amdgpu.initrd.enable = true;
 
+    boot.initrd.kernelModules = [ "amdgpu" ];
   };
 
 }

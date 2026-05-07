@@ -8,10 +8,12 @@
 let
   cfg = config.ushinnary.homelab;
   isAmd = config.ushinnary.gpu.amd.enable;
+  isRocmCompat = config.ushinnary.gpu.amd.rocm;
 in
 {
   config = lib.mkIf cfg.enable {
     console = {
+      earlySetup = true;
       font = "Google Sans Code";
       keyMap = "us";
     };
@@ -72,13 +74,18 @@ in
 
     services.ollama = {
       enable = true;
-      package = if isAmd then pkgs.ollama-rocm else pkgs.ollama;
+      package = if isRocmCompat then pkgs.ollama-rocm else pkgs.ollama;
       # modelDir = cfg.ollama.modelsPath;
       port = cfg.ollama.port;
-      environmentVariables = lib.mkIf isAmd {
-        ROCM_PATH = "${pkgs.rocmPackages.clr}";
-        HSA_OVERRIDE_GFX_VERSION = "10.3.0";
-      };
+      environmentVariables = lib.mkMerge [
+        {
+          OLLAMA_VULKAN = 1;
+        }
+        (lib.mkIf (isRocmCompat) {
+          ROCM_PATH = "${pkgs.rocmPackages.clr}";
+          HSA_OVERRIDE_GFX_VERSION = "10.3.0";
+        })
+      ];
     };
 
     networking.firewall = {
@@ -103,11 +110,6 @@ in
       SystemMaxUse=500M
       MaxRetentionSec=1week
       SystemKeepFree=100M
-    '';
-
-    services.udev.extraRules = ''
-      KERNEL=="kfd", MODE="0660", GROUP="video"
-      KERNEL=="kfd", MODE="0660", GROUP="render"
     '';
 
     users.users."${vars.userName}".extraGroups = [ "render" ];

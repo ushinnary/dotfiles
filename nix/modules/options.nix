@@ -25,6 +25,7 @@ with lib;
       };
 
       amd.enable = mkEnableOption "AMD GPU drivers";
+      amd.rocm = mkEnableOption "Is ROCm supported";
     };
 
     # ── Hardware ──────────────────────────────────────────────────
@@ -89,7 +90,7 @@ with lib;
             "zed"
           ]
         );
-        default = [];
+        default = [ ];
         description = ''
           Select which development servers to install when dev.enable is true.
           Supported values are "vscode" and "zed".
@@ -131,20 +132,26 @@ with lib;
         };
       };
       extraDrives = mkOption {
-        type = types.listOf (types.submodule {
-          options = {
-            device = mkOption { type = types.str; };
-            mountPoint = mkOption { type = types.str; };
-            label = mkOption { type = types.str; };
-          };
-        });
-        default = [];
+        type = types.listOf (
+          types.submodule {
+            options = {
+              device = mkOption { type = types.str; };
+              mountPoint = mkOption { type = types.str; };
+              label = mkOption { type = types.str; };
+            };
+          }
+        );
+        default = [ ];
         description = "Extra LUKS-encrypted drives for storage";
       };
       powerManagement = {
         enable = mkEnableOption "Power saving features (CPU governor, tuning)";
         cpuGovernor = mkOption {
-          type = types.enum [ "performance" "powersave" "schedutil" ];
+          type = types.enum [
+            "performance"
+            "powersave"
+            "schedutil"
+          ];
           default = "powersave";
           description = "CPU frequency governor";
         };

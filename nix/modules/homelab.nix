@@ -12,7 +12,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     console = {
-      font = "ter-v16n";
+      font = "Google Sans Code";
       keyMap = "us";
     };
 
@@ -103,6 +103,11 @@ in
       SystemMaxUse=500M
       MaxRetentionSec=1week
       SystemKeepFree=100M
+    '';
+
+    services.udev.extraRules = ''
+      KERNEL=="kfd", MODE="0660", GROUP="video"
+      KERNEL=="kfd", MODE="0660", GROUP="render"
     '';
 
     users.users."${vars.userName}".extraGroups = [ "render" ];

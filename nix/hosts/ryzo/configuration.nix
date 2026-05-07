@@ -24,8 +24,7 @@
 
   networking.hostName = "ryzo";
 
-  time.timeZone = "Europe/Paris"; # Change this to your timezone
-  # Locale is set via modules/locale.nix
+  time.timeZone = "Europe/Paris";
 
   # Enable the custom options
   ushinnary = {

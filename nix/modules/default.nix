@@ -15,6 +15,7 @@
     ./dev.nix
     ./firewall.nix
     ./gaming.nix
+    ./homelab.nix
     ./locale.nix
     ./location.nix
     ./packages.nix

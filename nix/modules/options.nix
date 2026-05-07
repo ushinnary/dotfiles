@@ -112,6 +112,45 @@ with lib;
       enable = mkEnableOption "Enable Podman container runtime";
     };
 
+    # ── Homelab ──────────────────────────────────────────────────
+    homelab = {
+      enable = mkEnableOption "Homelab server configuration (headless, services, monitoring)";
+      samba = mkEnableOption "Samba file server with configurable shares";
+      cockpit = mkEnableOption "Cockpit web interface for server management";
+      ollama = {
+        enable = mkEnableOption "Local Ollama AI server with GPU acceleration";
+        modelsPath = mkOption {
+          type = types.path;
+          default = "/var/lib/ollama";
+          description = "Path to store Ollama models";
+        };
+        port = mkOption {
+          type = types.port;
+          default = 11434;
+          description = "Port for Ollama service";
+        };
+      };
+      extraDrives = mkOption {
+        type = types.listOf (types.submodule {
+          options = {
+            device = mkOption { type = types.str; };
+            mountPoint = mkOption { type = types.str; };
+            label = mkOption { type = types.str; };
+          };
+        });
+        default = [];
+        description = "Extra LUKS-encrypted drives for storage";
+      };
+      powerManagement = {
+        enable = mkEnableOption "Power saving features (CPU governor, tuning)";
+        cpuGovernor = mkOption {
+          type = types.enum [ "performance" "powersave" "schedutil" ];
+          default = "powersave";
+          description = "CPU frequency governor";
+        };
+      };
+    };
+
     # ── Virtualisation ───────────────────────────────────────────
     virtualisation = {
       host.enable = mkEnableOption "host virtualization stack for running VMs (VirtualBox)";

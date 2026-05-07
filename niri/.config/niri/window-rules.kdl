@@ -9,9 +9,6 @@ window-rule {
 }
 window-rule {
     match app-id="org.telegram.desktop"
-    open-on-workspace "Chat"
-}
-window-rule {
     match app-id="com.discordapp.Discord"
     open-on-workspace "Chat"
 }

@@ -79,7 +79,7 @@ in
       port = cfg.ollama.port;
       environmentVariables = lib.mkMerge [
         {
-          OLLAMA_VULKAN = 1;
+          OLLAMA_VULKAN = "1";
         }
         (lib.mkIf (isRocmCompat) {
           ROCM_PATH = "${pkgs.rocmPackages.clr}";

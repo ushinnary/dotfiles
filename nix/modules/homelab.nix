@@ -6,13 +6,10 @@
 }:
 let
   cfg = config.ushinnary.homelab;
+  isAmd = config.ushinnary.gpu.amd.enable;
 in
 {
   config = lib.mkIf cfg.enable {
-    services.xserver.enable = false;
-
-    services.getty.autologinUser = lib.mkDefault "root";
-
     console = {
       font = "ter-v16n";
       keyMap = "us";
@@ -57,19 +54,19 @@ in
     #   };
     # };
 
-    system.activationScripts.samba-dirs = ''
-      mkdir -p /srv/samba/data
-      mkdir -p /srv/samba/media
-      chmod 755 /srv/samba/data
-      chmod 755 /srv/samba/media
-    '';
+    # system.activationScripts.samba-dirs = ''
+    #   mkdir -p /srv/samba/data
+    #   mkdir -p /srv/samba/media
+    #   chmod 755 /srv/samba/data
+    #   chmod 755 /srv/samba/media
+    # '';
 
     services.ollama = {
       enable = true;
-      package = pkgs.ollama-rocm;
+      package = if isAmd then pkgs.ollama-rocm else pkgs.ollama;
       # modelDir = cfg.ollama.modelsPath;
       port = cfg.ollama.port;
-      environmentVariables = {
+      environmentVariables = lib.mkIf isAmd {
         ROCM_PATH = "${pkgs.rocmPackages.clr}";
         HSA_OVERRIDE_GFX_VERSION = "10.3.0";
       };
@@ -85,14 +82,10 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      htop
-      iotop
-      ncdu
       vim
       git
       curl
       wget
-      rsync
       btrfs-progs
       cockpit
     ];

@@ -30,7 +30,6 @@
   ushinnary = {
     gpu.amd.enable = true;
     hardware.amdCpu = true;
-    desktop.niri = true;
     containers.enable = true;
     dev = {
       enable = true;
@@ -49,6 +48,10 @@
     display = {
       refreshRate = 90; # Normal desktop use
       gamingRefreshRate = 144; # Gaming performance
+    };
+    homelab = {
+      enable = true;
+      powerManagement.cpuGovernor = "powersave";
     };
   };
 

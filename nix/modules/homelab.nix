@@ -31,7 +31,7 @@ in
 
     services.cockpit = {
       enable = true;
-      enableOpenSSL = true;
+      # enableOpenSSL = true;
     };
 
     # services.samba = {
@@ -67,7 +67,7 @@ in
     services.ollama = {
       enable = true;
       package = pkgs.ollama-rocm;
-      modelDir = cfg.ollama.modelsPath;
+      # modelDir = cfg.ollama.modelsPath;
       port = cfg.ollama.port;
       environmentVariables = {
         ROCM_PATH = "${pkgs.rocmPackages.clr}";

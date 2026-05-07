@@ -28,7 +28,12 @@ in
 
     services.cockpit = {
       enable = true;
-      # enableOpenSSL = true;
+      port = 9090;
+      settings = {
+        WebService = {
+          AllowUnencrypted = true;
+        };
+      };
     };
 
     # services.samba = {

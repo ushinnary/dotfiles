@@ -43,12 +43,7 @@
         "vscode"
       ];
     };
-    apps.davinciResolve = true;
     gaming.enable = false;
-    display = {
-      refreshRate = 90; # Normal desktop use
-      gamingRefreshRate = 144; # Gaming performance
-    };
     homelab = {
       enable = true;
       powerManagement.cpuGovernor = "powersave";

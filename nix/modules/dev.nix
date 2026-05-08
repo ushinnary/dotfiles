@@ -64,7 +64,7 @@ in
       pkgs.fzf
       pkgs.lazygit
       pkgs.zoxide
-      # pkgs.zellij
+      pkgs.zellij
       pkgs.difftastic
       # pkgs.dotnet-sdk_10
 

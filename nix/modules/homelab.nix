@@ -80,6 +80,7 @@ in
       environmentVariables = lib.mkMerge [
         {
           OLLAMA_VULKAN = "1";
+          # OLLAMA_CONTEXT_LENGTH = "131072";
         }
         (lib.mkIf (isRocmCompat) {
           ROCM_PATH = "${pkgs.rocmPackages.clr}";

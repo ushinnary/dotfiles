@@ -129,13 +129,20 @@ in
         home.file = {
           ".alacritty.toml".source = mkDotfileSymlink "alacritty/.alacritty.toml";
           ".wezterm.lua".source = mkDotfileSymlink "wezterm/.wezterm.lua";
+
+          # Agent PI
+          ".pi" = lib.mkIf cfg.aiAgents {
+            source = mkDotfileSymlink "pi/.pi";
+            recursive = true;
+          };
+
+          # Zed server
+          ".zed_server" = lib.mkIf (!hasEditor "zed" && hasServer "zed") {
+            source = "${pkgs.zed-editor.remote_server}/bin";
+            recursive = true;
+          };
         };
 
-        # Zed server
-        home.file.".zed_server" = lib.mkIf (!hasEditor "zed" && hasServer "zed") {
-          source = "${pkgs.zed-editor.remote_server}/bin";
-          recursive = true;
-        };
       };
   };
 }

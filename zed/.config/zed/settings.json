@@ -128,8 +128,8 @@
   "buffer_font_family": "Google Sans Code",
   "theme": {
     "mode": "system",
-    "light": "Ayu Light",
-    "dark": "Catppuccin Mocha (Blur)",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Mocha",
   },
   "icon_theme": {
     "mode": "system",
@@ -186,7 +186,7 @@
     "surrealql": true,
     "toml": true,
     "biome": true,
-    "catppuccin-blur": true,
+    "catppuccin": true,
     "catppuccin-icons": true,
     "csharp": true,
     "csv": true,

@@ -105,12 +105,6 @@ binds {
     Mod+L {
         focus-column-right
     }
-    Mod+J {
-        focus-window-down
-    }
-    Mod+K {
-        focus-window-up
-    }
     // Movement
     Mod+Shift+Left {
         move-column-left
@@ -175,7 +169,13 @@ binds {
     Mod+Page_Down {
         focus-workspace-down
     }
+    Mod+J {
+        focus-workspace-down
+    }
     Mod+Page_Up {
+        focus-workspace-up
+    }
+    Mod+K {
         focus-workspace-up
     }
     Mod+Shift+Page_Down {

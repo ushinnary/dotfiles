@@ -26,7 +26,6 @@ in
     boot.kernelParams = [
       "quiet"
       "loglevel=3"
-      "nomodeset"
     ];
 
     services.cockpit = {

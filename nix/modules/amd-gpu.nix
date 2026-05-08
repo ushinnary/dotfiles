@@ -28,7 +28,6 @@ in
     hardware.amdgpu.initrd.enable = true;
 
     boot.initrd.kernelModules = [ "amdgpu" ];
-    boot.kernelParams = [ "amdgpu.device_is_privileged=1" ];
   };
 
 }

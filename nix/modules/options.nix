@@ -26,6 +26,11 @@ with lib;
 
       amd.enable = mkEnableOption "AMD GPU drivers";
       amd.rocm = mkEnableOption "Is ROCm supported";
+      amd.rocmOverrideGfx = mkOption {
+        type = types.str;
+        default = "";
+        description = "rocmOverrideGfx used for ollama";
+      };
     };
 
     # ── Hardware ──────────────────────────────────────────────────

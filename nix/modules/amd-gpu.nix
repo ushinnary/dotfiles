@@ -14,16 +14,21 @@ in
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [
-        mesa.opencl # Enables Rusticl (OpenCL) support
-        vulkan-loader
-      ];
+      extraPackages =
+        with pkgs;
+        [
+          mesa.opencl # Enables Rusticl (OpenCL) support
+          vulkan-loader
+
+        ]
+        ++ lib.optional cfg.rocm rocmPackages.clr.icd;
     };
 
     hardware.amdgpu.opencl.enable = true;
     hardware.amdgpu.initrd.enable = true;
 
     boot.initrd.kernelModules = [ "amdgpu" ];
+    boot.kernelParams = [ "amdgpu.device_is_privileged=1" ];
   };
 
 }

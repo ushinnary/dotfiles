@@ -8,6 +8,7 @@
 let
   cfg = config.ushinnary.homelab;
   isRocmCompat = config.ushinnary.gpu.amd.rocm;
+  rocmOverrideGfx = config.ushinnary.gpu.amd.rocmOverrideGfx;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -73,8 +74,9 @@ in
 
     services.ollama = {
       enable = true;
-      package = if isRocmCompat then pkgs.ollama-rocm else pkgs.ollama;
+      package = if isRocmCompat then pkgs.ollama-rocm else pkgs.ollama-vulkan;
       # modelDir = cfg.ollama.modelsPath;
+      rocmOverrideGfx = rocmOverrideGfx;
       port = cfg.ollama.port;
       environmentVariables = lib.mkMerge [
         {
@@ -82,7 +84,7 @@ in
         }
         (lib.mkIf (isRocmCompat) {
           ROCM_PATH = "${pkgs.rocmPackages.clr}";
-          HSA_OVERRIDE_GFX_VERSION = "10.3.0";
+          HSA_OVERRIDE_GFX_VERSION = "${rocmOverrideGfx}";
         })
       ];
     };

@@ -28,7 +28,11 @@
 
   # Enable the custom options
   ushinnary = {
-    gpu.amd.enable = true;
+    gpu.amd = {
+      enable = true;
+      rocm = true;
+      rocmOverrideGfx = "10.3.0";
+    };
     hardware.amdCpu = true;
     containers.enable = true;
     dev = {

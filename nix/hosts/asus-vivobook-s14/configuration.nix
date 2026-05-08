@@ -74,12 +74,12 @@
       in
       {
         imports = [ ../../modules/home.nix ];
-        xdg.configFile."niri/outputs.kdl".source = lib.mkForce (
-          mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14/outputs.kdl"
-        );
-        xdg.configFile."niri/binds-custom.kdl".source = lib.mkForce (
-          mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14/binds-custom.kdl"
-        );
+        xdg.configFile = {
+          "niri-overrides" = {
+            source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14");
+            recursive = true;
+          };
+        };
       };
   };
 

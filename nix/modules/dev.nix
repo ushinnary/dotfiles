@@ -16,18 +16,6 @@ let
   # ── Dotfile helpers ─────────────────────────────────────────────
   # Relative paths inside ~/dotfiles for out-of-store Home Manager symlinks.
   nuRelativeRoot = "nushell/.config/nushell";
-  nuCompletions = [
-    "cargo"
-    "dotnet"
-    "git"
-    "npm"
-    "rg"
-    "rustup"
-    "ssh"
-    "tar"
-    "zellij"
-    "zoxide"
-  ];
 
   zedLspPackages = with pkgs; [
     nodejs_24
@@ -108,9 +96,10 @@ in
 
         xdg.configFile = {
           # ── Nushell ──────────────────────────────────────────
-          "nushell/config.nu".source = mkDotfileSymlink "${nuRelativeRoot}/config.nu";
-          "nushell/env.nu".source = mkDotfileSymlink "${nuRelativeRoot}/env.nu";
-          "nushell/alias.nu".source = mkDotfileSymlink "${nuRelativeRoot}/alias.nu";
+          "nushell" = {
+            source = mkDotfileSymlink "${nuRelativeRoot}";
+            recursive = true;
+          };
 
           # ── Lazygit ──────────────────────────────────────────
           "lazygit/config.yml".source = mkDotfileSymlink "lazygit/.config/lazygit/config.yml";
@@ -122,8 +111,10 @@ in
           "zellij/config.kdl".source = mkDotfileSymlink "zellij/.config/zellij/config.kdl";
 
           # ── Zed ──────────────────────────────────────────────
-          "zed/settings.json".source = mkDotfileSymlink "zed/.config/zed/settings.json";
-          "zed/keymap.json".source = mkDotfileSymlink "zed/.config/zed/keymap.json";
+          "zed" = {
+            source = mkDotfileSymlink "zed/.config/zed";
+            recursive = true;
+          };
 
           # ── Kitty ─────────────────────────────────────────────
           "kitty/kitty.conf".source = mkDotfileSymlink "kitty/.config/kitty/kitty.conf";
@@ -131,16 +122,8 @@ in
           # # ── Pipewire ─────────────────────────────────────────
           # "pipewire/pipewire.conf.d/hesuvi.conf".source =
           #   mkDotfileSymlink "pipewire/.config/pipewire/pipewire.conf.d/hesuvi.conf";
-        }
+        };
         # Nushell completion scripts — one entry per tool
-        // builtins.listToAttrs (
-          map (tool: {
-            name = "nushell/${tool}-completions.nu";
-            value = {
-              source = mkDotfileSymlink "${nuRelativeRoot}/${tool}-completions.nu";
-            };
-          }) nuCompletions
-        );
 
         # ── Files that live in $HOME directly ──────────────────────
         home.file = {

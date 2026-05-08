@@ -229,13 +229,6 @@ binds {
     XF86AudioMicMute {
         spawn "dms" "ipc" "call" "audio" "micmute"
     }
-    // Brightness keys — routed through DMS IPC (handles OSD automatically)
-    XF86MonBrightnessUp {
-        spawn "dms" "ipc" "call" "brightness" "increment" "5"
-    }
-    XF86MonBrightnessDown {
-        spawn "dms" "ipc" "call" "brightness" "decrement" "5"
-    }
     // Media player keys (DMS MPRIS)
     XF86AudioPlay {
         spawn "dms" "ipc" "call" "mpris" "playPause"

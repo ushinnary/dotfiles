@@ -74,7 +74,6 @@ in
     services.ollama = {
       enable = true;
       package = if isRocmCompat then pkgs.ollama-rocm else pkgs.ollama-vulkan;
-      # modelDir = cfg.ollama.modelsPath;
       rocmOverrideGfx = rocmOverrideGfx;
       port = cfg.ollama.port;
       environmentVariables = lib.mkMerge [
@@ -86,6 +85,7 @@ in
         (lib.mkIf (isRocmCompat) {
           ROCM_PATH = "${pkgs.rocmPackages.clr}";
           HSA_OVERRIDE_GFX_VERSION = "${rocmOverrideGfx}";
+          OLLAMA_VULKAN = lib.mkForce "0";
         })
       ];
     };

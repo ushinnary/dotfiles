@@ -7,7 +7,6 @@
 }:
 let
   cfg = config.ushinnary.homelab;
-  isAmd = config.ushinnary.gpu.amd.enable;
   isRocmCompat = config.ushinnary.gpu.amd.rocm;
 in
 {
@@ -70,7 +69,7 @@ in
     #   chmod 755 /srv/samba/media
     # '';
     #
-    nixpkgs.config.rocmSupport = isAmd;
+    nixpkgs.config.rocmSupport = isRocmCompat;
 
     services.ollama = {
       enable = true;

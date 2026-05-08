@@ -44,6 +44,7 @@
         "zed"
         "vscode"
       ];
+      aiAgents = true;
     };
     gaming.enable = false;
     homelab = {

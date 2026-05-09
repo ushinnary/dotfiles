@@ -57,6 +57,7 @@ in
       # pkgs.dotnet-sdk_10
 
       pkgs.git-credential-manager
+      pkgs.carapace
     ]
     ++ lib.optionals cfg.aiAgents [
       pkgs.opencode

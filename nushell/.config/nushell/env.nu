@@ -124,3 +124,6 @@ if not ($starship_init | path exists) {
 if not ($zoxide_init | path exists) {
     zoxide init nushell | save -f $zoxide_init
 }
+
+mkdir $"($nu.cache-dir)"
+carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"

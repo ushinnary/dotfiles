@@ -1,4 +1,5 @@
 {
+  "cli_default_open_behavior": "new_window",
   "use_podman": true,
   "agent_ui_font_size": 14.0,
   "ui_font_size": 15.0,

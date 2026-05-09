@@ -9,6 +9,7 @@ input {
         natural-scroll
         accel-profile "adaptive"
         accel-speed 0.2
+        disabled-on-external-mouse
     }
     mouse {
         natural-scroll

@@ -32,6 +32,18 @@ in
             source = mkDotfileSymlink "${niriRelativeRoot}";
             recursive = true;
           };
+          "DankMaterialShell" = {
+            source = mkDotfileSymlink "DankMaterialShell/.config/DankMaterialShell";
+            recursive = true;
+          };
+          "ironbar" = {
+            source = mkDotfileSymlink "ironbar/.config/ironbar";
+            recursive = true;
+          };
+          "waybar" = {
+            source = mkDotfileSymlink "waybar/.config/waybar";
+            recursive = true;
+          };
         };
       };
   };

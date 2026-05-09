@@ -38,6 +38,7 @@
       enable = true;
       editors = [
         "zed"
+        "nixvim"
       ];
       aiAgents = true;
     };

@@ -43,7 +43,7 @@
       aiAgents = true;
     };
     gaming.enable = false;
-    containers.enable = true;
+    containers.enable = false;
     display = {
       refreshRate = 60; # 60Hz OLED screen
       oled = true;

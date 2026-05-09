@@ -59,6 +59,7 @@ in
 
       pkgs.git-credential-manager
       pkgs.carapace
+      pkgs.devenv
     ]
     ++ lib.optionals cfg.aiAgents [
       pkgs.opencode

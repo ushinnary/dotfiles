@@ -938,3 +938,6 @@ def "cargo search" [ query: string, --limit=10] {
 
 source alias.nu
 source $"($nu.cache-dir)/carapace.nu"
+
+devenv hook nu | save --force ~/.cache/devenv/hook.nu
+source ~/.cache/devenv/hook.nu

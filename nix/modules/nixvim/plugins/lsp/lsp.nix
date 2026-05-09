@@ -98,9 +98,6 @@
         lemminx = {
           enable = true;
         };
-        vtsls = {
-          enable = true;
-        };
         vue_ls = {
           enable = true;
         };
@@ -110,7 +107,10 @@
         qmlls = {
           enable = true;
           # -E flag required for qmlls >= 6.8.2
-          cmd = [ "${pkgs.kdePackages.qtdeclarative}/bin/qmlls" "-E" ];
+          cmd = [
+            "${pkgs.kdePackages.qtdeclarative}/bin/qmlls"
+            "-E"
+          ];
         };
         # rust_analyzer = {
         #   enable = true;

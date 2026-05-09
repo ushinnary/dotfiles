@@ -29,6 +29,7 @@ let
     docker-language-server
     powershell
     tree-sitter-grammars.tree-sitter-kdl
+    typescript-go
   ];
 in
 {

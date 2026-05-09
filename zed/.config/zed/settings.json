@@ -166,6 +166,22 @@
       },
       "format_on_save": "on",
     },
+    "TypeScript": {
+      "language_servers": [
+        "tsgo",
+        "!vtsls",
+        "!typescript-language-server",
+        "...",
+      ],
+    },
+    "TSX": {
+      "language_servers": [
+        "tsgo",
+        "!vtsls",
+        "!typescript-language-server",
+        "...",
+      ],
+    },
   },
   "lsp": {
     "rust-analyzer": {
@@ -203,5 +219,6 @@
     "vue": true,
     "xml": true,
     "kdl": true,
+    "tsgo": true,
   },
 }

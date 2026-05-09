@@ -37,9 +37,12 @@ in
         };
       };
 
-      environment.systemPackages = with pkgs; [
-        podman-compose
-      ];
+      environment.systemPackages =
+        with pkgs;
+        [
+          podman-compose
+        ]
+        ++ optional containersCfg.distrobox distrobox;
     })
     (mkIf vmHostCfg.enable {
       virtualisation.libvirtd.enable = true;

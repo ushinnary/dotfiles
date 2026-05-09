@@ -116,6 +116,7 @@ with lib;
     # ── Containers ────────────────────────────────────────────────
     containers = {
       enable = mkEnableOption "Enable Podman container runtime";
+      distrobox = mkEnableOption "Enable distrobox";
     };
 
     # ── Homelab ──────────────────────────────────────────────────

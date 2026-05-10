@@ -130,6 +130,12 @@ in
             recursive = true;
           };
 
+          # Ghostty
+          "ghostty" = {
+            source = mkDotfileSymlink "ghostty/.config/ghostty";
+            recursive = true;
+          };
+
           # ── Kitty ─────────────────────────────────────────────
           "kitty/kitty.conf".source = mkDotfileSymlink "kitty/.config/kitty/kitty.conf";
 

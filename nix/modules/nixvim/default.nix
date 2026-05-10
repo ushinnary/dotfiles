@@ -25,15 +25,17 @@ in
         register = "unnamedplus";
         providers.wl-copy.enable = true;
       };
+      extraConfigLuaPost = ''
+        vim.cmd([[
+          colorscheme github_dark_default
+        ]])
+      '';
 
-      colorschemes.catppuccin = {
+      colorschemes.github-theme = {
         enable = true;
         settings = {
-          flavour = "auto";
-          transparent_background = true;
-          background = {
-            light = "latte";
-            dark = "mocha";
+          options = {
+
           };
         };
       };

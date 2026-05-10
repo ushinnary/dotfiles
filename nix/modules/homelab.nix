@@ -76,10 +76,10 @@ in
       package = if isRocmCompat then pkgs.ollama-rocm else pkgs.ollama-vulkan;
       rocmOverrideGfx = rocmOverrideGfx;
       port = cfg.ollama.port;
+      host = "0.0.0.0";
       environmentVariables = lib.mkMerge [
         {
           OLLAMA_VULKAN = "1";
-          OLLAMA_HOST = "0.0.0.0";
           # OLLAMA_CONTEXT_LENGTH = "131072";
         }
         (lib.mkIf (isRocmCompat) {

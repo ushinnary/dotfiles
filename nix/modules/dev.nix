@@ -36,8 +36,6 @@ in
   imports = [ ./nixvim/default.nix ];
 
   config = lib.mkIf cfg.enable {
-    users.users."${vars.userName}".shell = pkgs.nushell;
-
     environment.systemPackages = [
       pkgs.ast-grep
 
@@ -58,8 +56,8 @@ in
       # pkgs.dotnet-sdk_10
 
       pkgs.git-credential-manager
-      pkgs.carapace
       pkgs.devenv
+      pkgs.nushell
     ]
     ++ lib.optionals cfg.aiAgents [
       pkgs.opencode
@@ -74,6 +72,12 @@ in
     programs.nix-ld = {
       enable = true;
     };
+
+    programs.bash.interactiveShellInit = ''
+      if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+        exec nu
+      fi
+    '';
 
     programs.direnv = {
       enable = true;
@@ -95,6 +99,13 @@ in
           enable = true;
           extraPackages = zedLspPackages;
           installRemoteServer = true;
+        };
+
+        programs = {
+          carapace = {
+            enable = true;
+            enableNushellIntegration = true;
+          };
         };
 
         xdg.configFile = {

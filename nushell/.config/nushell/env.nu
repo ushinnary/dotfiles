@@ -1,7 +1,3 @@
-# Nushell Environment Config File
-#
-# version = "0.93.0"
-
 def create_left_prompt [] {
     let dir = match (do --ignore-errors { $env.PWD | path relative-to $env.HOME }) {
         null => $env.PWD
@@ -108,22 +104,19 @@ $env.FREETYPE_PROPERTIES = 'cff:no-stem-darkening=0'
 $env.DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 1
 $env.VISUAL = "nvim"
 $env.EDITOR = "nvim"
-
 $env.DOCKER_HOST = $"unix://($env.XDG_RUNTIME_DIR)/podman/podman.sock"
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
 
-# To load from a custom file you can use:
-# source ($nu.default-config-dir | path join 'custom.nu')
-
+mkdir $"($nu.cache-dir)"
 let starship_init = ($env.HOME | path join ".cache" "starship" "init.nu")
-let zoxide_init = ($env.HOME | path join ".zoxide.nu")
-
 mkdir ($env.HOME | path join ".cache" "starship")
 if not ($starship_init | path exists) {
     starship init nu | save -f $starship_init
 }
+
+let zoxide_init = ($env.HOME | path join ".zoxide.nu")
 if not ($zoxide_init | path exists) {
     zoxide init nushell | save -f $zoxide_init
 }
 
-mkdir $"($nu.cache-dir)"
 carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"

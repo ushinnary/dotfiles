@@ -1,11 +1,8 @@
 // ── Window rules ────────────────────────────────────────
 // Rounded corners for all windows
 window-rule {
-    geometry-corner-radius 10
+    geometry-corner-radius 12
     clip-to-geometry true
-    background-effect {
-        blur true
-    }
 }
 window-rule {
     match app-id="org.telegram.desktop"
@@ -20,6 +17,9 @@ window-rule {
 window-rule {
     match app-id="(^ghostty$|^com\\.mitchellh\\.ghostty$)"
     open-on-workspace "Code"
+    background-effect {
+        blur true
+    }
 }
 // Block out sensitive components from screencasts
 layer-rule {

@@ -1,12 +1,16 @@
 {
   "currentThemeName": "custom",
   "currentThemeCategory": "custom",
-  "customThemeFile": "/home/ushinnary/dotfiles/DankMaterialShell/.config/DankMaterialShell/catppuccin.json",
+  "customThemeFile": "/home/ushinnary/dotfiles/DankMaterialShell/.config/DankMaterialShell/oled.json",
   "registryThemeVariants": {
     "amoledBlack": {
       "dark": {
         "flavor": "black",
-        "accent": "white"
+        "accent": "greenyellow"
+      },
+      "light": {
+        "flavor": "black-light",
+        "accent": "greenyellow"
       }
     },
     "catppuccin": {
@@ -179,7 +183,7 @@
       "value": "music_note"
     }
   },
-  "waveProgressEnabled": true,
+  "waveProgressEnabled": false,
   "scrollTitleEnabled": true,
   "audioVisualizerEnabled": false,
   "audioScrollMode": "volume",
@@ -216,7 +220,7 @@
   "browserUsageHistory": {},
   "appPickerViewMode": "grid",
   "filePickerUsageHistory": {},
-  "sortAppsAlphabetically": false,
+  "sortAppsAlphabetically": true,
   "appLauncherGridColumns": 4,
   "spotlightCloseNiriOverview": true,
   "spotlightSectionViewModes": {
@@ -234,7 +238,7 @@
   "dankLauncherV2UnloadOnClose": false,
   "useAutoLocation": false,
   "weatherEnabled": true,
-  "networkPreference": "auto",
+  "networkPreference": "wifi",
   "iconTheme": "System Default",
   "cursorSettings": {
     "theme": "Bibata-Modern-Ice",
@@ -305,7 +309,7 @@
   "qtThemingEnabled": false,
   "syncModeWithPortal": true,
   "terminalsAlwaysDark": false,
-  "muxType": "tmux",
+  "muxType": "zellij",
   "muxUseCustomCommand": false,
   "muxCustomCommand": "",
   "muxSessionFilter": "",
@@ -454,7 +458,7 @@
         {
           "id": "focusedWindow",
           "enabled": true,
-          "focusedWindowCompactMode": false
+          "focusedWindowCompactMode": true
         },
         {
           "id": "music",
@@ -510,15 +514,15 @@
       "spacing": 0,
       "innerPadding": 0,
       "bottomGap": 0,
-      "transparency": 0,
+      "transparency": 1,
       "widgetTransparency": 1,
-      "squareCorners": false,
+      "squareCorners": true,
       "noBackground": false,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
       "removeWidgetPadding": false,
       "widgetPadding": 6,
-      "gothCornersEnabled": false,
+      "gothCornersEnabled": true,
       "gothCornerRadiusOverride": false,
       "gothCornerRadiusValue": 12,
       "borderEnabled": false,
@@ -526,7 +530,7 @@
       "borderOpacity": 1,
       "borderThickness": 1,
       "widgetOutlineEnabled": false,
-      "widgetOutlineColor": "primary",
+      "widgetOutlineColor": "secondary",
       "widgetOutlineOpacity": 1,
       "widgetOutlineThickness": 1,
       "fontScale": 1,
@@ -543,8 +547,8 @@
       "scrollXBehavior": "column",
       "scrollYBehavior": "workspace",
       "shadowIntensity": 0,
-      "shadowOpacity": 60,
-      "shadowColorMode": "text",
+      "shadowOpacity": 51,
+      "shadowColorMode": "secondary",
       "shadowCustomColor": "#000000",
       "clickThrough": false
     }

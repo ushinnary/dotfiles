@@ -130,8 +130,8 @@
   "buffer_font_family": "Google Sans Code",
   "theme": {
     "mode": "system",
-    "light": "Catppuccin Latte",
-    "dark": "Catppuccin Mocha",
+    "light": "GitHub Light",
+    "dark": "GitHub Dark",
   },
   "icon_theme": {
     "mode": "system",
@@ -157,6 +157,12 @@
     },
     "Nu": {
       "language_servers": ["nushell"],
+      "formatter": {
+        "external": {
+          "command": "nufmt",
+          "arguments": ["--stdin"],
+        },
+      },
     },
     "Kdl": {
       "formatter": {
@@ -204,7 +210,7 @@
     "surrealql": true,
     "toml": true,
     "biome": true,
-    "catppuccin": true,
+    "github-theme": true,
     "catppuccin-icons": true,
     "csharp": true,
     "csv": true,

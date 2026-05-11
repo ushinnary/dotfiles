@@ -21,7 +21,7 @@ in
       nfc = "nix flake check";
       nfu = "nix flake update";
     };
-    bashrcExtra = ''
+    initExtra = ''
       nrfs() {
         if [ "$#" -ne 1 ]; then
           echo "Usage: nrfs <flake>"
@@ -30,6 +30,11 @@ in
 
         sudo nixos-rebuild switch --flake "$1"
       }
+    '';
+    bashrcExtra = ''
+      export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+      source <(carapace _carapace)
+      eval "$(devenv hook bash)"
     '';
   };
 

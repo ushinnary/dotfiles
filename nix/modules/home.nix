@@ -20,6 +20,7 @@ in
     shellAliases = {
       nfc = "nix flake check";
       nfu = "nix flake update";
+      ncg = "sudo nix-collect-garbage -d";
     };
     initExtra = ''
       nrfs() {

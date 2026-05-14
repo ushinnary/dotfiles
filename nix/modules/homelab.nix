@@ -82,7 +82,7 @@ in
           OLLAMA_VULKAN = "1";
           # OLLAMA_CONTEXT_LENGTH = "131072";
         }
-        (lib.mkIf (isRocmCompat) {
+        (lib.mkIf isRocmCompat {
           ROCM_PATH = "${pkgs.rocmPackages.clr}";
           HSA_OVERRIDE_GFX_VERSION = "${rocmOverrideGfx}";
           OLLAMA_VULKAN = lib.mkForce "0";

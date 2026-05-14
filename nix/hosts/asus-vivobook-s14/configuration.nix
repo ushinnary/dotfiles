@@ -37,13 +37,12 @@
     dev = {
       enable = true;
       editors = [
-        "zed"
         "nixvim"
       ];
       aiAgents = true;
     };
     gaming.enable = false;
-    containers.enable = true;
+    # containers.enable = true;
     display = {
       refreshRate = 60; # 60Hz OLED screen
       oled = true;

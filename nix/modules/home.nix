@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = osConfig.ushinnary;
   isGnome = osConfig.ushinnary.desktop.gnome;
   inherit (lib.hm.gvariant) mkEmptyArray mkTuple type;
 in
@@ -34,8 +35,9 @@ in
     '';
     bashrcExtra = ''
       export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
-      source <(carapace _carapace)
-      eval "$(devenv hook bash)"
+      ${lib.optionalString cfg.dev.enable "source <(carapace _carapace)"}
+      ${lib.optionalString cfg.dev.enable "eval \"$(devenv hook bash)\""}
+      ${lib.optionalString cfg.dev.enable "eval \"$(zoxide init bash)\""}
     '';
   };
 

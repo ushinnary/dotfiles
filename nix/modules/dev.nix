@@ -73,11 +73,11 @@ in
       enable = true;
     };
 
-    # programs.bash.interactiveShellInit = ''
-    #   if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
-    #     exec nu
-    #   fi
-    # '';
+    programs.bash.interactiveShellInit = ''
+      if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+        exec nu
+      fi
+    '';
 
     programs.direnv = {
       enable = true;

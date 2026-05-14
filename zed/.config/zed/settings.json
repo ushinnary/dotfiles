@@ -7,6 +7,11 @@
   "minimum_split_diff_width": 0.0,
   "agent_servers": {
     "OpenCode": {
+      "favorite_config_option_values": {
+        "model": [
+          "opencode/deepseek-v4-flash-free"
+        ]
+      },
       "type": "custom",
       "command": "/run/current-system/sw/bin/opencode",
       "args": ["acp"],

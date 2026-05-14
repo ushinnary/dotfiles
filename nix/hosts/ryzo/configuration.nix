@@ -34,11 +34,16 @@
       rocmOverrideGfx = "10.3.0";
     };
     hardware.amdCpu = true;
+    # desktop.niri = true;
     containers.enable = true;
+    display = {
+      refreshRate = 90;
+    };
     dev = {
       enable = true;
       editors = [
         "nixvim"
+        "zed"
       ];
       servers = [
         "zed"
@@ -47,10 +52,6 @@
       aiAgents = true;
     };
     gaming.enable = false;
-    homelab = {
-      enable = true;
-      powerManagement.cpuGovernor = "powersave";
-    };
   };
 
   # Home Manager Setup

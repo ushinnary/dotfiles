@@ -21,15 +21,12 @@ let
     nodejs_24
     nil
     nixd
-    rust-analyzer
     nushell
     vscode-langservers-extracted
     lua-language-server
-    biome
     docker-language-server
     powershell
     tree-sitter-grammars.tree-sitter-kdl
-    typescript-go
   ];
 in
 {
@@ -53,7 +50,6 @@ in
       pkgs.zoxide
       pkgs.zellij
       pkgs.difftastic
-      # pkgs.dotnet-sdk_10
 
       pkgs.git-credential-manager
       pkgs.devenv

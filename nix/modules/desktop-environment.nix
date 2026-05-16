@@ -57,7 +57,6 @@ in
 
       powerManagement = {
         enable = true;
-        powertop.enable = true;
       };
       services.upower.enable = true;
       hardware.sane.enable = true;

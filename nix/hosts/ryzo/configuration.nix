@@ -13,6 +13,7 @@
       device = "/dev/nvme0n1";
       swapSize = "0G";
       isSsd = true;
+      luks = false;
     })
     ../../modules/default.nix
     inputs.home-manager.nixosModules.home-manager
@@ -34,7 +35,7 @@
       rocmOverrideGfx = "10.3.0";
     };
     hardware.amdCpu = true;
-    # desktop.niri = true;
+    desktop.niri = true;
     containers.enable = true;
     display = {
       refreshRate = 90;

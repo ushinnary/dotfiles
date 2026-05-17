@@ -63,7 +63,22 @@
     extraSpecialArgs = {
       inherit inputs vars;
     };
-    users."${vars.userName}" = import ../../modules/home.nix;
+    users."${vars.userName}" =
+      { lib, config, ... }:
+      let
+        mkDotfileSymlink =
+          relativePath:
+          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
+      in
+      {
+        imports = [ ../../modules/home.nix ];
+        xdg.configFile = {
+          "niri-overrides" = {
+            source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/ryzo");
+            recursive = true;
+          };
+        };
+      };
   };
 
   system.stateVersion = "25.11";

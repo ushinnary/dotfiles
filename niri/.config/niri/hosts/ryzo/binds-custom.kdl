@@ -1,0 +1,9 @@
+binds {
+    XF86MonBrightnessUp {
+        spawn "dms" "ipc" "call" "brightness" "increment" "5"
+    }
+    XF86MonBrightnessDown {
+        spawn "dms" "ipc" "call" "brightness" "decrement" "5"
+    }
+}
+

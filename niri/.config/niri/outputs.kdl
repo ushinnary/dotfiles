@@ -3,12 +3,9 @@
 // output "eDP-1" {
 //     scale 1.0
 // }
-output "DP-1" {
-    scale 1.33
-}
-
 output "BOE J560T09 0x01010101" {
     mode "2560x1600@84.951"
     scale 1.33203125
     position x=0 y=0
 }
+

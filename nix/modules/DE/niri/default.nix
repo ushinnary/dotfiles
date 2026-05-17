@@ -72,6 +72,7 @@ in
       nautilus
       cups-pk-helper
       seahorse
+      brightnessctl
     ];
 
     # ── XDG portals ───────────────────────────────────────────────

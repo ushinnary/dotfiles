@@ -19,8 +19,8 @@ in
   programs.bash = {
     enable = true;
     shellAliases = {
-      nfc = "nix flake check";
-      nfu = "nix flake update";
+      nfc = "(cd ~/dotfiles/nix && nix flake check)";
+      nfu = "(cd ~/dotfiles/nix && nix flake update)";
       ncg = "sudo nix-collect-garbage -d";
     };
     initExtra = ''

@@ -20,6 +20,9 @@ in
   config = mkIf (cfg.enable && hasEditor "nixvim") {
     programs.nixvim = {
       enable = true;
+      enableMan = false;
+      withRuby = false;
+      withPython3 = false;
       defaultEditor = true;
       clipboard = {
         register = "unnamedplus";
@@ -60,7 +63,6 @@ in
         fd
         # Formatters
         stylua # Lua formatter
-        csharpier # C# formatter
         nixfmt # Nix formatter
         nufmt # Nushell formatter
         # Linters

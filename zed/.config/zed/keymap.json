@@ -78,10 +78,9 @@
       "[ d": "editor::GoToPreviousDiagnostic",
       "] e": "editor::GoToDiagnostic",
       "[ e": "editor::GoToPreviousDiagnostic",
-
       // Symbols & outline
-      "s s": "outline::Toggle",
-      "s S": "project_symbols::Toggle",
+      // "s s": "outline::Toggle",
+      // "s S": "project_symbols::Toggle",
 
       // Diagnostics
       "space x x": "diagnostics::Deploy",
@@ -225,10 +224,16 @@
 
   // Sneak motion (using vim sneak-like actions)
   {
-    "context": "vim_mode == normal || vim_mode == visual",
+    "context": " vim_mode == visual",
     "bindings": {
-      "s": ["vim::PushSneak", {}],
-      "S": ["vim::PushSneakBackward", {}],
+      "shift-s": "vim::PushAddSurrounds",
+    },
+  },
+
+  {
+    "context": "vim_mode == normal ",
+    "bindings": {
+      "s": ["workspace::SendKeystrokes", "v c"],
     },
   },
 

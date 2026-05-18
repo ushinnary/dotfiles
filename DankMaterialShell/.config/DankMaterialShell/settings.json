@@ -1,7 +1,7 @@
 {
   "currentThemeName": "custom",
   "currentThemeCategory": "custom",
-  "customThemeFile": "/home/ushinnary/dotfiles/DankMaterialShell/.config/DankMaterialShell/oled.json",
+  "customThemeFile": "/home/ushinnary/dotfiles/DankMaterialShell/.config/DankMaterialShell/catppuccin.json",
   "registryThemeVariants": {
     "amoledBlack": {
       "dark": {
@@ -205,7 +205,7 @@
   "runningAppsGroupByApp": false,
   "runningAppsCurrentMonitor": false,
   "appIdSubstitutions": [],
-  "centeringMode": "geometric",
+  "centeringMode": "index",
   "clockDateFormat": "ddd MMM d",
   "lockDateFormat": "",
   "greeterRememberLastSession": true,
@@ -430,7 +430,7 @@
   "updaterUseCustomCommand": false,
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
-  "displayNameMode": "system",
+  "displayNameMode": "model",
   "screenPreferences": {},
   "showOnLastDisplay": {},
   "niriOutputSettings": {},
@@ -456,13 +456,9 @@
           "enabled": true
         },
         {
-          "id": "focusedWindow",
-          "enabled": true,
-          "focusedWindowCompactMode": true
-        },
-        {
           "id": "music",
-          "enabled": true
+          "enabled": true,
+          "mediaSize": 1
         }
       ],
       "centerWidgets": [
@@ -495,7 +491,11 @@
         },
         {
           "id": "controlCenterButton",
-          "enabled": true
+          "enabled": true,
+          "showBrightnessIcon": true,
+          "showBrightnessPercent": false,
+          "showMicIcon": false,
+          "showBatteryIcon": true
         },
         {
           "id": "clock",
@@ -504,10 +504,6 @@
         },
         {
           "id": "notificationButton",
-          "enabled": true
-        },
-        {
-          "id": "powerMenuButton",
           "enabled": true
         }
       ],

@@ -28,6 +28,13 @@ in
         register = "unnamedplus";
         providers.wl-copy.enable = true;
       };
+      dependencies = {
+        direnv.enable = true;
+        fd.enable = true;
+        fzf.enable = true;
+        ripgrep.enable = true;
+        tree-sitter.enable = true;
+      };
       extraConfigLuaPost = ''
         vim.cmd([[
           colorscheme github_dark_default
@@ -58,9 +65,6 @@ in
       };
 
       extraPackages = with pkgs; [
-        fzf
-        ripgrep
-        fd
         # Formatters
         stylua # Lua formatter
         nixfmt # Nix formatter

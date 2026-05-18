@@ -37,8 +37,8 @@ in
       ${lib.optionalString cfg.dev.enable "export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'"}
       ${lib.optionalString cfg.dev.enable "source <(carapace _carapace)"}
       ${lib.optionalString cfg.dev.enable "eval \"$(devenv hook bash)\""}
-      ${lib.optionalString cfg.dev.enable "eval \"$(zoxide init bash)\""}
       ${lib.optionalString cfg.dev.enable "eval \"$(starship init bash)\""}
+      ${lib.optionalString cfg.dev.enable "eval \"$(zoxide init bash)\""}
     '';
   };
 

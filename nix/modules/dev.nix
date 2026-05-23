@@ -135,12 +135,6 @@ in
           # ── Kitty ─────────────────────────────────────────────
           "kitty/kitty.conf".source = mkDotfileSymlink "kitty/.config/kitty/kitty.conf";
 
-          # ── Agents (shared agent configs) ────────────────────
-          ".agents" = lib.mkIf cfg.aiAgents {
-            source = mkDotfileSymlink "pi/.pi/agent";
-            recursive = true;
-          };
-
           # # ── Pipewire ─────────────────────────────────────────
           # "pipewire/pipewire.conf.d/hesuvi.conf".source =
           #   mkDotfileSymlink "pipewire/.config/pipewire/pipewire.conf.d/hesuvi.conf";
@@ -155,6 +149,12 @@ in
           # Agent PI
           ".pi" = lib.mkIf cfg.aiAgents {
             source = mkDotfileSymlink "pi/.pi";
+            recursive = true;
+          };
+
+          # ── Agents (shared agent configs) ────────────────────
+          ".agents" = lib.mkIf cfg.aiAgents {
+            source = mkDotfileSymlink "pi/.pi/agent";
             recursive = true;
           };
 

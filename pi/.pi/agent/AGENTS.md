@@ -41,4 +41,6 @@ This agent runs inside **NixOS**. The main repository is located at `/home/ushin
 
 ### Knowledge base
 
-- When you learn something new about code base, you may create / update a file inside docs/ directory. Small parts of logic might go to spec/ directory. Make sure to explain everything by Domain Driven Design language, using vocabulary from `CONTEXT.md` that you can also evolve.
+- When you learn something new about code base, you may create / update a file inside `docs/` directory. Small parts of logic might go to `spec/` directory. Make sure to explain everything by Domain Driven Design language, using vocabulary from `CONTEXT.md` that you can also evolve.
+- When you detect code duplications, security issues, or performance problems, create a file inside `refactorings/` directory describing the issue and its fix.
+- Two skills automate these workflows: `capture-knowledge` (for docs) and `detect-code-smells` (for refactorings). See `~/.agents/skills/<skill-name>/SKILL.md` for details.

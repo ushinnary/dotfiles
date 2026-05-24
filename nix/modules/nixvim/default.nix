@@ -24,6 +24,9 @@ in
       withRuby = false;
       withPython3 = false;
       defaultEditor = true;
+      nixpkgs = {
+        source = inputs.nixvim.inputs.nixpkgs;
+      };
       clipboard = {
         register = "unnamedplus";
         providers.wl-copy.enable = true;

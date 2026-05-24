@@ -23,16 +23,13 @@ in
       nfu = "(cd ~/dotfiles/nix && nix flake update)";
       ncg = "sudo nix-collect-garbage -d";
     };
+
     initExtra = ''
       nrfs() {
-        if [ "$#" -ne 1 ]; then
-          echo "Usage: nrfs <flake>"
-          return 1
-        fi
-
-        sudo nixos-rebuild switch --flake "$1"
+        (cd ~/dotfiles/nix && sudo nixos-rebuild switch --flake "#$HOSTNAME")
       }
     '';
+
     bashrcExtra = ''
       ${lib.optionalString cfg.dev.enable "export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'"}
       ${lib.optionalString cfg.dev.enable "source <(carapace _carapace)"}

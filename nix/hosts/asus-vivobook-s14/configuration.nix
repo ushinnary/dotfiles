@@ -24,7 +24,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
-  networking.hostName = "asus-vivobook-s14-m5406n";
+  # networking.hostName = "asus-vivobook-s14-m5406n";
+  networking.hostName = "asus-vivobook-s14";
 
   time.timeZone = "Europe/Paris"; # Change this to your timezone
   # Locale is set via modules/locale.nix

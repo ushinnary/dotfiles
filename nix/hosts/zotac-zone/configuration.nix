@@ -55,7 +55,7 @@ in
       autoStart = true;
       user = vars.userName;
       # No desktopSession — "Switch to Desktop" re-enters Gaming Mode
-      desktopSession = "plasma";
+      desktopSession = "gamescope-wayland";
       environment = {
         STEAM_EXTRA_COMPAT_TOOLS_PATHS = compatPaths;
       };

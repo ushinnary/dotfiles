@@ -9,7 +9,6 @@ This repo uses a flake in `nix/`.
 ### Hosts
 
 - `ryzo`: Desktop (AMD GPU)
-- `zotac-zone`: Handheld (Jovian-NixOS)
 - `asus-vivobook-s14`: Laptop (AMD APU, OLED)
 
 ### Normal Rebuild Commands
@@ -18,7 +17,6 @@ From repository root:
 
 ```bash
 sudo nixos-rebuild switch --flake ./nix#ryzo
-sudo nixos-rebuild switch --flake ./nix#zotac-zone
 sudo nixos-rebuild switch --flake ./nix#asus-vivobook-s14
 ```
 

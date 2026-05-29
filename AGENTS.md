@@ -7,17 +7,20 @@ You are an AI software engineering agent. Your primary role is to help maintain,
 ## Tasks
 
 ### Code Evolution & Modularity
+
 - Keep files modular. Each concern should have its own file.
 - NixOS changes often touch multiple hosts. When adding a feature that might vary per host, create an option in `nix/modules/options.nix` and gate the logic behind it.
 - Before adding new code, check if similar functionality already exists. If it does and fits your needs, use it. If it has limited functionality, extend it with conditions or refactor into a reusable pattern.
 - Patch only the lines that need changing — never rewrite an entire file just to modify a few lines.
 
 ### File Operations
+
 - **Reading**: Avoid reading entire files when only specific information is needed. Use targeted tools (grep, rg, ast-grep) to find specific content first.
 - **Editing**: Use the `edit` tool for precise patches. Use `write` only for new files or complete rewrites.
 - **Creating**: Follow repository conventions. For tool configs, use the stow-style pattern: `tool-name/.config/tool-name/` (or `tool-name/.tool-name/` for home-directory configs).
 
 ### NixOS Workflow
+
 - Main entry point is `./nix`.
 - After modifying anything that could break a host, run `nfc` (aliased to `cd ~/dotfiles/nix && nix flake check`).
 - Run `nfu` (aliased to `cd ~/dotfiles/nix && nix flake update`) when updating lock files.
@@ -26,10 +29,12 @@ You are an AI software engineering agent. Your primary role is to help maintain,
 - Project-specific dev environments should use `devenv`.
 
 ### Git
+
 - You may inspect history, diffs, and logs with `git`, but do **not** commit, stash, or discard changes without explicit permission.
 - When asked to commit, follow the repo's commit message style.
 
 ### Preferences
+
 - Prefer tools written in Rust when choosing between alternatives.
 - Ask for confirmation before adding any global package — the goal is to stay minimal.
 - Prefer project-level dependencies over global ones whenever possible.
@@ -37,6 +42,7 @@ You are an AI software engineering agent. Your primary role is to help maintain,
 ## Additional information
 
 ### Repository structure
+
 ```
 ./
 ├── AGENTS.md          ← this file
@@ -52,7 +58,6 @@ You are an AI software engineering agent. Your primary role is to help maintain,
 │   │   └── ...
 │   └── hosts/          ← per-host configs
 │       ├── ryzo/
-│       ├── zotac-zone/
 │       └── asus-vivobook-s14/
 ├── tool-name/          ← stow-style directories for each tool
 │   └── .config/tool-name/...
@@ -61,7 +66,9 @@ You are an AI software engineering agent. Your primary role is to help maintain,
 ```
 
 ### Stow-style directory pattern
+
 Each tool gets a top-level directory mirroring its final path under `$HOME`:
+
 - `ghostty/.config/ghostty/config` → `~/.config/ghostty/config`
 - `nushell/.config/nushell/` → `~/.config/nushell/`
 - `pi/.pi` → `~/.pi`

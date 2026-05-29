@@ -29,10 +29,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-    jovian-nixos = {
-      url = "github:Jovian-Experiments/Jovian-NixOS";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -58,20 +56,6 @@
           };
           modules = [
             ./hosts/ryzo/configuration.nix
-          ];
-        };
-
-        # Hostname: zotac-zone (Gaming Handheld)
-        zotac-zone = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-            dotfiles = inputs.dotfiles;
-            inherit vars;
-          };
-          modules = [
-            inputs.jovian-nixos.nixosModules.default
-            ./hosts/zotac-zone/configuration.nix
           ];
         };
 

@@ -66,11 +66,8 @@ binds {
     Mod+Shift+T {
         spawn "dms" "ipc" "call" "theme" "toggle"
     }
-    Mod+Ctrl+Right {
-        spawn "dms" "ipc" "wallpaperCarousel" "cycleNext"
-    }
-    Mod+Ctrl+Left {
-        spawn "dms" "ipc" "wallpaperCarousel" "cyclePrevious"
+    Mod+Ctrl+C {
+        spawn "dms" "ipc" "wallpaperCarousel" "open"
     }
     // Window management
     Mod+Q {

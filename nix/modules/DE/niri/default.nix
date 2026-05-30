@@ -70,6 +70,7 @@ in
 
       # File manager
       nautilus
+      file-roller
       cups-pk-helper
       seahorse
       brightnessctl

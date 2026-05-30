@@ -80,6 +80,15 @@ in
         bibata-cursors
         ddcutil
 
+        # backends for extraction
+        unzip
+        p7zip
+        unrar
+        gnutar
+        gzip
+        bzip2
+        xz
+
         # Media codecs
         ffmpeg
         gst_all_1.gstreamer

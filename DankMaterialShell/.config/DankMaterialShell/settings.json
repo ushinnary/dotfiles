@@ -467,6 +467,10 @@
           "enabled": true
         },
         {
+          "id": "clock",
+          "enabled": true
+        },
+        {
           "id": "weather",
           "enabled": true
         }
@@ -496,11 +500,6 @@
           "showBrightnessPercent": false,
           "showMicIcon": false,
           "showBatteryIcon": true
-        },
-        {
-          "id": "clock",
-          "enabled": true,
-          "clockCompactMode": true
         },
         {
           "id": "notificationButton",

@@ -16,6 +16,9 @@
       explorer = {
         enabled = true;
         replace_netrw = true;
+        opts = {
+          hidden = true; # show dotfiles by default
+        };
       };
       dashboard = {
         sections = [
@@ -110,7 +113,7 @@
     {
       key = "<leader>sg";
       mode = [ "n" ];
-      action = "<cmd>lua Snacks.picker.grep()<CR>";
+      action = "<cmd>lua Snacks.picker.grep({hidden = true})<CR>";
       options = {
         silent = true;
         noremap = true;

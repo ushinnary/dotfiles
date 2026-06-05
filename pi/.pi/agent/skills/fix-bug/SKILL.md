@@ -1,6 +1,7 @@
-# fix-bug skill
-
-This skill automates the process of reproducing a bug, creating a test that captures the buggy behavior, then fixing the underlying issue, and finally ensuring the test passes. It is intended for use within the pi coding agent environment.
+---
+name: fix-bug
+description: This skill automates the process of reproducing a bug, creating a test that captures the buggy behavior, then fixing the underlying issue, and finally ensuring the test passes. It is intended for use within the coding agent environment.
+---
 
 ## Steps performed
 
@@ -26,7 +27,7 @@ No additional configuration is required. The skill will automatically detect the
 ## Example usage (within pi)
 
 ```
-/pi/run fix-bug --bug-id 1234 --description "Null pointer in user login flow"
+/pi/run fix-bug --description "Null pointer in user login flow"
 ```
 
 The command line arguments are parsed to tag the test and bug tracking entry.
@@ -36,3 +37,4 @@ The command line arguments are parsed to tag the test and bug tracking entry.
 - `capture-knowledge` – for documenting discovered bugs and fixes.
 - `detect-code-smells` – to identify related quality issues before fixing.
 - `grill-me` – can be used to grilling the plan before execution.
+

@@ -18,15 +18,10 @@ let
   nuRelativeRoot = "nushell/.config/nushell";
 
   zedLspPackages = with pkgs; [
-    nodejs_24
     nil
     nixd
-    nushell
-    vscode-langservers-extracted
     lua-language-server
-    docker-language-server
-    powershell
-    tree-sitter-grammars.tree-sitter-kdl
+    vscode-langservers-extracted
   ];
 in
 {
@@ -63,6 +58,7 @@ in
 
     environment.variables = {
       TERMINAL = "ghostty";
+      RIPGREP_CONFIG_PATH = "$HOME/.ripgreprc";
     };
 
     programs.nix-ld = {
@@ -145,6 +141,7 @@ in
         home.file = {
           ".alacritty.toml".source = mkDotfileSymlink "alacritty/.alacritty.toml";
           ".wezterm.lua".source = mkDotfileSymlink "wezterm/.wezterm.lua";
+          ".ripgreprc".source = mkDotfileSymlink "ripgrep/.ripgreprc";
 
           # Agent PI
           ".pi" = lib.mkIf cfg.aiAgents {

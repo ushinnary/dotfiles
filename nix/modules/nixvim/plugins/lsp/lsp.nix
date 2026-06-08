@@ -14,10 +14,10 @@
       enable = true;
       inlayHints = true;
       servers = {
-        sqls = {
+        nil_ls = {
           enable = true;
         };
-        nushell = {
+        nixd = {
           enable = true;
         };
         lua_ls = {
@@ -26,94 +26,12 @@
         bashls = {
           enable = true;
         };
-        csharp_ls = {
-          enable = true;
-        };
-        docker_language_server = {
+        jsonls = {
           enable = true;
         };
         markdown_oxide = {
           enable = true;
         };
-        nginx_language_server = {
-          enable = true;
-        };
-        svelte = {
-          enable = true;
-        };
-        systemd_ls = {
-          enable = true;
-        };
-        taplo = {
-          enable = true;
-        };
-        tsgo = {
-          enable = true;
-        };
-        nil_ls = {
-          enable = true;
-        };
-        marksman = {
-          enable = true;
-        };
-        pyright = {
-          enable = true;
-        };
-        gopls = {
-          enable = true;
-        };
-        terraformls = {
-          enable = true;
-        };
-        jsonls = {
-          enable = true;
-        };
-        biome = {
-          enable = true;
-        };
-
-        cssls = {
-          enable = true;
-          cmd = [
-            "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server"
-            "--stdio"
-          ];
-        };
-
-        emmet_language_server = {
-          enable = true;
-        };
-
-        html = {
-          enable = true;
-          cmd = [
-            "${pkgs.vscode-langservers-extracted}/bin/vscode-html-language-server"
-            "--stdio"
-          ];
-        };
-
-        lemminx = {
-          enable = true;
-        };
-        vue_ls = {
-          enable = true;
-        };
-        nixd = {
-          enable = true;
-        };
-        qmlls = {
-          enable = true;
-          # -E flag required for qmlls >= 6.8.2
-          cmd = [
-            "${pkgs.kdePackages.qtdeclarative}/bin/qmlls"
-            "-E"
-          ];
-        };
-        # rust_analyzer = {
-        #   enable = true;
-        #   installCargo = true;
-        #   installRustc = true;
-        # };
         yamlls = {
           enable = true;
           extraOptions = {
@@ -192,40 +110,8 @@
       };
     };
   };
-  extraPlugins = with pkgs.vimPlugins; [
-    ansible-vim
-    roslyn-nvim
-  ];
-  extraPackages = with pkgs; [
-    roslyn-ls
-  ];
-
   extraConfigLua = ''
     local _border = "rounded"
-
-    vim.lsp.config("roslyn", {
-      cmd = {
-        "dotnet",
-        "<target>/Microsoft.CodeAnalysis.LanguageServer.dll",
-        "--logLevel=Information",
-        "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
-        "--stdio"
-      },
-      on_attach = function()
-        print("This will run when the server attaches!")
-      end,
-      settings = {
-        csharp = {
-          inlay_hints = {
-            csharp_enable_inlay_hints_for_implicit_object_creation = true,
-            csharp_enable_inlay_hints_for_implicit_variable_types = true
-          },
-          code_lens = {
-            dotnet_enable_references_code_lens = true
-          }
-        }
-      }
-    })
 
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
       vim.lsp.handlers.hover, {

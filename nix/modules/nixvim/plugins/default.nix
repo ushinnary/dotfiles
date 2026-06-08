@@ -3,10 +3,7 @@
     ./lang/nix.nix
     ./lang/lua.nix
     ./lang/md.nix
-    ./lang/rust.nix
-    ./lang/shell.nix
     ./lang/nushell.nix
-    ./lang/toml.nix
     ./lualine.nix
     ./autosave.nix
     ./yazi.nix
@@ -16,7 +13,6 @@
     ./notify.nix
     ./ts-comments.nix
     ./lsp/blink.nix
-    ./lsp/roslyn.nix
     ./lsp/lsp.nix
     ./lsp/ast_grep.nix
     ./gitsigns.nix

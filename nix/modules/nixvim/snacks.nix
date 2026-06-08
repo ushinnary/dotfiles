@@ -16,6 +16,7 @@
       explorer = {
         enabled = true;
         replace_netrw = true;
+        auto_open = false;
         opts = {
           hidden = true; # show dotfiles by default
         };

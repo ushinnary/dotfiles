@@ -7,7 +7,7 @@ input {
     touchpad {
         tap
         natural-scroll
-        accel-profile "adaptive"
+        accel-profile "flat"
         accel-speed 0.2
         disabled-on-external-mouse
     }

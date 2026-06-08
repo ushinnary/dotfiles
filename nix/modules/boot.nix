@@ -48,7 +48,7 @@
 
   # NetworkManager-wait-online blocks boot for ~9s waiting for full
   # network connectivity. Desktop use doesn't need this.
-  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.network.wait-online.enable = false;
 
   # ModemManager is for cellular modems — not needed on desktops
   systemd.services.ModemManager.enable = lib.mkForce false;

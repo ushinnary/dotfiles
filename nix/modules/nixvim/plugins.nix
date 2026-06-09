@@ -70,6 +70,15 @@
         }
 
         {
+          __unkeyed-1 = "<leader>x";
+          mode = [
+            "n"
+            "v"
+          ];
+          group = "Diagnostics/Quickfix";
+        }
+
+        {
           __unkeyed-1 = "<leader>b";
           mode = "n";
           group = "Buffers";

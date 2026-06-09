@@ -24,14 +24,7 @@
       dashboard = {
         sections = [
           {
-            header = ''
-              ██╗   ██╗███████╗██╗  ██╗██╗███╗   ██╗███╗   ██╗ █████╗ ██████╗ ██╗   ██╗
-              ██║   ██║██╔════╝██║  ██║██║████╗  ██║████╗  ██║██╔══██╗██╔══██╗╚██╗ ██╔╝
-              ██║   ██║███████╗███████║██║██╔██╗ ██║██╔██╗ ██║███████║██████╔╝ ╚████╔╝ 
-              ██║   ██║╚════██║██╔══██║██║██║╚██╗██║██║╚██╗██║██╔══██║██╔══██╗  ╚██╔╝  
-              ╚██████╔╝███████║██║  ██║██║██║ ╚████║██║ ╚████║██║  ██║██║  ██║   ██║   
-               ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
-            '';
+            header = "ushinnary";
           }
           {
             icon = " ";
@@ -39,56 +32,6 @@
             section = "keys";
             gap = 1;
             padding = 1;
-          }
-          {
-            icon = " ";
-            title = "Recent Files";
-            __unkeyed-1.__raw = "require('snacks').dashboard.sections.recent_files({cwd = true})";
-            gap = 1;
-            padding = 1;
-          }
-          {
-            icon = " ";
-            title = "Projects";
-            section = "projects";
-            gap = 1;
-            padding = 1;
-          }
-          {
-            pane = 2;
-            icon = " ";
-            desc = "Browse Repo";
-            padding = 1;
-            key = "b";
-            action.__raw = ''
-              function()
-                Snacks.gitbrowse()
-              end'';
-          }
-          {
-            __raw = ''
-              function()
-                local in_git = Snacks.git.get_root() ~= nil
-                local cmds = {
-                  {
-                    icon = " ",
-                    title = "Git Status",
-                    cmd = "git --no-pager diff --stat -B -M -C",
-                    height = 10,
-                  },
-                }
-                return vim.tbl_map(function(cmd)
-                  return vim.tbl_extend("force", {
-                    pane = 2,
-                    section = "terminal",
-                    enabled = in_git,
-                    padding = 1,
-                    ttl = 5 * 60,
-                    indent = 3,
-                  }, cmd)
-                end, cmds)
-              end
-            '';
           }
         ];
       };
@@ -139,6 +82,19 @@
       options = {
         silent = true;
         noremap = true;
+      };
+    }
+    {
+      key = "<leader>sW";
+      mode = [
+        "n"
+        "v"
+      ];
+      action = "<cmd>lua Snacks.picker.grep_word({cwd = true})<CR>";
+      options = {
+        silent = true;
+        noremap = true;
+        desc = "Grep Word (cwd)";
       };
     }
     {
@@ -210,6 +166,48 @@
       action = "<cmd>lua Snacks.picker.colorschemes()<CR>";
     }
     {
+      key = "<leader>un";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.notifier.hide()<CR>";
+      options.desc = "Dismiss All Notifications";
+    }
+    {
+      key = "<leader>fp";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.picker.projects()<CR>";
+      options.desc = "Projects";
+    }
+    {
+      key = "<leader>fr";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.picker.recent()<CR>";
+      options.desc = "Recent Files";
+    }
+    {
+      key = "<leader>sh";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.picker.help()<CR>";
+      options.desc = "Help Pages";
+    }
+    {
+      key = "<leader>sb";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.picker.lines()<CR>";
+      options.desc = "Buffer Lines";
+    }
+    {
+      key = "<leader>sd";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.picker.diagnostics()<CR>";
+      options.desc = "Diagnostics";
+    }
+    {
+      key = "<leader>sr";
+      mode = [ "n" "x" ];
+      action = "<cmd>GrugFar<CR>";
+      options.desc = "Search and Replace";
+    }
+    {
       key = "<leader>:";
       mode = [ "n" ];
       action = "<cmd>lua Snacks.picker.command_history()<CR>";
@@ -242,6 +240,14 @@
     }
     {
       mode = "n";
+      key = "<leader>gS";
+      action = "<cmd>lua Snacks.picker.git_stash()<cr>";
+      options = {
+        desc = "Git Stash";
+      };
+    }
+    {
+      mode = "n";
       key = "<leader>gfL";
       action = "<cmd>lua Snacks.picker.git_log_line()<cr>";
       options = {
@@ -254,6 +260,14 @@
       action = "<cmd>lua Snacks.picker.git_diff()<cr>";
       options = {
         desc = "Git Diff (Hunks)";
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>gD";
+      action = "<cmd>lua Snacks.picker.git_diff()<cr>";
+      options = {
+        desc = "Git Diff";
       };
     }
     {

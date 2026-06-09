@@ -5,10 +5,8 @@
     ./lang/md.nix
     ./lang/nushell.nix
     ./lualine.nix
-    ./autosave.nix
     ./yazi.nix
     ./toggleterm.nix
-    ./smear-cursor.nix
     ./bufferline.nix
     ./notify.nix
     ./ts-comments.nix
@@ -16,6 +14,7 @@
     ./lsp/lsp.nix
     ./lsp/ast_grep.nix
     ./gitsigns.nix
+    ./mini-ai.nix
     ./web-devicons.nix
     ./nix-develop.nix
   ];

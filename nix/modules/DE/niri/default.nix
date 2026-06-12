@@ -36,6 +36,7 @@ in
     };
 
     services.clight.enable = false;
+    services.gnome.sushi.enable = true;
 
     # ── DankSearch ────────────────────────────────────────────────
     programs.dsearch = {

@@ -7,3 +7,5 @@ cursor-style-blink = true
 
 background-opacity-cells = true
 background-blur = true
+
+custom-shader = ~/.config/ghostty/shaders/smear_cursor_block.glsl

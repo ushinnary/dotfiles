@@ -17,6 +17,7 @@
         enabled = true;
         replace_netrw = true;
         auto_open = false;
+        openOnStartup = false;
         opts = {
           hidden = true; # show dotfiles by default
         };

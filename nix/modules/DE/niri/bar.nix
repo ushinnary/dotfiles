@@ -18,6 +18,7 @@ in
   config = mkIf cfg.niri {
     environment.systemPackages = [
       pkgs.adwaita-icon-theme
+      pkgs.papirus-icon-theme
       pkgs.hicolor-icon-theme
     ];
 
@@ -27,14 +28,14 @@ in
         gtk = {
           enable = true;
           iconTheme = {
-            name = "Adwaita";
-            package = pkgs.adwaita-icon-theme;
+            name = "Papirus";
+            package = pkgs.papirus-icon-theme;
           };
         };
 
         dconf.settings."org/gnome/desktop/interface" = {
           gtk-theme = "Adwaita";
-          icon-theme = "Adwaita";
+          icon-theme = "Papirus";
         };
       };
   };

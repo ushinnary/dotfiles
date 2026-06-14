@@ -2,7 +2,7 @@
   "cli_default_open_behavior": "new_window",
   "use_podman": true,
   "agent_ui_font_size": 14.0,
-  "ui_font_size": 15.0,
+  "ui_font_size": 16.0,
   "buffer_font_size": 13.0,
   "minimum_split_diff_width": 0.0,
   "agent_servers": {
@@ -130,9 +130,9 @@
     "tree_view": true,
   },
   "vim_mode": true,
-  "ui_font_weight": 500.0,
-  "ui_font_family": "Quicksand",
-  "buffer_font_family": "Google Sans Code",
+  "ui_font_weight": 300.0,
+  "ui_font_family": "Nunito",
+  "buffer_font_family": "Comic Mono",
   "theme": {
     "mode": "system",
     "light": "GitHub Light",

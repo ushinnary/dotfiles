@@ -2,7 +2,7 @@
  @define-color background #1a1b26;
 
  * {
-   font-family: "QuickSand";
+   font-family: "Nunito";
    font-size: 16px;
 
    color: @foreground;

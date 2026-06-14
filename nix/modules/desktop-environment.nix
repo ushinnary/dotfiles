@@ -110,9 +110,9 @@ in
           dconf.settings = {
             "org/gnome/desktop/interface" = {
               cursor-theme = "Bibata-Modern-Ice";
-              font-name = "Quicksand 11";
-              document-font-name = "Quicksand 11";
-              monospace-font-name = "Google Sans Code 10";
+              font-name = "Nunito 11";
+              document-font-name = "Nunito 11";
+              monospace-font-name = "Comic Mono 10";
             };
           };
 
@@ -186,16 +186,16 @@ in
 
       fonts = {
         packages = with pkgs; [
-          quicksand
-          googlesans-code
+          nunito
+          comic-mono
         ];
 
         fontconfig = {
           defaultFonts = {
-            serif = [ "Quicksand" ];
-            sansSerif = [ "Quicksand" ];
+            serif = [ "Nunito" ];
+            sansSerif = [ "Nunito" ];
             monospace = [
-              "Google Sans Code"
+              "Comic Mono"
             ];
           };
 

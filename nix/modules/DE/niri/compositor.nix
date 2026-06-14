@@ -14,6 +14,7 @@ in
   config = mkIf cfg.niri {
     environment.systemPackages = with pkgs; [
       adwaita-icon-theme
+      papirus-icon-theme
     ];
 
     home-manager.users."${vars.userName}" =

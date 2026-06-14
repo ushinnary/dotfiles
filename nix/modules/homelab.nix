@@ -14,7 +14,7 @@ in
   config = lib.mkIf cfg.enable {
     console = {
       earlySetup = true;
-      font = "Google Sans Code";
+      font = "Comic Mono";
       keyMap = "us";
     };
 

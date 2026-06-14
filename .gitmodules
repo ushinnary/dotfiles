@@ -1,0 +1,4 @@
+[submodule "DankMaterialShell/.config/DankMaterialShell/plugins/wallpaperCarousel"]
+	path = DankMaterialShell/.config/DankMaterialShell/plugins/wallpaperCarousel
+	url = https://github.com/motor-dev/wallpaperCarousel.git
+	branch = main

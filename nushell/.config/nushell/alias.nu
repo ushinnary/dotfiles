@@ -4,6 +4,8 @@ alias nfc = nix flake check
 alias nfu = nix flake update
 alias ncg = sudo nix-collect-garbage -d
 alias fd = fd --hidden
+alias subup = cd ~/dotfiles
+git submodule update --init --remote --merge
 def nrfs [flake: string] { sudo nixos-rebuild switch --flake $flake }
 # Common ls aliases and sort them by type and then name
 # Inspired by https://github.com/nushell/nushell/issues/7190

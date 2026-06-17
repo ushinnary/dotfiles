@@ -21,6 +21,10 @@ window-rule {
         blur true
     }
 }
+// Focus any window that opens on a non-focused workspace/output
+window-rule {
+    open-focused true
+}
 // Block out sensitive components from screencasts
 layer-rule {
     match namespace="^dms:clipboard$"

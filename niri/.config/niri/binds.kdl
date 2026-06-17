@@ -109,11 +109,13 @@ binds {
     Mod+Shift+Right {
         move-column-right
     }
+    // Toggle window between own column (side-by-side) and
+    // stacked in same column (half up / half down)
     Mod+Shift+Up {
-        move-window-up
+        consume-or-expel-window-left
     }
     Mod+Shift+Down {
-        move-window-down
+        consume-or-expel-window-right
     }
     Mod+Shift+H {
         move-column-left
@@ -122,10 +124,10 @@ binds {
         move-column-right
     }
     Mod+Shift+J {
-        move-window-down
+        move-column-to-workspace-down
     }
     Mod+Shift+K {
-        move-window-up
+        move-column-to-workspace-up
     }
     // Column width adjustment
     Mod+Minus {

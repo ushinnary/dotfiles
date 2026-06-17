@@ -16,10 +16,13 @@
       explorer = {
         enabled = true;
         replace_netrw = true;
-        auto_open = false;
-        openOnStartup = false;
-        opts = {
-          hidden = true; # show dotfiles by default
+      };
+      picker.sources = {
+        explorer = {
+          hidden = true;
+        };
+        files = {
+          hidden = true;
         };
       };
       dashboard = {
@@ -62,6 +65,7 @@
       options = {
         silent = true;
         noremap = true;
+        desc = "Grep with hidden files";
       };
     }
     {
@@ -79,7 +83,7 @@
         "n"
         "v"
       ];
-      action = "<cmd>lua Snacks.picker.grep_word()<CR>";
+      action = "<cmd>lua Snacks.picker.grep_word({hidden = true})<CR>";
       options = {
         silent = true;
         noremap = true;
@@ -204,7 +208,10 @@
     }
     {
       key = "<leader>sr";
-      mode = [ "n" "x" ];
+      mode = [
+        "n"
+        "x"
+      ];
       action = "<cmd>GrugFar<CR>";
       options.desc = "Search and Replace";
     }

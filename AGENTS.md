@@ -33,6 +33,14 @@ You are an AI software engineering agent. Your primary role is to help maintain,
 - You may inspect history, diffs, and logs with `git`, but do **not** commit, stash, or discard changes without explicit permission.
 - When asked to commit, follow the repo's commit message style.
 
+### Documentation lookups
+
+When you need to understand how an installed package or tool works:
+- **Check Nix store first.** Locate the package with `find /nix/store -maxdepth 1 -name '*<package>-*' -type d 2>/dev/null` then read its `README`, `doc/`, `share/doc/`, or `man/` dirs directly.
+- **For NixOS/nixvim modules**, read the nix module source directly: `find /nix/store -name '<module>.nix' -path '*plugins*' 2>/dev/null | head -5`. This gives you the exact version the user has, with all options documented inline.
+- **For bundled docs** (READMEs, man pages), prefer `find /nix/store/<path> -maxdepth 3 -name '*.md' -o -name '*.txt'` over web searches — they're always correct for the installed version.
+- **`nix eval nixpkgs#<pkg>.meta.description`** for a one-line summary of what a package does.
+
 ### Preferences
 
 - Prefer tools written in Rust when choosing between alternatives.

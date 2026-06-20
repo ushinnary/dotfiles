@@ -30,6 +30,8 @@ in
     };
 
     initExtra = ''
+      bind 'set completion-ignore-case on'
+
       nrfs() {
         (cd ~/dotfiles/nix && sudo nixos-rebuild switch --flake "#$HOSTNAME")
       }

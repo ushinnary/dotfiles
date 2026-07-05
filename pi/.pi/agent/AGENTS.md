@@ -97,6 +97,9 @@ or network access, or dependencies. Beyond non-negotiables 1, 2 and 10:
 - Cover unhappy paths: empty input, null, boundaries, duplicates, concurrent access, failing
   dependencies. The happy path is the least interesting test.
 - Tests are deterministic: no real time, network, or shared global state; no order dependence.
+- For code that transforms input — parsers, validators, serializers, encoders, state machines —
+  prefer property-based or fuzz tests over a handful of hand-picked examples; they find the inputs
+  you would never think to write.
 
 ## 5. Errors and edge cases
 
@@ -112,7 +115,12 @@ or network access, or dependencies. Beyond non-negotiables 1, 2 and 10:
 - Comments explain *why* (constraints, trade-offs), never narrate *what* the next line does, and
   never describe the change history.
 - Performance: first correct, then measured, then fast — but never gratuitously wasteful
-  (N+1 queries, quadratic loops over unbounded input, loading what could stream).
+  (N+1 queries, quadratic loops over unbounded input, loading what could stream). Optimize against
+  a stated budget and prove the win with before/after numbers; never optimize by guess. For
+  performance-sensitive work see `PERFORMANCE_GUIDELINES.md`.
+- Observability is part of the change, not an afterthought: a new code path emits what's needed to
+  debug it in production — a log with context (no secrets/PII), and a metric on anything on a hot
+  or failure-prone path. You cannot keep bug-free what you cannot see fail.
 
 ## 7. Version control
 
@@ -147,6 +155,18 @@ Reusable workflows live in [`skills/`](skills/). Each is a directory with a `SKI
 | Kind | How it runs | Skills |
 |------|-------------|--------|
 | **Automatic** | Apply whenever the task matches the description | `implement-feature`, `fix-bug`, `tdd`, `generate-tests` |
-| **Manual** | Only when the user explicitly invokes them | `generate-spec`, `generate-docs`, `improve-architecture`, `bug-hunt`, `security-audit`, `release-notes` |
+| **Manual** | Only when the user explicitly invokes them | `generate-spec`, `generate-docs`, `improve-architecture`, `bug-hunt`, `security-audit`, `release-notes`, `performance-review` |
 
 Checklists live in [`checklists/`](checklists/): `security.md`, `definition-of-done.md`.
+
+## Domain guides
+
+Read these only when the task matches — they are detailed and not needed for every change.
+
+| Guide | Read it when |
+|-------|--------------|
+| [`ARCHITECTURE_GUIDELINES.md`](ARCHITECTURE_GUIDELINES.md) | You make structural decisions — module/service boundaries, dependency direction, where a responsibility lives, how parts communicate, or how the system evolves. |
+| [`UI_GUIDELINES.md`](UI_GUIDELINES.md) | You write, refactor, or review JavaScript/TypeScript UI code (React, Vue, Svelte, Angular, Solid, or vanilla). |
+| [`BACKEND_GUIDELINES.md`](BACKEND_GUIDELINES.md) | You write, refactor, or review backend code — APIs, services, workers, jobs, data access, or domain logic — in any language or framework. |
+| [`CONCURRENCY_GUIDELINES.md`](CONCURRENCY_GUIDELINES.md) | Code runs concurrently or in parallel — threads, async/await, goroutines, workers, shared caches, or state touched by more than one request/task at once. |
+| [`PERFORMANCE_GUIDELINES.md`](PERFORMANCE_GUIDELINES.md) | Performance matters — a hot path, a latency/throughput-sensitive operation, a large dataset, a reported slowdown, or any "make it fast" task. |

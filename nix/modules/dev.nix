@@ -12,6 +12,11 @@ let
   selectedServers = cfg.servers;
   hasEditor = editor: builtins.elem editor selectedEditors;
   hasServer = server: builtins.elem server selectedServers;
+  hasDesktop =
+    config.ushinnary.desktop.gnome
+    || config.ushinnary.desktop.cosmic
+    || config.ushinnary.desktop.plasma
+    || config.ushinnary.desktop.niri;
 
   # ── Dotfile helpers ─────────────────────────────────────────────
   # Relative paths inside ~/dotfiles for out-of-store Home Manager symlinks.
@@ -45,10 +50,13 @@ in
       pkgs.zoxide
       pkgs.zellij
       pkgs.difftastic
+      pkgs.gh
 
-      pkgs.git-credential-manager
       pkgs.devenv
       pkgs.nushell
+    ]
+    ++ lib.optionals hasDesktop [
+      pkgs.git-credential-manager
     ]
     ++ lib.optionals cfg.aiAgents [
       pkgs.opencode

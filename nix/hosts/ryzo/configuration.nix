@@ -35,7 +35,6 @@
       rocmOverrideGfx = "10.3.0";
     };
     hardware.amdCpu = true;
-    desktop.niri = true;
     containers.enable = true;
     display = {
       refreshRate = 90;

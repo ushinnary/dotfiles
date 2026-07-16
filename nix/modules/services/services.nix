@@ -7,6 +7,8 @@ let
   cfg = config.ushinnary.hardware;
 in
 {
+  options.ushinnary.hardware.amdCpu = lib.mkEnableOption "AMD CPU tweaks (microcode, pstate)";
+
   config = {
     hardware.cpu.amd.updateMicrocode = cfg.amdCpu;
     services = {

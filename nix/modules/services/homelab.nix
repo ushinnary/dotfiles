@@ -11,6 +11,44 @@ let
   rocmOverrideGfx = config.ushinnary.gpu.amd.rocmOverrideGfx;
 in
 {
+  options.ushinnary.homelab = {
+    enable = lib.mkEnableOption "Homelab server configuration (headless, services, monitoring)";
+    samba = lib.mkEnableOption "Samba file server with configurable shares";
+    cockpit = lib.mkEnableOption "Cockpit web interface for server management";
+    ollama = {
+      enable = lib.mkEnableOption "Local Ollama AI server with GPU acceleration";
+      modelsPath = lib.mkOption {
+        type = lib.types.path;
+        default = "/var/lib/ollama";
+        description = "Path to store Ollama models";
+      };
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 11434;
+        description = "Port for Ollama service";
+      };
+    };
+    extraDrives = lib.mkOption {
+      type = lib.types.listOf (lib.types.submodule {
+        options = {
+          device = lib.mkOption { type = lib.types.str; };
+          mountPoint = lib.mkOption { type = lib.types.str; };
+          label = lib.mkOption { type = lib.types.str; };
+        };
+      });
+      default = [ ];
+      description = "Extra LUKS-encrypted drives for storage";
+    };
+    powerManagement = {
+      enable = lib.mkEnableOption "Power saving features (CPU governor, tuning)";
+      cpuGovernor = lib.mkOption {
+        type = lib.types.enum [ "performance" "powersave" "schedutil" ];
+        default = "powersave";
+        description = "CPU frequency governor";
+      };
+    };
+  };
+
   config = lib.mkIf cfg.enable {
     console = {
       earlySetup = true;

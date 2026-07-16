@@ -11,6 +11,8 @@ let
   displayCfg = config.ushinnary.display;
 in
 {
+  options.ushinnary.gaming.enable = mkEnableOption "gaming packages and configuration (Steam, Gamescope, etc.)";
+
   config = mkIf cfg.enable {
     boot.kernelModules = [ "ntsync" ];
     programs = {

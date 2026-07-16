@@ -9,6 +9,22 @@ let
   cfg = config.ushinnary.security;
 in
 {
+  options.ushinnary.security = {
+    howdy.enable = lib.mkEnableOption "Howdy facial recognition authentication";
+    sudo.passwordlessCommands = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [
+        "/run/current-system/sw/bin/reboot"
+        "/run/current-system/sw/bin/nixos-rebuild"
+        "/run/current-system/sw/bin/nix-collect-garbage"
+        "/run/current-system/sw/bin/shutdown"
+        "/run/current-system/sw/bin/fwupd"
+        "/run/current-system/sw/bin/fwupdmgr"
+      ];
+      description = "Commands that can be run with sudo without a password";
+    };
+  };
+
   config = mkMerge [
     # ═══════════════════════════════════════════════════════════════
     #  General security hardening (always active)

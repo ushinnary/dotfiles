@@ -12,6 +12,30 @@ let
   edgeFlagsAmdSrc = ../../flatpaks/.var/app/com.microsoft.Edge/config/edge-flags-amd.conf;
 in
 {
+  options.ushinnary.hardware = {
+    hasWebCam = lib.mkEnableOption "system has a webcam (enables clight for automatic brightness via camera)";
+    hasBattery = lib.mkEnableOption "system has a battery (enables battery widget in bars, power-aware features, etc.)";
+  };
+  options.ushinnary.desktop = {
+    gnome = lib.mkEnableOption "GNOME desktop environment";
+    cosmic = lib.mkEnableOption "COSMIC desktop environment";
+    plasma = lib.mkEnableOption "Plasma desktop environment";
+    niri = lib.mkEnableOption "Niri Wayland compositor";
+  };
+  options.ushinnary.display = {
+    oled = lib.mkEnableOption "OLED-specific optimizations (HDR, deeper blacks)";
+    refreshRate = lib.mkOption {
+      type = lib.types.int;
+      default = 60;
+      description = "Default refresh rate for normal desktop use";
+    };
+    gamingRefreshRate = lib.mkOption {
+      type = lib.types.int;
+      default = 144;
+      description = "Refresh rate used in gaming sessions";
+    };
+  };
+
   imports = [
     ./DE/gnome.nix
     ./DE/cosmic.nix

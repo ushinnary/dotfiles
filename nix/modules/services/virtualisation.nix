@@ -11,6 +11,12 @@ let
   vmHostCfg = config.ushinnary.virtualisation.host;
 in
 {
+  options.ushinnary.virtualisation.host.enable = lib.mkEnableOption "host virtualization stack for running VMs (VirtualBox)";
+  options.ushinnary.containers = {
+    enable = lib.mkEnableOption "Enable Podman container runtime";
+    distrobox = lib.mkEnableOption "Enable distrobox";
+  };
+
   config = mkMerge [
     (mkIf containersCfg.enable {
       virtualisation = {

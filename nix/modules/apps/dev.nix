@@ -30,7 +30,22 @@ let
   ];
 in
 {
-  imports = [ ./nixvim/default.nix ];
+  options.ushinnary.dev = {
+    enable = lib.mkEnableOption "development tools and Helix editor";
+    editors = lib.mkOption {
+      type = lib.types.listOf (lib.types.enum [ "helix" "vscode" "zed" ]);
+      default = [ "helix" "vscode" "zed" ];
+      description = "Select which development editors to install";
+    };
+    servers = lib.mkOption {
+      type = lib.types.listOf (lib.types.enum [ "vscode" "zed" ]);
+      default = [ ];
+      description = "Select which development servers to install";
+    };
+    aiAgents = lib.mkEnableOption "AI agent CLI tools (kilocode-cli)";
+  };
+
+  imports = [ ];
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [
@@ -54,6 +69,16 @@ in
 
       pkgs.devenv
       pkgs.nushell
+
+      # LSPs & Formatters
+      pkgs.nixd
+      pkgs.nixfmt
+      pkgs.lua-language-server
+      pkgs.stylua
+      pkgs.vscode-langservers-extracted
+      pkgs.nodePackages.typescript-language-server
+      pkgs.nodePackages.prettier
+      pkgs.marksman
     ]
     ++ lib.optionals hasDesktop [
       pkgs.git-credential-manager
@@ -101,10 +126,148 @@ in
           installRemoteServer = true;
         };
 
+        programs.helix = lib.mkIf (hasEditor "helix") {
+          enable = true;
+          settings = {
+            theme = "autumn_night_transparent";
+            editor = {
+              line-number = "relative";
+              cursor-shape = {
+                normal = "block";
+                insert = "bar";
+                select = "underline";
+              };
+              lsp = {
+                display-messages = true;
+                display-inlay-hints = true;
+              };
+            };
+            keys.normal = {
+              # Vim-like keybindings
+              d = {
+                d = [ "extend_to_line_bounds" "delete_selection" ];
+                i = {
+                  w = [ "select_textobject_inner_word" "delete_selection" ];
+                };
+                a = {
+                  w = [ "select_textobject_around_word" "delete_selection" ];
+                };
+              };
+              y = {
+                y = [ "extend_to_line_bounds" "yank" ];
+                i = {
+                  w = [ "select_textobject_inner_word" "yank" ];
+                };
+                a = {
+                  w = [ "select_textobject_around_word" "yank" ];
+                };
+              };
+              c = {
+                c = [ "extend_to_line_bounds" "change_selection" ];
+                i = {
+                  w = [ "select_textobject_inner_word" "change_selection" ];
+                };
+                a = {
+                  w = [ "select_textobject_around_word" "change_selection" ];
+                };
+              };
+
+              # Window navigation
+              "C-h" = "jump_view_left";
+              "C-j" = "jump_view_down";
+              "C-k" = "jump_view_up";
+              "C-l" = "jump_view_right";
+
+              # Buffer navigation
+              "H" = ":bp";
+              "L" = ":bn";
+
+              # Save & Quit
+              "C-s" = ":w";
+              
+              # Leader maps
+              "space" = {
+                "q" = {
+                  "q" = ":qa";
+                };
+                "f" = {
+                  "n" = ":new";
+                };
+                "c" = {
+                  "f" = ":format";
+                };
+                "-" = "hsplit";
+                "|" = "vsplit";
+                "w" = {
+                  "d" = "wclose";
+                };
+              };
+            };
+            keys.insert = {
+              "C-s" = [ ":w" "normal_mode" ];
+            };
+            keys.select = {
+              "C-s" = ":w";
+            };
+          };
+          
+          languages = {
+            language = [
+              {
+                name = "nix";
+                auto-format = true;
+                formatter.command = "${pkgs.nixfmt}/bin/nixfmt";
+              }
+              {
+                name = "lua";
+                auto-format = true;
+                formatter.command = "${pkgs.stylua}/bin/stylua";
+              }
+              {
+                name = "nushell";
+                auto-format = true;
+                formatter.command = "${pkgs.nufmt}/bin/nufmt";
+              }
+              {
+                name = "markdown";
+                auto-format = true;
+              }
+              {
+                name = "html";
+                auto-format = true;
+              }
+              {
+                name = "css";
+                auto-format = true;
+              }
+              {
+                name = "json";
+                auto-format = true;
+              }
+              {
+                name = "javascript";
+                auto-format = true;
+              }
+              {
+                name = "typescript";
+                auto-format = true;
+              }
+            ];
+          };
+
+          themes = {
+            autumn_night_transparent = {
+              "inherits" = "autumn_night";
+              "ui.background" = { };
+            };
+          };
+        };
+
         programs = {
           carapace = {
             enable = true;
             enableNushellIntegration = true;
+            enableBashIntegration = true;
           };
         };
 

@@ -9,13 +9,13 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Optional, once ready for a full disk encryption setup with LUKS and BTRFS:
-    (import ../../modules/disko-luks-btrfs.nix {
+    (import ../../modules/hardware/disko-luks-btrfs.nix {
       device = "/dev/nvme0n1";
       swapSize = "16G";
       isSsd = true;
     })
     # Optional after first successful boot/install:
-    ../../modules/secure-boot.nix
+    ../../modules/hardware/secure-boot.nix
     ../../modules/default.nix
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -38,7 +38,7 @@
     dev = {
       enable = true;
       editors = [
-        "nixvim"
+        "helix"
       ];
       aiAgents = true;
     };
@@ -59,30 +59,21 @@
   };
 
   # Home Manager Setup
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    backupFileExtension = "backup";
-    extraSpecialArgs = {
-      inherit inputs vars;
-    };
-    users."${vars.userName}" =
-      { lib, config, ... }:
-      let
-        mkDotfileSymlink =
-          relativePath:
-          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
-      in
-      {
-        imports = [ ../../modules/home.nix ];
-        xdg.configFile = {
-          "niri-overrides" = {
-            source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14");
-            recursive = true;
-          };
+  home-manager.users."${vars.userName}" =
+    { lib, config, ... }:
+    let
+      mkDotfileSymlink =
+        relativePath:
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
+    in
+    {
+      xdg.configFile = {
+        "niri-overrides" = {
+          source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14");
+          recursive = true;
         };
       };
-  };
+    };
 
   system.stateVersion = "25.11";
 }

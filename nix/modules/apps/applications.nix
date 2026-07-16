@@ -9,6 +9,8 @@ let
   cfg = config.ushinnary.apps;
 in
 {
+  options.ushinnary.apps.davinciResolve = lib.mkEnableOption "DaVinci Resolve Studio";
+
   environment.systemPackages =
     with pkgs;
     [

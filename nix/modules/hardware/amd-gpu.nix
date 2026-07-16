@@ -9,6 +9,16 @@ let
   cfg = config.ushinnary.gpu.amd;
 in
 {
+  options.ushinnary.gpu.amd = {
+    enable = lib.mkEnableOption "AMD GPU drivers";
+    rocm = lib.mkEnableOption "Is ROCm supported";
+    rocmOverrideGfx = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "rocmOverrideGfx used for ollama";
+    };
+  };
+
   config = mkIf cfg.enable {
     # Enable OpenGL
     hardware.graphics = {

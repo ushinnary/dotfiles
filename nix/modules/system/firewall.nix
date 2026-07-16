@@ -9,6 +9,11 @@ let
   cfg = config.ushinnary.firewall;
 in
 {
+  options.ushinnary.firewall = {
+    opensnitch = lib.mkEnableOption "Enable OpenSnitch application firewall";
+    smbSharing = lib.mkEnableOption "SMB/Samba file sharing ports in firewall (139, 445) — enable on LAN desktops only";
+  };
+
   networking.networkmanager.enable = true;
   networking.firewall = {
     enable = true;

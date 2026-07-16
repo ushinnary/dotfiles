@@ -187,7 +187,7 @@ gamescope --steam -- your-game-command
 
 The configuration includes a full development setup:
 
-- **Nixvim**: Pre-configured Neovim with plugins
+- **Helix**: Modern modal editor with built-in language server support
 - **Development Tools**: Git, compilers, debuggers
 - **Languages**: Support for multiple programming languages
 

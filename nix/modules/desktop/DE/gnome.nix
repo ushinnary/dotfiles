@@ -4,12 +4,11 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.desktop;
 in
 {
-  config = mkIf cfg.gnome {
+  config = lib.mkIf cfg.gnome {
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
 

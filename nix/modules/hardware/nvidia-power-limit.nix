@@ -4,14 +4,13 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.gpu.nvidia;
 in
 {
   # Option declarations for NVIDA are centralised in modules/options.nix
 
-  config = mkIf (cfg.enable && (builtins.isInt cfg.powerLimit)) {
+  config = lib.mkIf (cfg.enable && (builtins.isInt cfg.powerLimit)) {
     systemd.services."set-nvidia-power-limit" = {
       description = "Set NVIDIA GPU Power Limit on Boot";
       path = [ config.hardware.nvidia.package ];

@@ -4,12 +4,11 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.desktop;
 in
 {
-  config = mkIf cfg.plasma {
+  config = lib.mkIf cfg.plasma {
     # Enable Plasma
     services.desktopManager.plasma6.enable = true;
     services.displayManager.plasma-login-manager = {

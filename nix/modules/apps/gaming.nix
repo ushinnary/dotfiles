@@ -5,15 +5,14 @@
   vars,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.gaming;
   displayCfg = config.ushinnary.display;
 in
 {
-  options.ushinnary.gaming.enable = mkEnableOption "gaming packages and configuration (Steam, Gamescope, etc.)";
+  options.ushinnary.gaming.enable = lib.mkEnableOption "gaming packages and configuration (Steam, Gamescope, etc.)";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     boot.kernelModules = [ "ntsync" ];
     programs = {
       steam = {

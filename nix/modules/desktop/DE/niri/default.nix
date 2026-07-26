@@ -5,7 +5,6 @@
   vars,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.desktop;
 in
@@ -16,7 +15,7 @@ in
     ./compositor.nix
   ];
 
-  config = mkIf cfg.niri {
+  config = lib.mkIf cfg.niri {
     programs.niri.enable = true;
 
     # ── DankMaterialShell (bar, dock, OSD, notifications, clipboard,
@@ -87,7 +86,7 @@ in
       ];
       config.common.default = "*";
       config.niri = {
-        default = mkDefault [
+        default = lib.mkDefault [
           "gnome"
           "gtk"
         ];

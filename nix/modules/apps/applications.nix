@@ -4,7 +4,6 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.apps;
 in
@@ -16,7 +15,7 @@ in
     [
       firefox
     ]
-    ++ optionals cfg.davinciResolve [
+    ++ lib.optionals cfg.davinciResolve [
       davinci-resolve-studio
     ];
 

@@ -5,7 +5,6 @@
   vars,
   ...
 }:
-with lib;
 let
   containersCfg = config.ushinnary.containers;
   vmHostCfg = config.ushinnary.virtualisation.host;
@@ -17,8 +16,8 @@ in
     distrobox = lib.mkEnableOption "Enable distrobox";
   };
 
-  config = mkMerge [
-    (mkIf containersCfg.enable {
+  config = lib.mkMerge [
+    (lib.mkIf containersCfg.enable {
       virtualisation = {
         containers.enable = true;
         oci-containers.backend = "podman";
@@ -48,9 +47,9 @@ in
         [
           podman-compose
         ]
-        ++ optional containersCfg.distrobox distrobox;
+        ++ lib.optional containersCfg.distrobox distrobox;
     })
-    (mkIf vmHostCfg.enable {
+    (lib.mkIf vmHostCfg.enable {
       virtualisation.libvirtd.enable = true;
       programs.virt-manager.enable = true;
       users.users."${vars.userName}".extraGroups = [ "libvirtd" ];

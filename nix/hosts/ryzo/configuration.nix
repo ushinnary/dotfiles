@@ -56,12 +56,7 @@
 
   # Home Manager Setup
   home-manager.users."${vars.userName}" =
-    { lib, config, ... }:
-    let
-      mkDotfileSymlink =
-        relativePath:
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
-    in
+    { lib, mkDotfileSymlink, ... }:
     {
       xdg.configFile = {
         "niri-overrides" = {

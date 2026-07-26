@@ -15,8 +15,6 @@
     ./hardware/nvidia-gpu.nix
     ./hardware/amd-gpu.nix
     ./hardware/secure-boot.nix
-    ./hardware/disko-extra-drives.nix
-    ./hardware/disko-luks-btrfs.nix
     ./desktop/desktop-environment.nix
     ./desktop/audio.nix
     ./services/services.nix

@@ -4,7 +4,6 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.gpu.amd;
 in
@@ -19,7 +18,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # Enable OpenGL
     hardware.graphics = {
       enable = true;

@@ -25,6 +25,9 @@
     # It will just not appear on screen unless a key is pressed
     loader.timeout = 0;
     loader.systemd-boot.enable = true;
+    # ESP is only 1G (see disko-luks-btrfs.nix) — cap kept generations
+    # so kernels/initrds don't slowly fill it up.
+    loader.systemd-boot.configurationLimit = 10;
     initrd.systemd.enable = true;
   };
 

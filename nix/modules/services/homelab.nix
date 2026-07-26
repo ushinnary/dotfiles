@@ -28,17 +28,6 @@ in
         description = "Port for Ollama service";
       };
     };
-    extraDrives = lib.mkOption {
-      type = lib.types.listOf (lib.types.submodule {
-        options = {
-          device = lib.mkOption { type = lib.types.str; };
-          mountPoint = lib.mkOption { type = lib.types.str; };
-          label = lib.mkOption { type = lib.types.str; };
-        };
-      });
-      default = [ ];
-      description = "Extra LUKS-encrypted drives for storage";
-    };
     powerManagement = {
       enable = lib.mkEnableOption "Power saving features (CPU governor, tuning)";
       cpuGovernor = lib.mkOption {

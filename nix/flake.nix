@@ -43,6 +43,10 @@
       mkHost = import ./lib/mkHost.nix { inherit inputs vars; };
     in
     {
+      # Canonical formatter for this repo — `nix fmt` (or nix/fmt.sh) uses
+      # this. Matches pkgs.nixfmt used elsewhere (Helix's nix formatter).
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+
       nixosConfigurations = {
         # Hostname: ryzo
         ryzo = mkHost {

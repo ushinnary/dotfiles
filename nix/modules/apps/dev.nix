@@ -113,12 +113,7 @@ in
     # Files are linked out-of-store to ~/dotfiles, so edits are picked up
     # immediately (stow-like) without rebuilding.
     home-manager.users."${vars.userName}" =
-      { config, ... }:
-      let
-        mkDotfileSymlink =
-          relativePath:
-          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
-      in
+      { mkDotfileSymlink, ... }:
       {
         programs.zed-editor = lib.mkIf (hasEditor "zed") {
           enable = true;

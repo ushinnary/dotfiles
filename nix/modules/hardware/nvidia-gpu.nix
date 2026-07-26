@@ -3,7 +3,6 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.gpu.nvidia;
 in
@@ -26,7 +25,7 @@ in
     ./nvidia-power-limit.nix
   ];
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # Enable OpenGL
     hardware.graphics = {
       enable = true;

@@ -4,7 +4,6 @@
   pkgs,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.security;
 in
@@ -25,7 +24,7 @@ in
     };
   };
 
-  config = mkMerge [
+  config = lib.mkMerge [
     # ═══════════════════════════════════════════════════════════════
     #  General security hardening (always active)
     # ═══════════════════════════════════════════════════════════════
@@ -124,7 +123,7 @@ in
     # ═══════════════════════════════════════════════════════════════
     #  Howdy facial recognition (conditional)
     # ═══════════════════════════════════════════════════════════════
-    (mkIf cfg.howdy.enable {
+    (lib.mkIf cfg.howdy.enable {
       services.howdy = {
         enable = true;
         package = pkgs.howdy;

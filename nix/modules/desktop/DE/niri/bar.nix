@@ -5,7 +5,6 @@
   vars,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.desktop;
 in
@@ -15,7 +14,7 @@ in
   # This file now only carries the GTK / icon-theme defaults that the
   # rest of the desktop still needs.
 
-  config = mkIf cfg.niri {
+  config = lib.mkIf cfg.niri {
     environment.systemPackages = [
       pkgs.adwaita-icon-theme
       pkgs.papirus-icon-theme

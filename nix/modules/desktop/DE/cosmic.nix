@@ -5,12 +5,11 @@
   vars,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.desktop;
 in
 {
-  config = mkIf cfg.cosmic {
+  config = lib.mkIf cfg.cosmic {
     # Enable the COSMIC login manager
     services.displayManager.cosmic-greeter.enable = true;
 

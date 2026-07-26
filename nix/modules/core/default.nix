@@ -30,6 +30,11 @@
     users."${vars.userName}" =
       { lib, config, pkgs, osConfig, ... }:
       {
+        # Injected as a module arg for every fragment merged into this
+        # user's home-manager config (dev.nix, niri/compositor.nix, the
+        # per-host configuration.nix files, …) — see lib/mkDotfileSymlink.nix.
+        _module.args.mkDotfileSymlink = import ../../lib/mkDotfileSymlink.nix config;
+
         home.stateVersion = "25.11";
 
         gtk.gtk4.theme = config.gtk.theme;

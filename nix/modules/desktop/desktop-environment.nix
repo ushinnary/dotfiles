@@ -5,7 +5,6 @@
   vars,
   ...
 }:
-with lib;
 let
   cfg = config.ushinnary.desktop;
   electronFlagsSrc = ../../electron/.config/electron-flags.conf;
@@ -43,13 +42,13 @@ in
     ./DE/niri/default.nix
   ];
 
-  config = mkMerge [
+  config = lib.mkMerge [
     {
       services.tuned = {
         enable = true;
       };
     }
-    (mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
+    (lib.mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
 
       environment.sessionVariables = {
         NIXOS_OZONE_WL = "1";
@@ -161,7 +160,7 @@ in
                 fi
 
                 ${pkgs.coreutils}/bin/install -Dm644 ${electronFlagsSrc} "$HOME/.config/electron-flags.conf"
-                ${optionalString config.ushinnary.gpu.amd.enable ''
+                ${lib.optionalString config.ushinnary.gpu.amd.enable ''
                   ${pkgs.coreutils}/bin/install -Dm644 ${edgeFlagsAmdSrc} "$HOME/.var/app/com.microsoft.Edge/config/edge-flags.conf"
                 ''}
               ''}";

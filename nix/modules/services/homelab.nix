@@ -66,15 +66,12 @@ in
       "loglevel=3"
     ];
 
+    # Not opened on the firewall: reachable only over LAN/Tailscale via
+    # the trustedInterfaces below, and served over HTTPS (self-signed).
     services.cockpit = {
       enable = true;
       port = 9090;
-      openFirewall = true;
-      settings = {
-        WebService = {
-          AllowUnencrypted = true;
-        };
-      };
+      openFirewall = false;
     };
 
     # services.samba = {
@@ -128,16 +125,10 @@ in
       ];
     };
 
-    networking.firewall = {
-      allowPing = true;
-      trustedInterfaces = [
-        "eth0"
-        "enp*"
-        "wlp*"
-      ];
-
-      allowedTCPPorts = [ 11434 ];
-    };
+    # Ollama and Cockpit are reachable only via LAN/Tailscale/WireGuard —
+    # see the shared trustedInterfaces trust boundary in
+    # system/firewall.nix. No ports are opened on the public firewall.
+    networking.firewall.allowPing = true;
 
     environment.systemPackages = with pkgs; [
       vim

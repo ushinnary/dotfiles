@@ -11,10 +11,31 @@ in
 {
   options.ushinnary.firewall = {
     opensnitch = lib.mkEnableOption "Enable OpenSnitch application firewall";
-    smbSharing = lib.mkEnableOption "SMB/Samba file sharing ports in firewall (139, 445) — enable on LAN desktops only";
+    smbSharing = lib.mkEnableOption "SMB/Samba NetBIOS conntrack helper — enable on LAN desktops only";
   };
 
   networking.networkmanager.enable = true;
+
+  # ── Trust boundary ───────────────────────────────────────────────
+  # Every inbound service in this config (SSH, KDE Connect, Ollama,
+  # Cockpit, Steam Remote Play/dedicated servers, mDNS, …) is reachable
+  # ONLY from these interfaces: your LAN, Tailscale, or a WireGuard
+  # tunnel. No port is opened on any other interface, even when a
+  # service module tries to "openFirewall" itself — nothing here is
+  # meant to be reachable from the open internet.
+  #
+  # "+" is iptables' own interface-name prefix wildcard (the module
+  # passes these straight to `-i`, which only understands a trailing
+  # "+", not shell-style "*"), so "enp+"/"wlp+" match real interface
+  # names like enp5s0/wlp3s0 on any host.
+  networking.firewall.trustedInterfaces = [
+    "eth0"
+    "enp+"
+    "wlp+"
+    "tailscale0"
+    "wg+"
+  ];
+
   networking.firewall = {
     enable = true;
 
@@ -25,45 +46,14 @@ in
     logRefusedPackets = true; # log ALL dropped packets, not just connections
     logReversePathDrops = true; # log spoofed-source packets
 
-    # ── Inbound allow-list ───────────────────────────────────────
-    allowedTCPPorts = [
-      # 80
-      # 443
-      22
-      # 34445
-    ] ++ lib.optionals cfg.smbSharing [
-      139 # NetBIOS / Samba
-      445 # SMB / Samba
-    ];
-    allowedTCPPortRanges = [
-      # KDE Connect
-      {
-        from = 1714;
-        to = 1764;
-      }
-    ];
-    allowedUDPPortRanges = [
-      {
-        from = 4000;
-        to = 4007;
-      }
-      {
-        from = 8000;
-        to = 8010;
-      }
-      # KDE Connect
-      {
-        from = 1714;
-        to = 1764;
-      }
-    ] ++ lib.optionals cfg.smbSharing [
-      {
-        from = 137; # NetBIOS/Samba
-        to = 138;
-      }
-    ];
+    # No allowedTCPPorts/allowedUDPPorts here on purpose: anything
+    # needed (SSH, KDE Connect, …) is reachable via trustedInterfaces
+    # above. Nothing should be exposed beyond LAN/Tailscale/WireGuard.
   };
 
+  # NetBIOS name-resolution broadcasts need a conntrack helper to work
+  # correctly; unrelated to port filtering, so kept independent of the
+  # trust-boundary change above.
   networking.firewall.extraCommands = lib.optionalString cfg.smbSharing
     "iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns";
 

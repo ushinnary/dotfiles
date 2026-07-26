@@ -75,9 +75,9 @@ in
 
       };
 
-      networking.firewall.allowedUDPPorts = [
-        5353
-      ];
+      # mDNS/Avahi (5353) is reachable via the LAN/Tailscale/WireGuard
+      # trustedInterfaces set in system/firewall.nix — no need to open
+      # it globally.
 
       powerManagement = {
         enable = true;

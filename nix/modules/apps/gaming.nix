@@ -18,8 +18,11 @@ in
     programs = {
       steam = {
         enable = true;
-        remotePlay.openFirewall = true;
-        dedicatedServer.openFirewall = true;
+        # Not opened globally: Remote Play/dedicated-server ports are
+        # only reachable via the LAN/Tailscale/WireGuard
+        # trustedInterfaces set in system/firewall.nix.
+        remotePlay.openFirewall = false;
+        dedicatedServer.openFirewall = false;
         gamescopeSession = {
           enable = true;
         };

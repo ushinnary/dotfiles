@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  vars,
   ...
 }:
 {
@@ -53,21 +52,12 @@
   # ModemManager is for cellular modems — not needed on desktops
   systemd.services.ModemManager.enable = lib.mkForce false;
 
+  # NVMe has plenty of headroom, so favor rollback safety over
+  # aggressively reclaiming space: keep two weeks of generations.
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 3d";
+    options = "--delete-older-than 14d";
   };
   nix.settings.auto-optimise-store = true;
-
-  # ── Automatic weekly rebuild from local dotfiles flake ────────
-  # Applies any pending dotfile changes without manual intervention.
-  # Run `nix flake update` in ~/dotfiles/nix to also pull new nixpkgs.
-  system.autoUpgrade = {
-    enable = true;
-    flake = "/home/${vars.userName}/dotfiles/nix";
-    allowReboot = false;
-    dates = "weekly";
-    randomizedDelaySec = "45min";
-  };
 }

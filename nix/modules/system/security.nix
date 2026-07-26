@@ -112,7 +112,7 @@ in
           value = "0";
         }
       ];
-      security.auditd.enable = false;
+      security.auditd.enable = true;
 
       # ── Restrict su to wheel group only ─────────────────────────
       security.pam.services.su.requireWheel = true;

@@ -50,17 +50,16 @@
           shellAliases = {
             nfc = "(cd ~/dotfiles/nix && nix flake check)";
             nfu = "(cd ~/dotfiles/nix && nix flake update)";
-            ncg = "sudo nix-collect-garbage -d";
+            # nh reads NH_FLAKE (set in system/packages.nix) so these work
+            # from anywhere, and it shows a diff of what's changing.
+            nrfs = "nh os switch";
+            ncg = "nh clean all";
             subup = "(cd ~/dotfiles && git submodule update --init --remote --merge)";
             nvim = "hx";
           };
 
           initExtra = ''
             bind 'set completion-ignore-case on'
-
-            nrfs() {
-              (cd ~/dotfiles/nix && sudo nixos-rebuild switch --flake "#$HOSTNAME")
-            }
           '';
 
           bashrcExtra = ''

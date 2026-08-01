@@ -1,5 +1,6 @@
 {
   pkgs,
+  vars,
   ...
 }:
 {
@@ -11,7 +12,16 @@
     cifs-utils
     wayland-utils
     wl-clipboard
+    # nh (nicer `nixos-rebuild`/GC CLI) — nvd/nix-output-monitor are
+    # optional companions it shells out to for diffs and build progress.
+    nh
+    nvd
+    nix-output-monitor
   ];
+
+  # `nh os switch`/`nh os boot` use this as the default flake path so
+  # they don't need it passed explicitly each time.
+  environment.variables.NH_FLAKE = "/home/${vars.userName}/dotfiles/nix";
 
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only

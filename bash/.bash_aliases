@@ -4,7 +4,7 @@
 alias nvimconfig='nvim ~/.config/nvim'
 alias nfc='(cd ~/dotfiles/nix && nix flake check)'
 alias nfu='(cd ~/dotfiles/nix && nix flake update)'
-alias ncg='sudo nix-collect-garbage -d'
+alias ncg='nh clean all'
 alias subup='(cd ~/dotfiles && git submodule update --init --remote --merge)'
 
 nrfs() {
@@ -13,5 +13,5 @@ nrfs() {
 		return 1
 	fi
 
-	sudo nixos-rebuild switch --flake "$1"
+	nh os switch "$1"
 }

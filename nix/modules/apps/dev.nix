@@ -70,6 +70,10 @@ in
       pkgs.devenv
       pkgs.nushell
 
+      # IDE-style autocomplete wrapping bash/nushell — launched on shell
+      # start, see core/default.nix bashrcExtra and nushell/env.nu.
+      pkgs.inshellisense
+
       # LSPs & Formatters
       pkgs.nixd
       pkgs.nixfmt

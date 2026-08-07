@@ -120,3 +120,11 @@ if not ($zoxide_init | path exists) {
 }
 
 carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
+
+# inshellisense — IDE-style autocomplete wrapping the shell. IS_TERM is
+# set by `is` itself in the session it spawns, so this guard stops it
+# from re-launching itself recursively. Skips silently if `is` isn't
+# installed on this host.
+if ($env.IS_TERM? | is-empty) and ((which is) | is-not-empty) {
+    is
+}

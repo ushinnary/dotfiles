@@ -15,3 +15,11 @@ nrfs() {
 
 	nh os switch "$1"
 }
+
+# inshellisense — IDE-style autocomplete wrapping the shell. IS_TERM is
+# set by `is` itself in the session it spawns, so this guard stops it
+# from re-launching itself recursively. Skips silently if `is` isn't
+# installed on this host.
+if [ -z "$IS_TERM" ] && command -v is >/dev/null 2>&1; then
+	is
+fi

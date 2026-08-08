@@ -80,8 +80,8 @@ in
       pkgs.lua-language-server
       pkgs.stylua
       pkgs.vscode-langservers-extracted
-      pkgs.nodePackages.typescript-language-server
-      pkgs.nodePackages.prettier
+      pkgs.typescript-language-server
+      pkgs.prettier
       pkgs.marksman
     ]
     ++ lib.optionals hasDesktop [

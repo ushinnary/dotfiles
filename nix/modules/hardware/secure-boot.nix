@@ -12,7 +12,7 @@ in
   imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
 
   # During initial install keep systemd-boot active; switch to lanzaboote after first rebuild.
-  boot.loader.systemd-boot.enable = lib.mkForce initialInstall;
+  boot.loader.systemd-boot.enable = lib.mkOverride 50 initialInstall;
 
   boot.lanzaboote = {
     enable = !initialInstall;

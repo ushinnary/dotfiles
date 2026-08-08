@@ -24,7 +24,7 @@
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
     loader.timeout = 0;
-    loader.systemd-boot.enable = true;
+    loader.systemd-boot.enable = lib.mkForce true;
     # ESP is only 1G (see disko-luks-btrfs.nix) — cap kept generations
     # so kernels/initrds don't slowly fill it up.
     loader.systemd-boot.configurationLimit = 10;

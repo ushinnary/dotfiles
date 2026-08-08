@@ -7,8 +7,8 @@
 }:
 let
   cfg = config.ushinnary.desktop;
-  electronFlagsSrc = "${../../electron/.config/electron-flags.conf}";
-  edgeFlagsAmdSrc = "${../../flatpaks/.var/app/com.microsoft.Edge/config/edge-flags-amd.conf}";
+  electronFlagsSrc = "${../../../electron/.config/electron-flags.conf}";
+  edgeFlagsAmdSrc = "${../../../flatpaks/.var/app/com.microsoft.Edge/config/edge-flags-amd.conf}";
 in
 {
   options.ushinnary.hardware = {

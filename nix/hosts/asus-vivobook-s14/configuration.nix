@@ -34,6 +34,7 @@
   ushinnary = {
     gpu.amd.enable = true;
     hardware.amdCpu = true;
+    hardware.secureBoot = true;
     desktop.niri = true;
     dev = {
       enable = true;

@@ -9,7 +9,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Full disk encryption with LUKS and BTRFS:
-    (import ../../modules/disko-luks-btrfs.nix {
+    (import ../../modules/hardware/disko-luks-btrfs.nix {
       device = "/dev/nvme0n1";
       swapSize = "0G";
       isSsd = true;
@@ -42,7 +42,7 @@
     dev = {
       enable = true;
       editors = [
-        "nixvim"
+        "helix"
         "zed"
       ];
       servers = [
@@ -55,30 +55,16 @@
   };
 
   # Home Manager Setup
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    backupFileExtension = "backup";
-    extraSpecialArgs = {
-      inherit inputs vars;
-    };
-    users."${vars.userName}" =
-      { lib, config, ... }:
-      let
-        mkDotfileSymlink =
-          relativePath:
-          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
-      in
-      {
-        imports = [ ../../modules/home.nix ];
-        xdg.configFile = {
-          "niri-overrides" = {
-            source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/ryzo");
-            recursive = true;
-          };
+  home-manager.users."${vars.userName}" =
+    { lib, mkDotfileSymlink, ... }:
+    {
+      xdg.configFile = {
+        "niri-overrides" = {
+          source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/ryzo");
+          recursive = true;
         };
       };
-  };
+    };
 
   system.stateVersion = "25.11";
 }

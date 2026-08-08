@@ -1,0 +1,117 @@
+{
+  pkgs,
+  config,
+  lib,
+  vars,
+  ...
+}:
+let
+  cfg = config.ushinnary.desktop;
+in
+{
+  imports = [
+    ./bar.nix
+    ./terminal.nix
+    ./compositor.nix
+  ];
+
+  config = lib.mkIf cfg.niri {
+    programs.niri.enable = true;
+
+    # ── DankMaterialShell (bar, dock, OSD, notifications, clipboard,
+    #    wallpaper, theme, lock screen, media, brightness …) ───────
+    programs.dms-shell = {
+      enable = true;
+      systemd = {
+        enable = true;
+        restartIfChanged = true;
+      };
+      enableSystemMonitoring = false;
+      enableDynamicTheming = true;
+      enableClipboardPaste = true;
+      enableVPN = false;
+      enableCalendarEvents = false;
+      enableAudioWavelength = false;
+    };
+
+    services.clight.enable = false;
+    services.gnome.sushi.enable = true;
+
+    # ── DankSearch ────────────────────────────────────────────────
+    programs.dsearch = {
+      enable = true;
+      systemd.enable = true;
+    };
+
+    # ── Login manager — DankGreeter ───────────────────────────────
+    services.displayManager.dms-greeter = {
+      enable = true;
+      compositor.name = "niri";
+      configHome = "/home/${vars.userName}"; # Sync DMS theme with the greeter
+      #logs = {
+      #  save = true;
+      #  path = "/var/log/dms-greeter.log";
+      #};
+      configFiles = [
+        "/home/${vars.userName}/.config/DankMaterialShell/settings.json"
+        "/home/${vars.userName}/.local/state/DankMaterialShell/session.json"
+        "/home/${vars.userName}/.cache/DankMaterialShell/dms-colors.json"
+      ];
+    };
+
+    # ── Core Wayland / session packages ───────────────────────────
+    # Packages previously needed for the custom shell stack (swaylock,
+    # swayidle, brightnessctl, playerctl, wl-clipboard, cliphist, etc.)
+    # are now provided or superseded by DankMaterialShell.
+    environment.systemPackages = with pkgs; [
+      kdePackages.polkit-kde-agent-1
+      xwayland-satellite
+      gnome-keyring
+
+      # File manager
+      nautilus
+      file-roller
+      cups-pk-helper
+      seahorse
+      brightnessctl
+    ];
+
+    # ── XDG portals ───────────────────────────────────────────────
+    xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gnome
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config.common.default = "*";
+      config.niri = {
+        default = lib.mkDefault [
+          "gnome"
+          "gtk"
+        ];
+        "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+        "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      };
+    };
+
+    # ── Security & Password Management ────────────────────────────
+    services.gnome.gnome-keyring.enable = true;
+    security.pam.services.login.enableGnomeKeyring = true;
+    security.pam.services.greetd.enableGnomeKeyring = true;
+
+    # ── Polkit ────────────────────────────────────────────────────
+    systemd.user.services.polkit-kde-authentication-agent-1 = {
+      description = "polkit-kde-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
+  };
+}

@@ -24,10 +24,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
 
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
@@ -43,33 +40,24 @@
     }@inputs:
     let
       vars = import ./vars.nix;
+      mkHost = import ./lib/mkHost.nix { inherit inputs vars; };
     in
     {
+      # Canonical formatter for this repo — `nix fmt` (or nix/fmt.sh) uses
+      # this. Matches pkgs.nixfmt used elsewhere (Helix's nix formatter).
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+
       nixosConfigurations = {
         # Hostname: ryzo
-        ryzo = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-            dotfiles = inputs.dotfiles;
-            inherit vars;
-          };
-          modules = [
-            ./hosts/ryzo/configuration.nix
-          ];
+        ryzo = mkHost {
+          name = "ryzo";
         };
 
         # Hostname: asus-vivobook-s14 (Laptop)
-        asus-vivobook-s14 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-            dotfiles = inputs.dotfiles;
-            inherit vars;
-          };
-          modules = [
+        asus-vivobook-s14 = mkHost {
+          name = "asus-vivobook-s14";
+          extraModules = [
             inputs.nixos-hardware.nixosModules.asus-battery
-            ./hosts/asus-vivobook-s14/configuration.nix
           ];
         };
       };

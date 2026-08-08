@@ -1,0 +1,231 @@
+{
+  config,
+  lib,
+  pkgs,
+  vars,
+  ...
+}:
+let
+  cfg = config.ushinnary.desktop;
+  electronFlagsSrc = ../../electron/.config/electron-flags.conf;
+  edgeFlagsAmdSrc = ../../flatpaks/.var/app/com.microsoft.Edge/config/edge-flags-amd.conf;
+in
+{
+  options.ushinnary.hardware = {
+    hasWebCam = lib.mkEnableOption "system has a webcam (enables clight for automatic brightness via camera)";
+    hasBattery = lib.mkEnableOption "system has a battery (enables battery widget in bars, power-aware features, etc.)";
+  };
+  options.ushinnary.desktop = {
+    gnome = lib.mkEnableOption "GNOME desktop environment";
+    cosmic = lib.mkEnableOption "COSMIC desktop environment";
+    plasma = lib.mkEnableOption "Plasma desktop environment";
+    niri = lib.mkEnableOption "Niri Wayland compositor";
+  };
+  options.ushinnary.display = {
+    oled = lib.mkEnableOption "OLED-specific optimizations (HDR, deeper blacks)";
+    refreshRate = lib.mkOption {
+      type = lib.types.int;
+      default = 60;
+      description = "Default refresh rate for normal desktop use";
+    };
+    gamingRefreshRate = lib.mkOption {
+      type = lib.types.int;
+      default = 144;
+      description = "Refresh rate used in gaming sessions";
+    };
+  };
+
+  imports = [
+    ./DE/gnome.nix
+    ./DE/cosmic.nix
+    ./DE/plasma.nix
+    ./DE/niri/default.nix
+  ];
+
+  config = lib.mkMerge [
+    {
+      services.tuned = {
+        enable = true;
+      };
+    }
+    (lib.mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
+
+      environment.sessionVariables = {
+        NIXOS_OZONE_WL = "1";
+      };
+
+      security = {
+        polkit.enable = true;
+      };
+      # Enable CUPS printing services
+      # CUPS (Common Unix Printing System) handles all printer communication
+      services.printing = {
+        enable = true;
+
+        # Required drivers for most modern printers
+        # cups-filters: provides filters for converting documents to printer-ready formats
+        # cups-browsed: enables automatic printer discovery on the network
+        drivers = with pkgs; [
+          cups-filters
+          cups-browsed
+          gutenprint
+          hplipWithPlugin
+        ];
+
+      };
+
+      # mDNS/Avahi (5353) is reachable via the LAN/Tailscale/WireGuard
+      # trustedInterfaces set in system/firewall.nix — no need to open
+      # it globally.
+
+      powerManagement = {
+        enable = true;
+      };
+      services.upower.enable = true;
+      hardware.sane.enable = true;
+      services.colord.enable = true;
+      hardware.sensor.iio.enable = config.ushinnary.hardware.hasWebCam;
+      services.avahi.enable = true; # For network discovery of printers and other devices
+
+      boot.kernelModules = [ "i2c-dev" ];
+      hardware.i2c.enable = true;
+      services.udev.extraRules = ''
+        KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+        ACTION=="add", SUBSYSTEM=="usb", ATTR{power/control}="on"
+      '';
+      users.users."${vars.userName}".extraGroups = [
+        "i2c"
+        "scanner"
+        "lp"
+      ];
+
+      environment.systemPackages = with pkgs; [
+        bibata-cursors
+        ddcutil
+
+        # backends for extraction
+        unzip
+        p7zip
+        unrar
+        gnutar
+        gzip
+        bzip2
+        xz
+
+        # Media codecs
+        ffmpeg
+        gst_all_1.gstreamer
+        gst_all_1.gst-plugins-base
+        gst_all_1.gst-plugins-good
+        gst_all_1.gst-plugins-bad
+        gst_all_1.gst-plugins-ugly
+        gst_all_1.gst-libav
+        gst_all_1.gst-vaapi
+      ];
+
+      environment.variables = {
+        QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+      };
+
+      home-manager.users."${vars.userName}" =
+        { pkgs, ... }:
+        {
+          dconf.settings = {
+            "org/gnome/desktop/interface" = {
+              cursor-theme = "Bibata-Modern-Ice";
+              font-name = "Nunito 11";
+              document-font-name = "Nunito 11";
+              monospace-font-name = "Comic Mono 10";
+            };
+          };
+
+          systemd.user.services.copy-wayland-flags = {
+            Unit = {
+              Description = "Copy Electron and Edge flags for Wayland sessions";
+              After = [ "graphical-session.target" ];
+              PartOf = [ "graphical-session.target" ];
+            };
+
+            Install = {
+              WantedBy = [ "graphical-session.target" ];
+            };
+
+            Service = {
+              Type = "oneshot";
+              ExecStart = "${pkgs.writeShellScript "copy-wayland-flags" ''
+                set -eu
+
+                if [ "''${XDG_SESSION_TYPE:-}" != "wayland" ] && [ -z "''${WAYLAND_DISPLAY:-}" ]; then
+                  exit 0
+                fi
+
+                ${pkgs.coreutils}/bin/install -Dm644 ${electronFlagsSrc} "$HOME/.config/electron-flags.conf"
+                ${lib.optionalString config.ushinnary.gpu.amd.enable ''
+                  ${pkgs.coreutils}/bin/install -Dm644 ${edgeFlagsAmdSrc} "$HOME/.var/app/com.microsoft.Edge/config/edge-flags.conf"
+                ''}
+              ''}";
+            };
+          };
+        };
+
+      services.gvfs.enable = true;
+      services.flatpak.enable = true;
+      systemd.services.flatpak-repo = {
+        wantedBy = [ "multi-user.target" ];
+        path = [ pkgs.flatpak ];
+        script = ''
+          flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+        '';
+      };
+
+      systemd.services.flatpak-update = {
+        description = "Update Flatpak apps and runtimes";
+        after = [
+          "network-online.target"
+          "flatpak-repo.service"
+        ];
+        wants = [
+          "network-online.target"
+          "flatpak-repo.service"
+        ];
+        path = [ pkgs.flatpak ];
+        serviceConfig = {
+          Type = "oneshot";
+        };
+        script = ''
+          flatpak update --system -y --noninteractive
+        '';
+      };
+
+      systemd.timers.flatpak-update = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnBootSec = "5m";
+          OnUnitActiveSec = "1d";
+          Persistent = true;
+          RandomizedDelaySec = "15m";
+        };
+      };
+
+      fonts = {
+        packages = with pkgs; [
+          nunito
+          comic-mono
+        ];
+
+        fontconfig = {
+          defaultFonts = {
+            serif = [ "Nunito" ];
+            sansSerif = [ "Nunito" ];
+            monospace = [
+              "Comic Mono"
+            ];
+          };
+
+          hinting.style = "none";
+          subpixel.rgba = "rgb";
+        };
+      };
+    })
+  ];
+}

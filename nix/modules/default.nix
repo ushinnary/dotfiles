@@ -5,24 +5,24 @@
   # Option declarations moved to modules/options.nix
 
   imports = [
-    ./options.nix
-    ./nvidia-gpu.nix
-    ./amd-gpu.nix
-    ./applications.nix
-    ./boot.nix
-    ./audio.nix
-    ./desktop-environment.nix
-    ./dev.nix
-    ./firewall.nix
-    ./gaming.nix
-    ./homelab.nix
-    ./locale.nix
-    ./location.nix
-    ./packages.nix
-    ./users.nix
-    ./virtualisation.nix
-    ./services.nix
-    ./security.nix
+    ./system/boot.nix
+    ./system/locale.nix
+    ./system/location.nix
+    ./system/users.nix
+    ./system/security.nix
+    ./system/firewall.nix
+    ./system/packages.nix
+    ./hardware/nvidia-gpu.nix
+    ./hardware/amd-gpu.nix
+    ./hardware/secure-boot.nix
+    ./desktop/desktop-environment.nix
+    ./desktop/audio.nix
+    ./services/services.nix
+    ./services/homelab.nix
+    ./services/virtualisation.nix
+    ./apps/applications.nix
+    ./apps/gaming.nix
+    ./apps/dev.nix
   ];
 
   nix.settings.experimental-features = [

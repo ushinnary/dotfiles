@@ -1,0 +1,59 @@
+{
+  config,
+  pkgs,
+  lib,
+  vars,
+  ...
+}:
+let
+  cfg = config.ushinnary.gaming;
+  displayCfg = config.ushinnary.display;
+in
+{
+  options.ushinnary.gaming.enable = lib.mkEnableOption "gaming packages and configuration (Steam, Gamescope, etc.)";
+
+  config = lib.mkIf cfg.enable {
+    boot.kernelModules = [ "ntsync" ];
+    programs = {
+      steam = {
+        enable = true;
+        # Not opened globally: Remote Play/dedicated-server ports are
+        # only reachable via the LAN/Tailscale/WireGuard
+        # trustedInterfaces set in system/firewall.nix.
+        remotePlay.openFirewall = false;
+        dedicatedServer.openFirewall = false;
+        gamescopeSession = {
+          enable = true;
+        };
+      };
+
+      gamemode.enable = true;
+      gamescope = {
+        enable = true;
+        capSysNice = false;
+      };
+    };
+
+    environment.systemPackages = [ pkgs.mangohud ];
+
+    environment.variables = {
+      ENABLE_GAMESCOPE_WSI = "1";
+      STEAM_MULTIPLE_XWAYLANDS = "1";
+      PROTON_USE_NTSYNC = "1";
+      # HDR Support for OLED
+      ENABLE_HDR_WSI = if displayCfg.oled then "1" else "0";
+      DXVK_HDR = if displayCfg.oled then "1" else "0";
+
+      # Hardware specific variables
+      PROTON_ENABLE_NVAPI = if config.ushinnary.gpu.nvidia.enable then "1" else "0";
+    }
+    // lib.optionalAttrs config.ushinnary.gpu.amd.enable {
+      AMD_VULKAN_ICD = "radv";
+      RADV_PERFTEST = "gpl";
+      LD_BIND_NOW = "1";
+    };
+
+
+    users.users."${vars.userName}".extraGroups = [ "gamemode" ];
+  };
+}

@@ -68,7 +68,7 @@
             ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(devenv hook bash)\""}
             ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(starship init bash)\""}
             ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(zoxide init bash)\""}
-            ${lib.optionalString osConfig.ushinnary.dev.enable "if [ -z \"$IS_TERM\" ] && command -v is >/dev/null 2>&1; then is; fi"}
+            ${lib.optionalString osConfig.ushinnary.dev.enable "if [ -z \"$IS_TERM\" ] && command -v inshellisense >/dev/null 2>&1; then inshellisense; fi"}
           '';
         };
       };

@@ -39,6 +39,7 @@
     display = {
       refreshRate = 90;
     };
+    desktop.niri = true;
     dev = {
       enable = true;
       editors = [

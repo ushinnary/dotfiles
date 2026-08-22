@@ -125,6 +125,7 @@
     "model_parameters": [],
   },
   "git_panel": {
+    "group_by": "staging",
     "dock": "left",
     "file_icons": true,
     "tree_view": true,

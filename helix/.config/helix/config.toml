@@ -1,0 +1,72 @@
+# Helix config — linked out-of-store from ~/dotfiles/helix via home-manager.
+# Edits here take effect on the next `hx` launch, no rebuild needed.
+
+theme = "github_dark"
+
+[editor]
+line-number = "relative"
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "underline"
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+
+# Show dotfiles in the file picker and global search (gitignored paths stay
+# filtered). NOTE: `true` here means "enable ignoring hidden files", so dotfile
+# visibility requires `false`.
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+
+# Vim-like keybindings
+# NOTE: `diw`/`ciw`/etc. text-object operators are not bindable:
+# Helix only exposes the interactive `select_textobject_*` commands.
+d.d = ["extend_to_line_bounds", "delete_selection"]
+y.y = ["extend_to_line_bounds", "yank"]
+c.c = ["extend_to_line_bounds", "change_selection"]
+
+# Window navigation
+C-h = "jump_view_left"
+C-j = "jump_view_down"
+C-k = "jump_view_up"
+C-l = "jump_view_right"
+
+# Buffer navigation
+H = ":bp"
+L = ":bn"
+
+# Save
+C-s = ":w"
+
+[keys.normal.space]
+# LazyVim-style leader maps.
+# NOTE: binding a sub-key under an existing default prefix merges recursively,
+# but turning a default command into a prefix replaces it. That is why
+# `f` is bound directly to the picker instead of being a table.
+f = "file_picker"
+space.space = "file_picker"
+
+n = ":new"
+
+s.g = "global_search"
+
+c.c = "toggle_comments"
+c.f = ":format"
+
+"-" = "hsplit"
+"|" = "vsplit"
+
+q.q = ":qa"
+
+w.d = "wclose"
+
+[keys.insert]
+C-s = [":w", "normal_mode"]
+
+[keys.select]
+C-s = ":w"

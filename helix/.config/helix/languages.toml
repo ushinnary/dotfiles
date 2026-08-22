@@ -1,0 +1,42 @@
+# Helix language overrides — linked from ~/dotfiles/helix via home-manager.
+# Formatter commands resolve from PATH (installed globally in nix/modules/apps/dev.nix).
+
+[[language]]
+name = "nix"
+auto-format = true
+formatter = { command = "nixfmt" }
+
+[[language]]
+name = "lua"
+auto-format = true
+formatter = { command = "stylua" }
+
+[[language]]
+name = "nushell"
+scope = "source.nu"
+auto-format = true
+formatter = { command = "nufmt" }
+
+[[language]]
+name = "markdown"
+auto-format = true
+
+[[language]]
+name = "html"
+auto-format = true
+
+[[language]]
+name = "css"
+auto-format = true
+
+[[language]]
+name = "json"
+auto-format = true
+
+[[language]]
+name = "javascript"
+auto-format = true
+
+[[language]]
+name = "typescript"
+auto-format = true

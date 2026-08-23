@@ -13,6 +13,9 @@
 
   # Basic system settings
   time.timeZone = lib.mkDefault "Europe/Paris";
+  # Flatpak can't parse NixOS' /etc/localtime -> /etc/zoneinfo/<tz> symlink
+  # chain, so sandboxes fall back to UTC. Exporting TZ fixes them.
+  environment.sessionVariables.TZ = config.time.timeZone;
   system.stateVersion = "25.11";
 
   # Bootloader defaults

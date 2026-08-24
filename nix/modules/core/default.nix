@@ -55,7 +55,7 @@
             nfu = "(cd ~/dotfiles/nix && nix flake update)";
             # nh reads NH_FLAKE (set in system/packages.nix) so these work
             # from anywhere, and it shows a diff of what's changing.
-            nrfs = "nh os switch";
+            nrfs = "sudo nh os switch";
             ncg = "nh clean all";
             subup = "(cd ~/dotfiles && git submodule update --init --remote --merge)";
             nvim = "hx";
@@ -71,7 +71,6 @@
             ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(devenv hook bash)\""}
             ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(starship init bash)\""}
             ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(zoxide init bash)\""}
-            ${lib.optionalString osConfig.ushinnary.dev.enable "if [ -z \"$IS_TERM\" ] && command -v inshellisense >/dev/null 2>&1; then inshellisense; fi"}
           '';
         };
       };

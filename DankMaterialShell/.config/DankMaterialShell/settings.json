@@ -593,7 +593,32 @@
   "displayProfileAutoSelect": false,
   "displayShowDisconnected": false,
   "displaySnapToEdge": true,
-  "connectedFrameBarStyleBackups": {},
+  "connectedFrameBarStyleBackups": {
+    "default": {
+      "shadowIntensity": 0,
+      "squareCorners": true,
+      "gothCornersEnabled": true,
+      "borderEnabled": false
+    },
+    "bar1781722415915": {
+      "shadowIntensity": 0,
+      "squareCorners": true,
+      "gothCornersEnabled": true,
+      "borderEnabled": false
+    },
+    "bar1781722588830": {
+      "shadowIntensity": 0,
+      "squareCorners": true,
+      "gothCornersEnabled": true,
+      "borderEnabled": false
+    },
+    "bar1781722591237": {
+      "shadowIntensity": 0,
+      "squareCorners": true,
+      "gothCornersEnabled": true,
+      "borderEnabled": false
+    }
+  },
   "barConfigs": [
     {
       "id": "default",
@@ -618,6 +643,10 @@
         {
           "id": "weather",
           "enabled": true
+        },
+        {
+          "id": "privacyIndicator",
+          "enabled": true
         }
       ],
       "rightWidgets": [
@@ -637,15 +666,15 @@
       "spacing": 0,
       "innerPadding": 0,
       "bottomGap": 0,
-      "transparency": 1,
+      "transparency": 0,
       "widgetTransparency": 1,
-      "squareCorners": true,
+      "squareCorners": false,
       "noBackground": false,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
       "removeWidgetPadding": false,
       "widgetPadding": 6,
-      "gothCornersEnabled": true,
+      "gothCornersEnabled": false,
       "gothCornerRadiusOverride": false,
       "gothCornerRadiusValue": 12,
       "borderEnabled": false,
@@ -718,11 +747,11 @@
       "spacing": 0,
       "innerPadding": 0,
       "bottomGap": 0,
-      "transparency": 1,
+      "transparency": 0,
       "widgetTransparency": 1,
-      "squareCorners": true,
+      "squareCorners": false,
       "noBackground": false,
-      "gothCornersEnabled": true,
+      "gothCornersEnabled": false,
       "gothCornerRadiusOverride": false,
       "gothCornerRadiusValue": 12,
       "borderEnabled": false,
@@ -733,7 +762,7 @@
       "widgetOutlineColor": "secondary",
       "widgetOutlineOpacity": 1,
       "widgetOutlineThickness": 1,
-      "widgetPadding": 6,
+      "widgetPadding": 4,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
       "removeWidgetPadding": false,
@@ -773,13 +802,13 @@
       ],
       "rightWidgets": [],
       "spacing": 0,
-      "innerPadding": 0,
+      "innerPadding": 4,
       "bottomGap": 0,
-      "transparency": 1,
+      "transparency": 0,
       "widgetTransparency": 1,
-      "squareCorners": true,
+      "squareCorners": false,
       "noBackground": false,
-      "gothCornersEnabled": true,
+      "gothCornersEnabled": false,
       "gothCornerRadiusOverride": false,
       "gothCornerRadiusValue": 12,
       "borderEnabled": false,
@@ -790,7 +819,7 @@
       "widgetOutlineColor": "secondary",
       "widgetOutlineOpacity": 1,
       "widgetOutlineThickness": 1,
-      "widgetPadding": 6,
+      "widgetPadding": 4,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
       "removeWidgetPadding": false,
@@ -830,13 +859,13 @@
       ],
       "rightWidgets": [],
       "spacing": 0,
-      "innerPadding": 0,
+      "innerPadding": 4,
       "bottomGap": 0,
-      "transparency": 1,
+      "transparency": 0,
       "widgetTransparency": 1,
-      "squareCorners": true,
+      "squareCorners": false,
       "noBackground": false,
-      "gothCornersEnabled": true,
+      "gothCornersEnabled": false,
       "gothCornerRadiusOverride": false,
       "gothCornerRadiusValue": 12,
       "borderEnabled": false,
@@ -847,7 +876,7 @@
       "widgetOutlineColor": "secondary",
       "widgetOutlineOpacity": 1,
       "widgetOutlineThickness": 1,
-      "widgetPadding": 6,
+      "widgetPadding": 4,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
       "removeWidgetPadding": false,
@@ -867,7 +896,8 @@
       "shadowIntensity": 0,
       "shadowOpacity": 51,
       "shadowColorMode": "secondary",
-      "shadowCustomColor": "#000000"
+      "shadowCustomColor": "#000000",
+      "barInsetPadding": 4
     }
   ],
   "desktopClockEnabled": false,
@@ -963,24 +993,24 @@
   ],
   "launcherPluginVisibility": {},
   "launcherPluginOrder": [],
-  "frameEnabled": false,
+  "frameEnabled": true,
   "frameThickness": 16,
-  "frameRounding": 23,
+  "frameRounding": 15,
   "frameColor": "",
   "frameOpacity": 1,
   "frameScreenPreferences": [
     "all"
   ],
-  "frameBarSize": 40,
+  "frameBarSize": 32,
   "frameShowOnOverview": false,
   "frameBlurEnabled": true,
-  "frameCloseGaps": true,
+  "frameCloseGaps": false,
   "frameLauncherEmergeSide": "bottom",
   "frameLauncherArcExtender": false,
   "frameLauncherEdgeHover": false,
   "frameMode": "connected",
-  "barInsetPaddingShared": -1,
-  "barInsetPaddingSyncAll": false,
+  "barInsetPaddingShared": 4,
+  "barInsetPaddingSyncAll": true,
   "frameBarInsetPadding": -1,
   "configVersion": 13
 }

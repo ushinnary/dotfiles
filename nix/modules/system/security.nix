@@ -19,6 +19,10 @@ in
         "/run/current-system/sw/bin/shutdown"
         "/run/current-system/sw/bin/fwupd"
         "/run/current-system/sw/bin/fwupdmgr"
+        # Passwordless `nrfs` (`sudo nh os switch`). Building a flake
+        # already implies root-equivalent trust via the nixos-rebuild
+        # rule above, so this grants no new capability.
+        "/run/current-system/sw/bin/nh"
       ];
       description = "Commands that can be run with sudo without a password";
     };
@@ -29,6 +33,14 @@ in
     #  General security hardening (always active)
     # ═══════════════════════════════════════════════════════════════
     {
+      # ── Sudo ─────────────────────────────────────────────────────
+      # Keep NH_FLAKE across `sudo nh os switch` (sudo resets the
+      # environment). Safe: it only selects which flake to build, and
+      # the caller could equally pass that flake as an argument.
+      security.sudo.extraConfig = ''
+        Defaults env_keep += "NH_FLAKE"
+      '';
+
       # ── SSH hardening ────────────────────────────────────────────
       services.openssh.settings = {
         PermitRootLogin = "no";

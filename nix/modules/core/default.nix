@@ -55,7 +55,7 @@
             nfu = "(cd ~/dotfiles/nix && nix flake update)";
             # nh reads NH_FLAKE (set in system/packages.nix) so these work
             # from anywhere, and it shows a diff of what's changing.
-            nrfs = "sudo nh os switch";
+            nrfs = "nh os switch";
             ncg = "nh clean all";
             subup = "(cd ~/dotfiles && git submodule update --init --remote --merge)";
             nvim = "hx";

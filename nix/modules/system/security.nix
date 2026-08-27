@@ -19,10 +19,6 @@ in
         "/run/current-system/sw/bin/shutdown"
         "/run/current-system/sw/bin/fwupd"
         "/run/current-system/sw/bin/fwupdmgr"
-        # Passwordless `nrfs` (`sudo nh os switch`). Building a flake
-        # already implies root-equivalent trust via the nixos-rebuild
-        # rule above, so this grants no new capability.
-        "/run/current-system/sw/bin/nh"
       ];
       description = "Commands that can be run with sudo without a password";
     };

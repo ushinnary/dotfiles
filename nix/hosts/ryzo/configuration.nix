@@ -52,7 +52,7 @@
       ];
       aiAgents = true;
     };
-    gaming.enable = false;
+    gaming.enable = true;
   };
 
   # Home Manager Setup

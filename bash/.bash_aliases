@@ -13,5 +13,5 @@ nrfs() {
 		return 1
 	fi
 
-	sudo nh os switch "$1"
+	nh os switch "$1"
 }

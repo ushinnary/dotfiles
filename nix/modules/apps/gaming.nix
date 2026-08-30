@@ -30,7 +30,7 @@ in
       gamemode.enable = true;
       gamescope = {
         enable = true;
-        capSysNice = false;
+        capSysNice = true;
       };
     };
 
@@ -53,6 +53,10 @@ in
       LD_BIND_NOW = "1";
     };
 
+    services.scx = {
+     enable = true;
+     scheduler = "scx_lavd";
+    };
 
     users.users."${vars.userName}".extraGroups = [ "gamemode" ];
   };

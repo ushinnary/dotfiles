@@ -65,7 +65,6 @@ in
       pkgs.zoxide
       pkgs.zellij
       pkgs.difftastic
-      pkgs.gh
 
       pkgs.devenv
       pkgs.nushell

@@ -58,7 +58,6 @@
             nrfs = "nh os switch";
             ncg = "nh clean all";
             subup = "(cd ~/dotfiles && git submodule update --init --remote --merge)";
-            nvim = "hx";
           };
 
           initExtra = ''

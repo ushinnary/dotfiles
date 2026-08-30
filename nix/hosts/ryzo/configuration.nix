@@ -43,7 +43,7 @@
     dev = {
       enable = true;
       editors = [
-        "helix"
+        "nixvim"
         "zed"
       ];
       servers = [

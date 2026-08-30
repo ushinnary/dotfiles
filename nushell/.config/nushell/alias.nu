@@ -1,5 +1,4 @@
-alias nvim = hx
-alias nvimconfig = hx ~/.config/helix/config.toml
+alias nvimconfig = nvim ~/.config/nvim
 alias fg = job unfreeze
 alias nfc = nix flake check
 alias nfu = nix flake update

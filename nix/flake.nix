@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko/latest";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +49,7 @@
     in
     {
       # Canonical formatter for this repo — `nix fmt` (or nix/fmt.sh) uses
-      # this. Matches pkgs.nixfmt used elsewhere (Helix's nix formatter).
+      # this. Matches pkgs.nixfmt used elsewhere (Nixvim's nix formatter).
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
 
       nixosConfigurations = {

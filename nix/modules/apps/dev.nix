@@ -31,10 +31,10 @@ let
 in
 {
   options.ushinnary.dev = {
-    enable = lib.mkEnableOption "development tools and Helix editor";
+    enable = lib.mkEnableOption "development tools and Nixvim editor";
     editors = lib.mkOption {
-      type = lib.types.listOf (lib.types.enum [ "helix" "vscode" "zed" ]);
-      default = [ "helix" "vscode" "zed" ];
+      type = lib.types.listOf (lib.types.enum [ "nixvim" "vscode" "zed" ]);
+      default = [ "nixvim" "vscode" "zed" ];
       description = "Select which development editors to install";
     };
     servers = lib.mkOption {
@@ -45,7 +45,7 @@ in
     aiAgents = lib.mkEnableOption "AI agent CLI tools (kilocode-cli)";
   };
 
-  imports = [ ];
+  imports = [ ./nixvim/default.nix ];
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [
@@ -121,11 +121,6 @@ in
           installRemoteServer = true;
         };
 
-        # Config lives in ~/dotfiles/helix, linked below via xdg.configFile.
-        programs.helix = lib.mkIf (hasEditor "helix") {
-          enable = true;
-        };
-
         programs = {
           carapace = {
             enable = true;
@@ -153,12 +148,6 @@ in
           # ── Zed ──────────────────────────────────────────────
           "zed" = {
             source = mkDotfileSymlink "zed/.config/zed";
-            recursive = true;
-          };
-
-          # ── Helix ────────────────────────────────────────────
-          "helix" = {
-            source = mkDotfileSymlink "helix/.config/helix";
             recursive = true;
           };
 

@@ -39,7 +39,7 @@
     dev = {
       enable = true;
       editors = [
-        "helix"
+        "nixvim"
       ];
       aiAgents = true;
     };

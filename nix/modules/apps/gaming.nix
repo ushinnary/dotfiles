@@ -34,7 +34,11 @@ in
       };
     };
 
-    environment.systemPackages = [ pkgs.mangohud ];
+    environment.systemPackages = [
+      pkgs.mangohud
+      pkgs.clinfo
+      pkgs.vulkan-tools
+    ];
 
     environment.variables = {
       ENABLE_GAMESCOPE_WSI = "1";
@@ -54,8 +58,8 @@ in
     };
 
     services.scx = {
-     enable = true;
-     scheduler = "scx_lavd";
+      enable = true;
+      scheduler = "scx_lavd";
     };
 
     users.users."${vars.userName}".extraGroups = [ "gamemode" ];

@@ -1,6 +1,8 @@
 {
   inputs,
   vars,
+  pkgs,
+  lib,
   ...
 }:
 
@@ -23,7 +25,22 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0; # Skip boot menu for faster boot
 
+  # Performance
+  boot.kernelParams = [
+    "amdgpu.ppfeaturemask=0xffffffff"
+  ];
+
+  environment.variables = {
+    RADV_PERFTEST = lib.mkForce "gpl,sam";
+  };
+
   networking.hostName = "ryzo";
+
+  # Undervolt
+  services.lact.enable = true;
+  environment.systemPackages = [
+    pkgs.lact
+  ];
 
   time.timeZone = "Europe/Paris";
 

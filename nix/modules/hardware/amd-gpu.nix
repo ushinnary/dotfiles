@@ -28,9 +28,10 @@ in
         [
           mesa.opencl # Enables Rusticl (OpenCL) support
           vulkan-loader
-
+          libva
         ]
         ++ lib.optional cfg.rocm rocmPackages.clr.icd;
+      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
 
     hardware.amdgpu.opencl.enable = true;

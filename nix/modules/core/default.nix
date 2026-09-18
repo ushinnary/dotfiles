@@ -58,6 +58,8 @@
             nrfs = "nh os switch";
             ncg = "nh clean all";
             subup = "(cd ~/dotfiles && git submodule update --init --remote --merge)";
+            wtls = "git worktree list";
+            wtprune = "git worktree prune";
           };
 
           initExtra = ''

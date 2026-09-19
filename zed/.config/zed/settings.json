@@ -48,21 +48,80 @@
   "sticky_scroll": {
     "enabled": true,
   },
-  "diff_view_style": "split",
+  "diff_view_style": "unified",
   "show_edit_predictions": true,
   "edit_predictions": {
     "mode": "eager",
     "provider": "none",
   },
   "agent": {
+    "auto_compact": {
+      "threshold": "80%"
+    },
+    "cancel_generation_on_terminal_stop": false,
+    "expand_terminal_card": false,
+    "expand_edit_card": false,
+    "sandbox_permissions": {
+      "allow_unsandboxed": true,
+      "network_hosts": [
+        "registry.npmjs.org"
+      ]
+    },
     "play_sound_when_agent_done": "when_hidden",
     "dock": "left",
     "use_modifier_to_send": true,
     "notify_when_agent_waiting": "never",
     "enable_feedback": false,
-    "default_profile": "ask",
+    "default_profile": "write",
     "tool_permissions": {
       "tools": {
+        "write_file": {
+          "default": "allow"
+        },
+        "terminal": {
+          "default": "allow",
+          "always_allow": [
+            {
+              "pattern": "^npx\\s+biome(\\s|$)"
+            },
+            {
+              "pattern": "^npx\\s+vitest(\\s|$)"
+            },
+            {
+              "pattern": "^npx\\s+vue-tsc(\\s|$)"
+            },
+            {
+              "pattern": "^npx\\s+playwright(\\s|$)"
+            },
+            {
+              "pattern": "^cargo\\s+check(\\s|$)"
+            },
+            {
+              "pattern": "^cargo\\s+test(\\s|$)"
+            },
+            {
+              "pattern": "^rustfmt\\b"
+            },
+            {
+              "pattern": "^sed\\b"
+            },
+            {
+              "pattern": "^grep\\b"
+            },
+            {
+              "pattern": "^npm\\s+run(\\s|$)"
+            },
+            {
+              "pattern": "^cargo\\s+fmt(\\s|$)"
+            },
+            {
+              "pattern": "^cargo\\s+run(\\s|$)"
+            }
+          ]
+        },
+        "skill": {
+          "default": "allow"
+        },
         "fetch": {
           "always_allow": [
             {
@@ -94,33 +153,51 @@
       },
     },
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini",
-      "enable_thinking": false,
-      "effort": "high",
+      "effort": "max",
+      "provider": "openai-subscribed",
+      "model": "gpt-5.6-luna",
+      "enable_thinking": true,
     },
     "favorite_models": [
       {
         "provider": "copilot_chat",
         "model": "gpt-5-mini",
         "enable_thinking": true,
-        "effort": "high",
+        "effort": "high"
       },
       {
         "provider": "copilot_chat",
         "model": "claude-opus-4.6",
-        "enable_thinking": true,
+        "enable_thinking": true
       },
       {
         "provider": "copilot_chat",
         "model": "claude-sonnet-4.6",
-        "enable_thinking": true,
+        "enable_thinking": true
       },
       {
         "provider": "copilot_chat",
         "model": "gpt-5.3-codex",
-        "enable_thinking": true,
+        "enable_thinking": true
       },
+      {
+        "provider": "openai-subscribed",
+        "model": "gpt-5.6-luna",
+        "enable_thinking": true,
+        "effort": "max"
+      },
+      {
+        "provider": "openai-subscribed",
+        "model": "gpt-5.6-terra",
+        "enable_thinking": true,
+        "effort": "medium"
+      },
+      {
+        "provider": "openai-subscribed",
+        "model": "gpt-5.6-sol",
+        "enable_thinking": true,
+        "effort": "medium"
+      }
     ],
     "model_parameters": [],
   },

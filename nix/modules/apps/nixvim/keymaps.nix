@@ -27,7 +27,10 @@
     }
     {
       key = "<leader>cf";
-      mode = [ "n" "x" ];
+      mode = [
+        "n"
+        "x"
+      ];
       action.__raw = "function() require('conform').format({ lsp_fallback = true }) end";
       options.desc = "Format";
     }
@@ -230,7 +233,10 @@
     }
     {
       key = "<leader>gB";
-      mode = [ "n" "x" ];
+      mode = [
+        "n"
+        "x"
+      ];
       action = "<cmd>lua Snacks.gitbrowse()<CR>";
       options.desc = "Git Browse";
     }
@@ -361,7 +367,11 @@
     # Save
     {
       key = "<C-s>";
-      mode = [ "n" "i" "x" ];
+      mode = [
+        "n"
+        "i"
+        "x"
+      ];
       action = "<cmd>w<cr><esc>";
     }
   ];

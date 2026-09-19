@@ -1,15 +1,16 @@
 #!/bin/sh
 # Format every *.nix file in this directory with the flake's declared
-# formatter (nixfmt, see `formatter` in flake.nix). Run manually — no CI
-# hook is wired up on purpose.
+# formatter (nixfmt, see `formatter` in flake.nix). Pass --check to verify
+# formatting without changing files.
 set -eu
 cd "$(dirname "$0")"
 
-files=$(find . -name '*.nix')
-if [ -z "$files" ]; then
-  echo "No .nix files found."
-  exit 0
-fi
+case "${1:-}" in
+  "" | --check) ;;
+  *)
+    echo "usage: $0 [--check]" >&2
+    exit 2
+    ;;
+esac
 
-# shellcheck disable=SC2086
-nix fmt -- $files
+find . -type f -name '*.nix' -print0 | xargs -0 -r nix fmt -- "$@"

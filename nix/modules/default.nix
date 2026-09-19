@@ -2,8 +2,6 @@
   ...
 }:
 {
-  # Option declarations moved to modules/options.nix
-
   imports = [
     ./system/boot.nix
     ./system/locale.nix

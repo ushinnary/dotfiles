@@ -1,6 +1,8 @@
 # Ryzo NixOS Installation Guide
 
-This guide will help you install NixOS on your Ryzo desktop PC with AMD hardware, GNOME desktop environment, and gaming optimizations.
+This legacy guide describes the Ryzo desktop. The current configuration uses Niri and the
+declarative Btrfs layout in `configuration.nix`; use the repository root README as the source
+of truth for installation.
 
 ## 📋 Hardware Specifications
 

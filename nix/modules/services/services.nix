@@ -21,10 +21,10 @@ in
       };
       fstrim.enable = true;
       # ── Journald log size limits ──────────────────────────────────
-      journald.extraConfig = ''
-        SystemMaxUse=1G
-        MaxRetentionSec=2weeks
-      '';
+      journald.settings.Journal = {
+        SystemMaxUse = "1G";
+        MaxRetentionSec = "2weeks";
+      };
     };
     boot.kernelParams = lib.optionals cfg.amdCpu [
       "amd_pstate=active"

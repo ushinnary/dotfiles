@@ -33,16 +33,26 @@ in
   options.ushinnary.dev = {
     enable = lib.mkEnableOption "development tools and Nixvim editor";
     editors = lib.mkOption {
-      type = lib.types.listOf (lib.types.enum [ "nixvim" "vscode" "zed" ]);
-      default = [ "nixvim" "vscode" "zed" ];
+      type = lib.types.listOf (
+        lib.types.enum [
+          "nixvim"
+          "vscode"
+          "zed"
+        ]
+      );
+      default = [
+        "nixvim"
+        "vscode"
+        "zed"
+      ];
       description = "Select which development editors to install";
     };
     servers = lib.mkOption {
-      type = lib.types.listOf (lib.types.enum [ "vscode" "zed" ]);
+      type = lib.types.listOf (lib.types.enum [ "zed" ]);
       default = [ ];
       description = "Select which development servers to install";
     };
-    aiAgents = lib.mkEnableOption "AI agent CLI tools (kilocode-cli)";
+    aiAgents = lib.mkEnableOption "AI agent CLI tools (Codex, OpenCode, and Pi)";
   };
 
   imports = [ ./nixvim/default.nix ];
@@ -83,6 +93,7 @@ in
       pkgs.git-credential-manager
     ]
     ++ lib.optionals cfg.aiAgents [
+      pkgs.codex
       pkgs.opencode
       pkgs.pi-coding-agent
     ]
@@ -170,6 +181,11 @@ in
           ".alacritty.toml".source = mkDotfileSymlink "alacritty/.alacritty.toml";
           ".wezterm.lua".source = mkDotfileSymlink "wezterm/.wezterm.lua";
           ".ripgreprc".source = mkDotfileSymlink "ripgrep/.ripgreprc";
+
+          # Codex
+          ".codex/config.toml" = lib.mkIf cfg.aiAgents {
+            source = mkDotfileSymlink "codex/.codex/config.toml";
+          };
 
           # Agent PI
           ".pi" = lib.mkIf cfg.aiAgents {

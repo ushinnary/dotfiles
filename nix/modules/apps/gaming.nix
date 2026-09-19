@@ -22,9 +22,6 @@ in
         # trustedInterfaces set in system/firewall.nix.
         remotePlay.openFirewall = false;
         dedicatedServer.openFirewall = false;
-        gamescopeSession = {
-          enable = true;
-        };
       };
 
       gamemode.enable = true;

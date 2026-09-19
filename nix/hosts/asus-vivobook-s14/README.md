@@ -1,6 +1,8 @@
 # Asus Vivobook S14 NixOS Installation Guide
 
-This guide will help you install NixOS on your Asus Vivobook S14 laptop with AMD Ryzen 5 7535HS APU, GNOME desktop environment, and OLED display optimizations.
+This legacy guide describes the Asus Vivobook S14. The current configuration uses Niri and the
+declarative LUKS/Btrfs layout in `configuration.nix`; use the repository root README as the
+source of truth for installation.
 
 ## 📋 Hardware Specifications
 

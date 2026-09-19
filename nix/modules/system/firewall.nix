@@ -11,29 +11,28 @@ in
   options.ushinnary.firewall = {
     opensnitch = lib.mkEnableOption "Enable OpenSnitch application firewall";
     smbSharing = lib.mkEnableOption "SMB/Samba NetBIOS conntrack helper — enable on LAN desktops only";
+    trustPhysicalInterfaces = lib.mkEnableOption "Trust wired and wireless interfaces as LAN interfaces";
   };
 
   config = {
     networking.networkmanager.enable = true;
 
     # ── Trust boundary ───────────────────────────────────────────────
-    # Every inbound service in this config (SSH, KDE Connect, Ollama,
-    # Cockpit, Steam Remote Play/dedicated servers, mDNS, …) is reachable
-    # ONLY from these interfaces: your LAN, Tailscale, or a WireGuard
-    # tunnel. No port is opened on any other interface, even when a
-    # service module tries to "openFirewall" itself — nothing here is
-    # meant to be reachable from the open internet.
+    # VPN interfaces are always trusted. Physical interfaces are opt-in:
+    # a laptop must not treat every public Wi-Fi network as the home LAN.
     #
     # "+" is iptables' own interface-name prefix wildcard (the module
     # passes these straight to `-i`, which only understands a trailing
     # "+", not shell-style "*"), so "enp+"/"wlp+" match real interface
     # names like enp5s0/wlp3s0 on any host.
     networking.firewall.trustedInterfaces = [
+      "tailscale0"
+      "wg+"
+    ]
+    ++ lib.optionals cfg.trustPhysicalInterfaces [
       "eth0"
       "enp+"
       "wlp+"
-      "tailscale0"
-      "wg+"
     ];
 
     networking.firewall = {
@@ -54,8 +53,7 @@ in
     # NetBIOS name-resolution broadcasts need a conntrack helper to work
     # correctly; unrelated to port filtering, so kept independent of the
     # trust-boundary change above.
-    networking.firewall.extraCommands = lib.optionalString cfg.smbSharing
-      "iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns";
+    networking.firewall.extraCommands = lib.optionalString cfg.smbSharing "iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns";
 
     # ── Egress (outbound) application firewall ─────────────────────
     # OpenSnitch intercepts EVERY outbound connection at the process level.

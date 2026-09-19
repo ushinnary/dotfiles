@@ -1,5 +1,4 @@
 {
-  inputs,
   vars,
   pkgs,
   lib,
@@ -10,7 +9,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # Full disk encryption with LUKS and BTRFS:
+    # Btrfs layout without LUKS for this host:
     (import ../../modules/hardware/disko-luks-btrfs.nix {
       device = "/dev/nvme0n1";
       swapSize = "0G";
@@ -18,7 +17,6 @@
       luks = false;
     })
     ../../modules/default.nix
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   # Bootloader.
@@ -38,6 +36,7 @@
 
   # Undervolt
   services.lact.enable = true;
+  services.geoclue2.enableWifi = false;
   environment.systemPackages = [
     pkgs.lact
   ];
@@ -53,9 +52,7 @@
     };
     hardware.amdCpu = true;
     containers.enable = true;
-    display = {
-      refreshRate = 90;
-    };
+    firewall.trustPhysicalInterfaces = true;
     desktop.niri = true;
     dev = {
       enable = true;
@@ -63,10 +60,7 @@
         "nixvim"
         "zed"
       ];
-      servers = [
-        "zed"
-        "vscode"
-      ];
+      servers = [ "zed" ];
       aiAgents = true;
     };
     gaming.enable = true;

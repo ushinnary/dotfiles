@@ -156,7 +156,10 @@
           };
           qmlformat = {
             command = "${pkgs.kdePackages.qtdeclarative}/bin/qmlformat";
-            args = [ "-i" "$FILENAME" ];
+            args = [
+              "-i"
+              "$FILENAME"
+            ];
             stdin = false;
           };
         };

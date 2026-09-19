@@ -13,8 +13,7 @@ in
 {
   imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
 
-  options.ushinnary.hardware.secureBoot =
-    lib.mkEnableOption "Secure Boot with lanzaboote (requires sbctl keys enrolled)";
+  options.ushinnary.hardware.secureBoot = lib.mkEnableOption "Secure Boot with lanzaboote (requires sbctl keys enrolled)";
 
   # Gate behind the option so hosts without enrolled keys (e.g. ryzo) stay on systemd-boot.
   config = lib.mkIf cfg {

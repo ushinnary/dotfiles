@@ -20,6 +20,13 @@ sudo nixos-rebuild switch --flake ./nix#ryzo
 sudo nixos-rebuild switch --flake ./nix#asus-vivobook-s14
 ```
 
+Format and check the Nix files with:
+
+```bash
+./nix/fmt.sh
+./nix/fmt.sh --check
+```
+
 ## First Install (ASUS, Disk Reinstall)
 
 The ASUS host now uses a declarative `disko` layout:
@@ -81,7 +88,7 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 ### 4. Install NixOS from the flake
 
 ```bash
-sudo nixos-install --flake ./nix#asus-vivobook-s14
+sudo env INITIAL_INSTALL=1 nixos-install --impure --flake ./nix#asus-vivobook-s14
 reboot
 ```
 
@@ -89,26 +96,13 @@ On first boot, enter the LUKS passphrase you set during formatting.
 
 ## Optional: Enable Secure Boot (Lanzaboote)
 
-A reusable module exists at `nix/modules/secure-boot.nix`.
+A reusable module exists at `nix/modules/hardware/secure-boot.nix` and is imported centrally.
+The ASUS host enables it with `ushinnary.hardware.secureBoot = true`.
 
-On ASUS, this module may already be enabled in `nix/hosts/asus-vivobook-s14/configuration.nix`.
-If it is enabled, create keys before the first Secure Boot rebuild.
+Fresh installs use `INITIAL_INSTALL=1` with `--impure` so systemd-boot remains active until
+Secure Boot keys are created. The installer script already supplies these flags.
 
-### 1. Enable module import on ASUS host (if currently disabled)
-
-In `nix/hosts/asus-vivobook-s14/configuration.nix`, uncomment:
-
-```nix
-# ../../modules/secure-boot.nix
-```
-
-to:
-
-```nix
-../../modules/secure-boot.nix
-```
-
-### 2. Create Secure Boot keys
+### 1. Create Secure Boot keys
 
 On a fresh system, generate keys first so Lanzaboote can find `db.pem`:
 

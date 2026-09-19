@@ -106,11 +106,12 @@ sudo env "PATH=$PATH" "TMPDIR=$TMPDIR" "XDG_CACHE_HOME=$XDG_CACHE_HOME" "NIX_STA
 
 echo
 sudo mkdir -p /mnt/tmp
-sudo mkswap -U clear --size 8G --file /mnt/swapfile
-sudo swapon /mnt/swapfile
 
 echo "Running nixos-install (README step 4)..."
-sudo env "PATH=$PATH" "TMPDIR=/mnt/tmp" "XDG_CACHE_HOME=$XDG_CACHE_HOME" "NIX_STATE_DIR=$NIX_STATE_DIR" nixos-install --store "$INSTALL_NIX_STORE" --root /mnt --flake "$FLAKE_PATH#$HOST_NAME"
+# Secure Boot hosts use systemd-boot for the first install, then switch to
+# Lanzaboote after keys have been created. --impure makes INITIAL_INSTALL
+# visible to the flake evaluation.
+sudo env "INITIAL_INSTALL=1" "PATH=$PATH" "TMPDIR=/mnt/tmp" "XDG_CACHE_HOME=$XDG_CACHE_HOME" "NIX_STATE_DIR=$NIX_STATE_DIR" nixos-install --impure --store "$INSTALL_NIX_STORE" --root /mnt --flake "$FLAKE_PATH#$HOST_NAME"
 
 echo
 echo "Set password for user '$USERNAME' in the newly installed system:"

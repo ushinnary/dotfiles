@@ -101,11 +101,12 @@ in
             # 4. If luks is false, map btrfsContent directly to the partition root
             root = {
               size = "100%";
-              content = btrfsContent // { mountpoint = "/partition-root"; };
+              content = btrfsContent // {
+                mountpoint = "/partition-root";
+              };
             };
           }
       );
     };
   };
 }
-

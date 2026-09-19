@@ -26,9 +26,7 @@ in
         enable = true;
         restartIfChanged = true;
       };
-      enableSystemMonitoring = false;
       enableDynamicTheming = true;
-      enableClipboardPaste = true;
       enableVPN = false;
       enableCalendarEvents = false;
       enableAudioWavelength = false;

@@ -16,7 +16,6 @@
   # Flatpak can't parse NixOS' /etc/localtime -> /etc/zoneinfo/<tz> symlink
   # chain, so sandboxes fall back to UTC. Exporting TZ fixes them.
   environment.sessionVariables.TZ = config.time.timeZone;
-  system.stateVersion = "25.11";
 
   # Bootloader defaults
   boot.loader.efi.canTouchEfiVariables = true;
@@ -31,7 +30,13 @@
       inherit inputs vars;
     };
     users."${vars.userName}" =
-      { lib, config, pkgs, osConfig, ... }:
+      {
+        lib,
+        config,
+        pkgs,
+        osConfig,
+        ...
+      }:
       {
         # Injected as a module arg for every fragment merged into this
         # user's home-manager config (dev.nix, niri/compositor.nix, the
@@ -51,7 +56,7 @@
         programs.bash = {
           enable = true;
           shellAliases = {
-            nfc = "(cd ~/dotfiles/nix && nix flake check)";
+            nfc = "(cd ~/dotfiles/nix && ./fmt.sh --check && nix flake check)";
             nfu = "(cd ~/dotfiles/nix && nix flake update)";
             # nh reads NH_FLAKE (set in system/packages.nix) so these work
             # from anywhere, and it shows a diff of what's changing.

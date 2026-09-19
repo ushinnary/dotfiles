@@ -1,5 +1,4 @@
 {
-  inputs,
   vars,
   ...
 }:
@@ -8,16 +7,13 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # Optional, once ready for a full disk encryption setup with LUKS and BTRFS:
+    # LUKS-encrypted Btrfs layout:
     (import ../../modules/hardware/disko-luks-btrfs.nix {
       device = "/dev/nvme0n1";
       swapSize = "16G";
       isSsd = true;
     })
-    # Optional after first successful boot/install:
-    ../../modules/hardware/secure-boot.nix
     ../../modules/default.nix
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   # Bootloader.
@@ -45,11 +41,7 @@
     };
     gaming.enable = false;
     # containers.enable = true;
-    display = {
-      refreshRate = 60; # 60Hz OLED screen
-      oled = true;
-    };
-    hardware.hasBattery = true;
+    display.oled = true;
     hardware.hasWebCam = true;
     security.howdy.enable = false;
   };

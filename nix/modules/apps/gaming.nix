@@ -25,10 +25,6 @@ in
       };
 
       gamemode.enable = true;
-      gamescope = {
-        enable = true;
-        capSysNice = true;
-      };
     };
 
     environment.systemPackages = [
@@ -52,11 +48,6 @@ in
       AMD_VULKAN_ICD = "radv";
       RADV_PERFTEST = "gpl";
       LD_BIND_NOW = "1";
-    };
-
-    services.scx = {
-      enable = true;
-      scheduler = "scx_lavd";
     };
 
     users.users."${vars.userName}".extraGroups = [ "gamemode" ];

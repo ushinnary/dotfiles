@@ -26,10 +26,7 @@ in
         enable = true;
         restartIfChanged = true;
       };
-      enableDynamicTheming = true;
-      enableVPN = false;
-      enableCalendarEvents = false;
-      enableAudioWavelength = false;
+      excludePackages = [ pkgs.cava ];
     };
 
     services.clight.enable = false;

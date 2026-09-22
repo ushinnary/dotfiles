@@ -2,7 +2,7 @@
 
 output "BOE J560T09 0x01010101" {
     mode "2560x1600@84.951"
-    scale 1.33203125
+    scale 1.5
     position x=0 y=0
 }
 

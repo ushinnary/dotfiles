@@ -93,7 +93,7 @@ in
       pkgs.git-credential-manager
     ]
     ++ lib.optionals cfg.aiAgents [
-      pkgs.codex
+      pkgs.claude-code
       pkgs.opencode
       pkgs.pi-coding-agent
     ]
@@ -185,6 +185,23 @@ in
           # Codex
           ".codex/config.toml" = lib.mkIf cfg.aiAgents {
             source = mkDotfileSymlink "codex/.codex/config.toml";
+          };
+
+          # Claude: keep runtime state and newly created skills local to Claude.
+          ".claude/CLAUDE.md" = lib.mkIf cfg.aiAgents {
+            source = mkDotfileSymlink "claude/.claude/CLAUDE.md";
+          };
+          # Store-backed snapshots prevent writes through these links from changing Pi.
+          ".claude/skills" = lib.mkIf cfg.aiAgents {
+            source = ../../../pi/.pi/agent/skills;
+            recursive = true;
+          };
+          ".claude/checklists" = lib.mkIf cfg.aiAgents {
+            source = ../../../pi/.pi/agent/checklists;
+            recursive = true;
+          };
+          ".claude/PERFORMANCE_GUIDELINES.md" = lib.mkIf cfg.aiAgents {
+            source = ../../../pi/.pi/agent/PERFORMANCE_GUIDELINES.md;
           };
 
           # Agent PI

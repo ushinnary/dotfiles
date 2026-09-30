@@ -35,6 +35,7 @@ in
     {
       services.tuned = {
         enable = true;
+        ppdSettings.main.default = "balanced";
       };
     }
     (lib.mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {

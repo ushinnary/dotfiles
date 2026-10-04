@@ -17,10 +17,6 @@
   # chain, so sandboxes fall back to UTC. Exporting TZ fixes them.
   environment.sessionVariables.TZ = config.time.timeZone;
 
-  # Bootloader defaults
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = lib.mkDefault 0; # Skip boot menu for faster boot
-
   # Home Manager Setup
   home-manager = {
     useGlobalPkgs = true;

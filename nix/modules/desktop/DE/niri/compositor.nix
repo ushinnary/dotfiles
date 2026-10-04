@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   vars,
@@ -11,11 +10,7 @@ let
 in
 {
   config = lib.mkIf cfg.niri {
-    environment.systemPackages = with pkgs; [
-      adwaita-icon-theme
-      papirus-icon-theme
-    ];
-
+    # Icon themes are installed in bar.nix alongside the GTK theme config.
     home-manager.users."${vars.userName}" =
       { mkDotfileSymlink, ... }:
       {
@@ -29,14 +24,6 @@ in
           };
           "DankMaterialShell" = {
             source = mkDotfileSymlink "DankMaterialShell/.config/DankMaterialShell";
-            recursive = true;
-          };
-          "ironbar" = {
-            source = mkDotfileSymlink "ironbar/.config/ironbar";
-            recursive = true;
-          };
-          "waybar" = {
-            source = mkDotfileSymlink "waybar/.config/waybar";
             recursive = true;
           };
         };

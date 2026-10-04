@@ -22,12 +22,8 @@ let
   # Relative paths inside ~/dotfiles for out-of-store Home Manager symlinks.
   nuRelativeRoot = "nushell/.config/nushell";
 
-  zedLspPackages = with pkgs; [
-    nil
-    nixd
-    lua-language-server
-    vscode-langservers-extracted
-  ];
+  # Only LSPs not already installed globally below (Zed finds those on PATH).
+  zedLspPackages = [ pkgs.nil ];
 in
 {
   options.ushinnary.dev = {
@@ -52,7 +48,7 @@ in
       default = [ ];
       description = "Select which development servers to install";
     };
-    aiAgents = lib.mkEnableOption "AI agent CLI tools (Codex, OpenCode, and Pi)";
+    aiAgents = lib.mkEnableOption "AI agent CLI tools (Claude Code, OpenCode, and Pi)";
   };
 
   imports = [ ./nixvim/default.nix ];
@@ -181,11 +177,6 @@ in
           ".alacritty.toml".source = mkDotfileSymlink "alacritty/.alacritty.toml";
           ".wezterm.lua".source = mkDotfileSymlink "wezterm/.wezterm.lua";
           ".ripgreprc".source = mkDotfileSymlink "ripgrep/.ripgreprc";
-
-          # Codex
-          ".codex/config.toml" = lib.mkIf cfg.aiAgents {
-            source = mkDotfileSymlink "codex/.codex/config.toml";
-          };
 
           # Claude: keep runtime state and newly created skills local to Claude.
           ".claude/CLAUDE.md" = lib.mkIf cfg.aiAgents {

@@ -54,19 +54,22 @@ in
 
         # Required drivers for most modern printers
         # cups-filters: provides filters for converting documents to printer-ready formats
-        # cups-browsed: enables automatic printer discovery on the network
         drivers = with pkgs; [
           cups-filters
-          cups-browsed
           gutenprint
           hplipWithPlugin
         ];
 
+        # cups-browsed defaults to on with Avahi; CUPS already discovers
+        # IPP Everywhere printers via mDNS, and cups-browsed was part of
+        # the 2024 CUPS RCE chain.
+        browsed.enable = false;
       };
 
       # mDNS/Avahi (5353) is reachable via the LAN/Tailscale/WireGuard
       # trustedInterfaces set in system/firewall.nix — no need to open
-      # it globally.
+      # it globally (the Avahi module opens it by default).
+      services.avahi.openFirewall = false;
 
       powerManagement = {
         enable = true;
@@ -122,9 +125,9 @@ in
           dconf.settings = {
             "org/gnome/desktop/interface" = {
               cursor-theme = "Bibata-Modern-Ice";
-              font-name = "Nunito 11";
-              document-font-name = "Nunito 11";
-              monospace-font-name = "Comic Mono 10";
+              font-name = "Google Sans Flex 11";
+              document-font-name = "Google Sans Flex 11";
+              monospace-font-name = "Google Sans Code 10";
             };
           };
 
@@ -159,29 +162,27 @@ in
 
       services.gvfs.enable = true;
       services.flatpak.enable = true;
-      systemd.services.flatpak-repo = {
-        wantedBy = [ "multi-user.target" ];
-        path = [ pkgs.flatpak ];
-        script = ''
-          flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-        '';
-      };
 
+      # Edge's Hunspell spellchecker hangs whole tabs on some ru/fr input; there is no
+      # CLI switch for it. The Edge flatpak links host /etc/opt/edge/policies/*/*.json
+      # via `find -type f`, so this must be a real file, not a store symlink.
+      environment.etc."opt/edge/policies/managed/spellcheck.json" = {
+        text = builtins.toJSON { SpellcheckEnabled = false; };
+        mode = "0444";
+      };
+      # Adding Flathub lives here rather than in a boot-time unit: remote-add
+      # downloads the .flatpakrepo file, which failed at boot before DNS was
+      # up. This runs from the timer below (5 min after boot, then daily).
       systemd.services.flatpak-update = {
-        description = "Update Flatpak apps and runtimes";
-        after = [
-          "network-online.target"
-          "flatpak-repo.service"
-        ];
-        wants = [
-          "network-online.target"
-          "flatpak-repo.service"
-        ];
+        description = "Add Flathub and update Flatpak apps and runtimes";
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
         path = [ pkgs.flatpak ];
         serviceConfig = {
           Type = "oneshot";
         };
         script = ''
+          flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
           flatpak update --system -y --noninteractive
         '';
       };
@@ -198,16 +199,16 @@ in
 
       fonts = {
         packages = with pkgs; [
-          nunito
-          comic-mono
+          googlesans-code
+          (callPackage ../../pkgs/google-sans-flex.nix { })
         ];
 
         fontconfig = {
           defaultFonts = {
-            serif = [ "Nunito" ];
-            sansSerif = [ "Nunito" ];
+            serif = [ "Google Sans Flex" ];
+            sansSerif = [ "Google Sans Flex" ];
             monospace = [
-              "Comic Mono"
+              "Google Sans Code"
             ];
           };
 

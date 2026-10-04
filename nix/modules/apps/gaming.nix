@@ -22,6 +22,26 @@ in
         # trustedInterfaces set in system/firewall.nix.
         remotePlay.openFirewall = false;
         dedicatedServer.openFirewall = false;
+
+        # "Steam" session in the greeter: Big Picture on Gamescope's DRM
+        # backend. Unlike niri it can tear, so with V-Sync off frames
+        # don't wait for the next refresh.
+        gamescopeSession = {
+          enable = true;
+          args = [ "--immediate-flips" ];
+          # Games present straight to Gamescope (bypassing Xwayland) via
+          # its WSI layer. Scoped to this session, not set globally.
+          env.ENABLE_GAMESCOPE_WSI = "1";
+        };
+      };
+
+      gamescope = {
+        enable = true;
+        enableWsi = true;
+        # Keep off: the capability wrapper hands cap_sys_nice down to
+        # child processes, and Steam's bwrap sandbox refuses to start
+        # with it ("Unexpected capabilities but not setuid").
+        capSysNice = false;
       };
 
       gamemode.enable = true;
@@ -33,9 +53,10 @@ in
       pkgs.vulkan-tools
     ];
 
+    # No LD_BIND_NOW here: as a global variable it forces eager symbol
+    # binding for every process on the system. Set it per game in Steam
+    # launch options if one needs it.
     environment.variables = {
-      ENABLE_GAMESCOPE_WSI = "1";
-      STEAM_MULTIPLE_XWAYLANDS = "1";
       PROTON_USE_NTSYNC = "1";
       # HDR Support for OLED
       ENABLE_HDR_WSI = if displayCfg.oled then "1" else "0";
@@ -43,11 +64,6 @@ in
 
       # Hardware specific variables
       PROTON_ENABLE_NVAPI = if config.ushinnary.gpu.nvidia.enable then "1" else "0";
-    }
-    // lib.optionalAttrs config.ushinnary.gpu.amd.enable {
-      AMD_VULKAN_ICD = "radv";
-      RADV_PERFTEST = "gpl";
-      LD_BIND_NOW = "1";
     };
 
     users.users."${vars.userName}".extraGroups = [ "gamemode" ];

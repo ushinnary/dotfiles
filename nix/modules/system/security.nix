@@ -12,13 +12,14 @@ in
     howdy.enable = lib.mkEnableOption "Howdy facial recognition authentication";
     sudo.passwordlessCommands = lib.mkOption {
       type = lib.types.listOf lib.types.str;
+      # Only commands that can't be abused for root. Never add
+      # nixos-rebuild (`--flake <any path>` = arbitrary root config),
+      # nix-collect-garbage (wipes rollback generations) or fwupdmgr
+      # (bypasses fwupd's auth_admin polkit actions; signed updates
+      # already work unprivileged).
       default = [
         "/run/current-system/sw/bin/reboot"
-        "/run/current-system/sw/bin/nixos-rebuild"
-        "/run/current-system/sw/bin/nix-collect-garbage"
         "/run/current-system/sw/bin/shutdown"
-        "/run/current-system/sw/bin/fwupd"
-        "/run/current-system/sw/bin/fwupdmgr"
       ];
       description = "Commands that can be run with sudo without a password";
     };
@@ -119,13 +120,13 @@ in
           value = "0";
         }
       ];
-      security.auditd.enable = true;
 
       # ── Restrict su to wheel group only ─────────────────────────
       security.pam.services.su.requireWheel = true;
 
-      # ── Mandatory Access Control ─────────────────────────────────
-      security.apparmor.enable = true;
+      # No AppArmor/auditd: NixOS ships no profiles for anything running
+      # here (upstream ones target /usr paths) and there were no audit
+      # rules, so both cost boot time without confining anything.
     }
 
     # ═══════════════════════════════════════════════════════════════

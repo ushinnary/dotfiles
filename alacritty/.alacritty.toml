@@ -44,7 +44,7 @@ TERM = "xterm-256color"
 size = 14.0
 
 [font.normal]
-family = "Comic Mono"
+family = "Google Sans Code"
 
 #[shell]
 #program = "/home/ushinnary/.cargo/bin/nu"

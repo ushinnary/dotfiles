@@ -59,9 +59,7 @@ in
     # swayidle, brightnessctl, playerctl, wl-clipboard, cliphist, etc.)
     # are now provided or superseded by DankMaterialShell.
     environment.systemPackages = with pkgs; [
-      kdePackages.polkit-kde-agent-1
       xwayland-satellite
-      gnome-keyring
 
       # File manager
       nautilus
@@ -95,18 +93,7 @@ in
     security.pam.services.login.enableGnomeKeyring = true;
     security.pam.services.greetd.enableGnomeKeyring = true;
 
-    # ── Polkit ────────────────────────────────────────────────────
-    systemd.user.services.polkit-kde-authentication-agent-1 = {
-      description = "polkit-kde-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
-    };
+    # Polkit agent: DMS ships its own (Quickshell PolkitAgent). Don't add
+    # a second one — only one agent can register per session.
   };
 }

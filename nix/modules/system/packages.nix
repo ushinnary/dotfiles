@@ -12,16 +12,24 @@
     cifs-utils
     wayland-utils
     wl-clipboard
-    # nh (nicer `nixos-rebuild`/GC CLI) — nvd/nix-output-monitor are
-    # optional companions it shells out to for diffs and build progress.
-    nh
-    nvd
-    nix-output-monitor
   ];
 
-  # `nh os switch`/`nh os boot` use this as the default flake path so
-  # they don't need it passed explicitly each time.
-  environment.variables.NH_FLAKE = "/home/${vars.userName}/dotfiles/nix";
+  # nh (nicer `nixos-rebuild`/GC CLI). Its wrapper bundles
+  # nix-output-monitor and it diffs generations itself, so nvd/nom
+  # aren't needed as separate packages.
+  programs.nh = {
+    enable = true;
+    # Exported as NH_FLAKE, so `nh os switch`/`nh os boot` work from anywhere.
+    flake = "/home/${vars.userName}/dotfiles/nix";
+    # NVMe has plenty of headroom, so favor rollback safety over
+    # aggressively reclaiming space: keep two weeks of generations.
+    # --no-gcroots keeps nix-direnv/result roots, like nix.gc did.
+    clean = {
+      enable = true;
+      dates = "weekly";
+      extraArgs = "--keep-since 14d --no-gcroots";
+    };
+  };
 
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only

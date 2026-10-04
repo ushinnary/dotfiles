@@ -91,8 +91,8 @@
     }
   },
   "launcherLogoMode": "os",
-  "fontFamily": "Nunito",
-  "monoFontFamily": "Comic Mono",
+  "fontFamily": "Google Sans Flex",
+  "monoFontFamily": "Google Sans Code",
   "fontWeight": 500,
   "textRenderType": 1,
   "acMonitorTimeout": 900,

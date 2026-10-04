@@ -14,10 +14,18 @@ in
     services = {
       fwupd.enable = true;
       udisks2.enable = true;
-      resolved.enable = true;
+      resolved = {
+        enable = true;
+        # LLMNR answers can be spoofed by anyone on the local network
+        # (e.g. public Wi-Fi); mDNS via Avahi covers .local lookups.
+        settings.Resolve.LLMNR = "no";
+      };
       kmscon.enable = true;
       openssh = {
         enable = true;
+        # Reachable only via trustedInterfaces (system/firewall.nix);
+        # the default would open port 22 on every network.
+        openFirewall = false;
       };
       fstrim.enable = true;
       # ── Journald log size limits ──────────────────────────────────

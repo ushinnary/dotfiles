@@ -209,8 +209,8 @@
   },
   "vim_mode": true,
   "ui_font_weight": 300.0,
-  "ui_font_family": "Nunito",
-  "buffer_font_family": "Comic Mono",
+  "ui_font_family": "Google Sans Flex",
+  "buffer_font_family": "Google Sans Code",
   "theme": {
     "mode": "system",
     "light": "GitHub Light",

@@ -29,19 +29,14 @@ in
         };
       };
 
-      users.users."${vars.userName}".extraGroups = [ "podman" ];
+      # Deliberately not in the "podman" group: it grants access to the
+      # rootful /run/podman/podman.sock, i.e. root. Rootless podman
+      # doesn't need it; for a docker-style socket use the user unit
+      # (`systemctl --user enable --now podman.socket`).
 
-      systemd.services.podman-auto-update-boot = {
-        description = "Auto-update Podman containers on boot";
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${pkgs.podman}/bin/podman auto-update";
-          RemainAfterExit = false;
-        };
-      };
+      # Podman's own daily timer (ships with the package) instead of a
+      # boot-time run, so it doesn't depend on network-online at boot.
+      systemd.timers.podman-auto-update.wantedBy = [ "timers.target" ];
 
       environment.systemPackages =
         with pkgs;

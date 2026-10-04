@@ -1,7 +1,6 @@
 {
   vars,
   pkgs,
-  lib,
   ...
 }:
 
@@ -19,18 +18,10 @@
     ../../modules/default.nix
   ];
 
-  # Bootloader.
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 0; # Skip boot menu for faster boot
-
   # Performance
   boot.kernelParams = [
     "amdgpu.ppfeaturemask=0xffffffff"
   ];
-
-  environment.variables = {
-    RADV_PERFTEST = lib.mkForce "gpl,sam";
-  };
 
   networking.hostName = "ryzo";
 
@@ -41,14 +32,10 @@
     pkgs.lact
   ];
 
-  time.timeZone = "Europe/Paris";
-
   # Enable the custom options
   ushinnary = {
     gpu.amd = {
       enable = true;
-      rocm = true;
-      rocmOverrideGfx = "10.3.0";
     };
     hardware.amdCpu = true;
     containers.enable = true;
@@ -65,6 +52,18 @@
     };
     gaming.enable = true;
   };
+
+  # Gamescope session starts at the panel's 144 Hz mode; niri keeps its
+  # own 85 Hz (niri/.config/niri/hosts/ryzo/outputs.kdl). Gamescope needs
+  # an exact WxH@Hz match and falls back to the preferred mode otherwise.
+  programs.steam.gamescopeSession.args = [
+    "-W"
+    "2560"
+    "-H"
+    "1600"
+    "-r"
+    "144"
+  ];
 
   # Home Manager Setup
   home-manager.users."${vars.userName}" =

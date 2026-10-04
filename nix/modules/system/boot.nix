@@ -11,7 +11,6 @@
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "quiet"
-      "boot.shell_on_fail"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
       "splash"
@@ -24,6 +23,7 @@
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
     loader.timeout = 0;
+    loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot.enable = lib.mkDefault true;
     # ESP is only 1G (see disko-luks-btrfs.nix) — cap kept generations
     # so kernels/initrds don't slowly fill it up.
@@ -48,19 +48,16 @@
 
   # ── Boot time optimizations ───────────────────────────────────
 
-  # NetworkManager-wait-online blocks boot for ~9s waiting for full
-  # network connectivity. Desktop use doesn't need this.
-  systemd.network.wait-online.enable = false;
+  # NetworkManager-wait-online held multi-user.target (via tailscaled)
+  # for ~20s waiting for full connectivity. Desktop use doesn't need it.
+  # (systemd.network.wait-online is systemd-networkd's, unused here.)
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   # ModemManager is for cellular modems — not needed on desktops
   systemd.services.ModemManager.enable = lib.mkForce false;
 
-  # NVMe has plenty of headroom, so favor rollback safety over
-  # aggressively reclaiming space: keep two weeks of generations.
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
-  };
-  nix.settings.auto-optimise-store = true;
+  # Garbage collection runs via programs.nh.clean (system/packages.nix).
+  # Dedup the store on a schedule instead of auto-optimise-store, which
+  # hard-links on every store write and slows down every build.
+  nix.optimise.automatic = true;
 }

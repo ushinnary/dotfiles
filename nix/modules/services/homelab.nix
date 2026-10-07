@@ -4,13 +4,11 @@
   lib,
   vars,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.homelab;
   isRocmCompat = config.ushinnary.gpu.amd.enable && config.ushinnary.gpu.amd.rocm;
   rocmOverrideGfx = config.ushinnary.gpu.amd.rocmOverrideGfx;
-in
-{
+in {
   options.ushinnary.homelab = {
     enable = lib.mkEnableOption "Homelab server configuration (headless, services, monitoring)";
     cockpit = lib.mkEnableOption "Cockpit web interface for server management";
@@ -69,20 +67,27 @@ in
 
     services.ollama = lib.mkIf cfg.ollama.enable {
       enable = true;
-      package = if isRocmCompat then pkgs.ollama-rocm else pkgs.ollama-vulkan;
+      package =
+        if isRocmCompat
+        then pkgs.ollama-rocm
+        else pkgs.ollama-vulkan;
       rocmOverrideGfx = rocmOverrideGfx;
       modelsDir = cfg.ollama.modelsPath;
       port = cfg.ollama.port;
       host = "0.0.0.0";
-      environmentVariables = {
-        OLLAMA_VULKAN = if isRocmCompat then "0" else "1";
-      }
-      // lib.optionalAttrs isRocmCompat {
-        ROCM_PATH = "${pkgs.rocmPackages.clr}";
-      }
-      // lib.optionalAttrs (isRocmCompat && rocmOverrideGfx != null) {
-        HSA_OVERRIDE_GFX_VERSION = rocmOverrideGfx;
-      };
+      environmentVariables =
+        {
+          OLLAMA_VULKAN =
+            if isRocmCompat
+            then "0"
+            else "1";
+        }
+        // lib.optionalAttrs isRocmCompat {
+          ROCM_PATH = "${pkgs.rocmPackages.clr}";
+        }
+        // lib.optionalAttrs (isRocmCompat && rocmOverrideGfx != null) {
+          HSA_OVERRIDE_GFX_VERSION = rocmOverrideGfx;
+        };
     };
 
     # Ollama and Cockpit are reachable only via LAN/Tailscale/WireGuard —
@@ -90,8 +95,7 @@ in
     # system/firewall.nix. No ports are opened on the public firewall.
     networking.firewall.allowPing = true;
 
-    environment.systemPackages =
-      with pkgs;
+    environment.systemPackages = with pkgs;
       [
         vim
         git
@@ -107,6 +111,6 @@ in
       SystemKeepFree = "100M";
     };
 
-    users.users."${vars.userName}".extraGroups = [ "render" ];
+    users.users."${vars.userName}".extraGroups = ["render"];
   };
 }

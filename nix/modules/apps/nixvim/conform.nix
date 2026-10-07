@@ -2,8 +2,16 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: let
+  # The project's biome (node_modules or PATH) when it has biome.json(c) —
+  # see `formatters.biome.require_cwd` — otherwise prettier as before.
+  biomeOrPrettier = {
+    __unkeyed-1 = "biome";
+    __unkeyed-2 = "prettierd";
+    __unkeyed-3 = "prettier";
+    stop_after_first = true;
+  };
+in {
   config = {
     extraConfigLuaPre =
       # lua
@@ -83,26 +91,18 @@
             __unkeyed-2 = "prettier";
             stop_after_first = true;
           };
-          css = {
-            __unkeyed-1 = "prettierd";
-            __unkeyed-2 = "prettier";
-            stop_after_first = true;
-          };
-          javascript = {
-            __unkeyed-1 = "prettierd";
-            __unkeyed-2 = "prettier";
-            stop_after_first = true;
-          };
-          typescript = {
-            __unkeyed-1 = "prettierd";
-            __unkeyed-2 = "prettier";
-            stop_after_first = true;
-          };
+          css = biomeOrPrettier;
+          javascript = biomeOrPrettier;
+          javascriptreact = biomeOrPrettier;
+          typescript = biomeOrPrettier;
+          typescriptreact = biomeOrPrettier;
+          # Rust drop-ins for isort + black; resolved from the project's PATH
+          # (devenv), like the tools they replace.
           python = [
-            "black"
-            "isort"
+            "ruff_organize_imports"
+            "ruff_format"
           ];
-          lua = [ "stylua" ];
+          lua = ["stylua"];
           markdown = {
             __unkeyed-1 = "prettierd";
             __unkeyed-2 = "prettier";
@@ -113,28 +113,37 @@
             __unkeyed-2 = "prettier";
             stop_after_first = true;
           };
-          terraform = [ "terraform_fmt" ];
-          bicep = [ "bicep" ];
+          terraform = ["terraform_fmt"];
+          bicep = ["bicep"];
           bash = [
             "shellcheck"
             "shellharden"
             "shfmt"
           ];
-          json = [ "jq" ];
-          nu = [ "nufmt" ];
-          qml = [ "qmlformat" ];
-          "_" = [ "trim_whitespace" ];
+          json = {
+            __unkeyed-1 = "biome";
+            __unkeyed-2 = "jaq";
+            stop_after_first = true;
+          };
+          nu = ["nufmt"];
+          qml = ["qmlformat"];
+          "_" = ["trim_whitespace"];
         };
 
         formatters = {
-          nixfmt = {
-            command = "${lib.getExe pkgs.nixfmt}";
-          };
           alejandra = {
             command = "${lib.getExe pkgs.alejandra}";
           };
-          jq = {
-            command = "${lib.getExe pkgs.jq}";
+          # Only counts as available inside a biome project (cwd = the
+          # directory holding biome.json/biome.jsonc), so other projects
+          # fall through to prettier/jaq.
+          biome.require_cwd = true;
+          # Rust jq: same 2-space pretty-printing, keeps number literals as
+          # written. Not built into conform, hence the full definition.
+          jaq = {
+            command = "${lib.getExe pkgs.jaq}";
+            args = ["."];
+            stdin = true;
           };
           prettierd = {
             command = "${lib.getExe pkgs.prettierd}";

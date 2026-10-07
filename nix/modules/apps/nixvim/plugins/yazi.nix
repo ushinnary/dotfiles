@@ -14,7 +14,7 @@
   keymaps = [
     {
       key = "<leader>fm";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>Yazi<CR>";
     }
   ];

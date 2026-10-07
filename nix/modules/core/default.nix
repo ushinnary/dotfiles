@@ -4,9 +4,7 @@
   config,
   lib,
   ...
-}:
-
-{
+}: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -25,56 +23,59 @@
     extraSpecialArgs = {
       inherit inputs vars;
     };
-    users."${vars.userName}" =
-      {
-        lib,
-        config,
-        pkgs,
-        osConfig,
-        ...
-      }:
-      {
-        # Injected as a module arg for every fragment merged into this
-        # user's home-manager config (dev.nix, niri/compositor.nix, the
-        # per-host configuration.nix files, …) — see lib/mkDotfileSymlink.nix.
-        _module.args.mkDotfileSymlink = import ../../lib/mkDotfileSymlink.nix config;
+    users."${vars.userName}" = {
+      lib,
+      config,
+      pkgs,
+      osConfig,
+      ...
+    }: {
+      # Injected as a module arg for every fragment merged into this
+      # user's home-manager config (dev.nix, niri/compositor.nix, the
+      # per-host configuration.nix files, …) — see lib/mkDotfileSymlink.nix.
+      _module.args.mkDotfileSymlink = import ../../lib/mkDotfileSymlink.nix config;
 
-        home.stateVersion = "25.11";
+      home.stateVersion = "25.11";
 
-        gtk.gtk4.theme = config.gtk.theme;
+      gtk.gtk4.theme = config.gtk.theme;
 
-        xdg.userDirs = {
-          enable = true;
-          createDirectories = true;
-          setSessionVariables = false;
-        };
-
-        programs.bash = {
-          enable = true;
-          shellAliases = {
-            nfc = "(cd ~/dotfiles/nix && ./fmt.sh --check && nix flake check)";
-            nfu = "(cd ~/dotfiles/nix && nix flake update)";
-            # nh reads NH_FLAKE (set in system/packages.nix) so these work
-            # from anywhere, and it shows a diff of what's changing.
-            nrfs = "nh os switch";
-            ncg = "nh clean all";
-            subup = "(cd ~/dotfiles && git submodule update --init --remote --merge)";
-            wtls = "git worktree list";
-            wtprune = "git worktree prune";
-          };
-
-          initExtra = ''
-            bind 'set completion-ignore-case on'
-          '';
-
-          bashrcExtra = ''
-            ${lib.optionalString osConfig.ushinnary.dev.enable "export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'"}
-            ${lib.optionalString osConfig.ushinnary.dev.enable "source <(carapace _carapace)"}
-            ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(devenv hook bash)\""}
-            ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(starship init bash)\""}
-            ${lib.optionalString osConfig.ushinnary.dev.enable "eval \"$(zoxide init bash)\""}
-          '';
-        };
+      xdg.userDirs = {
+        enable = true;
+        createDirectories = true;
+        setSessionVariables = false;
       };
+
+      # Personal scripts, for every shell and GUI app in the session.
+      home.sessionPath = ["${config.home.homeDirectory}/dotfiles/bins"];
+
+      programs.bash = {
+        enable = true;
+        # Keep in sync with nushell/.config/nushell/alias.nu.
+        shellAliases = {
+          nfc = "(cd ~/dotfiles/nix && ./fmt.sh --check && nix flake check)";
+          nfu = "(cd ~/dotfiles/nix && nix flake update)";
+          # nh reads NH_FLAKE (set in system/packages.nix) so these work
+          # from anywhere, and it shows a diff of what's changing.
+          nrfs = "nh os switch";
+          ncg = "nh clean all";
+          subup = "(cd ~/dotfiles && git submodule update --init --remote --merge)";
+          wtls = "git worktree list";
+          wtprune = "git worktree prune";
+        };
+
+        # initExtra (unlike bashrcExtra) runs after the interactive-only
+        # guard, so ssh commands and Zed's remote server skip the hooks.
+        # Carapace is hooked by programs.carapace in apps/dev.nix.
+        initExtra =
+          ''
+            bind 'set completion-ignore-case on'
+          ''
+          + lib.optionalString osConfig.ushinnary.dev.enable ''
+            eval "$(devenv hook bash)"
+            eval "$(starship init bash)"
+            eval "$(zoxide init bash)"
+          '';
+      };
+    };
   };
 }

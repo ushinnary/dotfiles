@@ -3,16 +3,13 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.apps;
-in
-{
+in {
   options.ushinnary.apps.davinciResolve = lib.mkEnableOption "DaVinci Resolve Studio";
 
   config = {
-    environment.systemPackages =
-      with pkgs;
+    environment.systemPackages = with pkgs;
       [
         firefox
       ]

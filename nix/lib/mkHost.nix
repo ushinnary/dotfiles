@@ -1,19 +1,20 @@
-{ inputs, vars }:
-
 {
+  inputs,
+  vars,
+}: {
   name,
   system ? "x86_64-linux",
-  extraModules ? [ ],
+  extraModules ? [],
 }:
-
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = {
     inherit inputs vars;
   };
-  modules = [
-    ../hosts/${name}/configuration.nix
-    ../modules/core
-  ]
-  ++ extraModules;
+  modules =
+    [
+      ../hosts/${name}/configuration.nix
+      ../modules/core
+    ]
+    ++ extraModules;
 }

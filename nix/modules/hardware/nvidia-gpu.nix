@@ -2,11 +2,9 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.gpu.nvidia;
-in
-{
+in {
   options.ushinnary.gpu.nvidia = {
     enable = lib.mkEnableOption "NVIDIA GPU drivers";
     openDriver = lib.mkOption {
@@ -32,7 +30,7 @@ in
     };
 
     # Load nvidia driver for Xorg and Wayland
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = ["nvidia"];
 
     hardware.nvidia = {
       modesetting.enable = true;
@@ -43,5 +41,4 @@ in
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
   };
-
 }

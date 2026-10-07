@@ -332,11 +332,7 @@ $env.config = {
         pre_prompt: [{ null }] # run before the prompt is shown
         pre_execution: [{ null }] # run before the repl input is run
         env_change: {
-            PWD: [{|before, after|
-                if (which direnv | is-empty) == false {
-                    direnv export json | from json | default {} | load-env
-                }
-            }] # run if the PWD environment is different since the last repl input
+            PWD: [{|before, after| null }] # run if the PWD environment is different since the last repl input
         }
         display_output: "if (term size).columns >= 100 { table -e } else { table }" # run to display the output of a pipeline
         command_not_found: { null } # return an error message when a command is not found
@@ -940,8 +936,6 @@ $env.config = {
     ]
 }
 
-use ~/.cache/starship/init.nu
-
 # FNM Node manager
 if not (which fnm | is-empty) {
   ^fnm env --json | from json | load-env
@@ -954,9 +948,6 @@ if not (which fnm | is-empty) {
   }
   $env.PATH = ($path | prepend [ $node_path ])
 }
-
-# Zoxide
-source ~/.zoxide.nu
 
 # Yazi
 def --env y [...args] {
@@ -984,6 +975,3 @@ def "cargo search" [ query: string, --limit=10] {
 
 source alias.nu
 source $"($nu.cache-dir)/carapace.nu"
-
-# devenv hook nu | save --force ~/.cache/devenv/hook.nu
-# source ~/.cache/devenv/hook.nu

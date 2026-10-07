@@ -3,7 +3,6 @@
   stdenvNoCC,
   fetchurl,
 }:
-
 # Not in nixpkgs yet, and the pinned google-fonts snapshot predates it.
 # Fetches only the variable TTF instead of the whole google/fonts repo.
 stdenvNoCC.mkDerivation (finalAttrs: {

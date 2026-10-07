@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{lib, ...}: {
   # Select internationalisation properties.
   i18n.defaultLocale = lib.mkDefault "fr_FR.UTF-8";
 

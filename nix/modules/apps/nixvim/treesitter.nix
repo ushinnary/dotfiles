@@ -1,29 +1,34 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   plugins.treesitter = {
     enable = true;
     grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
       bash
       css
+      diff
+      gitcommit
       html
       javascript
       json
+      kdl
       lua
       markdown
       nix
       nu
+      python
       rust
       regex
       sql
       toml
+      tsx
       typescript
       yaml
       xml
       qmljs
     ];
-    settings.indent = {
-      enable = true;
-    };
+    # nvim-treesitter's main branch: Nixvim starts these per FileType. The
+    # old `settings.highlight`/`settings.indent` only apply to master.
+    highlight.enable = true;
+    indent.enable = true;
   };
 
   plugins.treesitter-textobjects = {
@@ -108,7 +113,7 @@
         };
         swap_previous = {
           "<leader>pa" = "@parameter.inner";
-          "<leader>pm" = "@parameter.outer";
+          "<leader>pm" = "@function.outer";
         };
       };
 

@@ -3,11 +3,9 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.gpu.amd;
-in
-{
+in {
   options.ushinnary.gpu.amd = {
     enable = lib.mkEnableOption "AMD GPU drivers";
     rocm = lib.mkEnableOption "ROCm runtime (ROCm OpenCL, ollama-rocm)";
@@ -28,7 +26,7 @@ in
         vulkan-loader
         libva
       ];
-      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [libva];
     };
 
     # Adds ROCm's clr + clr.icd (~900 MiB); Rusticl covers OpenCL otherwise,
@@ -37,7 +35,6 @@ in
     environment.sessionVariables.RUSTICL_ENABLE = lib.mkIf (!cfg.rocm) "radeonsi";
     hardware.amdgpu.initrd.enable = true;
 
-    boot.initrd.kernelModules = [ "amdgpu" ];
+    boot.initrd.kernelModules = ["amdgpu"];
   };
-
 }

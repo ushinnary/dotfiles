@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   plugins = {
     blink-cmp = {
       enable = true;
@@ -152,7 +151,7 @@
             border = "none";
             draw = {
               gap = 1;
-              treesitter = [ "lsp" ];
+              treesitter = ["lsp"];
               columns = [
                 {
                   __unkeyed-1 = "label";
@@ -162,7 +161,7 @@
                   __unkeyed-2 = "kind";
                   gap = 1;
                 }
-                { __unkeyed-1 = "source_name"; }
+                {__unkeyed-1 = "source_name";}
               ];
             };
           };

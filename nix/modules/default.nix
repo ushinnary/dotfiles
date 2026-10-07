@@ -1,7 +1,4 @@
-{
-  ...
-}:
-{
+{...}: {
   imports = [
     ./system/boot.nix
     ./system/locale.nix
@@ -27,6 +24,14 @@
     "nix-command"
     "flakes"
   ];
+  # Flake-only: NIX_PATH and the `nixpkgs` registry entry already point at
+  # this flake's nixpkgs input, so legacy channels would only drift.
+  nix.channel.enable = false;
+  # Builds (rebuilds, devenv) only get CPU/disk time nothing interactive
+  # wants, so the desktop stays responsive. Trade-off: they crawl while
+  # something else is busy (e.g. a game).
+  nix.daemonCPUSchedPolicy = "idle";
+  nix.daemonIOSchedClass = "idle";
 
   hardware.enableRedistributableFirmware = true;
 }

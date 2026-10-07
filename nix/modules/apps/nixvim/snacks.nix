@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   plugins.snacks = {
     enable = true;
     autoLoad = true;
@@ -51,7 +50,7 @@
   keymaps = [
     {
       key = "<leader>e";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.explorer()<CR>";
       options = {
         silent = true;
@@ -60,7 +59,7 @@
     }
     {
       key = "<leader>sg";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.grep({hidden = true})<CR>";
       options = {
         silent = true;
@@ -70,7 +69,7 @@
     }
     {
       key = "<leader>sk";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.keymaps()<CR>";
       options = {
         silent = true;
@@ -104,7 +103,7 @@
     }
     {
       key = "<C-f>";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "/";
       options = {
         silent = true;
@@ -113,7 +112,7 @@
     }
     {
       key = "<leader>n";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.notifications()<CR>";
       options = {
         silent = true;
@@ -122,7 +121,7 @@
     }
     {
       key = "<leader>fb";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.buffers()<CR>";
       options = {
         silent = true;
@@ -131,7 +130,7 @@
     }
     {
       key = "<leader>ff";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.files()<CR>";
       options = {
         silent = true;
@@ -140,7 +139,7 @@
     }
     {
       key = "<leader><leader>";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.files()<CR>";
       options = {
         silent = true;
@@ -149,7 +148,7 @@
     }
     {
       key = "<leader>gl";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.git_log()<CR>";
       options = {
         silent = true;
@@ -158,7 +157,7 @@
     }
     {
       key = "<leader>gs";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.git_status()<CR>";
       options = {
         silent = true;
@@ -167,42 +166,42 @@
     }
     {
       key = "<leader>uC";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.colorschemes()<CR>";
     }
     {
       key = "<leader>un";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.notifier.hide()<CR>";
       options.desc = "Dismiss All Notifications";
     }
     {
       key = "<leader>fp";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.projects()<CR>";
       options.desc = "Projects";
     }
     {
       key = "<leader>fr";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.recent()<CR>";
       options.desc = "Recent Files";
     }
     {
       key = "<leader>sh";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.help()<CR>";
       options.desc = "Help Pages";
     }
     {
       key = "<leader>sb";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.lines()<CR>";
       options.desc = "Buffer Lines";
     }
     {
       key = "<leader>sd";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.diagnostics()<CR>";
       options.desc = "Diagnostics";
     }
@@ -217,7 +216,7 @@
     }
     {
       key = "<leader>:";
-      mode = [ "n" ];
+      mode = ["n"];
       action = "<cmd>lua Snacks.picker.command_history()<CR>";
     }
     # Git

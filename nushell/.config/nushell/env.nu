@@ -92,31 +92,13 @@ $env.NU_PLUGIN_DIRS = [
 # path add ($env.HOME | path join ".local" "bin")
 # $env.PATH = ($env.PATH | uniq)
 #
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.cargo/bin/')
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.local/bin/')
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/.dotnet/tools/')
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/home/ushinnary/nvim-linux64/bin/')
-$env.PATH = ($env.PATH | prepend "/home/ushinnary/.fnm")
-$env.PATH = ($env.PATH | prepend "/home/ushinnary/.surrealdb")
-$env.PATH = ($env.PATH | prepend "/home/ushinnary/dotfiles/bins/")
-$env.PATH = ($env.PATH | prepend "/home/linuxbrew/.linuxbrew/bin/")
+# PATH (~/dotfiles/bins), DOCKER_HOST and CARAPACE_BRIDGES come from the Nix
+# config, shared with bash and GUI apps. Starship, zoxide and the devenv hook
+# are generated into the vendor autoload dir by nix/modules/apps/dev.nix.
 $env.FREETYPE_PROPERTIES = 'cff:no-stem-darkening=0'
 $env.DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 1
 $env.VISUAL = "nvim"
 $env.EDITOR = "nvim"
-$env.DOCKER_HOST = $"unix://($env.XDG_RUNTIME_DIR)/podman/podman.sock"
-$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
 
 mkdir $"($nu.cache-dir)"
-let starship_init = ($env.HOME | path join ".cache" "starship" "init.nu")
-mkdir ($env.HOME | path join ".cache" "starship")
-if not ($starship_init | path exists) {
-    starship init nu | save -f $starship_init
-}
-
-let zoxide_init = ($env.HOME | path join ".zoxide.nu")
-if not ($zoxide_init | path exists) {
-    zoxide init nushell | save -f $zoxide_init
-}
-
 carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"

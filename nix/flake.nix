@@ -29,35 +29,33 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      ...
-    }@inputs:
-    let
-      vars = import ./vars.nix;
-      mkHost = import ./lib/mkHost.nix { inherit inputs vars; };
-    in
-    {
-      # Canonical formatter for this repo — `nix fmt` (or nix/fmt.sh) uses
-      # this. Matches pkgs.nixfmt used elsewhere (Nixvim's nix formatter).
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+  outputs = {nixpkgs, ...} @ inputs: let
+    vars = import ./vars.nix;
+    mkHost = import ./lib/mkHost.nix {inherit inputs vars;};
+  in {
+    # Canonical formatter for this repo — `nix fmt` (or nix/fmt.sh) uses
+    # this. Matches pkgs.alejandra used elsewhere (Nixvim's nix formatter).
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
 
-      nixosConfigurations = {
-        # Hostname: ryzo
-        ryzo = mkHost {
-          name = "ryzo";
-        };
+    nixosConfigurations = {
+      # Hostname: ryzo
+      ryzo = mkHost {
+        name = "ryzo";
+      };
 
-        # Hostname: asus-vivobook-s14 (Laptop)
-        asus-vivobook-s14 = mkHost {
-          name = "asus-vivobook-s14";
-          extraModules = [
-            inputs.nixos-hardware.nixosModules.asus-battery
-          ];
-        };
+      # Hostname: asus-vivobook-s14 (Laptop)
+      asus-vivobook-s14 = mkHost {
+        name = "asus-vivobook-s14";
+        extraModules = [
+          inputs.nixos-hardware.nixosModules.asus-battery
+        ];
       };
     };
+  };
 }

@@ -2,9 +2,7 @@
   vars,
   pkgs,
   ...
-}:
-
-{
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -47,7 +45,7 @@
         "nixvim"
         "zed"
       ];
-      servers = [ "zed" ];
+      servers = ["zed"];
       aiAgents = true;
     };
     gaming.enable = true;
@@ -66,16 +64,18 @@
   ];
 
   # Home Manager Setup
-  home-manager.users."${vars.userName}" =
-    { lib, mkDotfileSymlink, ... }:
-    {
-      xdg.configFile = {
-        "niri-overrides" = {
-          source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/ryzo");
-          recursive = true;
-        };
+  home-manager.users."${vars.userName}" = {
+    lib,
+    mkDotfileSymlink,
+    ...
+  }: {
+    xdg.configFile = {
+      "niri-overrides" = {
+        source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/ryzo");
+        recursive = true;
       };
     };
+  };
 
   system.stateVersion = "25.11";
 }

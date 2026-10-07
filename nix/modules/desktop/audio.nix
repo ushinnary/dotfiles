@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -10,5 +9,4 @@
     pulse.enable = true;
     wireplumber.enable = true;
   };
-
 }

@@ -1,9 +1,16 @@
 {
   pkgs,
   vars,
+  inputs,
   ...
-}:
-{
+}: {
+  # Prebuilt nix-index database, pinned by the flake (bumped by `nfu`):
+  # replaces programs.command-not-found, which needs channels.
+  imports = [inputs.nix-index-database.nixosModules.nix-index];
+
+  # `, <cmd>` runs any nixpkgs program without installing it.
+  programs.nix-index-database.comma.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -23,7 +30,7 @@
     flake = "/home/${vars.userName}/dotfiles/nix";
     # NVMe has plenty of headroom, so favor rollback safety over
     # aggressively reclaiming space: keep two weeks of generations.
-    # --no-gcroots keeps nix-direnv/result roots, like nix.gc did.
+    # --no-gcroots keeps devenv/result roots, like nix.gc did.
     clean = {
       enable = true;
       dates = "weekly";
@@ -43,6 +50,18 @@
       credential = {
         helper = "manager";
         credentialStore = "secretservice";
+      };
+      init.defaultBranch = "main";
+      push.autoSetupRemote = true;
+      fetch.prune = true;
+      pull.rebase = true;
+      rebase.autoStash = true;
+      # Remember conflict resolutions and replay them on the next rebase.
+      rerere.enabled = true;
+      merge.conflictStyle = "zdiff3";
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "default";
       };
     };
   };

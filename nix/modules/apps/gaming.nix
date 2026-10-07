@@ -4,16 +4,14 @@
   lib,
   vars,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.gaming;
   displayCfg = config.ushinnary.display;
-in
-{
+in {
   options.ushinnary.gaming.enable = lib.mkEnableOption "gaming packages and configuration (Steam, Gamescope, etc.)";
 
   config = lib.mkIf cfg.enable {
-    boot.kernelModules = [ "ntsync" ];
+    boot.kernelModules = ["ntsync"];
     programs = {
       steam = {
         enable = true;
@@ -28,7 +26,7 @@ in
         # don't wait for the next refresh.
         gamescopeSession = {
           enable = true;
-          args = [ "--immediate-flips" ];
+          args = ["--immediate-flips"];
           # Games present straight to Gamescope (bypassing Xwayland) via
           # its WSI layer. Scoped to this session, not set globally.
           env.ENABLE_GAMESCOPE_WSI = "1";
@@ -59,13 +57,22 @@ in
     environment.variables = {
       PROTON_USE_NTSYNC = "1";
       # HDR Support for OLED
-      ENABLE_HDR_WSI = if displayCfg.oled then "1" else "0";
-      DXVK_HDR = if displayCfg.oled then "1" else "0";
+      ENABLE_HDR_WSI =
+        if displayCfg.oled
+        then "1"
+        else "0";
+      DXVK_HDR =
+        if displayCfg.oled
+        then "1"
+        else "0";
 
       # Hardware specific variables
-      PROTON_ENABLE_NVAPI = if config.ushinnary.gpu.nvidia.enable then "1" else "0";
+      PROTON_ENABLE_NVAPI =
+        if config.ushinnary.gpu.nvidia.enable
+        then "1"
+        else "0";
     };
 
-    users.users."${vars.userName}".extraGroups = [ "gamemode" ];
+    users.users."${vars.userName}".extraGroups = ["gamemode"];
   };
 }

@@ -2,8 +2,7 @@
   config,
   vars,
   ...
-}:
-{
+}: {
   users.users."${vars.userName}" = {
     isNormalUser = true;
     description = "Alexander";
@@ -18,15 +17,17 @@
     ];
   };
 
-  users.groups."${vars.userName}" = { };
+  users.groups."${vars.userName}" = {};
 
   security.sudo.extraRules = [
     {
-      users = [ vars.userName ];
-      commands = map (command: {
-        command = command;
-        options = [ "NOPASSWD" ];
-      }) config.ushinnary.security.sudo.passwordlessCommands;
+      users = [vars.userName];
+      commands =
+        map (command: {
+          command = command;
+          options = ["NOPASSWD"];
+        })
+        config.ushinnary.security.sudo.passwordlessCommands;
     }
   ];
 }

@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.firewall;
-in
-{
+in {
   options.ushinnary.firewall = {
     opensnitch = lib.mkEnableOption "Enable OpenSnitch application firewall";
     smbSharing = lib.mkEnableOption "SMB/Samba NetBIOS conntrack helper — enable on LAN desktops only";
@@ -25,15 +23,16 @@ in
     # passes these straight to `-i`, which only understands a trailing
     # "+", not shell-style "*"), so "enp+"/"wlp+" match real interface
     # names like enp5s0/wlp3s0 on any host.
-    networking.firewall.trustedInterfaces = [
-      "tailscale0"
-      "wg+"
-    ]
-    ++ lib.optionals cfg.trustPhysicalInterfaces [
-      "eth0"
-      "enp+"
-      "wlp+"
-    ];
+    networking.firewall.trustedInterfaces =
+      [
+        "tailscale0"
+        "wg+"
+      ]
+      ++ lib.optionals cfg.trustPhysicalInterfaces [
+        "eth0"
+        "enp+"
+        "wlp+"
+      ];
 
     networking.firewall = {
       enable = true;
@@ -70,7 +69,7 @@ in
     };
 
     # OpenSnitch UI — shows popup prompts and lets you manage rules
-    environment.systemPackages = lib.mkIf cfg.opensnitch [ pkgs.opensnitch-ui ];
+    environment.systemPackages = lib.mkIf cfg.opensnitch [pkgs.opensnitch-ui];
 
     services.tailscale.enable = true;
   };

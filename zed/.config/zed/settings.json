@@ -233,7 +233,13 @@
   },
   "languages": {
     "Nix": {
-      "language_servers": ["nil"],
+      "language_servers": ["nil", "!nixd"],
+      "formatter": {
+        "external": {
+          "command": "alejandra",
+          "arguments": ["--quiet", "-"],
+        },
+      },
     },
     "Lua": {
       "language_servers": ["lua-language-server"],

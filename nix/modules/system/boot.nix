@@ -2,8 +2,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   boot = {
     # Enable "Silent boot"
     consoleLogLevel = 0;

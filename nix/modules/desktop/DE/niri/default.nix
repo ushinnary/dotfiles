@@ -4,11 +4,9 @@
   lib,
   vars,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.desktop;
-in
-{
+in {
   imports = [
     ./bar.nix
     ./terminal.nix
@@ -26,7 +24,7 @@ in
         enable = true;
         restartIfChanged = true;
       };
-      excludePackages = [ pkgs.cava ];
+      excludePackages = [pkgs.cava];
     };
 
     services.clight.enable = false;
@@ -83,8 +81,8 @@ in
           "gnome"
           "gtk"
         ];
-        "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-        "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+        "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+        "org.freedesktop.impl.portal.FileChooser" = ["gtk"];
       };
     };
 

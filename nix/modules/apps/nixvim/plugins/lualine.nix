@@ -40,7 +40,7 @@
         lualine_c = [
           {
             __unkeyed-1 = "diagnostics";
-            sources = [ "nvim_lsp" ];
+            sources = ["nvim_lsp"];
             symbols = {
               error = " ";
               warn = " ";

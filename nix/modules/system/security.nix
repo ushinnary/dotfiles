@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.security;
-in
-{
+in {
   options.ushinnary.security = {
     howdy.enable = lib.mkEnableOption "Howdy facial recognition authentication";
     sudo.passwordlessCommands = lib.mkOption {

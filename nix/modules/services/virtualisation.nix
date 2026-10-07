@@ -4,12 +4,10 @@
   lib,
   vars,
   ...
-}:
-let
+}: let
   containersCfg = config.ushinnary.containers;
   vmHostCfg = config.ushinnary.virtualisation.host;
-in
-{
+in {
   options.ushinnary.virtualisation.host.enable =
     lib.mkEnableOption "host virtualization stack for running VMs (VirtualBox)";
   options.ushinnary.containers = {
@@ -31,15 +29,15 @@ in
 
       # Deliberately not in the "podman" group: it grants access to the
       # rootful /run/podman/podman.sock, i.e. root. Rootless podman
-      # doesn't need it; for a docker-style socket use the user unit
-      # (`systemctl --user enable --now podman.socket`).
+      # doesn't need it; docker-style clients use the user socket instead,
+      # which the podman module already enables for every user.
+      environment.variables.DOCKER_HOST = "unix://$XDG_RUNTIME_DIR/podman/podman.sock";
 
       # Podman's own daily timer (ships with the package) instead of a
       # boot-time run, so it doesn't depend on network-online at boot.
-      systemd.timers.podman-auto-update.wantedBy = [ "timers.target" ];
+      systemd.timers.podman-auto-update.wantedBy = ["timers.target"];
 
-      environment.systemPackages =
-        with pkgs;
+      environment.systemPackages = with pkgs;
         [
           podman-compose
         ]
@@ -48,11 +46,11 @@ in
     (lib.mkIf vmHostCfg.enable {
       virtualisation.libvirtd.enable = true;
       programs.virt-manager.enable = true;
-      users.users."${vars.userName}".extraGroups = [ "libvirtd" ];
+      users.users."${vars.userName}".extraGroups = ["libvirtd"];
       environment.systemPackages = with pkgs; [
         dnsmasq
       ];
-      networking.firewall.trustedInterfaces = [ "virbr0" ];
+      networking.firewall.trustedInterfaces = ["virbr0"];
     })
   ];
 }

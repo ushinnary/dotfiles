@@ -4,11 +4,9 @@
   lib,
   vars,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.desktop;
-in
-{
+in {
   config = lib.mkIf cfg.cosmic {
     # Enable the COSMIC login manager
     services.displayManager.cosmic-greeter.enable = true;
@@ -20,12 +18,10 @@ in
       seahorse
     ];
 
-    home-manager.users."${vars.userName}" =
-      { config, ... }:
-      {
-        services.gnome-keyring.enable = true;
-        home.packages = [ pkgs.gcr ];
-      };
+    home-manager.users."${vars.userName}" = {config, ...}: {
+      services.gnome-keyring.enable = true;
+      home.packages = [pkgs.gcr];
+    };
 
     services.system76-scheduler.enable = true;
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 # Format every *.nix file in this directory with the flake's declared
-# formatter (nixfmt, see `formatter` in flake.nix). Pass --check to verify
+# formatter (alejandra, see `formatter` in flake.nix). Pass --check to verify
 # formatting without changing files.
 set -eu
 cd "$(dirname "$0")"
@@ -13,4 +13,6 @@ case "${1:-}" in
     ;;
 esac
 
-find . -type f -name '*.nix' -print0 | xargs -0 -r nix fmt -- "$@"
+# --quiet drops alejandra's per-run banner; errors and --check failures
+# still print and exit non-zero.
+find . -type f -name '*.nix' -print0 | xargs -0 -r nix fmt -- --quiet "$@"

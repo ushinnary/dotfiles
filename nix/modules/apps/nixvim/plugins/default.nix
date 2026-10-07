@@ -4,6 +4,7 @@
     ./lang/lua.nix
     ./lang/md.nix
     ./lang/nushell.nix
+    ./lang/typescript.nix
     ./lualine.nix
     ./yazi.nix
     ./toggleterm.nix

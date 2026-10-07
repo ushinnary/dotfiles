@@ -4,13 +4,11 @@
   pkgs,
   vars,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.desktop;
   electronFlagsSrc = "${../../../electron/.config/electron-flags.conf}";
   edgeFlagsAmdSrc = "${../../../flatpaks/.var/app/com.microsoft.Edge/config/edge-flags-amd.conf}";
-in
-{
+in {
   options.ushinnary.hardware = {
     hasWebCam = lib.mkEnableOption "system has a webcam (enables clight for automatic brightness via camera)";
   };
@@ -39,7 +37,6 @@ in
       };
     }
     (lib.mkIf (cfg.gnome || cfg.cosmic || cfg.plasma || cfg.niri) {
-
       environment.sessionVariables = {
         NIXOS_OZONE_WL = "1";
       };
@@ -80,7 +77,7 @@ in
       hardware.sensor.iio.enable = config.ushinnary.hardware.hasWebCam;
       services.avahi.enable = true; # For network discovery of printers and other devices
 
-      boot.kernelModules = [ "i2c-dev" ];
+      boot.kernelModules = ["i2c-dev"];
       hardware.i2c.enable = true;
       services.udev.extraRules = ''
         KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
@@ -119,46 +116,44 @@ in
         QT_AUTO_SCREEN_SCALE_FACTOR = 1;
       };
 
-      home-manager.users."${vars.userName}" =
-        { pkgs, ... }:
-        {
-          dconf.settings = {
-            "org/gnome/desktop/interface" = {
-              cursor-theme = "Bibata-Modern-Ice";
-              font-name = "Google Sans Flex 11";
-              document-font-name = "Google Sans Flex 11";
-              monospace-font-name = "Google Sans Code 10";
-            };
-          };
-
-          systemd.user.services.copy-wayland-flags = {
-            Unit = {
-              Description = "Copy Electron and Edge flags for Wayland sessions";
-              After = [ "graphical-session.target" ];
-              PartOf = [ "graphical-session.target" ];
-            };
-
-            Install = {
-              WantedBy = [ "graphical-session.target" ];
-            };
-
-            Service = {
-              Type = "oneshot";
-              ExecStart = "${pkgs.writeShellScript "copy-wayland-flags" ''
-                set -eu
-
-                if [ "''${XDG_SESSION_TYPE:-}" != "wayland" ] && [ -z "''${WAYLAND_DISPLAY:-}" ]; then
-                  exit 0
-                fi
-
-                ${pkgs.coreutils}/bin/install -Dm644 ${electronFlagsSrc} "$HOME/.config/electron-flags.conf"
-                ${lib.optionalString config.ushinnary.gpu.amd.enable ''
-                  ${pkgs.coreutils}/bin/install -Dm644 ${edgeFlagsAmdSrc} "$HOME/.var/app/com.microsoft.Edge/config/edge-flags.conf"
-                ''}
-              ''}";
-            };
+      home-manager.users."${vars.userName}" = {pkgs, ...}: {
+        dconf.settings = {
+          "org/gnome/desktop/interface" = {
+            cursor-theme = "Bibata-Modern-Ice";
+            font-name = "Google Sans Flex 11";
+            document-font-name = "Google Sans Flex 11";
+            monospace-font-name = "Google Sans Code 10";
           };
         };
+
+        systemd.user.services.copy-wayland-flags = {
+          Unit = {
+            Description = "Copy Electron and Edge flags for Wayland sessions";
+            After = ["graphical-session.target"];
+            PartOf = ["graphical-session.target"];
+          };
+
+          Install = {
+            WantedBy = ["graphical-session.target"];
+          };
+
+          Service = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.writeShellScript "copy-wayland-flags" ''
+              set -eu
+
+              if [ "''${XDG_SESSION_TYPE:-}" != "wayland" ] && [ -z "''${WAYLAND_DISPLAY:-}" ]; then
+                exit 0
+              fi
+
+              ${pkgs.coreutils}/bin/install -Dm644 ${electronFlagsSrc} "$HOME/.config/electron-flags.conf"
+              ${lib.optionalString config.ushinnary.gpu.amd.enable ''
+                ${pkgs.coreutils}/bin/install -Dm644 ${edgeFlagsAmdSrc} "$HOME/.var/app/com.microsoft.Edge/config/edge-flags.conf"
+              ''}
+            ''}";
+          };
+        };
+      };
 
       services.gvfs.enable = true;
       services.flatpak.enable = true;
@@ -167,7 +162,7 @@ in
       # CLI switch for it. The Edge flatpak links host /etc/opt/edge/policies/*/*.json
       # via `find -type f`, so this must be a real file, not a store symlink.
       environment.etc."opt/edge/policies/managed/spellcheck.json" = {
-        text = builtins.toJSON { SpellcheckEnabled = false; };
+        text = builtins.toJSON {SpellcheckEnabled = false;};
         mode = "0444";
       };
       # Adding Flathub lives here rather than in a boot-time unit: remote-add
@@ -175,9 +170,9 @@ in
       # up. This runs from the timer below (5 min after boot, then daily).
       systemd.services.flatpak-update = {
         description = "Add Flathub and update Flatpak apps and runtimes";
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        path = [ pkgs.flatpak ];
+        after = ["network-online.target"];
+        wants = ["network-online.target"];
+        path = [pkgs.flatpak];
         serviceConfig = {
           Type = "oneshot";
         };
@@ -188,7 +183,7 @@ in
       };
 
       systemd.timers.flatpak-update = {
-        wantedBy = [ "timers.target" ];
+        wantedBy = ["timers.target"];
         timerConfig = {
           OnBootSec = "5m";
           OnUnitActiveSec = "1d";
@@ -200,13 +195,13 @@ in
       fonts = {
         packages = with pkgs; [
           googlesans-code
-          (callPackage ../../pkgs/google-sans-flex.nix { })
+          (callPackage ../../pkgs/google-sans-flex.nix {})
         ];
 
         fontconfig = {
           defaultFonts = {
-            serif = [ "Google Sans Flex" ];
-            sansSerif = [ "Google Sans Flex" ];
+            serif = ["Google Sans Flex"];
+            sansSerif = ["Google Sans Flex"];
             monospace = [
               "Google Sans Code"
             ];

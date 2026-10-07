@@ -5,13 +5,11 @@
   inputs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.ushinnary.dev;
   selectedEditors = cfg.editors;
   hasEditor = editor: builtins.elem editor selectedEditors;
-in
-{
+in {
   imports = [
     # For NixOS
     inputs.nixvim.nixosModules.nixvim
@@ -24,6 +22,15 @@ in
       withRuby = false;
       withPython3 = false;
       defaultEditor = true;
+      # Startup: vim.loader caches Lua modules; plugins, configs and the
+      # Neovim runtime are precompiled to Lua bytecode at build time.
+      luaLoader.enable = true;
+      performance.byteCompileLua = {
+        enable = true;
+        configs = true;
+        plugins = true;
+        nvimRuntime = true;
+      };
       nixpkgs = {
         source = inputs.nixvim.inputs.nixpkgs;
       };
@@ -32,7 +39,6 @@ in
         providers.wl-copy.enable = true;
       };
       dependencies = {
-        direnv.enable = true;
         fd.enable = true;
         fzf.enable = true;
         ripgrep.enable = true;
@@ -48,7 +54,6 @@ in
         enable = true;
         settings = {
           options = {
-
           };
         };
       };
@@ -70,14 +75,13 @@ in
       extraPackages = with pkgs; [
         # Formatters
         stylua # Lua formatter
-        nixfmt # Nix formatter
+        alejandra # Nix formatter
         nufmt # Nushell formatter
         # Linters
         # golangci-lint # Go linter
         shellcheck # Shell script linter
         # Debuggers
         # gcc
-
       ];
 
       diagnostic.settings = {

@@ -3,11 +3,9 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.desktop;
-in
-{
+in {
   config = lib.mkIf cfg.niri {
     # ── Terminal package ───────────────────────────────────────────
     environment.systemPackages = with pkgs; [

@@ -1,9 +1,4 @@
-{
-  vars,
-  ...
-}:
-
-{
+{vars, ...}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -48,16 +43,18 @@
   };
 
   # Home Manager Setup
-  home-manager.users."${vars.userName}" =
-    { lib, mkDotfileSymlink, ... }:
-    {
-      xdg.configFile = {
-        "niri-overrides" = {
-          source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14");
-          recursive = true;
-        };
+  home-manager.users."${vars.userName}" = {
+    lib,
+    mkDotfileSymlink,
+    ...
+  }: {
+    xdg.configFile = {
+      "niri-overrides" = {
+        source = lib.mkForce (mkDotfileSymlink "niri/.config/niri/hosts/asus-vivobook-s14");
+        recursive = true;
       };
     };
+  };
 
   system.stateVersion = "25.11";
 }

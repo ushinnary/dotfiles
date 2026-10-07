@@ -4,14 +4,12 @@
   pkgs,
   inputs,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.hardware.secureBoot;
   sbctlPath = "/var/lib/sbctl";
   initialInstall = builtins.getEnv "INITIAL_INSTALL" == "1";
-in
-{
-  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
+in {
+  imports = [inputs.lanzaboote.nixosModules.lanzaboote];
 
   options.ushinnary.hardware.secureBoot = lib.mkEnableOption "Secure Boot with lanzaboote (requires sbctl keys enrolled)";
 
@@ -31,7 +29,7 @@ in
       pkgs.tpm2-tss
     ];
 
-    boot.initrd.availableKernelModules = [ "tpm_crb" ];
+    boot.initrd.availableKernelModules = ["tpm_crb"];
     boot.initrd.systemd.enable = lib.mkForce (!initialInstall);
   };
 }

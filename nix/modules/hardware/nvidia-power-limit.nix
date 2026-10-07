@@ -3,15 +3,13 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.gpu.nvidia;
-in
-{
+in {
   config = lib.mkIf (cfg.enable && (builtins.isInt cfg.powerLimit)) {
     systemd.services."set-nvidia-power-limit" = {
       description = "Set NVIDIA GPU Power Limit on Boot";
-      path = [ config.hardware.nvidia.package ];
+      path = [config.hardware.nvidia.package];
       script = ''
         nvidia-smi -pm ENABLED
         nvidia-smi -pl ${toString cfg.powerLimit}
@@ -21,7 +19,7 @@ in
         User = "root";
         ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
       };
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
       after = [
         "display.manager.service"
         "multi-user.target"

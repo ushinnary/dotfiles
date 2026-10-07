@@ -3,11 +3,9 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.desktop;
-in
-{
+in {
   config = lib.mkIf cfg.gnome {
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
@@ -31,7 +29,7 @@ in
 
     programs.dconf.enable = true;
 
-    services.udev.packages = [ pkgs.gnome-settings-daemon ];
+    services.udev.packages = [pkgs.gnome-settings-daemon];
     services.gnome.sushi.enable = true;
     programs.kdeconnect = {
       enable = true;

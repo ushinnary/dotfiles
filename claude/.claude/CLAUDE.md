@@ -21,6 +21,7 @@ follow applicable project instructions and explicit user constraints when they d
   publishing, or transmitting private data to external services.
 - Do not commit, push, rewrite history, or bypass hooks unless explicitly requested.
 - Respect project restrictions on commands, network access, and file access.
+- Never run commands that could leak user's info or any data.
 
 ## Implementation
 

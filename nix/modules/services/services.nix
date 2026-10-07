@@ -2,11 +2,9 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.ushinnary.hardware;
-in
-{
+in {
   options.ushinnary.hardware.amdCpu = lib.mkEnableOption "AMD CPU tweaks (microcode, pstate)";
 
   config = {
@@ -38,5 +36,4 @@ in
       "amd_pstate=active"
     ];
   };
-
 }

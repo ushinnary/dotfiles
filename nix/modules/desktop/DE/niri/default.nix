@@ -91,6 +91,11 @@ in {
     security.pam.services.login.enableGnomeKeyring = true;
     security.pam.services.greetd.enableGnomeKeyring = true;
 
+    # Session-critical: when systemd-oomd (system/memory.nix) must kill
+    # something in the session, it picks apps before the compositor/shell.
+    systemd.user.services.niri.serviceConfig.ManagedOOMPreference = "avoid";
+    systemd.user.services.dms.serviceConfig.ManagedOOMPreference = "avoid";
+
     # Polkit agent: DMS ships its own (Quickshell PolkitAgent). Don't add
     # a second one — only one agent can register per session.
   };

@@ -54,7 +54,7 @@ in {
         drivers = with pkgs; [
           cups-filters
           gutenprint
-          hplipWithPlugin
+          hplip
         ];
 
         # cups-browsed defaults to on with Avahi; CUPS already discovers
@@ -67,6 +67,12 @@ in {
       # trustedInterfaces set in system/firewall.nix — no need to open
       # it globally (the Avahi module opens it by default).
       services.avahi.openFirewall = false;
+      # Avahi: DNS-SD browsing for SMB shares (gvfs network:// in
+      # Nautilus) and .local names via nss-mdns. One mDNS stack per
+      # host, so resolved's own mDNS responder is off.
+      services.avahi.enable = true;
+      services.avahi.nssmdns4 = true;
+      services.resolved.settings.Resolve.MulticastDNS = "no";
 
       powerManagement = {
         enable = true;
@@ -75,7 +81,6 @@ in {
       hardware.sane.enable = true;
       services.colord.enable = true;
       hardware.sensor.iio.enable = config.ushinnary.hardware.hasWebCam;
-      services.avahi.enable = true; # For network discovery of printers and other devices
 
       boot.kernelModules = ["i2c-dev"];
       hardware.i2c.enable = true;

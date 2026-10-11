@@ -190,7 +190,9 @@
         },
         {
           "id": "keyboard_layout_name",
-          "enabled": true
+          "enabled": true,
+          "keyboardLayoutNameCompactMode": true,
+          "keyboardLayoutNameShowIcon": false
         },
         {
           "id": "battery",

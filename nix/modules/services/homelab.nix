@@ -42,7 +42,6 @@ in {
   config = lib.mkIf cfg.enable {
     console = {
       earlySetup = true;
-      font = "Comic Mono";
       keyMap = "us";
     };
 

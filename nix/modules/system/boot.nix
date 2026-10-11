@@ -30,9 +30,6 @@
     initrd.systemd.enable = true;
   };
 
-  zramSwap.enable = true;
-  zramSwap.algorithm = "zstd";
-
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = false;

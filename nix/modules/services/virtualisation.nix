@@ -19,6 +19,14 @@ in {
     (lib.mkIf containersCfg.enable {
       virtualisation = {
         containers.enable = true;
+        # Container stdout goes to a per-container file (`podman logs` still
+        # works) instead of journald, where one chatty dev container pushed
+        # system logs out of the 1G journal. Truncated past 10 MiB.
+        # Existing containers keep their driver until recreated.
+        containers.containersConf.settings.containers = {
+          log_driver = "k8s-file";
+          log_size_max = 10 * 1024 * 1024;
+        };
         oci-containers.backend = "podman";
         podman = {
           enable = true;

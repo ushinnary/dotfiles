@@ -19,7 +19,7 @@
 
   users.groups."${vars.userName}" = {};
 
-  security.sudo.extraRules = [
+  security.sudo-rs.extraRules = [
     {
       users = [vars.userName];
       commands =

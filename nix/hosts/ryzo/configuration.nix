@@ -1,8 +1,4 @@
-{
-  vars,
-  pkgs,
-  ...
-}: {
+{vars, ...}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -16,19 +12,18 @@
     ../../modules/default.nix
   ];
 
-  # Performance
-  boot.kernelParams = [
-    "amdgpu.ppfeaturemask=0xffffffff"
-  ];
+  # Unlocks the overclock/undervolt controls LACT uses (sets the
+  # amdgpu.ppfeaturemask kernel param).
+  hardware.amdgpu.overdrive = {
+    enable = true;
+    ppfeaturemask = "0xffffffff";
+  };
 
   networking.hostName = "ryzo";
 
   # Undervolt
   services.lact.enable = true;
   services.geoclue2.enableWifi = false;
-  environment.systemPackages = [
-    pkgs.lact
-  ];
 
   # Enable the custom options
   ushinnary = {

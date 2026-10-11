@@ -60,6 +60,15 @@ in {
 
   boot.supportedFilesystems = ["btrfs"];
 
+  # Reads and checksums every block once a month. Metadata is DUP, so
+  # scrub repairs it; data has one copy, so corruption is only reported.
+  # One path is enough: every subvolume is the same filesystem.
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+    fileSystems = ["/"];
+  };
+
   disko.devices.disk.main = {
     type = "disk";
     inherit device;

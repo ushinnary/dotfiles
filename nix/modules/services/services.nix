@@ -5,7 +5,7 @@
 }: let
   cfg = config.ushinnary.hardware;
 in {
-  options.ushinnary.hardware.amdCpu = lib.mkEnableOption "AMD CPU tweaks (microcode, pstate)";
+  options.ushinnary.hardware.amdCpu = lib.mkEnableOption "AMD CPU microcode updates";
 
   config = {
     hardware.cpu.amd.updateMicrocode = cfg.amdCpu;
@@ -26,14 +26,31 @@ in {
         openFirewall = false;
       };
       fstrim.enable = true;
+      # ntpd-rs (Rust) replaces systemd-timesyncd. NTS authenticates the
+      # servers, so the clock can't be shifted by spoofed NTP replies.
+      # Four independent European operators, so one wrong or unreachable
+      # server is outvoted.
+      ntpd-rs = {
+        enable = true;
+        useNetworkingTimeServers = false;
+        settings.source =
+          map (address: {
+            mode = "nts";
+            inherit address;
+          }) [
+            "time.cloudflare.com"
+            "nts.netnod.se"
+            "ptbtime1.ptb.de"
+            "ntppool1.time.nl"
+          ];
+      };
       # ── Journald log size limits ──────────────────────────────────
+      # mkDefault: the homelab module sets tighter limits.
       journald.settings.Journal = {
-        SystemMaxUse = "1G";
-        MaxRetentionSec = "2weeks";
+        SystemMaxUse = lib.mkDefault "1G";
+        MaxRetentionSec = lib.mkDefault "2weeks";
       };
     };
-    boot.kernelParams = lib.optionals cfg.amdCpu [
-      "amd_pstate=active"
-    ];
+    # No amd_pstate=active: the kernel's default mode is already active.
   };
 }

@@ -29,10 +29,14 @@ in {
     # ═══════════════════════════════════════════════════════════════
     {
       # ── Sudo ─────────────────────────────────────────────────────
+      # sudo-rs: memory-safe drop-in for sudo (also provides `su`). The
+      # module checks the generated sudoers with sudo-rs' visudo at build
+      # time. `run0` (systemd/polkit) still works if sudo ever breaks.
+      security.sudo-rs.enable = true;
       # Keep NH_FLAKE across `sudo nh os switch` (sudo resets the
       # environment). Safe: it only selects which flake to build, and
       # the caller could equally pass that flake as an argument.
-      security.sudo.extraConfig = ''
+      security.sudo-rs.extraConfig = ''
         Defaults env_keep += "NH_FLAKE"
       '';
 

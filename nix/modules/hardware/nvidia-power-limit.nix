@@ -21,7 +21,7 @@ in {
       };
       wantedBy = ["multi-user.target"];
       after = [
-        "display.manager.service"
+        "display-manager.service"
         "multi-user.target"
       ];
     };

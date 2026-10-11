@@ -7,6 +7,7 @@
     ./system/security.nix
     ./system/firewall.nix
     ./system/packages.nix
+    ./system/memory.nix
     ./hardware/nvidia-gpu.nix
     ./hardware/amd-gpu.nix
     ./hardware/secure-boot.nix

@@ -1,13 +1,11 @@
 layout {
-    gaps 4
+    // Matches DMS frameThickness (8) so screen edges and window gaps line up.
+    gaps 8
     center-focused-column "never"
+    // A lone window sits centred instead of glued to the left edge.
+    always-center-single-column
     // Transparent so the wallpaper shows through (stationary behind workspaces).
     background-color "transparent"
-    preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-    }
     default-column-width {
         proportion 0.5
     }
@@ -15,13 +13,17 @@ layout {
         off
         width 0
     }
+    // Large, soft, slightly dropped shadow (macOS-style depth); the focused
+    // window gets a darker one so it reads as lifted. Overrides the shadow
+    // colour from dms/colors.kdl, which is included earlier.
     shadow {
         on
-        softness 1
-        spread 0.5
-        offset x=0 y=0
+        softness 40
+        spread 2
+        offset x=0 y=10
         draw-behind-window true
-        color "#11111177"
+        color "#00000070"
+        inactive-color "#00000030"
     }
     border {
         on

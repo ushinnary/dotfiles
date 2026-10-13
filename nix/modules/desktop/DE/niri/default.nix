@@ -82,7 +82,7 @@ in {
           "gtk"
         ];
         "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
-        "org.freedesktop.impl.portal.FileChooser" = ["gtk"];
+        # FileChooser falls through to "gnome": the Nautilus-based picker.
       };
     };
 

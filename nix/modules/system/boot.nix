@@ -12,7 +12,6 @@
       "quiet"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
-      "splash"
     ];
 
     # Plymouth disabled for faster boot (~3.8s saving)

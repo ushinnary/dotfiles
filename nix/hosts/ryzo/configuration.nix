@@ -47,7 +47,7 @@
   };
 
   # Gamescope session starts at the panel's 144 Hz mode; niri keeps its
-  # own 85 Hz (niri/.config/niri/hosts/ryzo/outputs.kdl). Gamescope needs
+  # own 85 Hz (niri/.config/niri/outputs.kdl). Gamescope needs
   # an exact WxH@Hz match and falls back to the preferred mode otherwise.
   programs.steam.gamescopeSession.args = [
     "-W"

@@ -150,6 +150,27 @@ binds {
     Mod+V {
         toggle-window-floating
     }
+    // Show the windows of the focused column as tabs
+    Mod+W {
+        toggle-column-tabbed-display
+    }
+    // Widen the focused column to fill the free space on screen
+    Mod+Ctrl+F {
+        expand-column-to-available-width
+    }
+    // Mouse wheel scrolls horizontally through columns only
+    Mod+WheelScrollDown {
+        focus-column-right
+    }
+    Mod+WheelScrollUp {
+        focus-column-left
+    }
+    Mod+WheelScrollRight {
+        focus-column-right
+    }
+    Mod+WheelScrollLeft {
+        focus-column-left
+    }
     // Consume / expel windows (merge into or split from column)
     Mod+BracketLeft {
         consume-window-into-column
@@ -182,13 +203,6 @@ binds {
     }
     Mod+Shift+Page_Up {
         move-column-to-workspace-up
-    }
-    // Super+J/K for workspace navigation (added)
-    Super+J {
-        focus-workspace-down
-    }
-    Super+K {
-        focus-workspace-up
     }
     // Workspace by number
     Mod+1 {

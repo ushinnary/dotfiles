@@ -74,11 +74,12 @@
     "apps": "list"
   },
   "networkPreference": "wifi",
+  "iconThemeDark": "Adwaita",
   "cursorSettings": {
     "theme": "Bibata-Modern-Ice",
     "size": 20,
     "niri": {
-      "hideWhenTyping": false,
+      "hideWhenTyping": true,
       "hideAfterInactiveMs": 0
     },
     "hyprland": {

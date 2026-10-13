@@ -1,11 +1,5 @@
 {
-    "icon_theme": "Papirus",
-    "icon_overrides": {
-        "com.mitchellh.ghostty": "ghostty",
-        "org.gnome.Console": "utilities-terminal",
-        "org.gnome.Nautilus": "nautilus",
-        "org.gnome.Settings": "preferences-system"
-    },
+    "icon_theme": "Adwaita",
     "monitors": {
         "": [
             {

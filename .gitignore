@@ -10,3 +10,5 @@ pi/.pi/agent/models.json
 pi/.pi/agent/settings.json
 pi/.pi/agent/sessions/**
 pi/.pi/agent/models-store.json
+DankMaterialShell/.config/DankMaterialShell/.changelog-*
+DankMaterialShell/.config/DankMaterialShell/.firstlaunch

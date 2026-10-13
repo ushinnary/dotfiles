@@ -53,15 +53,8 @@ in {
         ClientAliveCountMax = 2;
       };
 
-      # ── Intrusion prevention ─────────────────────────────────────
-      services.fail2ban = {
-        enable = true;
-        maxretry = 3;
-        bantime = "1h";
-        bantime-increment = {
-          enable = true; # each repeat offence doubles the ban
-        };
-      };
+      # No fail2ban: sshd is only reachable via trustedInterfaces
+      # (system/firewall.nix) and takes keys only, so it guarded nothing.
 
       # ── Kernel hardening (sysctl) ───────────────────────────────
       boot.kernel.sysctl = {

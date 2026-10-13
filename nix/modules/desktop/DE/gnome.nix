@@ -50,8 +50,7 @@ in {
       dconf-editor
       simple-scan
 
-      # Icon themes (ensure hicolor fallback + Papirus are available to the GNOME session)
-      papirus-icon-theme
+      # Icon themes (Adwaita + hicolor fallback for app icons)
       adwaita-icon-theme
       hicolor-icon-theme
       adwaita-fonts

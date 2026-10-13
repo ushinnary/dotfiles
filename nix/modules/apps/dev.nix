@@ -200,9 +200,6 @@ in {
           recursive = true;
         };
 
-        # ── Kitty ─────────────────────────────────────────────
-        "kitty/kitty.conf".source = mkDotfileSymlink "kitty/.config/kitty/kitty.conf";
-
         # # ── Pipewire ─────────────────────────────────────────
         # "pipewire/pipewire.conf.d/hesuvi.conf".source =
         #   mkDotfileSymlink "pipewire/.config/pipewire/pipewire.conf.d/hesuvi.conf";
@@ -210,9 +207,9 @@ in {
       # Nushell completion scripts — one entry per tool
 
       # ── Files that live in $HOME directly ──────────────────────
+      # Alacritty/WezTerm/kitty configs stay in the repo for install.sh
+      # (stow) hosts; nothing installs those terminals here.
       home.file = {
-        ".alacritty.toml".source = mkDotfileSymlink "alacritty/.alacritty.toml";
-        ".wezterm.lua".source = mkDotfileSymlink "wezterm/.wezterm.lua";
         ".ripgreprc".source = mkDotfileSymlink "ripgrep/.ripgreprc";
 
         # Claude: keep runtime state and newly created skills local to Claude.

@@ -31,9 +31,3 @@ window-rule {
     open-maximized true
     open-on-workspace "chat"
 }
-
-// @id=wr_1777706130088335019 @name=com.mitchellh.ghostty
-window-rule {
-    match app-id="^com.mitchellh.ghostty$"
-    opacity 0.85
-}

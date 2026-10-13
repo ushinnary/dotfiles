@@ -8,6 +8,35 @@
   cfg = config.ushinnary.desktop;
   electronFlagsSrc = "${../../../electron/.config/electron-flags.conf}";
   edgeFlagsAmdSrc = "${../../../flatpaks/.var/app/com.microsoft.Edge/config/edge-flags-amd.conf}";
+
+  # Flatpak sandboxes see the host fonts but not /etc/fonts, so generic
+  # families (sans-serif, system-ui, …) fell back to DejaVu Sans. Fontconfig
+  # in the sandbox only reads the per-app $XDG_CONFIG_HOME, so this file is
+  # passed as FONTCONFIG_FILE: it loads the runtime's own config, then puts
+  # the host's default fonts first. Sandboxes only mount the store paths
+  # behind host font/icon dirs, so it's copied out as a real file.
+  flatpakFontsConfPath = "/home/${vars.userName}/.config/fontconfig/flatpak.conf";
+  flatpakFontsConf = let
+    defaults = config.fonts.fontconfig.defaultFonts;
+    prefer = generic: families:
+      lib.optionalString (families != []) ''
+        <match target="pattern">
+          <test qual="any" name="family"><string>${generic}</string></test>
+          <edit name="family" mode="prepend" binding="strong">${lib.concatMapStrings (f: "<string>${f}</string>") families}</edit>
+        </match>
+      '';
+  in
+    pkgs.writeText "flatpak-fonts.conf" ''
+      <?xml version="1.0"?>
+      <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+      <fontconfig>
+        <include>/etc/fonts/fonts.conf</include>
+        ${prefer "sans-serif" defaults.sansSerif}
+        ${prefer "system-ui" defaults.sansSerif}
+        ${prefer "serif" defaults.serif}
+        ${prefer "monospace" defaults.monospace}
+      </fontconfig>
+    '';
 in {
   options.ushinnary.hardware = {
     hasWebCam = lib.mkEnableOption "system has a webcam (enables clight for automatic brightness via camera)";
@@ -82,10 +111,9 @@ in {
       services.colord.enable = true;
       hardware.sensor.iio.enable = config.ushinnary.hardware.hasWebCam;
 
-      boot.kernelModules = ["i2c-dev"];
+      # Loads i2c-dev and grants the i2c group access (ddcutil brightness).
       hardware.i2c.enable = true;
       services.udev.extraRules = ''
-        KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
         ACTION=="add", SUBSYSTEM=="usb", ATTR{power/control}="on"
       '';
       users.users."${vars.userName}".extraGroups = [
@@ -117,14 +145,40 @@ in {
         gst_all_1.gst-libav
       ];
 
-      environment.variables = {
-        QT_AUTO_SCREEN_SCALE_FACTOR = 1;
-      };
+      home-manager.users."${vars.userName}" = {
+        pkgs,
+        lib,
+        ...
+      }: {
+        # Single cursor definition for apps: XCURSOR_* (XWayland, Electron,
+        # Flatpak), ~/.icons/default and, via gtk.enable, GTK settings + dconf.
+        # niri's own copy is DMS-managed (niri/.config/niri/dms/cursor.kdl).
+        home.pointerCursor = {
+          enable = true;
+          name = "Bibata-Modern-Ice";
+          package = pkgs.bibata-cursors;
+          size = 20;
+          gtk.enable = true;
+        };
 
-      home-manager.users."${vars.userName}" = {pkgs, ...}: {
+        # Global Flatpak overrides, declared instead of `flatpak override`.
+        # No XCURSOR_PATH: Flatpak already points it at the host's icon dirs
+        # (/run/host/share/icons), which carry the cursor themes.
+        xdg.dataFile."flatpak/overrides/global".text = ''
+          [Context]
+          filesystems=xdg-config/gtk-3.0:ro;xdg-config/fontconfig:ro;
+
+          [Environment]
+          FONTCONFIG_FILE=${flatpakFontsConfPath}
+        '';
+        # Host fontconfig only reads fonts.conf and conf.d/ here, so this
+        # file affects Flatpak sandboxes only.
+        home.activation.flatpakFontsConf = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          run install -Dm644 ${flatpakFontsConf} ${lib.escapeShellArg flatpakFontsConfPath}
+        '';
+
         dconf.settings = {
           "org/gnome/desktop/interface" = {
-            cursor-theme = "Bibata-Modern-Ice";
             font-name = "Google Sans Flex 11";
             document-font-name = "Google Sans Flex 11";
             monospace-font-name = "Google Sans Code 10";
@@ -212,8 +266,10 @@ in {
             ];
           };
 
+          # Grayscale AA, no hinting (as on macOS): subpixel AA fringes
+          # under fractional scaling and isn't needed on HiDPI panels.
           hinting.style = "none";
-          subpixel.rgba = "rgb";
+          subpixel.rgba = "none";
         };
       };
     })

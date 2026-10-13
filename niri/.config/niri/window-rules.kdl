@@ -45,3 +45,15 @@ window-rule {
     match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
     default-floating-position x=10 y=10 relative-to="bottom-right"
 }
+// Picture-in-Picture (Firefox "Picture-in-Picture", Edge/Chromium "Picture in
+// picture"): float in the bottom-right corner without stealing focus.
+// Dialogs need no rule: niri floats windows that have a parent.
+window-rule {
+    match title=r#"(?i)^picture[- ]in[- ]picture$"#
+    open-floating true
+    open-focused false
+    // Undo the browsers' DMS rules (same app-id as the main window).
+    open-maximized false
+    open-maximized-to-edges false
+    default-floating-position x=24 y=24 relative-to="bottom-right"
+}

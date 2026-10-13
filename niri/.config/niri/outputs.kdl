@@ -1,11 +1,15 @@
-// Host-specific layouts can override this file when needed.
-// The defaults below keep Niri usable with sane scaling out of the box.
-// output "eDP-1" {
-//     scale 1.0
-// }
+// Every monitor for every host lives here, and only here (not in DMS or
+// per-host overrides). niri ignores outputs that aren't connected.
+
+// ryzo — BOE 16" panel (also offers 120/144 Hz).
 output "BOE J560T09 0x01010101" {
     mode "2560x1600@84.951"
     scale 1.5
     position x=0 y=0
 }
 
+// asus-vivobook-s14 — built-in display.
+output "eDP-1" {
+    mode "1920x1200@60"
+    scale 1.25
+}

@@ -166,7 +166,8 @@ let carapace_completer = {|spans: list<string>|
        # multiple completions
        # the default will be carapace, but you can also switch to fish
        # https://www.nushell.sh/cookbook/external_completers.html#alias-completions
-       let multiple_completers = {|spans|
+       let multiple_completers = {|place|
+           let spans = $place.command
            ## alias fixer start https://www.nushell.sh/cookbook/external_completers.html#alias-completions
            let expanded_alias = scope aliases
            | where name == $spans.0

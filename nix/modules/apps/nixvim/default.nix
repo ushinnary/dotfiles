@@ -44,10 +44,19 @@ in {
         ripgrep.enable = true;
         tree-sitter.enable = true;
       };
+      # Nvim sets 'background' from the terminal's OSC 11 reply (Ghostty
+      # follows the system light/dark theme), so pick the variant from it
+      # instead of the plugin's fixed default.
+      colorscheme = null;
       extraConfigLuaPost = ''
-        vim.cmd([[
-          colorscheme github_dark_default
-        ]])
+        local function apply_github_theme()
+          vim.cmd.colorscheme(vim.o.background == "light" and "github_light_default" or "github_dark_default")
+        end
+        apply_github_theme()
+        vim.api.nvim_create_autocmd("OptionSet", {
+          pattern = "background",
+          callback = apply_github_theme,
+        })
       '';
 
       colorschemes.github-theme = {

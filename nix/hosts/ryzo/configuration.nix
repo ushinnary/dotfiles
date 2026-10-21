@@ -44,6 +44,7 @@
       aiAgents = true;
     };
     gaming.enable = true;
+    homelab.ollama.enable = true;
   };
 
   # Gamescope session starts at the panel's 144 Hz mode; niri keeps its

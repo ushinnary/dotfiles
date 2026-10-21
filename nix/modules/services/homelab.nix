@@ -39,77 +39,83 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    console = {
-      earlySetup = true;
-      keyMap = "us";
-    };
+  config = lib.mkMerge [
+    (lib.mkIf cfg.enable {
+      console = {
+        earlySetup = true;
+        keyMap = "us";
+      };
 
-    powerManagement = lib.mkIf cfg.powerManagement.enable {
-      enable = true;
-      cpuFreqGovernor = cfg.powerManagement.cpuGovernor;
-    };
+      powerManagement = lib.mkIf cfg.powerManagement.enable {
+        enable = true;
+        cpuFreqGovernor = cfg.powerManagement.cpuGovernor;
+      };
 
-    boot.kernelParams = [
-      "quiet"
-      "loglevel=3"
-    ];
+      boot.kernelParams = [
+        "quiet"
+        "loglevel=3"
+      ];
 
-    # Not opened on the firewall: reachable only over trusted interfaces.
-    services.cockpit = lib.mkIf cfg.cockpit {
-      enable = true;
-      port = 9090;
-      openFirewall = false;
-    };
+      # Not opened on the firewall: reachable only over trusted interfaces.
+      services.cockpit = lib.mkIf cfg.cockpit {
+        enable = true;
+        port = 9090;
+        openFirewall = false;
+      };
 
-    nixpkgs.config.rocmSupport = lib.mkIf cfg.ollama.enable isRocmCompat;
+      # Ollama and Cockpit are reachable only via LAN/Tailscale/WireGuard —
+      # see the shared trustedInterfaces trust boundary in
+      # system/firewall.nix. No ports are opened on the public firewall.
+      networking.firewall.allowPing = true;
 
-    services.ollama = lib.mkIf cfg.ollama.enable {
-      enable = true;
-      package =
-        if isRocmCompat
-        then pkgs.ollama-rocm
-        else pkgs.ollama-vulkan;
-      rocmOverrideGfx = rocmOverrideGfx;
-      modelsDir = cfg.ollama.modelsPath;
-      port = cfg.ollama.port;
-      host = "0.0.0.0";
-      environmentVariables =
-        {
-          OLLAMA_VULKAN =
-            if isRocmCompat
-            then "0"
-            else "1";
-        }
-        // lib.optionalAttrs isRocmCompat {
-          ROCM_PATH = "${pkgs.rocmPackages.clr}";
-        }
-        // lib.optionalAttrs (isRocmCompat && rocmOverrideGfx != null) {
-          HSA_OVERRIDE_GFX_VERSION = rocmOverrideGfx;
-        };
-    };
+      environment.systemPackages = with pkgs;
+        [
+          vim
+          git
+          curl
+          wget
+          btrfs-progs
+        ]
+        ++ lib.optional cfg.cockpit cockpit;
 
-    # Ollama and Cockpit are reachable only via LAN/Tailscale/WireGuard —
-    # see the shared trustedInterfaces trust boundary in
-    # system/firewall.nix. No ports are opened on the public firewall.
-    networking.firewall.allowPing = true;
+      services.journald.settings.Journal = {
+        SystemMaxUse = "500M";
+        MaxRetentionSec = "1week";
+        SystemKeepFree = "100M";
+      };
 
-    environment.systemPackages = with pkgs;
-      [
-        vim
-        git
-        curl
-        wget
-        btrfs-progs
-      ]
-      ++ lib.optional cfg.cockpit cockpit;
+      users.users."${vars.userName}".extraGroups = ["render"];
+    })
 
-    services.journald.settings.Journal = {
-      SystemMaxUse = "500M";
-      MaxRetentionSec = "1week";
-      SystemKeepFree = "100M";
-    };
+    # Independent of `enable` so a host can run Ollama without the rest of
+    # the homelab profile.
+    (lib.mkIf cfg.ollama.enable {
+      nixpkgs.config.rocmSupport = isRocmCompat;
 
-    users.users."${vars.userName}".extraGroups = ["render"];
-  };
+      services.ollama = {
+        enable = true;
+        package =
+          if isRocmCompat
+          then pkgs.ollama-rocm
+          else pkgs.ollama-vulkan;
+        rocmOverrideGfx = rocmOverrideGfx;
+        modelsDir = cfg.ollama.modelsPath;
+        port = cfg.ollama.port;
+        host = "0.0.0.0";
+        environmentVariables =
+          {
+            OLLAMA_VULKAN =
+              if isRocmCompat
+              then "0"
+              else "1";
+          }
+          // lib.optionalAttrs isRocmCompat {
+            ROCM_PATH = "${pkgs.rocmPackages.clr}";
+          }
+          // lib.optionalAttrs (isRocmCompat && rocmOverrideGfx != null) {
+            HSA_OVERRIDE_GFX_VERSION = rocmOverrideGfx;
+          };
+      };
+    })
+  ];
 }

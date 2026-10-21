@@ -30,6 +30,8 @@ in {
     # but only exposes the GPU when its driver is listed in RUSTICL_ENABLE.
     hardware.amdgpu.opencl.enable = cfg.rocm;
     environment.sessionVariables.RUSTICL_ENABLE = lib.mkIf (!cfg.rocm) "radeonsi";
-    hardware.amdgpu.initrd.enable = true;
+    # amdgpu stays out of the initrd: loading it there held stage 1 for
+    # ~2.3s on ryzo, while after switch-root it initialises in parallel
+    # with the rest of boot. The LUKS prompt uses the EFI framebuffer.
   };
 }

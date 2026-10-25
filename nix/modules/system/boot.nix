@@ -6,7 +6,6 @@
   boot = {
     # Enable "Silent boot"
     consoleLogLevel = 0;
-    initrd.verbose = false;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "quiet"
@@ -26,7 +25,6 @@
     # ESP is only 1G (see disko-luks-btrfs.nix) — cap kept generations
     # so kernels/initrds don't slowly fill it up.
     loader.systemd-boot.configurationLimit = 10;
-    initrd.systemd.enable = true;
   };
 
   hardware.bluetooth = {

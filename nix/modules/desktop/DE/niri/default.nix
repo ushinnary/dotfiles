@@ -28,7 +28,7 @@ in {
     };
 
     services.clight.enable = false;
-    services.gnome.sushi.enable = true;
+    ushinnary.desktop.nautilus = lib.mkDefault true;
 
     # ── DankSearch ────────────────────────────────────────────────
     programs.dsearch = {
@@ -60,7 +60,6 @@ in {
       xwayland-satellite
 
       # File manager
-      nautilus
       file-roller
       cups-pk-helper
       seahorse

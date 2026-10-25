@@ -52,6 +52,7 @@ in {
   };
 
   imports = [
+    ./nautilus.nix
     ./DE/gnome.nix
     ./DE/cosmic.nix
     ./DE/plasma.nix

@@ -25,12 +25,9 @@
     }
   },
   "matugenSourceMode": "saturation",
-  "dockTransparency": 0.5,
   "floatingWindowSyncGlobal": false,
-  "dmsWindowsFloating": false,
   "widgetBackgroundColor": "s",
   "widgetColorMode": "colorful",
-  "cornerRadius": 12,
   "clockFormat": "24h",
   "motionEffect": 1,
   "m3ElevationIntensity": 4,
@@ -41,10 +38,6 @@
   "blurLayerOutlineOpacity": 0.4,
   "blurBorderColor": "primary",
   "wallpaperBackgroundColorMode": "primary",
-  "controlCenterShowMicPercent": true,
-  "workspaceDragReorder": false,
-  "workspaceUnfocusedColorMode": "sch",
-  "workspaceFocusedBorderEnabled": true,
   "workspaceNameIcons": {
     "Code": {
       "type": "icon",
@@ -91,8 +84,7 @@
       "cursorHideTimeout": 0
     }
   },
-  "launcherLogoMode": "os",
-  "fontFamily": "Google Sans Flex",
+  "fontFamily": "Google Sans Flex Medium",
   "monoFontFamily": "Google Sans Code",
   "fontWeight": 500,
   "textRenderType": 1,
@@ -125,20 +117,10 @@
   "matugenTemplateVscode": false,
   "matugenTemplateEmacs": false,
   "matugenTemplateZed": false,
-  "showDock": true,
-  "dockSmartAutoHide": true,
-  "dockGroupByApp": true,
-  "dockIconSize": 36,
-  "dockBorderEnabled": true,
-  "dockBorderColor": "secondary",
-  "dockLauncherEnabled": true,
-  "dockLauncherLogoMode": "os",
-  "dockShowTrash": true,
   "osdAlwaysShowValue": true,
   "osdPosition": 7,
   "osdMediaPlaybackEnabled": true,
   "osdPowerProfileEnabled": true,
-  "updaterHideWidget": true,
   "displayNameMode": "model",
   "connectedFrameBarStyleBackups": {
     "default": {
@@ -162,7 +144,8 @@
       "leftWidgets": [
         {
           "id": "launcherButton",
-          "enabled": true
+          "enabled": true,
+          "launcherLogoMode": "os"
         },
         {
           "id": "colorPicker",
@@ -250,7 +233,6 @@
       "noBackground": false,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
-      "removeWidgetPadding": false,
       "widgetPadding": 6,
       "gothCornersEnabled": false,
       "gothCornerRadiusOverride": false,
@@ -274,7 +256,7 @@
       "popupGapsManual": 4,
       "maximizeDetection": false,
       "scrollEnabled": true,
-      "scrollXBehavior": "column",
+      "scrollXBehavior": "focusWindow",
       "scrollYBehavior": "workspace",
       "shadowIntensity": 0,
       "shadowOpacity": 60,
@@ -283,37 +265,14 @@
       "clickThrough": false,
       "hoverPopouts": false,
       "attachToScreenEdge": false,
-      "useOverlayLayer": false
+      "useOverlayLayer": false,
+      "followInterfaceStyle": true,
+      "widgetFollowInterfaceStyle": true,
+      "surfaceColor": "default",
+      "surfaceCustomColor": "#6750A4",
+      "widgetStyle": "segments"
     }
   ],
-  "desktopClockCustomColor": {
-    "r": 1,
-    "g": 1,
-    "b": 1,
-    "a": 1,
-    "hsvHue": -1,
-    "hsvSaturation": 0,
-    "hsvValue": 1,
-    "hslHue": -1,
-    "hslSaturation": 0,
-    "hslLightness": 1,
-    "valid": true,
-    "rgba": -1
-  },
-  "systemMonitorCustomColor": {
-    "r": 1,
-    "g": 1,
-    "b": 1,
-    "a": 1,
-    "hsvHue": -1,
-    "hsvSaturation": 0,
-    "hsvValue": 1,
-    "hslHue": -1,
-    "hslSaturation": 0,
-    "hslLightness": 1,
-    "valid": true,
-    "rgba": -1
-  },
   "builtInPluginSettings": {
     "dms_settings_search": {
       "trigger": "?"
@@ -337,7 +296,6 @@
   "frameEnabled": true,
   "frameThickness": 8,
   "frameRounding": 12,
-  "frameColor": "surface",
   "frameBarSize": 28,
   "frameCloseGaps": false,
   "frameLauncherEmergeSide": "top",
@@ -345,5 +303,97 @@
   "barInsetPaddingShared": 4,
   "barInsetPaddingSyncAll": true,
   "frameBarInsetPadding": 8,
-  "configVersion": 18
+  "configVersion": 42,
+  "radiusStrength": 38,
+  "blurBorderEnabled": true,
+  "dockConfigs": [
+    {
+      "id": "dock",
+      "name": "Dock",
+      "enabled": true,
+      "screenPreferences": [
+        "all"
+      ],
+      "showOnLastDisplay": true,
+      "position": 1,
+      "mode": "compact",
+      "taskbarAlign": "center",
+      "widgetExpansion": "popout",
+      "iconSize": 36,
+      "spacing": 4,
+      "itemSpacing": 4,
+      "margin": 0,
+      "bottomGap": 0,
+      "transparency": 0.5,
+      "followInterfaceStyle": false,
+      "autoHide": false,
+      "smartAutoHide": true,
+      "useOverlayLayer": false,
+      "editOnRightClick": false,
+      "showOnFullscreen": false,
+      "openOnOverview": false,
+      "groupByApp": true,
+      "separatePinnedAndRunningApps": false,
+      "restoreSpecialWorkspaceOnClick": false,
+      "isolateDisplays": false,
+      "indicatorStyle": "circle",
+      "borderEnabled": true,
+      "borderColor": "secondary",
+      "borderOpacity": 1,
+      "borderThickness": 1,
+      "launcherEnabled": true,
+      "launcherLogoMode": "os",
+      "launcherLogoCustomPath": "",
+      "launcherLogoColorOverride": "",
+      "launcherLogoSizeOffset": 0,
+      "launcherLogoBrightness": 0.5,
+      "launcherLogoContrast": 1,
+      "maxVisibleApps": 0,
+      "maxVisibleRunningApps": 0,
+      "showOverflowBadge": true,
+      "showTrash": true,
+      "trashFileManager": "default",
+      "trashCustomCommand": "",
+      "magnification": false,
+      "magnificationScale": 130,
+      "magnificationProfile": "parabolic",
+      "magnificationExpand": false,
+      "order": [],
+      "widgets": [
+        {
+          "id": "dock_launcher",
+          "widgetId": "dockLauncher",
+          "enabled": true
+        },
+        {
+          "id": "dock_apps",
+          "widgetId": "appsDock",
+          "enabled": true
+        },
+        {
+          "id": "dock_trash",
+          "widgetId": "dockTrash",
+          "enabled": true
+        }
+      ]
+    }
+  ],
+  "dmsWindowsFloatingSeeded": [
+    "niri",
+    "hyprland",
+    "mango"
+  ],
+  "blurBorderSeeded": true,
+  "hostSurfaceColor": "default",
+  "cardSurfaceColor": "s",
+  "chipSurfaceColor": "s",
+  "chipSurfaceNestedColor": "default",
+  "displayFontFamily": "Google Sans Flex",
+  "dashOptions": {
+    "media": {
+      "lyrics": false,
+      "smoothLyrics": false
+    }
+  },
+  "avatarRing": "primary"
 }

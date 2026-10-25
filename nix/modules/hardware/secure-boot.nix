@@ -30,6 +30,5 @@ in {
     ];
 
     boot.initrd.availableKernelModules = ["tpm_crb"];
-    boot.initrd.systemd.enable = lib.mkForce (!initialInstall);
   };
 }

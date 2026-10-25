@@ -30,13 +30,12 @@ in {
     programs.dconf.enable = true;
 
     services.udev.packages = [pkgs.gnome-settings-daemon];
-    services.gnome.sushi.enable = true;
+    ushinnary.desktop.nautilus = lib.mkDefault true;
     programs.kdeconnect = {
       enable = true;
       package = pkgs.gnomeExtensions.gsconnect;
     };
     environment.systemPackages = with pkgs; [
-      nautilus
       gnome-calculator
       gnome-calendar
       gnome-characters
@@ -61,7 +60,6 @@ in {
       refine
       pavucontrol
       gnome-disk-utility
-      ffmpegthumbnailer
 
       # Passwords and Keys
       seahorse

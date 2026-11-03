@@ -117,5 +117,19 @@ in {
           };
       };
     })
+
+    # amdgpu loads after switch-root (see hardware/amd-gpu.nix), so Ollama's
+    # one-shot GPU discovery could run before the render node exists and
+    # stay on CPU for the whole boot. Tag render nodes so systemd exposes
+    # them as device units, then start Ollama only once the GPU is up.
+    (lib.mkIf (cfg.ollama.enable && config.ushinnary.gpu.amd.enable) {
+      services.udev.extraRules = ''
+        SUBSYSTEM=="drm", KERNEL=="renderD*", TAG+="systemd"
+      '';
+      systemd.services.ollama = {
+        wants = ["dev-dri-renderD128.device"];
+        after = ["dev-dri-renderD128.device"];
+      };
+    })
   ];
 }

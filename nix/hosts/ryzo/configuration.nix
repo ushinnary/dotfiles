@@ -43,7 +43,7 @@
       servers = ["zed"];
       aiAgents = true;
     };
-    gaming.enable = true;
+    gaming.enable = false;
     homelab.ollama.enable = true;
   };
 

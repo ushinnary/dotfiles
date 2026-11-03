@@ -18,7 +18,7 @@ in {
 
     # ── DankMaterialShell (bar, dock, OSD, notifications, clipboard,
     #    wallpaper, theme, lock screen, media, brightness …) ───────
-    programs.dms-shell = {
+    programs.dux-shell = {
       enable = true;
       systemd = {
         enable = true;
@@ -31,13 +31,13 @@ in {
     ushinnary.desktop.nautilus = lib.mkDefault true;
 
     # ── DankSearch ────────────────────────────────────────────────
-    programs.dsearch = {
+    programs.dux-search = {
       enable = true;
       systemd.enable = true;
     };
 
     # ── Login manager — DankGreeter ───────────────────────────────
-    services.displayManager.dms-greeter = {
+    services.displayManager.dux-greeter = {
       enable = true;
       compositor.name = "niri";
       configHome = "/home/${vars.userName}"; # Sync DMS theme with the greeter

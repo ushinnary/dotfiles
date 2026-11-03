@@ -1,0 +1,2 @@
+FROM bonsai-2:2b
+PARAMETER num_ctx 32768

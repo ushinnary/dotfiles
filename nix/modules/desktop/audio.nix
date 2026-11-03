@@ -1,6 +1,23 @@
-{...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   g435Sink = "alsa_output.usb-Logitech_G_series_G435_Wireless_Gaming_Headset_202105190004-00.analog-stereo";
+
+  # The kernel truncates the dongle's mixer name ("…Playback Volum"), so
+  # PipeWire's ALSA profiles don't see it as a volume control and use soft
+  # volume only, leaving the hardware gain wherever it was (~-10 dB). Pin it
+  # to 0 dB on plug-in so PipeWire's slider is the only control, like Windows.
+  g435HwVolumeMax = pkgs.writeShellScript "g435-hw-volume-max" ''
+    ${lib.getExe' pkgs.alsa-utils "amixer"} -q -c "$1" \
+      sset 'G435 Wireless Gaming Headset Playback Volum' 100%
+  '';
 in {
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="sound", KERNEL=="controlC*", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="0acb", RUN+="${g435HwVolumeMax} $attr{device/number}"
+  '';
+
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;

@@ -27,7 +27,7 @@
   "matugenSourceMode": "saturation",
   "floatingWindowSyncGlobal": false,
   "widgetBackgroundColor": "s",
-  "widgetColorMode": "colorful",
+  "widgetColorMode": "default",
   "clockFormat": "24h",
   "motionEffect": 1,
   "m3ElevationIntensity": 4,
@@ -84,9 +84,9 @@
       "cursorHideTimeout": 0
     }
   },
-  "fontFamily": "Google Sans Flex Medium",
+  "fontFamily": "Google Sans Flex Light",
   "monoFontFamily": "Google Sans Code",
-  "fontWeight": 500,
+  "fontWeight": 600,
   "textRenderType": 1,
   "acMonitorTimeout": 900,
   "acLockTimeout": 7200,
@@ -384,9 +384,9 @@
     "mango"
   ],
   "blurBorderSeeded": true,
-  "hostSurfaceColor": "default",
+  "hostSurfaceColor": "sc",
   "cardSurfaceColor": "s",
-  "chipSurfaceColor": "s",
+  "chipSurfaceColor": "sc",
   "chipSurfaceNestedColor": "default",
   "displayFontFamily": "Google Sans Flex",
   "dashOptions": {
@@ -395,5 +395,6 @@
       "smoothLyrics": false
     }
   },
-  "avatarRing": "primary"
+  "avatarRing": "primary",
+  "audioShowStreamDevices": false
 }
